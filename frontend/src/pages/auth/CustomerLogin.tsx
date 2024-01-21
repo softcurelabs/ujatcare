@@ -7,16 +7,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "react-i18next";
 import classNames from "classnames";
 
-// actions
-import { resetAuth, loginUser } from "../../redux/actions";
-
 // store
-import { RootState, AppDispatch } from "../../redux/store";
+import { RootState, AppDispatch } from "../../store";
 
 // components
 import { VerticalForm, FormInput } from "../../components/";
 
 import AuthCustomerLayout from "./AuthCustomerLayout";
+import { loggedInAsync } from "../../store/auth/AuthSlice";
 
 interface UserData {
   username: string;
@@ -94,18 +92,11 @@ const CustomerLogin = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
 
-  const { user, userLoggedIn, loading, error } = useSelector(
-    (state: RootState) => ({
-      user: state.Auth.user,
-      loading: state.Auth.loading,
-      error: state.Auth.error,
-      userLoggedIn: state.Auth.userLoggedIn,
-    })
-  );
-
-  useEffect(() => {
-    dispatch(resetAuth());
-  }, [dispatch]);
+  const { user, userLoggedIn, loading } = useSelector((state: RootState) => ({
+    user: state.Auth.user,
+    loading: state.Auth.loading,
+    userLoggedIn: state.Auth.userLoggedIn,
+  }));
 
   /*
   form validation schema
@@ -121,7 +112,7 @@ const CustomerLogin = () => {
   handle form submission
   */
   const onSubmit = (formData: UserData) => {
-    dispatch(loginUser(formData["username"], formData["password"]));
+    dispatch(loggedInAsync(formData));
   };
 
   const location = useLocation();
@@ -134,12 +125,6 @@ const CustomerLogin = () => {
       {(userLoggedIn || user) && <Navigate to={redirectUrl}></Navigate>}
 
       <AuthCustomerLayout isCombineForm={true} bottomLinks={<BottomLink />}>
-        {error && (
-          <Alert variant="danger" className="my-2">
-            {error}
-          </Alert>
-        )}
-
         <Row>
           <Col md={8} lg={8} xl={6}>
             <div>

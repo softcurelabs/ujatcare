@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { Container } from "react-bootstrap";
 
 // redux
-import { RootState, AppDispatch } from "../redux/store";
+import { RootState, AppDispatch } from "../store";
 import { LayoutTypes, SideBarTypes } from "../constants/layout";
-import { changeSidebarType } from "../redux/actions";
+// import { changeSidebarType } from "../redux/actions";
 
 // constants
 // import { LayoutTypes, SideBarTypes } from '../constants';
@@ -63,13 +63,11 @@ const VerticalLayout = ({ children }: VerticalLayoutProps) => {
 
   useEffect(() => {
     if (width < 1140) {
-      dispatch(changeSidebarType(SideBarTypes.LEFT_SIDEBAR_TYPE_FULL));
+      // dispatch(changeSidebarType(SideBarTypes.LEFT_SIDEBAR_TYPE_FULL));
       // document.getElementsByTagName('html')[0].classList.add('sidebar-enable')
     } else if (width >= 1140) {
-      dispatch(changeSidebarType(SideBarTypes.LEFT_SIDEBAR_TYPE_DEFAULT));
-      document
-        .getElementsByTagName("html")[0]
-        .classList.remove("sidebar-enable");
+      // dispatch(changeSidebarType(SideBarTypes.LEFT_SIDEBAR_TYPE_DEFAULT));
+      document.getElementsByTagName("html")[0].classList.remove("sidebar-enable");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [width]);
@@ -107,14 +105,11 @@ const VerticalLayout = ({ children }: VerticalLayoutProps) => {
   }, [topbarTheme]);
 
   useEffect(() => {
-    changeHTMLAttribute(
-      "data-menu-icon",
-      showTwoToneIcons ? "twotones" : "default"
-    );
+    changeHTMLAttribute("data-menu-icon", showTwoToneIcons ? "twotones" : "default");
   }, [showTwoToneIcons]);
 
   useEffect(() => {
-    changeHTMLAttribute("data-sidenav-user", showSidebarUserInfo);
+    // changeHTMLAttribute("data-sidenav-user", showSidebarUserInfo);
   }, [showSidebarUserInfo]);
 
   /**
@@ -132,8 +127,7 @@ const VerticalLayout = ({ children }: VerticalLayoutProps) => {
     }
   };
 
-  const isCondensed: boolean =
-    leftSideBarType === SideBarTypes.LEFT_SIDEBAR_TYPE_CONDENSED;
+  const isCondensed: boolean = leftSideBarType === SideBarTypes.LEFT_SIDEBAR_TYPE_CONDENSED;
 
   return (
     <>

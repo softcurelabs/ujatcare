@@ -4,10 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import SimpleBar from "simplebar-react";
 
 // actions
-import { hideRightSidebar } from "../../redux/actions";
-
 // store
-import { AppDispatch, RootState } from "../../redux/store";
+import { AppDispatch, RootState } from "../../store";
 
 // components
 import Chats from "../../components/Chats";
@@ -17,7 +15,6 @@ import ThemeCustomizer from "../../components/ThemeCustomizer/";
 import { chats, tasks } from "./data";
 
 interface RightSideBarProps {
-  hideRightSidebar?: () => void;
   title?: string;
   children?: any;
 }
@@ -25,8 +22,7 @@ interface RightSideBarProps {
 const RightSideBar = (props: RightSideBarProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const rightBarNodeRef: any = useRef(null);
-  const [showRightSideNav, setShowRightSideNav] =
-    useState<boolean>(rightBarNodeRef);
+  const [showRightSideNav, setShowRightSideNav] = useState<boolean>(rightBarNodeRef);
 
   const { isOpenRightSideBar } = useSelector((state: RootState) => ({
     isOpenRightSideBar: state.Layout.isOpenRightSideBar,
@@ -45,7 +41,6 @@ const RightSideBar = (props: RightSideBarProps) => {
         ) {
           return;
         } else {
-          dispatch(hideRightSidebar(), setShowRightSideNav(false));
         }
       }
     },
@@ -73,10 +68,7 @@ const RightSideBar = (props: RightSideBarProps) => {
             // timeout={500}
             scrollbarMaxSize={320}
           >
-            <Tab.Container
-              id="left-tabs-example"
-              defaultActiveKey="themecustomizer"
-            >
+            <Tab.Container id="left-tabs-example" defaultActiveKey="themecustomizer">
               <Nav variant="tabs" className="nav-bordered nav-justified">
                 <Nav.Item as="li">
                   <Nav.Link eventKey="chats" className="py-2 cursor-pointer">
@@ -89,10 +81,7 @@ const RightSideBar = (props: RightSideBarProps) => {
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item as="li">
-                  <Nav.Link
-                    eventKey="themecustomizer"
-                    className="py-2 cursor-pointer"
-                  >
+                  <Nav.Link eventKey="themecustomizer" className="py-2 cursor-pointer">
                     <i className="mdi mdi-cog-outline d-block font-22 my-1"></i>
                   </Nav.Link>
                 </Nav.Item>

@@ -6,17 +6,13 @@ import { useSelector } from "react-redux";
 import { LayoutTypes } from "../constants/layout";
 
 // strore
-import { RootState } from "../redux/store";
-
 // All layouts containers
 import DefaultLayout from "../layouts/Default";
 import VerticalLayout from "../layouts/Vertical";
 
-import {
-  authProtectedFlattenRoutes,
-  publicProtectedFlattenRoutes,
-} from "./index";
+import { authProtectedFlattenRoutes, publicProtectedFlattenRoutes } from "./index";
 import { APICore } from "../helpers/api/apiCore";
+import { RootState } from "../store";
 
 interface IRoutesProps {}
 

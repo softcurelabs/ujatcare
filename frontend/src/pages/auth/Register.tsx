@@ -8,14 +8,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import classNames from "classnames";
 
 //actions
-import { resetAuth, signupUser } from "../../redux/actions";
-
-import { RootState, AppDispatch } from "../../redux/store";
 
 // components
 import { VerticalForm, FormInput } from "../../components/";
 
 import AuthLayout from "./AuthLayout";
+import { RootState } from "../../store";
 
 interface UserData {
   fullname: string;
@@ -87,17 +85,6 @@ const SocialLinks = () => {
 
 const Register = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch<AppDispatch>();
-
-  const { loading, userSignUp, error } = useSelector((state: RootState) => ({
-    loading: state.Auth.loading,
-    error: state.Auth.error,
-    userSignUp: state.Auth.userSignUp,
-  }));
-
-  useEffect(() => {
-    dispatch(resetAuth());
-  }, [dispatch]);
 
   /*
    * form validation schema
@@ -105,10 +92,7 @@ const Register = () => {
   const schemaResolver = yupResolver(
     yup.object().shape({
       fullname: yup.string().required(t("Please enter Fullname")),
-      email: yup
-        .string()
-        .required("Please enter Email")
-        .email("Please enter valid Email"),
+      email: yup.string().required("Please enter Email").email("Please enter valid Email"),
       password: yup.string().required(t("Please enter Password")),
     })
   );
@@ -116,33 +100,15 @@ const Register = () => {
   /*
    * handle form submission
    */
-  const onSubmit = (formData: UserData) => {
-    dispatch(
-      signupUser(formData["fullname"], formData["email"], formData["password"])
-    );
-  };
+  const onSubmit = (formData: UserData) => {};
 
   return (
     <>
-      {userSignUp ? <Navigate to={"/auth/confirm"}></Navigate> : null}
-
       <AuthLayout
-        helpText={t(
-          "Don't have an account? Create your account, it takes less than a minute"
-        )}
+        helpText={t("Don't have an account? Create your account, it takes less than a minute")}
         bottomLinks={<BottomLink />}
       >
-        {error && (
-          <Alert variant="danger" className="my-2">
-            {error}
-          </Alert>
-        )}
-
-        <VerticalForm<UserData>
-          onSubmit={onSubmit}
-          resolver={schemaResolver}
-          defaultValues={{}}
-        >
+        <VerticalForm<UserData> onSubmit={onSubmit} resolver={schemaResolver} defaultValues={{}}>
           <FormInput
             label={t("Full Name")}
             type="text"
@@ -172,7 +138,7 @@ const Register = () => {
           />
 
           <div className="text-center d-grid">
-            <Button variant="success" type="submit" disabled={loading}>
+            <Button variant="success" type="submit">
               {t("Sign Up")}
             </Button>
           </div>

@@ -7,7 +7,7 @@ import { getMenuItems } from "../helpers/menu";
 
 // store
 import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
+import { RootState } from "../store";
 
 // constants
 import { LayoutTypes } from "../constants/layout";
@@ -59,12 +59,7 @@ const UserBox = () => {
 
   return (
     <div className="user-box text-center">
-      <img
-        src={profileImg}
-        alt=""
-        title="Mat Helme"
-        className="rounded-circle avatar-md"
-      />
+      <img src={profileImg} alt="" title="Mat Helme" className="rounded-circle avatar-md" />
       <Dropdown show={dropdownOpen} onToggle={toggleDropdown}>
         <Dropdown.Toggle
           id="dropdown-notification"
@@ -128,12 +123,7 @@ const LeftSidebar = ({ isCondensed, hideLogo }: LeftSidebarProps) => {
    * Handle the click anywhere in doc
    */
   const handleOtherClick = (e: any) => {
-    if (
-      menuNodeRef &&
-      menuNodeRef.current &&
-      menuNodeRef.current.contains(e.target)
-    )
-      return;
+    if (menuNodeRef && menuNodeRef.current && menuNodeRef.current.contains(e.target)) return;
     // else hide the menubar
     if (document.body) {
       document.body.classList.remove("sidebar-enable");
@@ -159,11 +149,7 @@ const LeftSidebar = ({ isCondensed, hideLogo }: LeftSidebarProps) => {
               </span>
               <span className="logo-lg">
                 <img
-                  src={
-                    layoutType === LayoutTypes.LAYOUT_TWO_COLUMN
-                      ? logoDark2
-                      : logoDark
-                  }
+                  src={layoutType === LayoutTypes.LAYOUT_TWO_COLUMN ? logoDark2 : logoDark}
                   alt=""
                   height="50"
                 />
@@ -175,11 +161,7 @@ const LeftSidebar = ({ isCondensed, hideLogo }: LeftSidebarProps) => {
               </span>
               <span className="logo-lg">
                 <img
-                  src={
-                    layoutType === LayoutTypes.LAYOUT_TWO_COLUMN
-                      ? logoLight2
-                      : logoLight
-                  }
+                  src={layoutType === LayoutTypes.LAYOUT_TWO_COLUMN ? logoLight2 : logoLight}
                   alt=""
                   height="20"
                 />

@@ -2,7 +2,7 @@ import React, { useEffect, Suspense } from "react";
 import { useSelector } from "react-redux";
 
 // store
-import { RootState } from "../redux/store";
+import { RootState } from "../store";
 
 // utils
 import { changeHTMLAttribute } from "../utils";
@@ -31,17 +31,11 @@ const DefaultLayout = (props: DefaultLayoutProps) => {
 
   useEffect(() => {
     if (document.body)
-      document.body.classList.add(
-        "authentication-bg",
-        "authentication-bg-pattern"
-      );
+      document.body.classList.add("authentication-bg", "authentication-bg-pattern");
 
     return () => {
       if (document.body)
-        document.body.classList.remove(
-          "authentication-bg",
-          "authentication-bg-pattern"
-        );
+        document.body.classList.remove("authentication-bg", "authentication-bg-pattern");
     };
   }, []);
 

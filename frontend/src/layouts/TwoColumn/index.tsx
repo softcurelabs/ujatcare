@@ -6,14 +6,14 @@ import { Container } from "react-bootstrap";
 // import { changeTopbarTheme } from '../../redux/actions';
 
 // store
-import { RootState, AppDispatch } from "../../redux/store";
+import { RootState, AppDispatch } from "../../store";
 
 // utils
 import { changeHTMLAttribute } from "../../utils";
 
 // constants
 import { LayoutTypes, SideBarTypes } from "../../constants/layout";
-import { changeSidebarType } from "../../redux/actions";
+// import { changeSidebarType } from "../../redux/actions";
 import { useViewport } from "../../hooks/useViewPort";
 
 // code splitting and lazy loading
@@ -63,11 +63,11 @@ const TwoColumnLayout = ({ children }: VerticalLayoutProps) => {
    */
 
   useEffect(() => {
-    if (window.outerWidth < 1140) {
-      dispatch(changeSidebarType(SideBarTypes.LEFT_SIDEBAR_TYPE_FULL));
-    } else if (width >= 1140) {
-      dispatch(changeSidebarType(SideBarTypes.LEFT_SIDEBAR_TYPE_DEFAULT));
-    }
+    // if (window.outerWidth < 1140) {
+    //   dispatch(changeSidebarType(SideBarTypes.LEFT_SIDEBAR_TYPE_FULL));
+    // } else if (width >= 1140) {
+    //   dispatch(changeSidebarType(SideBarTypes.LEFT_SIDEBAR_TYPE_DEFAULT));
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [width]);
 
@@ -109,10 +109,7 @@ const TwoColumnLayout = ({ children }: VerticalLayoutProps) => {
   }, [leftSideBarType]);
 
   useEffect(() => {
-    changeHTMLAttribute(
-      "data-menu-icon",
-      showTwoToneIcons ? "twotones" : "default"
-    );
+    changeHTMLAttribute("data-menu-icon", showTwoToneIcons ? "twotones" : "default");
   }, [showTwoToneIcons]);
 
   /**

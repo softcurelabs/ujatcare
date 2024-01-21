@@ -4,10 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 // import classNames from 'classnames';
 
 // actions
-import { showRightSidebar, changeSidebarType } from "../redux/actions";
+// import { showRightSidebar, changeSidebarType } from "../redux/actions";
 
 // store
-import { RootState, AppDispatch } from "../redux/store";
+import { RootState, AppDispatch } from "../store";
 
 //constants
 import { LayoutTypes, SideBarTypes } from "../constants/layout";
@@ -210,12 +210,7 @@ interface TopbarProps {
   topbarDark?: boolean;
 }
 
-const Topbar = ({
-  hideLogo,
-  navCssClasses,
-  openLeftMenuCallBack,
-  topbarDark,
-}: TopbarProps) => {
+const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: TopbarProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const { width } = useViewport();
 
@@ -227,33 +222,6 @@ const Topbar = ({
     leftSideBarType: state.Layout.leftSideBarType,
   }));
 
-  /**
-   * Toggle the leftmenu when having mobile screen
-   */
-  const handleLeftMenuCallBack = () => {
-    if (width < 1140) {
-      if (leftSideBarType === "full") {
-        showLeftSideBarBackdrop();
-        document
-          .getElementsByTagName("html")[0]
-          .classList.add("sidebar-enable");
-      } else {
-        dispatch(changeSidebarType(SideBarTypes.LEFT_SIDEBAR_TYPE_FULL));
-      }
-    } else if (leftSideBarType === "condensed") {
-      dispatch(changeSidebarType(SideBarTypes.LEFT_SIDEBAR_TYPE_DEFAULT));
-    } else if (leftSideBarType === "full") {
-      showLeftSideBarBackdrop();
-      document.getElementsByTagName("html")[0].classList.add("sidebar-enable");
-    } else if (leftSideBarType === "fullscreen") {
-      dispatch(changeSidebarType(SideBarTypes.LEFT_SIDEBAR_TYPE_DEFAULT));
-      // showLeftSideBarBackdrop();
-      document.getElementsByTagName("html")[0].classList.add("sidebar-enable");
-    } else {
-      dispatch(changeSidebarType(SideBarTypes.LEFT_SIDEBAR_TYPE_CONDENSED));
-    }
-  };
-
   // create backdrop for leftsidebar
   function showLeftSideBarBackdrop() {
     const backdrop = document.createElement("div");
@@ -262,9 +230,7 @@ const Topbar = ({
     // backdrop.style.zIndex = '999'
     document.body.appendChild(backdrop);
 
-    if (
-      document.getElementsByTagName("html")[0]?.getAttribute("dir") !== "rtl"
-    ) {
+    if (document.getElementsByTagName("html")[0]?.getAttribute("dir") !== "rtl") {
       document.body.style.overflow = "hidden";
       if (width > 1140) {
         document.body.style.paddingRight = "15px";
@@ -272,10 +238,8 @@ const Topbar = ({
     }
 
     backdrop.addEventListener("click", function (e) {
-      document
-        .getElementsByTagName("html")[0]
-        .classList.remove("sidebar-enable");
-      dispatch(changeSidebarType(SideBarTypes.LEFT_SIDEBAR_TYPE_FULL));
+      document.getElementsByTagName("html")[0].classList.remove("sidebar-enable");
+      // dispatch(changeSidebarType(SideBarTypes.LEFT_SIDEBAR_TYPE_FULL));
       hideLeftSideBarBackdrop();
     });
   }
@@ -287,13 +251,6 @@ const Topbar = ({
       document.body.style.overflow = "visible";
     }
   }
-
-  /**
-   * Toggles the right sidebar
-   */
-  const handleRightSideBar = () => {
-    dispatch(showRightSidebar());
-  };
 
   /**
    * Toggles the left sidebar width

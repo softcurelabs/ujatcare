@@ -6,10 +6,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
 
-//actions
-import { resetAuth, forgotPassword } from "../../redux/actions";
-import { RootState, AppDispatch } from "../../redux/store";
-
 // components
 import { VerticalForm, FormInput } from "../../components/";
 
@@ -38,22 +34,22 @@ const BottomLink = () => {
 };
 
 const ForgetPassword = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  // const dispatch = useDispatch<AppDispatch>();
   const { t } = useTranslation();
 
-  useEffect(() => {
-    dispatch(resetAuth());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(resetAuth());
+  // }, [dispatch]);
 
-  const { loading, passwordReset, resetPasswordSuccess, error } = useSelector(
-    (state: RootState) => ({
-      loading: state.Auth.loading,
-      user: state.Auth.user,
-      error: state.Auth.error,
-      passwordReset: state.Auth.passwordReset,
-      resetPasswordSuccess: state.Auth.resetPasswordSuccess,
-    })
-  );
+  // const { loading, passwordReset, resetPasswordSuccess, error } = useSelector(
+  //   (state: RootState) => ({
+  //     loading: state.Auth.loading,
+  //     user: state.Auth.user,
+  //     error: state.Auth.error,
+  //     passwordReset: state.Auth.passwordReset,
+  //     resetPasswordSuccess: state.Auth.resetPasswordSuccess,
+  //   })
+  // );
 
   /*
    * form validation schema
@@ -68,7 +64,7 @@ const ForgetPassword = () => {
    * handle form submission
    */
   const onSubmit = (formData: UserData) => {
-    dispatch(forgotPassword(formData["username"]));
+    // dispatch(forgotPassword(formData["username"]));
   };
 
   return (
@@ -79,17 +75,13 @@ const ForgetPassword = () => {
         )}
         bottomLinks={<BottomLink />}
       >
-        {resetPasswordSuccess && (
-          <Alert variant="success">{resetPasswordSuccess.message}</Alert>
-        )}
-
-        {error && (
+        {/* {error && (
           <Alert variant="danger" className="my-2">
             {error}
           </Alert>
-        )}
+        )} */}
 
-        {!passwordReset && (
+        {
           <VerticalForm onSubmit={onSubmit} resolver={schemaResolver}>
             <FormInput
               label={t("Username")}
@@ -100,12 +92,12 @@ const ForgetPassword = () => {
             />
 
             <div className="d-grid text-center">
-              <Button variant="primary" type="submit" disabled={loading}>
+              <Button variant="primary" type="submit">
                 {t("Reset Password")}
               </Button>
             </div>
           </VerticalForm>
-        )}
+        }
       </AuthLayout>
     </>
   );

@@ -5,20 +5,14 @@ import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 
 //actions
-import { logoutUser, resetAuth } from "../../redux/actions";
-
-import { AppDispatch } from "../../redux/store";
-
 // components
 import AuthLayout from "./AuthLayout";
+import { logoutAsync } from "../../store/auth/AuthSlice";
+import { AppDispatch } from "../../store";
 
 const LogoutIcon = () => {
   return (
-    <svg
-      version="1.1"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 130.2 130.2"
-    >
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
       {" "}
       <circle
         className="path circle"
@@ -65,11 +59,7 @@ const Logout = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(resetAuth());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(logoutUser());
+    dispatch(logoutAsync());
   }, [dispatch]);
 
   return (
@@ -84,10 +74,7 @@ const Logout = () => {
 
           <h3>{t("See you again !")}</h3>
 
-          <p className="text-muted">
-            {" "}
-            {t("You are now successfully sign out.")}{" "}
-          </p>
+          <p className="text-muted"> {t("You are now successfully sign out.")} </p>
         </div>
       </AuthLayout>
     </>

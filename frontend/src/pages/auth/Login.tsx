@@ -8,15 +8,12 @@ import { useTranslation } from "react-i18next";
 import classNames from "classnames";
 
 // actions
-import { resetAuth, loginUser } from "../../redux/actions";
-
-// store
-import { RootState, AppDispatch } from "../../redux/store";
-
 // components
 import { VerticalForm, FormInput } from "../../components/";
 
 import AuthLayout from "./AuthLayout";
+import { loggedInAsync } from "../../store/auth/AuthSlice";
+import { AppDispatch, RootState } from "../../store";
 
 interface UserData {
   username: string;
@@ -94,18 +91,11 @@ const Login = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
 
-  const { user, userLoggedIn, loading, error } = useSelector(
-    (state: RootState) => ({
-      user: state.Auth.user,
-      loading: state.Auth.loading,
-      error: state.Auth.error,
-      userLoggedIn: state.Auth.userLoggedIn,
-    })
-  );
-
-  useEffect(() => {
-    dispatch(resetAuth());
-  }, [dispatch]);
+  const { user, userLoggedIn, loading } = useSelector((state: RootState) => ({
+    user: state.Auth.user,
+    loading: state.Auth.loading,
+    userLoggedIn: state.Auth.userLoggedIn,
+  }));
 
   /*
   form validation schema
@@ -121,7 +111,7 @@ const Login = () => {
   handle form submission
   */
   const onSubmit = (formData: UserData) => {
-    dispatch(loginUser(formData["username"], formData["password"]));
+    dispatch(loggedInAsync(formData));
   };
 
   const location = useLocation();
@@ -134,11 +124,11 @@ const Login = () => {
       {(userLoggedIn || user) && <Navigate to={redirectUrl}></Navigate>}
 
       <AuthLayout helpText={t("")} bottomLinks={<BottomLink />}>
-        {error && (
+        {/* {error && (
           <Alert variant="danger" className="my-2">
             {error}
           </Alert>
-        )}
+        )} */}
 
         <VerticalForm<UserData>
           onSubmit={onSubmit}

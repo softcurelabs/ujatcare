@@ -21,17 +21,6 @@ const Register = React.lazy(() => import("../pages/auth/Register"));
 const SignInSignUp = React.lazy(() => import("../pages/auth/SignInSignUp"));
 const LockScreen = React.lazy(() => import("../pages/auth/LockScreen"));
 
-// auth2
-const Login2 = React.lazy(() => import("../pages/auth2/Login2"));
-const Logout2 = React.lazy(() => import("../pages/auth2/Logout2"));
-const Register2 = React.lazy(() => import("../pages/auth2/Register2"));
-const Confirm2 = React.lazy(() => import("../pages/auth2/Confirm2"));
-const ForgetPassword2 = React.lazy(
-  () => import("../pages/auth2/ForgetPassword2")
-);
-const LockScreen2 = React.lazy(() => import("../pages/auth2/LockScreen2"));
-const SignInSignUp2 = React.lazy(() => import("../pages/auth2/SignInSignUp2"));
-
 // landing
 const Landing = React.lazy(() => import("../pages/landing/"));
 
@@ -44,41 +33,25 @@ const Dashboard4 = React.lazy(() => import("../pages/dashboard/Dashboard4/"));
 // apps
 const CalendarApp = React.lazy(() => import("../pages/apps/Calendar/"));
 const Projects = React.lazy(() => import("../pages/apps/Projects/"));
-const ProjectDetail = React.lazy(
-  () => import("../pages/apps/Projects/Detail/")
-);
-const ProjectForm = React.lazy(
-  () => import("../pages/apps/Projects/ProjectForm")
-);
+const ProjectDetail = React.lazy(() => import("../pages/apps/Projects/Detail/"));
+const ProjectForm = React.lazy(() => import("../pages/apps/Projects/ProjectForm"));
 // - chat
 const ChatApp = React.lazy(() => import("../pages/apps/Chat/"));
 // - ecommece pages
-const EcommerceDashboard = React.lazy(
-  () => import("../pages/apps/Ecommerce/Dashboard/")
-);
-const EcommerceProducts = React.lazy(
-  () => import("../pages/apps/Ecommerce/Products")
-);
-const ProductDetails = React.lazy(
-  () => import("../pages/apps/Ecommerce/ProductDetails")
-);
-const ProductEdit = React.lazy(
-  () => import("../pages/apps/Ecommerce/ProductEdit")
-);
+const EcommerceDashboard = React.lazy(() => import("../pages/apps/Ecommerce/Dashboard/"));
+const EcommerceProducts = React.lazy(() => import("../pages/apps/Ecommerce/Products"));
+const ProductDetails = React.lazy(() => import("../pages/apps/Ecommerce/ProductDetails"));
+const ProductEdit = React.lazy(() => import("../pages/apps/Ecommerce/ProductEdit"));
 const Customers = React.lazy(() => import("../pages/apps/Ecommerce/Customers"));
 const Orders = React.lazy(() => import("../pages/apps/Ecommerce/Orders"));
-const OrderDetails = React.lazy(
-  () => import("../pages/apps/Ecommerce/OrderDetails")
-);
+const OrderDetails = React.lazy(() => import("../pages/apps/Ecommerce/OrderDetails"));
 const Sellers = React.lazy(() => import("../pages/apps/Ecommerce/Sellers"));
 const Cart = React.lazy(() => import("../pages/apps/Ecommerce/Cart"));
 const Checkout = React.lazy(() => import("../pages/apps/Ecommerce/Checkout"));
 // - crm pages
 const CRMDashboard = React.lazy(() => import("../pages/apps/CRM/Dashboard/"));
 const CRMContacts = React.lazy(() => import("../pages/apps/CRM/Contacts/"));
-const Opportunities = React.lazy(
-  () => import("../pages/apps/CRM/Opportunities/")
-);
+const Opportunities = React.lazy(() => import("../pages/apps/CRM/Opportunities/"));
 const CRMLeads = React.lazy(() => import("../pages/apps/CRM/Leads/"));
 const CRMCustomers = React.lazy(() => import("../pages/apps/CRM/Customers/"));
 // - social
@@ -91,16 +64,12 @@ const TaskDetails = React.lazy(() => import("../pages/apps/Tasks/Details"));
 const Kanban = React.lazy(() => import("../pages/apps/Tasks/Board/"));
 // -contacts
 const ContactsList = React.lazy(() => import("../pages/apps/Contacts/List/"));
-const ContactsProfile = React.lazy(
-  () => import("../pages/apps/Contacts/Profile/")
-);
+const ContactsProfile = React.lazy(() => import("../pages/apps/Contacts/Profile/"));
 // -tickets
 const TicketsList = React.lazy(() => import("../pages/apps/Tickets/List/"));
 
 const RequestList = React.lazy(() => import("../pages/apps/Request/List/"));
-const TicketsDetails = React.lazy(
-  () => import("../pages/apps/Tickets/Details/")
-);
+const TicketsDetails = React.lazy(() => import("../pages/apps/Tickets/Details/"));
 // - file
 const FileManager = React.lazy(() => import("../pages/apps/FileManager"));
 
@@ -158,7 +127,6 @@ const Maintenance = React.lazy(() => import("../pages/other/Maintenance"));
 //   () => import("../pages/uikit/LoadingButtons")
 // );
 
-
 // widgets
 // const Widgets = React.lazy(() => import("../pages/uikit/Widgets"));
 
@@ -167,13 +135,9 @@ const TwoToneIcons = React.lazy(() => import("../pages/icons/TwoToneIcons/"));
 const FeatherIcons = React.lazy(() => import("../pages/icons/FeatherIcons/"));
 const Dripicons = React.lazy(() => import("../pages/icons/Dripicons/"));
 const MDIIcons = React.lazy(() => import("../pages/icons/MDIIcons/"));
-const FontAwesomeIcons = React.lazy(
-  () => import("../pages/icons/FontAwesomeIcons/")
-);
+const FontAwesomeIcons = React.lazy(() => import("../pages/icons/FontAwesomeIcons/"));
 const ThemifyIcons = React.lazy(() => import("../pages/icons/ThemifyIcons/"));
-const SimpleLineIcons = React.lazy(
-  () => import("../pages/icons/SimpleLineIcons/")
-);
+const SimpleLineIcons = React.lazy(() => import("../pages/icons/SimpleLineIcons/"));
 const WeatherIcons = React.lazy(() => import("../pages/icons/WeatherIcons/"));
 
 // forms
@@ -380,7 +344,6 @@ const crmAppRoutes = {
     },
   ],
 };
-
 
 const socialAppRoutes = {
   path: "/apps/social-feed",
@@ -1003,48 +966,6 @@ const authRoutes: RoutesProps[] = [
     element: <Logout />,
     route: Route,
   },
-  {
-    path: "/auth/login2",
-    name: "Login2",
-    element: <Login2 />,
-    route: Route,
-  },
-  {
-    path: "/auth/logout2",
-    name: "Logout2",
-    element: <Logout2 />,
-    route: Route,
-  },
-  {
-    path: "/auth/register2",
-    name: "Register2",
-    element: <Register2 />,
-    route: Route,
-  },
-  {
-    path: "/auth/confirm2",
-    name: "Confirm2",
-    element: <Confirm2 />,
-    route: Route,
-  },
-  {
-    path: "/auth/forget-password2",
-    name: "Forget Password2",
-    element: <ForgetPassword2 />,
-    route: Route,
-  },
-  {
-    path: "/auth/signin-signup2",
-    name: "SignIn-SignUp2",
-    element: <SignInSignUp2 />,
-    route: Route,
-  },
-  {
-    path: "/auth/lock-screen2",
-    name: "Lock Screen2",
-    element: <LockScreen2 />,
-    route: Route,
-  },
 ];
 
 // public routes
@@ -1109,12 +1030,7 @@ const flattenRoutes = (routes: RoutesProps[]) => {
 };
 
 // All routes
-const authProtectedRoutes = [
-  dashboardRoutes,
-  ...appRoutes,
-  extrapagesRoutes,
-  uiRoutes,
-];
+const authProtectedRoutes = [dashboardRoutes, ...appRoutes, extrapagesRoutes, uiRoutes];
 const publicRoutes = [...authRoutes, ...otherPublicRoutes];
 
 const authProtectedFlattenRoutes = flattenRoutes([...authProtectedRoutes]);

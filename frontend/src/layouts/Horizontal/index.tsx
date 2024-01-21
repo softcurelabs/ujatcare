@@ -3,8 +3,8 @@ import { Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 // redux
-import { RootState, AppDispatch } from "../../redux/store";
-import { changeLayout, changeSidebarType } from "../../redux/actions";
+import { RootState, AppDispatch } from "../../store";
+// import { changeLayout, changeSidebarType } from "../../redux/actions";
 
 // constants
 import { LayoutTypes, SideBarTypes } from "../../constants/layout";
@@ -54,10 +54,10 @@ const HorizontalLayout = ({ children }: HorizontalLayoutProps) => {
 
   useEffect(() => {
     if (width < 1140) {
-      dispatch(changeLayout(LayoutTypes.LAYOUT_VERTICAL));
-      dispatch(changeSidebarType(SideBarTypes.LEFT_SIDEBAR_TYPE_FULL));
+      // dispatch(changeLayout(LayoutTypes.LAYOUT_VERTICAL));
+      // dispatch(changeSidebarType(SideBarTypes.LEFT_SIDEBAR_TYPE_FULL));
     } else if (width >= 1140) {
-      dispatch(changeLayout(LayoutTypes.LAYOUT_HORIZONTAL));
+      // dispatch(changeLayout(LayoutTypes.LAYOUT_HORIZONTAL));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [width]);
@@ -86,10 +86,7 @@ const HorizontalLayout = ({ children }: HorizontalLayoutProps) => {
   }, [menuPosition]);
 
   useEffect(() => {
-    changeHTMLAttribute(
-      "data-menu-icon",
-      showTwoToneIcons ? "twotones" : "default"
-    );
+    changeHTMLAttribute("data-menu-icon", showTwoToneIcons ? "twotones" : "default");
   }, [showTwoToneIcons]);
 
   useEffect(() => {

@@ -4,12 +4,6 @@ import { Navigate, Link } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "react-i18next";
-import { useSelector, useDispatch } from "react-redux";
-
-// actions
-import { resetAuth, loginUser, signupUser } from "../../redux/actions";
-
-import { RootState, AppDispatch } from "../../redux/store";
 
 // components
 import { VerticalForm, FormInput } from "../../components/";
@@ -26,20 +20,6 @@ interface UserData {
 
 const SignInSignUp = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch<AppDispatch>();
-
-  const { user, userSignUp, loading, error } = useSelector(
-    (state: RootState) => ({
-      user: state.Auth.user,
-      loading: state.Auth.loading,
-      error: state.Auth.error,
-      userSignUp: state.Auth.userSignUp,
-    })
-  );
-
-  useEffect(() => {
-    dispatch(resetAuth());
-  }, [dispatch]);
 
   /*
     form validation schema
@@ -55,10 +35,7 @@ const SignInSignUp = () => {
     yup.object().shape({
       password: yup.string().required(t("Please enter Password")),
       fullname: yup.string().required(t("Please enter Fullname")),
-      email: yup
-        .string()
-        .required("Please enter Email")
-        .email("Please enter valid Email"),
+      email: yup.string().required("Please enter Email").email("Please enter valid Email"),
     })
   );
 
@@ -66,20 +43,16 @@ const SignInSignUp = () => {
     handle form submission
     */
   const onSubmit = (formData: UserData) => {
-    dispatch(loginUser(formData["username"], formData["loginpassword"]));
+    // dispatch(loginUser(formData["username"], formData["loginpassword"]));
   };
 
-  const onSignUp = (formData: UserData) => {
-    dispatch(
-      signupUser(formData["fullname"], formData["email"], formData["password"])
-    );
-  };
+  const onSignUp = (formData: UserData) => {};
 
   return (
     <>
-      {user ? <Navigate to="/"></Navigate> : null}
+      {/* {user ? <Navigate to="/"></Navigate> : null}
 
-      {userSignUp ? <Navigate to={"/auth/confirm"}></Navigate> : null}
+      {userSignUp ? <Navigate to={"/auth/confirm"}></Navigate> : null} */}
 
       <AuthLayout isCombineForm={true}>
         <Row>
@@ -89,11 +62,11 @@ const SignInSignUp = () => {
               <p className="text-muted mb-4">
                 {t("Enter your email address and password to access account.")}
               </p>
-              {error && (
+              {/* {error && (
                 <Alert variant="danger" className="my-2">
                   {error}
                 </Alert>
-              )}
+              )} */}
               <VerticalForm<UserData>
                 onSubmit={onSubmit}
                 resolver={loginSchema}
@@ -113,10 +86,7 @@ const SignInSignUp = () => {
                   placeholder="Enter your password"
                   containerClass={"mb-3"}
                 >
-                  <Link
-                    to="/auth/forget-password"
-                    className="text-muted float-end"
-                  >
+                  <Link to="/auth/forget-password" className="text-muted float-end">
                     <small>{t("Forgot your password?")}</small>
                   </Link>
                 </FormInput>
@@ -126,7 +96,6 @@ const SignInSignUp = () => {
                     variant="primary"
                     type="submit"
                     className="btn btn-primary btn-sm float-sm-end"
-                    disabled={loading}
                   >
                     {t("Log In")}
                   </Button>
@@ -145,16 +114,10 @@ const SignInSignUp = () => {
             <div className="p-sm-3">
               <h4 className="mt-0">{t("Free Sign Up")}</h4>
               <p className="text-muted mb-4">
-                {t(
-                  "Don't have an account? Create your account, it takes less than a minute"
-                )}
+                {t("Don't have an account? Create your account, it takes less than a minute")}
               </p>
 
-              <VerticalForm
-                onSubmit={onSignUp}
-                resolver={signUpSchema}
-                defaultValues={{}}
-              >
+              <VerticalForm onSubmit={onSignUp} resolver={signUpSchema} defaultValues={{}}>
                 <FormInput
                   label={t("Full Name")}
                   type="text"
@@ -182,7 +145,6 @@ const SignInSignUp = () => {
                     variant="success"
                     type="submit"
                     className="btn btn-success btn-sm float-sm-end"
-                    disabled={loading}
                   >
                     {t("Sign Up")}
                   </Button>
