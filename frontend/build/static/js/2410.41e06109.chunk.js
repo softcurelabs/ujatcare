@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkubold_react=self.webpackChunkubold_react||[]).push([[2410],{92410:(e,t,a)=>{a.r(t),a.d(t,{default:()=>l});a(47313);var r=a(51450),s=a(46417);const l=()=>(0,s.jsx)(s.Fragment,{children:(0,s.jsx)(r.Z,{breadCrumbItems:[{label:"Extra Pages",path:"/pages/starter"},{label:"Starter",path:"/pages/starter",active:!0}],title:"Starter"})})}}]);

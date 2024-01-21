@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+    frontend:
+        container_name: ujatcare_frontend
+        build:
+            context: frontend
+            dockerfile: ./Dockerfile
+        command: yarn run dev
+        ports:
+            - 3000:3000
+        volumes:
+            - ./api:/srv/app
+        restart: unless-stopped
+
+    api:
+        container_name: ujatcare_api
+        build:
+            context: api
+            dockerfile: ./Dockerfile
+        ports:
+            - 8000:3000
+        volumes:
+            - ./auth:/srv/app
+        restart: unless-stopped
+
+    mysql:
+        image: mysql:latest
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+        ports:
+            - 3306:3306
+        volumes:
+            - mysql_db_data_container:/var/lib/mysql
+ 
+    adminer:
+        image: adminer:latest
+        environment:
+        ADMINER_DEFAULT_SERVER: mysql_db_container
+        ports:
+            - 8080:8080
+
+volumes:
+  mysql_db_data_container:
