@@ -140,7 +140,7 @@ const CUSTOMER_ITEMS: MenuItemTypes[] = [
     key: "maintanance-request",
     label: "Maintanance Request",
     isTitle: false,
-    url: "/ui/tables/ticket",
+    url: "/maintanance/create",
   },
   {
     key: "maintanance-request-history",

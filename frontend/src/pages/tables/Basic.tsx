@@ -92,8 +92,8 @@ const InverseTable = () => {
       <Card.Body>
         <h4 className="header-title">Inverse Table</h4>
         <p className="text-muted font-14 mb-4">
-          You can also invert the colors—with light text on dark backgrounds—by
-          specifying <code>dark</code> attribute
+          You can also invert the colors—with light text on dark backgrounds—by specifying{" "}
+          <code>dark</code> attribute
         </p>
 
         <div className="table-responsive">
@@ -133,8 +133,8 @@ const TableHeadOptions = ({ variant }: { variant: string }) => {
         <Card.Body>
           <h4 className="header-title">Table head options</h4>
           <p className="text-muted font-14 mb-4">
-            Use one of two modifier classes to make <code>&lt;thead&gt;</code>s
-            appear light or dark gray.
+            Use one of two modifier classes to make <code>&lt;thead&gt;</code>s appear light or dark
+            gray.
           </p>
           <div className="table-responsive">
             <Table className="mb-0">
@@ -210,8 +210,7 @@ const BorderedTable = () => {
       <Card.Body>
         <h4 className="header-title">Bordered table</h4>
         <p className="text-muted font-14 mb-4">
-          Add <code>bordered</code> attribute for borders on all sides of the
-          table and cells.
+          Add <code>bordered</code> attribute for borders on all sides of the table and cells.
         </p>
 
         <div className="table-responsive">
@@ -249,8 +248,7 @@ const BorderedColorTable = () => {
       <Card.Body>
         <h4 className="header-title">Bordered table</h4>
         <p className="text-muted font-14 mb-4">
-          Add <code>.table-bordered</code> for borders on all sides of the table
-          and cells.
+          Add <code>.table-bordered</code> for borders on all sides of the table and cells.
         </p>
 
         <Table className="border-primary mb-0" bordered>
@@ -322,8 +320,8 @@ const SmallTable = () => {
       <Card.Body>
         <h4 className="header-title">Small table</h4>
         <p className="text-muted font-14 mb-4">
-          Add <code>size="sm"</code> attribute to make tables more compact by
-          cutting cell padding in half
+          Add <code>size="sm"</code> attribute to make tables more compact by cutting cell padding
+          in half
         </p>
 
         <Table className="mb-0" size="sm">
@@ -360,8 +358,8 @@ const BorderlessTable = () => {
         <Card.Body>
           <h4 className="header-title">Borderless table</h4>
           <p className="text-muted font-14 mb-4">
-            For basic styling—light padding and only horizontal dividers—add the
-            base class <code>.table</code> to any <code>&lt;table&gt;</code>.
+            For basic styling—light padding and only horizontal dividers—add the base class{" "}
+            <code>.table</code> to any <code>&lt;table&gt;</code>.
           </p>
 
           <div className="table-responsive">
@@ -486,8 +484,7 @@ const ResponsiveTable = () => {
       <Card.Body>
         <h4 className="header-title">Always responsive</h4>
         <p className="text-muted font-14 mb-4">
-          Across every breakpoint, use <code>responsive</code> attribute to
-          create responsive tables
+          Across every breakpoint, use <code>responsive</code> attribute to create responsive tables
         </p>
 
         <Table className="mb-0" responsive>
@@ -536,13 +533,7 @@ const Tables = () => {
           <BasicTable />
         </Col>
       </Row>
-      <Row>
-        <Col lg={12}>
-          <Button onClick={() => navigate(-1)} className="me-3">
-            Back
-          </Button>
-        </Col>
-      </Row>
+
       {/* 
         <Col lg={6}>
           <InverseTable />

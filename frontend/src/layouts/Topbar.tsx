@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 // import classNames from 'classnames';
 
@@ -25,13 +25,8 @@ import MegaMenu from "../components/MegaMenu";
 
 import profilePic from "../assets/images/users/user-1.jpg";
 import avatar4 from "../assets/images/users/user-4.jpg";
-import logoSm from "../assets/images/logo-sm.png";
-import logoDark from "../assets/images/logo-dark.png";
-import logoDark2 from "../assets/images/logo-dark-2.png";
-import logoLight from "../assets/images/logo-light.png";
-import logoLight2 from "../assets/images/logo-light-2.png";
 import { useViewport } from "../hooks/useViewPort";
-import { Row, ToggleButton } from "react-bootstrap";
+import { Button, Row, ToggleButton } from "react-bootstrap";
 
 export interface NotificationItem {
   id: number;
@@ -92,16 +87,6 @@ const ProfileMenus = [
     label: "My Account",
     icon: "fe-user",
     redirectTo: "#",
-  },
-  {
-    label: "Settings",
-    icon: "fe-settings",
-    redirectTo: "#",
-  },
-  {
-    label: "Lock Screen",
-    icon: "fe-lock",
-    redirectTo: "/auth/lock-screen",
   },
   {
     label: "Logout",
@@ -209,18 +194,27 @@ interface TopbarProps {
   openLeftMenuCallBack?: () => void;
   topbarDark?: boolean;
 }
-
+interface LocationState {
+  from: {
+    pathname: string;
+  };
+}
 const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: TopbarProps) => {
-  const dispatch = useDispatch<AppDispatch>();
   const { width } = useViewport();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const navbarCssClasses: string = navCssClasses || "";
+  let navbarCssClasses: string = navCssClasses || "";
   const containerCssClasses: string = !hideLogo ? "container-fluid" : "";
 
-  const { layoutType, leftSideBarType } = useSelector((state: RootState) => ({
-    layoutType: state.Layout.layoutType,
-    leftSideBarType: state.Layout.leftSideBarType,
+  const { user } = useSelector((state: RootState) => ({
+    user: state.Auth.user,
   }));
+
+  if (user && user.role === "Flat") {
+    navbarCssClasses = "topnav-light";
+  }
+  console.log(user);
 
   // create backdrop for leftsidebar
   function showLeftSideBarBackdrop() {
@@ -260,27 +254,54 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
   //     dispatch(changeSidebarType(SideBarTypes.LEFT_SIDEBAR_TYPE_CONDENSED));
   //   if (leftSideBarType === 'condensed') dispatch(changeSidebarType(SideBarTypes.LEFT_SIDEBAR_TYPE_DEFAULT));
   // };
+  let heading;
+  let name: string = "Admin";
+  let link = "/dashboard-1";
+  if (user && user.role === "Flat") {
+    name = "Matthew Adams";
+    heading = (
+      <>
+        <h4> Apt#: 12323</h4>
+        <h4>Name: {name}</h4>
+      </>
+    );
+  } else {
+    link = "/dashboard-2";
+    heading = (
+      <>
+        <h4 className="text-muted">Name: {name}</h4>
+      </>
+    );
+  }
+  const pathname = location.pathname;
+  console.log(location);
+  const BackButton =
+    pathname === "/dashboard-1" || pathname === "/dashboard-2" ? (
+      <></>
+    ) : (
+      <Button onClick={() => navigate(link)} className="me-3">
+        Back to Dashboard
+      </Button>
+    );
 
   return (
     <React.Fragment>
       <div className={`navbar-custom ${navbarCssClasses}`}>
         <div className={`topbar ${containerCssClasses}`}>
+          <div className="col-lg-2">{BackButton}</div>
           <div className="topbar-menu mx-auto">
-            <div className="text-center">
-              <h4 className="text-muted"> Apt#: 12323</h4>
-              <h4 className="text-muted">Name: Matthew Adams</h4>
-            </div>
+            <div className="text-center">{heading}</div>
           </div>
 
           <ul className="topbar-menu d-flex align-items-center">
-            <li className="dropdown notification-list">
+            {/* <li className="dropdown notification-list">
               <NotificationDropdown notifications={Notifications} />
-            </li>
+            </li> */}
             <li className="dropdown">
               <ProfileDropdown
                 profilePic={profilePic}
                 menuItems={ProfileMenus}
-                username={"Geneva"}
+                username={name}
                 userTitle={"Founder"}
               />
             </li>

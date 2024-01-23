@@ -90,13 +90,6 @@ const Notices = () => {
           <BasicTable />
         </Col>
       </Row>
-      <Row>
-        <Col lg={12}>
-          <Button onClick={() => navigate(-1)} className="me-3">
-            Back
-          </Button>
-        </Col>
-      </Row>
       {/* 
         <Col lg={6}>
           <InverseTable />

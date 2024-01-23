@@ -20,7 +20,7 @@ const List = () => {
         ]}
         title={"Ticket List"}
       />
-      <Row>
+      {/* <Row>
         <Col md={6} xl={3}>
           <Statistics
             icon="fe-tag"
@@ -53,7 +53,7 @@ const List = () => {
             desc="Deleted Tickets"
           />
         </Col>
-      </Row>
+      </Row> */}
 
       <Row>
         <Col>

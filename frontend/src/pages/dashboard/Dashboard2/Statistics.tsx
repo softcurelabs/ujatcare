@@ -10,41 +10,42 @@ const Statistics = () => {
       <Row>
         <Col md={6} xl={3}>
           <StatisticsWidget2
+            variant="info"
+            description="Total Tickets"
+            stats="178"
+            icon="fe-cpu"
+            progress={74}
+          />
+        </Col>
+
+        <Col md={6} xl={3}>
+          <StatisticsWidget2
             variant="blue"
-            description="Income status"
-            stats="12145"
+            description="Ticket Close"
+            stats="50"
             icon="fe-aperture"
             progress={60}
             counterOptions={{
-              prefix: "$",
+              prefix: "",
             }}
           />
         </Col>
         <Col md={6} xl={3}>
           <StatisticsWidget2
-            variant="success"
-            description="January's Sales"
-            stats="1576"
-            icon="fe-shopping-cart"
+            variant="warning"
+            description="Ticket Pending"
+            stats="60"
+            icon="fa-plug"
             progress={49}
           />
         </Col>
         <Col md={6} xl={3}>
           <StatisticsWidget2
-            variant="warning"
-            description="Payouts"
-            stats="8947"
+            variant="success"
+            description="Ticket Resolve"
+            stats="68"
             icon="fe-bar-chart-2"
             progress={18}
-          />
-        </Col>
-        <Col md={6} xl={3}>
-          <StatisticsWidget2
-            variant="info"
-            description="Available Stores"
-            stats="178"
-            icon="fe-cpu"
-            progress={74}
           />
         </Col>
       </Row>

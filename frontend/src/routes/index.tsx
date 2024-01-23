@@ -8,6 +8,7 @@ import MaintananceReport from "../pages/tables/MaintananceReport";
 import Notices from "../pages/tables/Notices";
 import Notice from "../pages/forms/Notice";
 import CustomerLogin from "../pages/auth/CustomerLogin";
+import Create from "../pages/maintanance/create";
 // import Root from './Root';
 
 // lazy load all the views
@@ -861,6 +862,18 @@ const uiRoutes = {
           path: "/ui/forms/editors",
           name: "Editors",
           element: <Editors />,
+          route: PrivateRoute,
+        },
+      ],
+    },
+    {
+      path: "/maintanance",
+      name: "Tables",
+      children: [
+        {
+          path: "/maintanance/create",
+          name: "Basic",
+          element: <Create />,
           route: PrivateRoute,
         },
       ],
