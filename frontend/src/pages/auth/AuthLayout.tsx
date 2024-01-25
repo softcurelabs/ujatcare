@@ -12,25 +12,14 @@ interface AccountLayoutProps {
   children?: any;
 }
 
-const AuthLayout = ({
-  helpText,
-  bottomLinks,
-  children,
-  isCombineForm,
-}: AccountLayoutProps) => {
+const AuthLayout = ({ helpText, bottomLinks, children, isCombineForm }: AccountLayoutProps) => {
   useEffect(() => {
     if (document.body)
-      document.body.classList.add(
-        "authentication-bg",
-        "authentication-bg-pattern"
-      );
+      document.body.classList.add("authentication-bg", "authentication-bg-pattern");
 
     return () => {
       if (document.body)
-        document.body.classList.remove(
-          "authentication-bg",
-          "authentication-bg-pattern"
-        );
+        document.body.classList.remove("authentication-bg", "authentication-bg-pattern");
     };
   }, []);
 
@@ -69,12 +58,12 @@ const AuthLayout = ({
         </Container>
       </div>
 
-      <footer className="footer footer-alt">
+      {/* <footer className="footer footer-alt">
         2015 - {new Date().getFullYear()} &copy; UBold theme by{" "}
         <Link to="#" className="text-white-50">
           Coderthemes
         </Link>
-      </footer>
+      </footer> */}
     </>
   );
 };

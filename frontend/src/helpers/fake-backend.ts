@@ -37,9 +37,9 @@ export function configureFakeBackend() {
     },
     {
       id: 2,
-      username: "flat",
-      password: "flat",
-      firstName: "Flat",
+      username: "apartment",
+      password: "apartment",
+      firstName: "Apartment",
       lastName: "User",
       role: "Flat",
       token:

@@ -16,7 +16,7 @@ const RevenueHistory = ({ revenueHistory }: RevenueHistoryProps) => {
     <>
       <Card>
         <Card.Body>
-          <Dropdown className="float-end" align="end">
+          {/* <Dropdown className="float-end" align="end">
             <Dropdown.Toggle as="a" className="card-drop cursor-pointer">
               <i className="mdi mdi-dots-vertical"></i>
             </Dropdown.Toggle>
@@ -25,7 +25,7 @@ const RevenueHistory = ({ revenueHistory }: RevenueHistoryProps) => {
               <Dropdown.Item>Export Report</Dropdown.Item>
               <Dropdown.Item>Action</Dropdown.Item>
             </Dropdown.Menu>
-          </Dropdown>
+          </Dropdown> */}
 
           <h4 className="header-title mb-3">Notice</h4>
           <div className="table-responsive">

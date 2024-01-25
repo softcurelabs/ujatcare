@@ -2,9 +2,6 @@ import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-// layout constants
-import { LayoutTypes } from "../constants/layout";
-
 // strore
 // All layouts containers
 import DefaultLayout from "../layouts/Default";

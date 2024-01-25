@@ -198,7 +198,7 @@ const ManageTickets = ({ ticketDetails }: ManageTicketsProps) => {
           <Button className="btn-sm btn-blue waves-effect waves-light float-end">
             <i className="mdi mdi-plus-circle"></i> Add Ticket
           </Button>
-          <h4 className="header-title mb-4">Manage Tickets</h4>
+          {/* <h4 className="header-title mb-4">Manage Tickets</h4> */}
 
           <Table
             columns={columns}

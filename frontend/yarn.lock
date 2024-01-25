@@ -14758,9 +14758,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ubold-react@workspace:.":
+"ujatcare@workspace:.":
   version: 0.0.0-use.local
-  resolution: "ubold-react@workspace:."
+  resolution: "ujatcare@workspace:."
   dependencies:
     "@fullcalendar/bootstrap": "npm:^5.8.0"
     "@fullcalendar/core": "npm:^5.8.0"

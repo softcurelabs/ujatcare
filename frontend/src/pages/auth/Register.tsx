@@ -144,10 +144,10 @@ const Register = () => {
           </div>
         </VerticalForm>
 
-        <div className="text-center">
+        {/* <div className="text-center">
           <h5 className="mt-3 text-muted">{t("Sign up using")}</h5>
           <SocialLinks />
-        </div>
+        </div> */}
       </AuthLayout>
     </>
   );

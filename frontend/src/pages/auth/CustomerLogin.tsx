@@ -137,13 +137,13 @@ const CustomerLogin = () => {
             <VerticalForm<UserData>
               onSubmit={onSubmit}
               resolver={schemaResolver}
-              defaultValues={{ username: "flat", password: "flat" }}
+              defaultValues={{ username: "apartment", password: "apartment" }}
             >
               <FormInput
                 label={t("Apartment #")}
                 type="text"
                 name="apartment"
-                placeholder="Enter Flat Number"
+                placeholder="Enter Apartment Number"
                 containerClass={"mb-3"}
               />
               <FormInput
@@ -180,13 +180,13 @@ const CustomerLogin = () => {
             <VerticalForm<UserData>
               onSubmit={onSubmit}
               resolver={schemaResolver}
-              defaultValues={{ username: "test", password: "test" }}
+              defaultValues={{ username: "apartment", password: "apartment" }}
             >
               <FormInput
                 label={t("Apartment #")}
                 type="text"
                 name="apartment"
-                placeholder="Enter Flat Number"
+                placeholder="Enter Apartment Number"
                 containerClass={"mb-3"}
               />
               <FormInput

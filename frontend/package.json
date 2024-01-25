@@ -1,5 +1,5 @@
 {
-  "name": "ubold-react",
+  "name": "ujatcare",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
@@ -57,7 +57,7 @@
   },
   "scripts": {
     "start": "GENERATE_SOURCEMAP=false react-scripts start",
-    "build": "GENERATE_SOURCEMAP=false react-scripts build",
+    "build": "INLINE_RUNTIME_CHUNK=false GENERATE_SOURCEMAP=false react-scripts build",
     "build-demo": "GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

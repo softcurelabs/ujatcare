@@ -86,7 +86,7 @@ const ProfileMenus = [
   {
     label: "My Account",
     icon: "fe-user",
-    redirectTo: "#",
+    redirectTo: "/ui/forms/basic",
   },
   {
     label: "Logout",
@@ -214,7 +214,6 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
   if (user && user.role === "Flat") {
     navbarCssClasses = "topnav-light";
   }
-  console.log(user);
 
   // create backdrop for leftsidebar
   function showLeftSideBarBackdrop() {
@@ -274,7 +273,6 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
     );
   }
   const pathname = location.pathname;
-  console.log(location);
   const BackButton =
     pathname === "/dashboard-1" || pathname === "/dashboard-2" ? (
       <></>

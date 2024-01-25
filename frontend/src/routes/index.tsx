@@ -9,6 +9,7 @@ import Notices from "../pages/tables/Notices";
 import Notice from "../pages/forms/Notice";
 import CustomerLogin from "../pages/auth/CustomerLogin";
 import Create from "../pages/maintanance/create";
+
 // import Root from './Root';
 
 // lazy load all the views
@@ -91,6 +92,8 @@ const Upcoming = React.lazy(() => import("../pages/other/Upcoming"));
 const Pricing = React.lazy(() => import("../pages/other/Pricing"));
 const Gallery = React.lazy(() => import("../pages/other/Gallery/"));
 const Maintenance = React.lazy(() => import("../pages/other/Maintenance"));
+
+const Inspection = React.lazy(() => import("../pages/Inspection"));
 
 // uikit
 // const Buttons = React.lazy(() => import("../pages/uikit/Buttons"));
@@ -874,6 +877,18 @@ const uiRoutes = {
           path: "/maintanance/create",
           name: "Basic",
           element: <Create />,
+          route: PrivateRoute,
+        },
+      ],
+    },
+    {
+      path: "/",
+      name: "Tables",
+      children: [
+        {
+          path: "/inspection",
+          name: "Basic",
+          element: <Inspection />,
           route: PrivateRoute,
         },
       ],

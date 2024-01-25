@@ -117,7 +117,7 @@ const MENU_ITEMS: MenuItemTypes[] = [
         key: "maintanance-inspection-history",
         label: "Notices",
         isTitle: false,
-        url: "/ui/forms/notices",
+        url: "/inspection",
       },
     ],
   },
@@ -152,7 +152,7 @@ const CUSTOMER_ITEMS: MenuItemTypes[] = [
     key: "maintanance-inspection",
     label: "Maintanance Inspections",
     isTitle: false,
-    url: "/apps/ecommerce/orders",
+    url: "/inspection",
   },
   {
     key: "my-account",
@@ -185,7 +185,7 @@ const ADMIN_ITEMS: MenuItemTypes[] = [
     key: "inspect",
     label: "Inspect",
     isTitle: false,
-    url: "/apps/tickets/list",
+    url: "/inspection",
   },
   {
     key: "rent",

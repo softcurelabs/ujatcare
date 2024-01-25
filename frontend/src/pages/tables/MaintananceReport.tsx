@@ -103,11 +103,11 @@ const BasicTable = () => {
 
         <div className="table-responsive">
           <Table className="mb-0">
-            <thead>
+            <thead className="table-light">
               <tr>
                 <th>Date</th>
                 <th>Builds</th>
-                <th>Unit</th>
+                <th>Apartment</th>
                 <th>Name</th>
                 <th>Phone</th>
                 <th>Request</th>
