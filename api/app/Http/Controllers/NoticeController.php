@@ -10,9 +10,17 @@ class NoticeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Notice::all();
+        return Notice::orderBy('id')->paginate($request->get('limit', 10));
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function highlight(Request $request)
+    {
+        return Notice::where('schedule_date', '<', now())->orderBy('id', 'desc')->paginate($request->get('limit', 5));
     }
 
     /**
@@ -21,13 +29,14 @@ class NoticeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|min:10'
+            'title' => 'required|min:10',
+
         ]);
         Notice::create($request->all());
 
         return response()->json([
             'status' => true,
-            'message' => 'Post Created Successfully',
+            'message' => 'Notice Created Successfully',
         ]);
     }
 
@@ -53,7 +62,7 @@ class NoticeController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Post Updated Successfully',
+            'message' => 'Notice Updated Successfully',
         ]);
     }
 
@@ -67,7 +76,7 @@ class NoticeController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Post Deleted Successfully',
+            'message' => 'Notice Deleted Successfully',
         ]);
     }
 }

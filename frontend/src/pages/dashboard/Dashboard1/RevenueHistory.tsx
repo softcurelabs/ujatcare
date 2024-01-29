@@ -48,27 +48,6 @@ const RevenueHistory = ({ revenueHistory }: RevenueHistoryProps) => {
                       </td>
 
                       <td>{item.ago}</td>
-
-                      {/* <td>
-                        <span
-                          className={classNames("badge", {
-                            "bg-soft-warning text-warning":
-                              item.status === "Upcoming",
-                            "bg-soft-success text-success":
-                              item.status === "Paid",
-                            "bg-soft-danger text-danger":
-                              item.status === "Overdue",
-                          })}
-                        >
-                          {item.status}
-                        </span>
-                      </td>
-
-                      <td>
-                        <Link to="#" className="btn btn-xs btn-light">
-                          <i className="mdi mdi-pencil"></i>
-                        </Link>
-                      </td> */}
                     </tr>
                   );
                 })}

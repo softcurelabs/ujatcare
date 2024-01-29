@@ -6,11 +6,12 @@ const api = new APICore();
 const initialState = {
   user: api.getLoggedInUser(),
   userLoggedIn: false,
+  error: "",
   loading: false,
 };
 
 interface UserData {
-  username: string;
+  email: string;
   password: string;
 }
 
@@ -32,6 +33,11 @@ const AuthSlice = createSlice({
         state.userLoggedIn = true;
         state.loading = false;
       })
+      .addCase(loggedInAsync.rejected, (state, action) => {
+        state.error = action.error.message ?? "";
+        state.userLoggedIn = false;
+        state.loading = false;
+      })
       .addCase(logoutAsync.fulfilled, (state, action) => {
         state.user = null;
         state.userLoggedIn = false;
@@ -41,16 +47,16 @@ const AuthSlice = createSlice({
 });
 
 export const loggedInAsync = createAsyncThunk<any, UserData>("loggedIn", async (userData) => {
-  const response = await login({ username: userData.username, password: userData.password });
+  const response = await login({ email: userData.email, password: userData.password });
   const user = response.data;
   // NOTE - You can change this according to response format from your api
   api.setLoggedInUser(user);
-  setAuthorization(user["token"]);
+  setAuthorization(user.accessToken);
   return user;
 });
 
 export const logoutAsync = createAsyncThunk<any>("logout", async () => {
-  await logout();
+  //await logout();
   api.setLoggedInUser(null);
   setAuthorization(null);
 });

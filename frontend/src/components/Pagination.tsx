@@ -15,9 +15,7 @@ const Pagination = ({ tableProps, sizePerPageList }: PaginationProps) => {
    * pagination count , index
    */
   const [pageCount, setPageCount] = useState<number>(tableProps.pageCount);
-  const [pageIndex, setPageIndex] = useState<number>(
-    tableProps.state.pageIndex
-  );
+  const [pageIndex, setPageIndex] = useState<number>(tableProps.state.pageIndex);
 
   useEffect(() => {
     setPageCount(tableProps.pageCount);
@@ -60,7 +58,7 @@ const Pagination = ({ tableProps, sizePerPageList }: PaginationProps) => {
    * @returns
    */
   const changePage = (page: number) => {
-    const activePage = pageIndex + 1;
+    const activePage = pageIndex;
 
     if (page === activePage) {
       return;
@@ -69,7 +67,7 @@ const Pagination = ({ tableProps, sizePerPageList }: PaginationProps) => {
     const visiblePages = getVisiblePages(page, pageCount);
     setVisiblePages(filterPages(visiblePages, pageCount));
 
-    tableProps.gotoPage(page - 1);
+    tableProps.gotoPage(page);
   };
 
   useEffect(() => {
@@ -77,10 +75,8 @@ const Pagination = ({ tableProps, sizePerPageList }: PaginationProps) => {
     setVisiblePages(visiblePages);
   }, [pageCount, getVisiblePages]);
 
-  const [visiblePages, setVisiblePages] = useState<number[]>(
-    getVisiblePages(null, pageCount)
-  );
-  const activePage: number = pageIndex + 1;
+  const [visiblePages, setVisiblePages] = useState<number[]>(getVisiblePages(null, pageCount));
+  const activePage: number = pageIndex;
 
   return (
     <>
@@ -109,7 +105,7 @@ const Pagination = ({ tableProps, sizePerPageList }: PaginationProps) => {
         <span className="me-3">
           Page{" "}
           <strong>
-            {pageIndex + 1} of {tableProps.pageOptions.length}
+            {pageIndex} of {tableProps.pageOptions.length}
           </strong>{" "}
         </span>
 
@@ -117,10 +113,10 @@ const Pagination = ({ tableProps, sizePerPageList }: PaginationProps) => {
           <label className="form-label">Go to page : </label>
           <input
             type="number"
-            value={pageIndex + 1}
+            value={pageIndex}
             min="1"
             onChange={(e: any) => {
-              const page = e.target.value ? Number(e.target.value) - 1 : 0;
+              const page = e.target.value ? Number(e.target.value) : 0;
               tableProps.gotoPage(page);
               setPageIndex(tableProps.state.pageIndex);
             }}
@@ -152,14 +148,9 @@ const Pagination = ({ tableProps, sizePerPageList }: PaginationProps) => {
                   </Link>
                 </li>
                 <li
-                  className={classNames(
-                    "page-item",
-                    "d-none",
-                    "d-xl-inline-block",
-                    {
-                      active: activePage === page,
-                    }
-                  )}
+                  className={classNames("page-item", "d-none", "d-xl-inline-block", {
+                    active: activePage === page,
+                  })}
                   onClick={(e: any) => changePage(page)}
                 >
                   <Link to="#" className="page-link">
@@ -170,14 +161,9 @@ const Pagination = ({ tableProps, sizePerPageList }: PaginationProps) => {
             ) : (
               <li
                 key={page}
-                className={classNames(
-                  "page-item",
-                  "d-none",
-                  "d-xl-inline-block",
-                  {
-                    active: activePage === page,
-                  }
-                )}
+                className={classNames("page-item", "d-none", "d-xl-inline-block", {
+                  active: activePage === page,
+                })}
                 onClick={(e: any) => changePage(page)}
               >
                 <Link to="#" className="page-link">

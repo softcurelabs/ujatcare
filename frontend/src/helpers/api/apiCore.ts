@@ -1,10 +1,10 @@
-import jwtDecode from "jwt-decode";
 import axios from "axios";
 
 import config from "../../config";
 
 // content type
 axios.defaults.headers.post["Content-Type"] = "application/json";
+axios.defaults.headers.post["Accept"] = "application/json";
 axios.defaults.baseURL = config.API_URL;
 
 // intercepting to capture errors
@@ -14,10 +14,10 @@ axios.interceptors.response.use(
   },
   (error) => {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
-    let message;
+    let message:String = "";
 
     if (error && error.response && error.response.status === 404) {
-      // window.location.href = '/not-found';
+      window.location.href = '/not-found';
     } else if (error && error.response && error.response.status === 403) {
       window.location.href = "/access-denied";
     } else {
@@ -31,26 +31,25 @@ axios.interceptors.response.use(
         case 404:
           message = "Sorry! the data you are looking for could not be found";
           break;
-        default: {
-          message =
-            error.response && error.response.data
-              ? error.response.data["message"]
-              : error.message || error;
-        }
+
+        case 422: 
+        console.log(error.response.data);
+          return Promise.reject(error.response.data);
       }
+      console.log("Sdfsd", message);
       return Promise.reject(message);
     }
   }
 );
 
-const AUTH_SESSION_KEY = "ubold_user";
+const AUTH_SESSION_KEY = "ujatcare_user";
 
 /**
  * Sets the default authorization
  * @param {*} token
  */
 const setAuthorization = (token: string | null) => {
-  if (token) axios.defaults.headers.common["Authorization"] = "JWT " + token;
+  if (token) axios.defaults.headers.common["Authorization"] = "Bearer " + token;
   else delete axios.defaults.headers.common["Authorization"];
 };
 
@@ -179,14 +178,15 @@ class APICore {
     if (!user) {
       return false;
     }
-    const decoded: any = jwtDecode(user.token);
-    const currentTime = Date.now() / 1000;
-    if (decoded.exp < currentTime) {
-      console.warn("access token expired");
-      return false;
-    } else {
-      return true;
-    }
+    return true;
+    // const decoded: any = jwtDecode(user.token);
+    // const currentTime = Date.now() / 1000;
+    // if (decoded.exp < currentTime) {
+    //   console.warn("access token expired");
+    //   return false;
+    // } else {
+    //   return true;
+    // }
   };
 
   setLoggedInUser = (session: any) => {
@@ -217,9 +217,9 @@ Check if token available in session
 */
 let user = getUserFromCookie();
 if (user) {
-  const { token } = user;
-  if (token) {
-    setAuthorization(token);
+  const { accessToken } = user;
+  if (accessToken) {
+    setAuthorization(accessToken);
   }
 }
 

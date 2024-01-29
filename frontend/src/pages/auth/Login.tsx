@@ -1,11 +1,9 @@
-import React, { useEffect } from "react";
 import { Button, Alert, Row, Col } from "react-bootstrap";
 import { Navigate, Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "react-i18next";
-import classNames from "classnames";
 
 // actions
 // components
@@ -16,7 +14,7 @@ import { loggedInAsync } from "../../store/auth/AuthSlice";
 import { AppDispatch, RootState } from "../../store";
 
 interface UserData {
-  username: string;
+  email: string;
   password: string;
 }
 
@@ -43,57 +41,14 @@ const BottomLink = () => {
   );
 };
 
-/* social links */
-const SocialLinks = () => {
-  const socialLinks = [
-    {
-      variant: "primary",
-      icon: "facebook",
-    },
-    {
-      variant: "danger",
-      icon: "google",
-    },
-    {
-      variant: "info",
-      icon: "twitter",
-    },
-    {
-      variant: "secondary",
-      icon: "github",
-    },
-  ];
-  return (
-    <>
-      <ul className="social-list list-inline mt-3 mb-0">
-        {(socialLinks || []).map((item, index: number) => {
-          return (
-            <li key={index} className="list-inline-item">
-              <Link
-                to="#"
-                className={classNames(
-                  "social-list-item",
-                  "border-" + item.variant,
-                  "text-" + item.variant
-                )}
-              >
-                <i className={classNames("mdi", "mdi-" + item.icon)}></i>
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-    </>
-  );
-};
-
 const Login = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
 
-  const { user, userLoggedIn, loading } = useSelector((state: RootState) => ({
+  const { user, userLoggedIn, error, loading } = useSelector((state: RootState) => ({
     user: state.Auth.user,
     loading: state.Auth.loading,
+    error: state.Auth.error,
     userLoggedIn: state.Auth.userLoggedIn,
   }));
 
@@ -102,7 +57,7 @@ const Login = () => {
   */
   const schemaResolver = yupResolver(
     yup.object().shape({
-      username: yup.string().required(t("Please enter Username")),
+      email: yup.string().required(t("Please enter Email")).email("Please enter valid email"),
       password: yup.string().required(t("Please enter Password")),
     })
   );
@@ -124,22 +79,18 @@ const Login = () => {
       {(userLoggedIn || user) && <Navigate to={redirectUrl}></Navigate>}
 
       <AuthLayout helpText={t("")} bottomLinks={<BottomLink />}>
-        {/* {error && (
+        {error && (
           <Alert variant="danger" className="my-2">
             {error}
           </Alert>
-        )} */}
+        )}
 
-        <VerticalForm<UserData>
-          onSubmit={onSubmit}
-          resolver={schemaResolver}
-          defaultValues={{ username: "test", password: "test" }}
-        >
+        <VerticalForm<UserData> onSubmit={onSubmit} resolver={schemaResolver}>
           <FormInput
-            label={t("Username")}
+            label={t("Email")}
             type="text"
-            name="username"
-            placeholder="Enter your Username"
+            name="email"
+            placeholder="Enter your Email"
             containerClass={"mb-3"}
           />
           <FormInput

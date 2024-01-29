@@ -11,11 +11,10 @@ import { VerticalForm, FormInput } from "../../components/";
 import AuthLayout from "./AuthLayout";
 
 interface UserData {
-  username: string;
+  email: string;
   loginpassword: string;
   password: string;
   fullname: string;
-  email: string;
 }
 
 const SignInSignUp = () => {
@@ -26,7 +25,7 @@ const SignInSignUp = () => {
     */
   const loginSchema = yupResolver(
     yup.object().shape({
-      username: yup.string().required(t("Please enter Username")),
+      email: yup.string().required(t("Please enter Username")),
       loginpassword: yup.string().required(t("Please enter Password")),
     })
   );

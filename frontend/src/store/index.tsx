@@ -2,13 +2,19 @@ import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 
 import LayoutReducer from "./layout/LayoutSlice";
+import FlatReducer from "./flat/FlatSlice";
+import CustomerAuthReducer from "./auth/CustomerAuthSlice";
 
 import AuthReducer from "./auth/AuthSlice";
+import NoticeReducer from "./notice/NoticeSlice";
 
 const store = configureStore({
   reducer: {
     Layout: LayoutReducer,
     Auth: AuthReducer,
+    Flat: FlatReducer,
+    CustomerAuth: CustomerAuthReducer,
+    Notice: NoticeReducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

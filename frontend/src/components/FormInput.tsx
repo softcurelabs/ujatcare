@@ -67,7 +67,7 @@ interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   placeholder?: string;
   register?: any;
-  errors?: FieldErrors;
+  errors?: FieldErrors<any>;
   control?: Control<any>;
   className?: string;
   labelClassName?: string;
@@ -94,8 +94,7 @@ const FormInput = ({
   ...otherProps
 }: FormInputProps) => {
   // handle input type
-  const comp =
-    type === "textarea" ? "textarea" : type === "select" ? "select" : "input";
+  const comp = type === "textarea" ? "textarea" : type === "select" ? "select" : "input";
 
   return (
     <>
@@ -103,6 +102,7 @@ const FormInput = ({
         <input
           type={type}
           name={name}
+          id={name}
           {...(register ? register(name) : {})}
           {...otherProps}
         />
@@ -114,10 +114,7 @@ const FormInput = ({
                 {label ? (
                   <>
                     {" "}
-                    <Form.Label className={labelClassName}>
-                      {label}
-                    </Form.Label>{" "}
-                    {children}{" "}
+                    <Form.Label className={labelClassName}>{label}</Form.Label> {children}{" "}
                   </>
                 ) : null}
                 <PasswordInput
@@ -131,6 +128,7 @@ const FormInput = ({
 
                 {errors && errors[name] ? (
                   <Form.Control.Feedback type="invalid" className="d-block">
+                    {errors[name]!.message}
                   </Form.Control.Feedback>
                 ) : null}
               </Form.Group>
@@ -156,15 +154,14 @@ const FormInput = ({
 
                     {errors && errors[name] ? (
                       <Form.Control.Feedback type="invalid">
+                        {errors[name]!.message}
                       </Form.Control.Feedback>
                     ) : null}
                   </Form.Group>
                 </>
               ) : (
                 <Form.Group className={containerClass}>
-                  {label ? (
-                    <Form.Label className={labelClassName}>{label}</Form.Label>
-                  ) : null}
+                  {label ? <Form.Label className={labelClassName}>{label}</Form.Label> : null}
 
                   <Form.Control
                     type={type}
@@ -187,6 +184,7 @@ const FormInput = ({
 
                   {errors && errors[name] ? (
                     <Form.Control.Feedback type="invalid">
+                      {errors[name]!.message}
                     </Form.Control.Feedback>
                   ) : null}
                 </Form.Group>

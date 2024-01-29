@@ -254,14 +254,14 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
   //   if (leftSideBarType === 'condensed') dispatch(changeSidebarType(SideBarTypes.LEFT_SIDEBAR_TYPE_DEFAULT));
   // };
   let heading;
-  let name: string = "Admin";
+  let name: string = user.username;
   let link = "/dashboard-1";
-  if (user && user.role === "Flat") {
+  if (user && user.user_role.includes("renter")) {
     name = "Matthew Adams";
     heading = (
       <>
-        <h4> Apt#: 12323</h4>
-        <h4>Name: {name}</h4>
+        <h4 className="text-muted"> Apt#: 12323</h4>
+        <h4 className="text-muted">Name: {name}</h4>
       </>
     );
   } else {

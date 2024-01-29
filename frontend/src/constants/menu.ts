@@ -164,7 +164,7 @@ const CUSTOMER_ITEMS: MenuItemTypes[] = [
     key: "maintanance-inspection-history",
     label: "Notices",
     isTitle: false,
-    url: "/ui/forms/notices",
+    url: "/notice-highlight",
   },
 ];
 
@@ -214,9 +214,9 @@ const ADMIN_ITEMS: MenuItemTypes[] = [
   },
   {
     key: "users",
-    label: "Post Notice",
+    label: "Notice",
     isTitle: false,
-    url: "/ui/forms/notice",
+    url: "/notice",
   },
 ];
 

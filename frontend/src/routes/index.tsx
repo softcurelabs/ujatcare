@@ -6,7 +6,6 @@ import PrivateRoute from "./PrivateRoute";
 import Ticket from "../pages/forms/Ticket";
 import MaintananceReport from "../pages/tables/MaintananceReport";
 import Notices from "../pages/tables/Notices";
-import Notice from "../pages/forms/Notice";
 import CustomerLogin from "../pages/auth/CustomerLogin";
 import Create from "../pages/maintanance/create";
 
@@ -94,7 +93,10 @@ const Gallery = React.lazy(() => import("../pages/other/Gallery/"));
 const Maintenance = React.lazy(() => import("../pages/other/Maintenance"));
 
 const Inspection = React.lazy(() => import("../pages/Inspection"));
-
+const NoticeList = React.lazy(() => import("../pages/notice/Notices"));
+const NewNotice = React.lazy(() => import("../pages/notice/NewNotice"));
+const EditNotice = React.lazy(() => import("../pages/notice/EditNotice"));
+const NoticeHighlight = React.lazy(() => import("../pages/notice/CustomerNotices"));
 // uikit
 // const Buttons = React.lazy(() => import("../pages/uikit/Buttons"));
 // const Avatars = React.lazy(() => import("../pages/uikit/Avatars"));
@@ -184,6 +186,8 @@ export interface RoutesProps {
 const dashboardRoutes: RoutesProps = {
   path: "/dashboard",
   name: "Dashboards",
+  route: PrivateRoute,
+  roles: ["admin"],
   icon: "airplay",
   header: "Navigation",
   children: [
@@ -196,12 +200,14 @@ const dashboardRoutes: RoutesProps = {
     {
       path: "/dashboard-1",
       name: "Dashboard 1",
+      roles: ["renter"],
       element: <Dashboard1 />,
       route: PrivateRoute,
     },
     {
       path: "/dashboard-2",
       name: "Dashboard 2",
+      roles: ["admin"],
       element: <Dashboard2 />,
       route: PrivateRoute,
     },
@@ -820,12 +826,6 @@ const uiRoutes = {
           route: PrivateRoute,
         },
         {
-          path: "/ui/forms/notice",
-          name: "Basic Elements",
-          element: <Notice />,
-          route: PrivateRoute,
-        },
-        {
           path: "/ui/forms/notices",
           name: "Basic Elements",
           element: <Notices />,
@@ -890,6 +890,31 @@ const uiRoutes = {
           name: "Basic",
           element: <Inspection />,
           route: PrivateRoute,
+        },
+      ],
+    },
+    {
+      path: "/",
+      children: [
+        {
+          path: "/notice-highlight",
+          name: "Basic",
+          element: <NoticeHighlight />,
+        },
+        {
+          path: "/notice",
+          name: "Basic",
+          element: <NoticeList />,
+        },
+        {
+          path: "/notice/new",
+          name: "Basic",
+          element: <NewNotice />,
+        },
+        {
+          path: "/notice/:id",
+          name: "Basic",
+          element: <EditNotice />,
         },
       ],
     },

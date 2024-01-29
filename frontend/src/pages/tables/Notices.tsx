@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Card, Table, Dropdown, Button } from "react-bootstrap";
+import { Row, Col, Card, Table, Dropdown } from "react-bootstrap";
 
 // components
 import PageTitle from "../../components/PageTitle";
@@ -49,7 +49,7 @@ const BasicTable = () => {
     <Card>
       <Card.Body>
         <div className="table-responsive">
-          <Table className="mb-0">
+          <Table className="mb-0 table-striped dt-responsive nowrap w-100">
             <thead className="table-light">
               <tr>
                 <th>Date</th>

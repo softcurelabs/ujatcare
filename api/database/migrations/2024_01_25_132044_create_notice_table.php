@@ -18,6 +18,7 @@ return new class extends Migration
                 table: 'users',
                 indexName: 'notices_user_id'
             )->cascadeOnDelete();
+            $table->dateTime('schedule_date');
             $table->timestamps();
         });
     }

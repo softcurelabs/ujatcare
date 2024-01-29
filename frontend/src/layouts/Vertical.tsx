@@ -21,7 +21,7 @@ const LeftSidebar = React.lazy(() => import("./LeftSidebar"));
 const Footer = React.lazy(() => import("./Footer"));
 const RightSidebar = React.lazy(() => import("./RightSidebar/"));
 
-const loading = () => <div className=""></div>;
+const loading = () => <div className="">Loading...</div>;
 
 interface VerticalLayoutProps {
   children?: any;

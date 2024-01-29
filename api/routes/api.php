@@ -2,6 +2,7 @@
 
 use App\Constants\Role;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FlatController;
 use App\Http\Controllers\NoticeController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'auth'], function () {
   Route::post('login', [AuthController::class, 'login']);
+  Route::post('rent-login', [AuthController::class, 'loginRenter']);
   Route::post('register', [AuthController::class, 'register']);
 
   Route::group(['middleware' => 'auth:sanctum'], function () {
@@ -25,10 +27,14 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('user', [AuthController::class, 'user']);
   });
 });
+Route::get('flats', [FlatController::class, 'index']);
 Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
-  Route::get('notice', [NoticeController::class, 'index']);
   Route::get('notice/{id}', [NoticeController::class, 'show']);
   Route::post('notice', [NoticeController::class, 'store']);
   Route::delete('notice/{id}', [NoticeController::class, 'delete']);
   Route::put('notice/{id}', [NoticeController::class, 'update']);
+  Route::get('notice', [NoticeController::class, 'index']);
+});
+Route::group(['middleware' => ['auth:sanctum', 'role:admin|renter']], function () {
+  Route::get('notice-highlight', [NoticeController::class, 'highlight']);
 });

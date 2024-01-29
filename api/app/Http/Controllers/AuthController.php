@@ -3,13 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Constants\Role;
+use App\Models\FlatOwner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Repositories\UserRepository;
 use Validator;
 
 class AuthController extends Controller
 {
+    private UserRepository $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
     /**
      * Create user
      *
@@ -68,15 +76,59 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
         if (!Auth::attempt($credentials)) {
             return response()->json([
-                'message' => 'Unauthorized'
+                'message' => 'Username or password Incorrect'
             ], 401);
         }
 
         $user = $request->user();
+        if (!$user->hasRole(Role::Admin)) {
+            return response()->json([
+                'message' => 'User is not authorized'
+            ], 401);
+        }
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->plainTextToken;
 
         return response()->json([
+            'user_id' => $user->id,
+            'user_role' => $user->getRoleNames(),
+            'username' => $user->name,
+            'accessToken' => $token,
+            'token_type' => 'Bearer',
+        ]);
+    }
+
+    public function loginRenter(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+            'flat_id' => 'required|int',
+            'apartment_id' => 'required|int',
+            'remember_me' => 'boolean'
+        ]);
+
+        $credentials = request(['email', 'password']);
+        if (!Auth::attempt($credentials)) {
+            return response()->json([
+                'message' => 'Username or password Incorrect'
+            ], 401);
+        }
+
+        $user = $request->user();
+
+        if (!$user->hasRole(Role::Staff) && null === $this->userRepository->isValid($user->id, $request->get('flat_id'), $request->get('apartment_id'))) {
+            return response()->json([
+                'message' => 'User is not authorized'
+            ], 401);
+        }
+        $tokenResult = $user->createToken('Personal Access Token');
+        $token = $tokenResult->plainTextToken;
+
+        return response()->json([
+            'user_id' => $user->id,
+            'user_role' => $user->getRoleNames(),
+            'username' => $user->name,
             'accessToken' => $token,
             'token_type' => 'Bearer',
         ]);

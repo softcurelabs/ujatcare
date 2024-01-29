@@ -3,9 +3,14 @@ import { APICore } from "./apiCore";
 const api = new APICore();
 
 // account
-function login(params: { username: string; password: string }) {
-  const baseUrl = "/login/";
-  return api.create(`${baseUrl}`, params);
+function login(params: { email: string; password: string }) {
+  const baseUrl = "/auth/login";
+    return api.create(`${baseUrl}`, params);
+}
+
+function customerLogin(params: {email: string;password: string;apartment_id: number, flat_id: number}) {
+  const baseUrl = "/auth/rent-login";
+    return api.create(`${baseUrl}`, params);
 }
 
 function logout() {
@@ -23,4 +28,4 @@ function forgotPassword(params: { username: string }) {
   return api.create(`${baseUrl}`, params);
 }
 
-export { login, logout, signup, forgotPassword };
+export { login, logout, signup, forgotPassword, customerLogin };

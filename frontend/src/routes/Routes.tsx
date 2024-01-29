@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 // strore
@@ -8,8 +8,8 @@ import DefaultLayout from "../layouts/Default";
 import VerticalLayout from "../layouts/Vertical";
 
 import { authProtectedFlattenRoutes, publicProtectedFlattenRoutes } from "./index";
-import { APICore } from "../helpers/api/apiCore";
 import { RootState } from "../store";
+import PrivateRoute from "./PrivateRoute";
 
 interface IRoutesProps {}
 
@@ -25,7 +25,6 @@ const AllRoutes = (props: IRoutesProps) => {
   };
 
   let Layout = getLayout();
-  const api = new APICore();
 
   return (
     <React.Fragment>
@@ -49,17 +48,9 @@ const AllRoutes = (props: IRoutesProps) => {
             <Route
               path={route.path}
               element={
-                api.isUserAuthenticated() === false ? (
-                  <Navigate
-                    to={{
-                      pathname: "/auth/customer-login",
-                      // hash:route.path,
-                      search: "next=" + route.path,
-                    }}
-                  />
-                ) : (
+                <PrivateRoute roles={route.roles}>
                   <Layout {...props}>{route.element}</Layout>
-                )
+                </PrivateRoute>
               }
               key={idx}
             />
