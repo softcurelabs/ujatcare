@@ -14,8 +14,8 @@ jobs:
         server: ftp.appt.ujatech.com
         username: github_action@appt.ujatech.com
         password: ${{ secrets.password }}
-        local-dir: "./api"
-        server-dir: "./backend"
+        local-dir: "./api/"
+        server-dir: "./backend/"
     - name: Sync UI code
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
