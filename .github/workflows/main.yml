@@ -11,7 +11,7 @@ jobs:
     - name: Sync Laravel code
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
-        server: ftp.appt.ujatech.com
+        server: appt.ujatech.com
         username: github_action@appt.ujatech.com
         password: ${{ secrets.password }}
         local-dir: "./api/"
@@ -20,7 +20,7 @@ jobs:
     - name: Sync UI code
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
-        server: ftp.appt.ujatech.com
+        server: appt.ujatech.com
         username: github_action@appt.ujatech.com
         password: ${{ secrets.password }}
         port: 4121
