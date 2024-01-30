@@ -17,7 +17,7 @@ jobs:
         local-dir: "./api/"
         server-dir: "./backend/"
         port: 4121
-        timeout: 300000
+        timeout: 3000000
     - name: Sync UI code
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
