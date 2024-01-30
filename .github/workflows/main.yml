@@ -16,11 +16,13 @@ jobs:
         password: ${{ secrets.password }}
         local-dir: "./api/"
         server-dir: "./backend/"
+        port: 4121
     - name: Sync UI code
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
         server: ftp.appt.ujatech.com
         username: github_action@appt.ujatech.com
         password: ${{ secrets.password }}
+        port: 4121
         local-dir: "./frontend/build/"
         server-dir: "./"
