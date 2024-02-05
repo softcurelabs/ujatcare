@@ -86,7 +86,7 @@ const ProfileMenus = [
   {
     label: "My Account",
     icon: "fe-user",
-    redirectTo: "/ui/forms/basic",
+    redirectTo: "/my-account",
   },
   {
     label: "Logout",
@@ -194,12 +194,7 @@ interface TopbarProps {
   openLeftMenuCallBack?: () => void;
   topbarDark?: boolean;
 }
-interface LocationState {
-  from: {
-    pathname: string;
-  };
-}
-const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: TopbarProps) => {
+const Topbar = ({ hideLogo, navCssClasses }: TopbarProps) => {
   const { width } = useViewport();
   const navigate = useNavigate();
   const location = useLocation();
@@ -207,11 +202,16 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
   let navbarCssClasses: string = navCssClasses || "";
   const containerCssClasses: string = !hideLogo ? "container-fluid" : "";
 
-  const { user } = useSelector((state: RootState) => ({
+  let { user, customer } = useSelector((state: RootState) => ({
     user: state.Auth.user,
+    customer: state.CustomerAuth.user,
   }));
 
-  if (user && user.role === "Flat") {
+  if (customer) {
+    user = customer;
+  }
+
+  if (user && user.user_role.includes("renter")) {
     navbarCssClasses = "topnav-light";
   }
 
@@ -257,11 +257,10 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
   let name: string = user.username;
   let link = "/dashboard-1";
   if (user && user.user_role.includes("renter")) {
-    name = "Matthew Adams";
     heading = (
       <>
-        <h4 className="text-muted"> Apt#: 12323</h4>
-        <h4 className="text-muted">Name: {name}</h4>
+        <h4 className="text-white"> Apt#: {user.flat}</h4>
+        <h4 className="text-white">Name: {name}</h4>
       </>
     );
   } else {
@@ -297,7 +296,7 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
             </li> */}
             <li className="dropdown">
               <ProfileDropdown
-                profilePic={profilePic}
+                profilePic={user.profile_pic ? user.profile_pic : profilePic}
                 menuItems={ProfileMenus}
                 username={name}
                 userTitle={"Founder"}

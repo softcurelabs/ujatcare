@@ -66,7 +66,7 @@ const CustomerLogin = () => {
   */
   const schemaResolver = yupResolver(
     yup.object().shape({
-      flat_id: yup.number().required(t("Please select Apartment")),
+      flat_id: yup.string().required(t("Please select Apartment")),
       email: yup.string().required(t("Please enter Email")),
       password: yup.string().required(t("Please enter Password")),
     })
@@ -76,7 +76,6 @@ const CustomerLogin = () => {
   handle form submission
   */
   const onSubmit = (formData: UserData) => {
-    console.log(formData);
     dispatch(loggedInAsync(formData));
   };
 
@@ -113,7 +112,7 @@ const CustomerLogin = () => {
                 <FormInput type="hidden" name="apartment_id" value={flats[0].id}></FormInput>
               )}
               <FormInput type="select" label="Apartment#" name="flat_id" containerClass="mb-3">
-                <option>Select Apartment Number</option>
+                <option value="">Select Apartment Number</option>
                 {flats.length &&
                   flats[0].flats.map((flat) => (
                     <option key={"flat" + flat.id} value={flat.id}>
@@ -161,7 +160,7 @@ const CustomerLogin = () => {
                 <FormInput type="hidden" name="apartment_id" value={flats[1].id}></FormInput>
               )}
               <FormInput type="select" label="Apartment#" name="flat_id" containerClass="mb-3">
-                <option>Select Apartment Number</option>
+                <option value="">Select Apartment Number</option>
                 {flats.length &&
                   flats[1].flats.map((flat) => (
                     <option key={"flat" + flat.id} value={flat.id}>

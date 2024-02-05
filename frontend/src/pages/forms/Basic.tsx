@@ -73,12 +73,34 @@ const BasicInputElements = () => {
               <form onSubmit={handleSubmit(() => {})} className={disabled ? "form-readonly" : ""}>
                 <fieldset disabled={disabled ? true : undefined}>
                   <FormInput
+                    label="Emergency Contact"
+                    type="text"
+                    name="contact"
+                    placeholder="Contact"
+                    containerClass={"mb-3"}
+                    register={register}
+                    key="contact"
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
                     label="Name"
                     type="text"
                     name="name"
                     containerClass={"mb-3"}
                     register={register}
                     key="text"
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label="Phone#"
+                    type="text"
+                    name="phone"
+                    placeholder="phone"
+                    containerClass={"mb-3"}
+                    register={register}
+                    key="phone"
                     errors={errors}
                     control={control}
                   />
@@ -91,6 +113,17 @@ const BasicInputElements = () => {
                     containerClass={"mb-3"}
                     register={register}
                     key="email"
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label="Relationship"
+                    type="text"
+                    name="relationship"
+                    placeholder="relationship"
+                    containerClass={"mb-3"}
+                    register={register}
+                    key="relationship"
                     errors={errors}
                     control={control}
                   />
@@ -108,18 +141,6 @@ const BasicInputElements = () => {
                   />
 
                   <FormInput
-                    label="Phone Number"
-                    type="text"
-                    name="phone"
-                    placeholder="phone"
-                    containerClass={"mb-3"}
-                    register={register}
-                    key="phone"
-                    errors={errors}
-                    control={control}
-                  />
-
-                  <FormInput
                     label="Parking Space"
                     type="text"
                     name="parking"
@@ -131,17 +152,6 @@ const BasicInputElements = () => {
                     control={control}
                   />
 
-                  <FormInput
-                    label="Emergency Contact"
-                    type="text"
-                    name="contact"
-                    placeholder="Contact"
-                    containerClass={"mb-3"}
-                    register={register}
-                    key="contact"
-                    errors={errors}
-                    control={control}
-                  />
                   <FormInput
                     label="Income Verification"
                     type="text"

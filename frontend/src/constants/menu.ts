@@ -111,7 +111,7 @@ const MENU_ITEMS: MenuItemTypes[] = [
         key: "my-account",
         label: "My Account",
         isTitle: false,
-        url: "/ui/forms/basic",
+        url: "/my-account",
       },
       {
         key: "maintanance-inspection-history",
@@ -124,6 +124,12 @@ const MENU_ITEMS: MenuItemTypes[] = [
 ];
 
 const CUSTOMER_ITEMS: MenuItemTypes[] = [
+  {
+    key: "my-account",
+    label: "My Account",
+    isTitle: false,
+    url: "/my-account",
+  },
   {
     key: "rent-payment",
     label: "Rent Payment",
@@ -138,7 +144,7 @@ const CUSTOMER_ITEMS: MenuItemTypes[] = [
   },
   {
     key: "maintanance-request",
-    label: "Maintanance Request",
+    label: "Create Maintanance Request",
     isTitle: false,
     url: "/maintanance/create",
   },
@@ -147,18 +153,6 @@ const CUSTOMER_ITEMS: MenuItemTypes[] = [
     label: "Maintanance Request History",
     isTitle: false,
     url: "/apps/tickets/list",
-  },
-  {
-    key: "maintanance-inspection",
-    label: "Maintanance Inspections",
-    isTitle: false,
-    url: "/inspection",
-  },
-  {
-    key: "my-account",
-    label: "My Account",
-    isTitle: false,
-    url: "/ui/forms/basic",
   },
   {
     key: "maintanance-inspection-history",
@@ -204,7 +198,7 @@ const ADMIN_ITEMS: MenuItemTypes[] = [
     key: "users",
     label: "Users",
     isTitle: false,
-    url: "/ui/tables/basic",
+    url: "/user",
   },
   {
     key: "rent-history",

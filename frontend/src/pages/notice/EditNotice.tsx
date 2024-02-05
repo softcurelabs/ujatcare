@@ -107,7 +107,7 @@ const BasicInputElements = () => {
                   />
                 </div>
                 <Button variant="primary" type="submit">
-                  Submit
+                  Publish
                 </Button>
               </form>
             </Col>

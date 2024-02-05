@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Alert, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
@@ -10,9 +10,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { VerticalForm, FormInput } from "../../components/";
 
 import AuthLayout from "./AuthLayout";
+import { AppDispatch } from "../../store";
+import { forgotPasswordAsync } from "../../store/auth/AuthSlice";
 
 interface UserData {
-  username: string;
+  email: string;
 }
 
 /* bottom link */
@@ -41,22 +43,16 @@ const ForgetPassword = () => {
   //   dispatch(resetAuth());
   // }, [dispatch]);
 
-  // const { loading, passwordReset, resetPasswordSuccess, error } = useSelector(
-  //   (state: RootState) => ({
-  //     loading: state.Auth.loading,
-  //     user: state.Auth.user,
-  //     error: state.Auth.error,
-  //     passwordReset: state.Auth.passwordReset,
-  //     resetPasswordSuccess: state.Auth.resetPasswordSuccess,
-  //   })
-  // );
+  const [toast, setToast] = useState("");
+  const [error, setError] = useState("");
+  const dispatch = useDispatch<AppDispatch>();
 
   /*
    * form validation schema
    */
   const schemaResolver = yupResolver(
     yup.object().shape({
-      username: yup.string().required(t("Please enter Username")),
+      email: yup.string().email().required(t("Please enter email")),
     })
   );
 
@@ -64,7 +60,18 @@ const ForgetPassword = () => {
    * handle form submission
    */
   const onSubmit = (formData: UserData) => {
+    console.log(formData);
     // dispatch(forgotPassword(formData["username"]));
+    dispatch(forgotPasswordAsync(formData.email))
+      .unwrap()
+      .then((response) => {
+        if (response && response.status === true) {
+          setToast(response.message);
+        }
+      })
+      .catch((reason) => {
+        setError(reason.message);
+      });
   };
 
   return (
@@ -75,19 +82,20 @@ const ForgetPassword = () => {
         )}
         bottomLinks={<BottomLink />}
       >
-        {/* {error && (
-          <Alert variant="danger" className="my-2">
+        {toast && <div className="alert alert-success">{toast}</div>}
+        {error && (
+          <div className="alert alert-danger mt-3" role="alert">
             {error}
-          </Alert>
-        )} */}
+          </div>
+        )}
 
         {
           <VerticalForm onSubmit={onSubmit} resolver={schemaResolver}>
             <FormInput
-              label={t("Username")}
+              label={t("Email")}
               type="text"
-              name="username"
-              placeholder={t("Enter your username")}
+              name="email"
+              placeholder={t("Enter your email")}
               containerClass={"mb-3"}
             />
 

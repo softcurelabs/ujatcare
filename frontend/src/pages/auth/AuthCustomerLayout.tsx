@@ -7,24 +7,14 @@ interface AccountLayoutProps {
   children?: any;
 }
 
-const AuthCustomerLayout = ({
-  bottomLinks,
-  children,
-  isCombineForm,
-}: AccountLayoutProps) => {
+const AuthCustomerLayout = ({ bottomLinks, children, isCombineForm }: AccountLayoutProps) => {
   useEffect(() => {
     if (document.body)
-      document.body.classList.add(
-        "authentication-bg",
-        "authentication-bg-pattern"
-      );
+      document.body.classList.add("authentication-bg", "authentication-bg-pattern");
 
     return () => {
       if (document.body)
-        document.body.classList.remove(
-          "authentication-bg",
-          "authentication-bg-pattern"
-        );
+        document.body.classList.remove("authentication-bg", "authentication-bg-pattern");
     };
   }, []);
   let navigate = useNavigate();
@@ -50,9 +40,7 @@ const AuthCustomerLayout = ({
                         </span>
                       </Link> */}
                       <h2 className="text-muted">Society</h2>
-                      <h3 className="text-muted">
-                        North Park Monor & Fisgard House
-                      </h3>
+                      <h3 className="text-muted">North Park Manor & Fisgard House</h3>
 
                       {/* <Link to="/" className="logo logo-light text-center">
                         <span className="logo-lg">

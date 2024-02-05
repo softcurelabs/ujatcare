@@ -9,13 +9,7 @@ const Statistics = () => {
     <>
       <Row>
         <Col md={6} xl={3}>
-          <StatisticsWidget2
-            variant="info"
-            description="Total Tickets"
-            stats="178"
-            icon="fe-cpu"
-            progress={74}
-          />
+          <StatisticsWidget2 variant="info" description="Total Tickets" stats="178" icon="fe-cpu" />
         </Col>
 
         <Col md={6} xl={3}>
@@ -24,7 +18,6 @@ const Statistics = () => {
             description="Ticket Close"
             stats="50"
             icon="fe-aperture"
-            progress={60}
             counterOptions={{
               prefix: "",
             }}
@@ -36,7 +29,6 @@ const Statistics = () => {
             description="Ticket Pending"
             stats="60"
             icon="fa-plug"
-            progress={49}
           />
         </Col>
         <Col md={6} xl={3}>
@@ -45,7 +37,6 @@ const Statistics = () => {
             description="Ticket Resolve"
             stats="68"
             icon="fe-bar-chart-2"
-            progress={18}
           />
         </Col>
       </Row>

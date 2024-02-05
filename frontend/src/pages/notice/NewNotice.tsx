@@ -13,6 +13,7 @@ import { NoticeData } from "../../types/NoticeType";
 import { noticeAddAsync } from "../../store/notice/NoticeSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
+import { Link } from "react-router-dom";
 
 const BasicInputElements = () => {
   const { t } = useTranslation();
@@ -33,7 +34,6 @@ const BasicInputElements = () => {
     formState: { errors },
   } = useForm<NoticeData>({ defaultValues: {}, resolver: schemaResolver });
   const onSubmit = handleSubmit(async (data) => {
-    console.log(data);
     await dispatch(noticeAddAsync(data))
       .unwrap()
       .then((response) => {
@@ -51,7 +51,12 @@ const BasicInputElements = () => {
 
   return (
     <>
-      {toast && <div className="alert alert-success">{toast}</div>}
+      {toast && (
+        <div className="alert alert-success">
+          {toast}
+          <Link to={"/notice"}> Back to Notice.</Link>
+        </div>
+      )}
       {error && (
         <div className="alert alert-danger mt-3" role="alert">
           {error}
@@ -93,7 +98,7 @@ const BasicInputElements = () => {
                   />
                 </div>
                 <Button variant="primary" type="submit">
-                  Submit
+                  Publish
                 </Button>
               </form>
             </Col>

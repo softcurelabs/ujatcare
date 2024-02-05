@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { APICore, setAuthorization } from "../../helpers/api/apiCore";
-import { login, logout } from "../../helpers/api/auth";
+import { forgotPassword, login, logout, profile, resetPassword } from "../../helpers/api/auth";
+import { ResetPasswordType } from "../../types/ResetPasswordType";
 const api = new APICore();
 
 const initialState = {
@@ -16,7 +17,7 @@ interface UserData {
 }
 
 const AuthSlice = createSlice({
-  name: "layout",
+  name: "Auth",
   initialState,
   reducers: {
     login: (state, action) => {
@@ -29,6 +30,11 @@ const AuthSlice = createSlice({
         console.log("incrementAsync.pending");
       })
       .addCase(loggedInAsync.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.userLoggedIn = true;
+        state.loading = false;
+      })
+      .addCase(profileAsync.fulfilled, (state, action) => {
         state.user = action.payload;
         state.userLoggedIn = true;
         state.loading = false;
@@ -52,6 +58,32 @@ export const loggedInAsync = createAsyncThunk<any, UserData>("loggedIn", async (
   // NOTE - You can change this according to response format from your api
   api.setLoggedInUser(user);
   setAuthorization(user.accessToken);
+  return user;
+});
+
+export const forgotPasswordAsync = createAsyncThunk<any, string>(
+  "forgotPassword",
+  async (email) => {
+    const response = await forgotPassword({ email: email });
+    const data = response.data;
+    return data;
+  }
+);
+
+export const resetPasswordAsync = createAsyncThunk<any, ResetPasswordType>(
+  "resetPassword",
+  async (params) => {
+    const response = await resetPassword(params);
+    const data = response.data;
+    return data;
+  }
+);
+
+export const profileAsync = createAsyncThunk<any, void>("profile", async (userData) => {
+  const response = await profile();
+  const user = response.data;
+  // NOTE - You can change this according to response format from your api
+  api.setUserInSession(user);
   return user;
 });
 

@@ -14,7 +14,7 @@ interface RevenueHistoryProps {
 const RevenueHistory = ({ revenueHistory }: RevenueHistoryProps) => {
   return (
     <>
-      <Card>
+      <Card className="bg-info">
         <Card.Body>
           {/* <Dropdown className="float-end" align="end">
             <Dropdown.Toggle as="a" className="card-drop cursor-pointer">

@@ -109,7 +109,7 @@ const Pagination = ({ tableProps, sizePerPageList }: PaginationProps) => {
           </strong>{" "}
         </span>
 
-        <span className="d-inline-block align-items-center text-sm-start text-center my-sm-0 my-2">
+        {/* <span className="d-inline-block align-items-center text-sm-start text-center my-sm-0 my-2">
           <label className="form-label">Go to page : </label>
           <input
             type="number"
@@ -122,7 +122,7 @@ const Pagination = ({ tableProps, sizePerPageList }: PaginationProps) => {
             }}
             className="form-control w-25 ms-1 d-inline-block"
           />
-        </span>
+        </span> */}
 
         <ul className="pagination pagination-rounded d-inline-flex ms-auto align-item-center mb-0">
           <li

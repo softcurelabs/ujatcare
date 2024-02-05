@@ -11,6 +11,7 @@ interface FileType extends File {
 interface FileUploaderProps {
   onFileUpload?: (files: FileType[]) => void;
   showPreview?: boolean;
+  maxFiles?: number;
 }
 
 const FileUploader = (props: FileUploaderProps) => {
@@ -25,14 +26,11 @@ const FileUploader = (props: FileUploaderProps) => {
     if (props.showPreview) {
       (files || []).map((file) =>
         Object.assign(file, {
-          preview:
-            file["type"].split("/")[0] === "image"
-              ? URL.createObjectURL(file)
-              : null,
+          preview: file["type"].split("/")[0] === "image" ? URL.createObjectURL(file) : null,
           formattedSize: formatBytes(file.size),
         })
       );
-      allFiles = [...selectedFiles];
+      allFiles = [];
       allFiles.push(...files);
       setSelectedFiles(allFiles);
     }
@@ -65,10 +63,7 @@ const FileUploader = (props: FileUploaderProps) => {
 
   return (
     <>
-      <Dropzone
-        {...props}
-        onDrop={(acceptedFiles) => handleAcceptedFiles(acceptedFiles)}
-      >
+      <Dropzone {...props} onDrop={(acceptedFiles) => handleAcceptedFiles(acceptedFiles)}>
         {({ getRootProps, getInputProps }) => (
           <div className="dropzone">
             <div className="dz-message needsclick" {...getRootProps()}>
@@ -116,14 +111,8 @@ const FileUploader = (props: FileUploaderProps) => {
                       </p>
                     </Col>
                     <Col className="text-end">
-                      <Link
-                        to="#"
-                        className="btn btn-link btn-lg text-muted shadow-none"
-                      >
-                        <i
-                          className="dripicons-cross"
-                          onClick={() => removeFile(i)}
-                        ></i>
+                      <Link to="#" className="btn btn-link btn-lg text-muted shadow-none">
+                        <i className="dripicons-cross" onClick={() => removeFile(i)}></i>
                       </Link>
                     </Col>
                   </Row>

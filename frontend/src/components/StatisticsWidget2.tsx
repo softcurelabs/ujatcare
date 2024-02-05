@@ -8,7 +8,6 @@ interface StatisticsWidgetProps {
   description: string;
   stats: string;
   icon: string;
-  progress: number;
   counterOptions?: any;
 }
 
@@ -19,51 +18,21 @@ const StatisticsWidget2 = (props: StatisticsWidgetProps) => {
         <Card.Body>
           <Row>
             <Col className="col-6">
-              <div
-                className={classNames(
-                  "avatar-sm",
-                  "rounded",
-                  "bg-" + props["variant"]
-                )}
-              >
-                <i
-                  className={classNames(
-                    props["icon"],
-                    "avatar-title font-22 text-white"
-                  )}
-                ></i>
+              <div className={classNames("avatar-sm", "rounded", "bg-" + props["variant"])}>
+                <i className={classNames(props["icon"], "avatar-title font-22 text-white")}></i>
               </div>
             </Col>
             <Col className="col-6">
               <div className="text-end">
                 <h3 className="text-dark my-1">
                   <span>
-                    <CountUp
-                      duration={1}
-                      end={props["stats"]}
-                      {...props["counterOptions"]}
-                    />
+                    <CountUp duration={1} end={props["stats"]} {...props["counterOptions"]} />
                   </span>
                 </h3>
-                <p className="text-muted mb-1 text-truncate">
-                  {props["description"]}
-                </p>
+                <p className="text-muted mb-1 text-truncate">{props["description"]}</p>
               </div>
             </Col>
           </Row>
-          <div className="mt-3">
-            <h6 className="text-uppercase">
-              Target <span className="float-end">{props["progress"]}%</span>
-            </h6>
-
-            <ProgressBar
-              now={props["progress"]}
-              className="progress-sm m-0"
-              label={`${props["progress"]}% Complete`}
-              visuallyHidden
-              variant={props["variant"]}
-            />
-          </div>
         </Card.Body>
       </Card>
     </>

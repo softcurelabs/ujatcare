@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('flat_owner', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->constrained(
-                table: 'user',
+            $table->foreignId('user_id')->constrained(
+                table: 'users',
                 indexName: 'flat_owner_user_id'
             )->unique()->cascadeOnDelete();
             $table->integer('flat_id')->constrained(

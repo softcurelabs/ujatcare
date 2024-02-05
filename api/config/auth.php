@@ -18,6 +18,8 @@ return [
         'passwords' => 'users',
     ],
 
+    'frontend' => env('FRONTEND_URL'),
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards

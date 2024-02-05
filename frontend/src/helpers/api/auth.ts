@@ -1,3 +1,4 @@
+import { ResetPasswordType } from "../../types/ResetPasswordType";
 import { APICore } from "./apiCore";
 
 const api = new APICore();
@@ -23,9 +24,19 @@ function signup(params: { fullname: string; email: string; password: string }) {
   return api.create(`${baseUrl}`, params);
 }
 
-function forgotPassword(params: { username: string }) {
-  const baseUrl = "/forget-password/";
+function forgotPassword(params: { email: string }) {
+  const baseUrl = "/auth/forgot-password";
   return api.create(`${baseUrl}`, params);
 }
 
-export { login, logout, signup, forgotPassword, customerLogin };
+function resetPassword(params: ResetPasswordType) {
+  const baseUrl = "/auth/reset-password";
+  return api.create(`${baseUrl}`, params);
+}
+
+function profile() {
+  const baseUrl = "/auth/profile";
+  return api.get(`${baseUrl}`, {});
+}
+
+export { login, logout, signup, forgotPassword, customerLogin, resetPassword, profile };

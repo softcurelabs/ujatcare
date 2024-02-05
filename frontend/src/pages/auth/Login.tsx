@@ -27,15 +27,15 @@ const BottomLink = () => {
       <Col className="text-center">
         <p>
           <Link to={"/auth/forget-password"} className="text-white-50 ms-1">
-            {t("Forgot your password?")}
+            {t("Forgot password?")}
           </Link>
         </p>
-        <p className="text-white-50">
+        {/* <p className="text-white-50">
           {t("Don't have an account?")}{" "}
           <Link to={"/auth/register"} className="text-white ms-1">
             <b>{t("Sign Up")}</b>
           </Link>
-        </p>
+        </p> */}
       </Col>
     </Row>
   );

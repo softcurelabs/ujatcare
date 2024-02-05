@@ -18,6 +18,7 @@ const Login = React.lazy(() => import("../pages/auth/Login"));
 const Logout = React.lazy(() => import("../pages/auth/Logout"));
 const Confirm = React.lazy(() => import("../pages/auth/Confirm"));
 const ForgetPassword = React.lazy(() => import("../pages/auth/ForgetPassword"));
+const ResetPassword = React.lazy(() => import("../pages/auth/ResetPassword"));
 const Register = React.lazy(() => import("../pages/auth/Register"));
 const SignInSignUp = React.lazy(() => import("../pages/auth/SignInSignUp"));
 const LockScreen = React.lazy(() => import("../pages/auth/LockScreen"));
@@ -97,6 +98,13 @@ const NoticeList = React.lazy(() => import("../pages/notice/Notices"));
 const NewNotice = React.lazy(() => import("../pages/notice/NewNotice"));
 const EditNotice = React.lazy(() => import("../pages/notice/EditNotice"));
 const NoticeHighlight = React.lazy(() => import("../pages/notice/CustomerNotices"));
+
+const UserList = React.lazy(() => import("../pages/user/Users"));
+const EditUser = React.lazy(() => import("../pages/user/EditUser"));
+const NewUser = React.lazy(() => import("../pages/user/NewUser"));
+
+const AssignPermission = React.lazy(() => import("../pages/user/AssignPermission"));
+const MyAccount = React.lazy(() => import("../pages/user/MyAccount"));
 // uikit
 // const Buttons = React.lazy(() => import("../pages/uikit/Buttons"));
 // const Avatars = React.lazy(() => import("../pages/uikit/Avatars"));
@@ -919,6 +927,36 @@ const uiRoutes = {
       ],
     },
     {
+      path: "/",
+      children: [
+        {
+          path: "/user",
+          name: "Basic",
+          element: <UserList />,
+        },
+        {
+          path: "/user/new",
+          name: "Basic",
+          element: <NewUser />,
+        },
+        {
+          path: "/user/:id",
+          name: "Basic",
+          element: <EditUser />,
+        },
+        {
+          path: "/assign-permission/:id",
+          name: "Basic",
+          element: <AssignPermission />,
+        },
+        {
+          path: "/my-account",
+          name: "Basic",
+          element: <MyAccount />,
+        },
+      ],
+    },
+    {
       path: "/ui/tables",
       name: "Tables",
       children: [
@@ -999,6 +1037,12 @@ const authRoutes: RoutesProps[] = [
     path: "/auth/forget-password",
     name: "Forget Password",
     element: <ForgetPassword />,
+    route: Route,
+  },
+  {
+    path: "/reset-password/:token",
+    name: "Reset Password",
+    element: <ResetPassword />,
     route: Route,
   },
   {

@@ -28,15 +28,13 @@ const AuthLayout = ({ helpText, bottomLinks, children, isCombineForm }: AccountL
       <div className="account-pages mt-5 mb-5">
         <Container>
           <Row className="justify-content-center">
-            <Col md={8} lg={6} xl={isCombineForm ? 9 : 4}>
+            <Col md={8} lg={6} xl={isCombineForm ? 9 : 5}>
               <Card className="bg-pattern">
                 <Card.Body className="p-4">
-                  <div className="text-center w-75 m-auto">
+                  <div className="text-center w-100 m-auto">
                     <div className="auth-brand">
                       <Link to="/" className="logo logo-dark text-center">
-                        <span className="logo-lg">
-                          <img src={LogoDark} alt="" height="50" />
-                        </span>
+                        <h2 className="text-muted">North Park Manor Society</h2>
                       </Link>
 
                       <Link to="/" className="logo logo-light text-center">

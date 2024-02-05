@@ -7,6 +7,7 @@ import CustomerAuthReducer from "./auth/CustomerAuthSlice";
 
 import AuthReducer from "./auth/AuthSlice";
 import NoticeReducer from "./notice/NoticeSlice";
+import UserReducer from "./user/UserSlice";
 
 const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ const store = configureStore({
     Flat: FlatReducer,
     CustomerAuth: CustomerAuthReducer,
     Notice: NoticeReducer,
+    User: UserReducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

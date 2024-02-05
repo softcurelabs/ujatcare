@@ -58,8 +58,9 @@ export const loggedInAsync = createAsyncThunk<any, UserData>(
       flat_id: userData.flat_id,
     });
     const user = response.data;
+
     api.setLoggedInUser(user);
-    setAuthorization(user["token"]);
+    setAuthorization(user.accessToken);
     return user;
   }
 );

@@ -12,21 +12,14 @@ interface AddOpportunitiesProps {
   onSubmit: (value: any) => void;
 }
 
-const AddOpportunities = ({
-  show,
-  onHide,
-  onSubmit,
-}: AddOpportunitiesProps) => {
+const AddOpportunities = ({ show, onHide, onSubmit }: AddOpportunitiesProps) => {
   /*
     form validation schema
     */
   const schemaResolver = yupResolver(
     yup.object().shape({
       name: yup.string().required("Please enter name"),
-      email: yup
-        .string()
-        .required("Please enter email")
-        .email("Please enter valid email"),
+      email: yup.string().required("Please enter email").email("Please enter valid email"),
       phone: yup
         .string()
         .required("Please enter phone")
@@ -37,12 +30,7 @@ const AddOpportunities = ({
 
   return (
     <>
-      <Modal
-        show={show}
-        onHide={onHide}
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
+      <Modal show={show} onHide={onHide} aria-labelledby="contained-modal-title-vcenter" centered>
         <Modal.Header className="bg-light" onHide={onHide} closeButton>
           <Modal.Title className="m-0">Add New Opportunities</Modal.Title>
         </Modal.Header>
@@ -78,18 +66,10 @@ const AddOpportunities = ({
             />
 
             <div className="text-end">
-              <Button
-                variant="success"
-                type="submit"
-                className="waves-effect waves-light me-1"
-              >
+              <Button variant="success" type="submit" className="waves-effect waves-light me-1">
                 Save
               </Button>
-              <Button
-                variant="danger"
-                className="waves-effect waves-light"
-                onClick={onHide}
-              >
+              <Button variant="danger" className="waves-effect waves-light" onClick={onHide}>
                 Continue
               </Button>
             </div>

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Constants\Role;
-use App\Models\FlatOwner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Repositories\UserRepository;
-use Validator;
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -43,7 +45,7 @@ class AuthController extends Controller
         ]);
 
         $user->assignRole(Role::Renter);
-
+        event(new Registered($user));
         if ($user->save()) {
             $tokenResult = $user->createToken('Personal Access Token');
             $token = $tokenResult->plainTextToken;
@@ -92,6 +94,7 @@ class AuthController extends Controller
         return response()->json([
             'user_id' => $user->id,
             'user_role' => $user->getRoleNames(),
+            'profile_pic' => $user->profile->image_path ? asset($user->profile->image_path) : '#',
             'username' => $user->name,
             'accessToken' => $token,
             'token_type' => 'Bearer',
@@ -125,10 +128,13 @@ class AuthController extends Controller
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->plainTextToken;
 
+
         return response()->json([
             'user_id' => $user->id,
             'user_role' => $user->getRoleNames(),
+            'profile_pic' => $user->profile->image_path ? asset($user->profile->image_path) : '#',
             'username' => $user->name,
+            'flat' => $user->flat->flat->name,
             'accessToken' => $token,
             'token_type' => 'Bearer',
         ]);
@@ -151,9 +157,68 @@ class AuthController extends Controller
     public function user()
     {
         $user = Auth::user();
-        return [
-            'email' => $user->email,
-            'role' => $user->roles->pluck('id')
-        ];
+        return response()->json([
+            'user_id' => $user->id,
+            'user_role' => $user->getRoleNames(),
+            'profile_pic' => $user->profile->image_path ? asset($user->profile->image_path) : '#',
+            'username' => $user->name
+        ]);
+    }
+
+    public function forgotPassword(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        if ($status === Password::RESET_LINK_SENT) {
+            return response()->json([
+                'status' => true,
+                'message' => __($status),
+            ]);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => __($status),
+            'errors' => ['email' => __($status)],
+        ], 422);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function (User $user, string $password) {
+                $user->forceFill([
+                    'password' => bcrypt($password)
+                ])->setRememberToken(Str::random(60));
+
+                $user->save();
+
+                event(new PasswordReset($user));
+            }
+        );
+
+        if ($status === Password::PASSWORD_RESET) {
+            return response()->json([
+                'status' => true,
+                'message' => __($status)
+            ]);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => __($status),
+            'errors' => ['email' => __($status)],
+        ], 422);
     }
 }

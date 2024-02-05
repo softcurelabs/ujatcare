@@ -31,12 +31,9 @@ axios.interceptors.response.use(
         case 404:
           message = "Sorry! the data you are looking for could not be found";
           break;
-
         case 422: 
-        console.log(error.response.data);
           return Promise.reject(error.response.data);
       }
-      console.log("Sdfsd", message);
       return Promise.reject(message);
     }
   }
@@ -206,8 +203,8 @@ class APICore {
   setUserInSession = (modifiedUser: any) => {
     let userInfo = sessionStorage.getItem(AUTH_SESSION_KEY);
     if (userInfo) {
-      const { token, user } = JSON.parse(userInfo);
-      this.setLoggedInUser({ token, ...user, ...modifiedUser });
+      const { accessToken, user } = JSON.parse(userInfo);
+      this.setLoggedInUser({ accessToken, ...user, ...modifiedUser });
     }
   };
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Card, Table, Button } from "react-bootstrap";
+import { Row, Col, Card, Table, Button, Dropdown } from "react-bootstrap";
 
 // components
 import PageTitle from "../../components/PageTitle";
@@ -51,25 +51,29 @@ const BasicTable = ({ notices }: NoticeHighlightType) => {
                       <td>{record.title}</td>
                       <td>
                         <React.Fragment>
-                          {/* <Link to="#" className="action-icon">
-                            {" "}
-                            <i className="mdi mdi-eye"></i>
-                          </Link> */}
-                          <Link to={`/notice/${record.id}`} className="action-icon">
-                            {" "}
-                            <i className="mdi mdi-square-edit-outline"></i>
-                          </Link>
-                          <Link
-                            to="#"
-                            className="action-icon"
-                            onClick={() => {
-                              setId(record.id);
-                              setShow(true);
-                            }}
-                          >
-                            {" "}
-                            <i className="mdi mdi-delete"></i>
-                          </Link>
+                          <>
+                            <Dropdown className="btn-group" align="end">
+                              <Dropdown.Toggle variant="light" className="table-action-btn btn-sm">
+                                <i className="mdi mdi-dots-horizontal"></i>
+                              </Dropdown.Toggle>
+                              <Dropdown.Menu>
+                                {" "}
+                                <Dropdown.Item href={`notice/${record.id}`}>
+                                  <i className="mdi mdi-check-all me-2 text-muted font-18 vertical-middle"></i>
+                                  Edit Notice
+                                </Dropdown.Item>
+                                <Dropdown.Item
+                                  onClick={() => {
+                                    setId(record.id);
+                                    setShow(true);
+                                  }}
+                                >
+                                  <i className="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>
+                                  Delete Notice
+                                </Dropdown.Item>
+                              </Dropdown.Menu>
+                            </Dropdown>
+                          </>
                         </React.Fragment>
                       </td>
                     </tr>

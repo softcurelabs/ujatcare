@@ -158,7 +158,7 @@ const columns = [
     sort: true,
   },
   {
-    Header: "Due Date",
+    Header: "Completion Date",
     accessor: "due_date",
     sort: true,
   },
