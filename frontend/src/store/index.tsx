@@ -8,6 +8,7 @@ import CustomerAuthReducer from "./auth/CustomerAuthSlice";
 import AuthReducer from "./auth/AuthSlice";
 import NoticeReducer from "./notice/NoticeSlice";
 import UserReducer from "./user/UserSlice";
+import MaintananceReducer from "./maintanance/MaintananceSlice";
 
 const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ const store = configureStore({
     CustomerAuth: CustomerAuthReducer,
     Notice: NoticeReducer,
     User: UserReducer,
+    Maintanance: MaintananceReducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

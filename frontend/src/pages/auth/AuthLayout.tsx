@@ -34,7 +34,9 @@ const AuthLayout = ({ helpText, bottomLinks, children, isCombineForm }: AccountL
                   <div className="text-center w-100 m-auto">
                     <div className="auth-brand">
                       <Link to="/" className="logo logo-dark text-center">
-                        <h2 className="text-muted">North Park Manor Society</h2>
+                        <span className="logo-lg">
+                          <img src={LogoLight} alt="" height="100" />
+                        </span>
                       </Link>
 
                       <Link to="/" className="logo logo-light text-center">

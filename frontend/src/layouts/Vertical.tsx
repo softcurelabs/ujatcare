@@ -13,6 +13,7 @@ import { LayoutTypes, SideBarTypes } from "../constants/layout";
 // utils
 import { changeHTMLAttribute } from "../utils";
 import { useViewport } from "../hooks/useViewPort";
+import Loader from "../components/Loader";
 
 // code splitting and lazy loading
 // https://blog.logrocket.com/lazy-loading-components-in-react-16-6-6cea535c0b52
@@ -21,7 +22,7 @@ const LeftSidebar = React.lazy(() => import("./LeftSidebar"));
 const Footer = React.lazy(() => import("./Footer"));
 const RightSidebar = React.lazy(() => import("./RightSidebar/"));
 
-const loading = () => <div className="">Loading...</div>;
+const loading = () => <Loader />;
 
 interface VerticalLayoutProps {
   children?: any;

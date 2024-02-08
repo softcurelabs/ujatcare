@@ -7,7 +7,7 @@ import Ticket from "../pages/forms/Ticket";
 import MaintananceReport from "../pages/tables/MaintananceReport";
 import Notices from "../pages/tables/Notices";
 import CustomerLogin from "../pages/auth/CustomerLogin";
-import Create from "../pages/maintanance/create";
+import Create from "../pages/maintanance/Create";
 
 // import Root from './Root';
 
@@ -105,6 +105,10 @@ const NewUser = React.lazy(() => import("../pages/user/NewUser"));
 
 const AssignPermission = React.lazy(() => import("../pages/user/AssignPermission"));
 const MyAccount = React.lazy(() => import("../pages/user/MyAccount"));
+const MaintananceList = React.lazy(() => import("../pages/maintanance/List"));
+const MaintananceEdit = React.lazy(() => import("../pages/maintanance/Edit"));
+const MaintananceEditAdmin = React.lazy(() => import("../pages/maintanance/EditAdmin"));
+const MaintananceListAdmin = React.lazy(() => import("../pages/maintanance/ListAdmin"));
 // uikit
 // const Buttons = React.lazy(() => import("../pages/uikit/Buttons"));
 // const Avatars = React.lazy(() => import("../pages/uikit/Avatars"));
@@ -195,7 +199,6 @@ const dashboardRoutes: RoutesProps = {
   path: "/dashboard",
   name: "Dashboards",
   route: PrivateRoute,
-  roles: ["admin"],
   icon: "airplay",
   header: "Navigation",
   children: [
@@ -208,7 +211,6 @@ const dashboardRoutes: RoutesProps = {
     {
       path: "/dashboard-1",
       name: "Dashboard 1",
-      roles: ["renter"],
       element: <Dashboard1 />,
       route: PrivateRoute,
     },
@@ -238,7 +240,7 @@ const calendarAppRoutes: RoutesProps = {
   path: "/apps/calendar",
   name: "Calendar",
   route: PrivateRoute,
-  roles: ["Admin"],
+  roles: ["admin"],
   icon: "calendar",
   element: <CalendarApp />,
   header: "Apps",
@@ -878,14 +880,33 @@ const uiRoutes = {
       ],
     },
     {
-      path: "/maintanance",
+      path: "/",
       name: "Tables",
       children: [
         {
           path: "/maintanance/create",
           name: "Basic",
           element: <Create />,
-          route: PrivateRoute,
+        },
+        {
+          path: "/maintanance",
+          name: "Basic",
+          element: <MaintananceList />,
+        },
+        {
+          path: "/maintanance/:id",
+          name: "Basic",
+          element: <MaintananceEdit />,
+        },
+        {
+          path: "/maintanance-admin/:id",
+          name: "Basic",
+          element: <MaintananceEditAdmin />,
+        },
+        {
+          path: "/maintanance-admin",
+          name: "Basic",
+          element: <MaintananceListAdmin />,
         },
       ],
     },
@@ -955,6 +976,10 @@ const uiRoutes = {
           element: <MyAccount />,
         },
       ],
+    },
+    {
+      path: "/",
+      children: [],
     },
     {
       path: "/ui/tables",

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, FormLabel } from "react-bootstrap";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -11,6 +11,8 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { userImportAsync } from "../../store/user/UserSlice";
 import Loader from "../../components/Loader";
+import { Link } from "react-router-dom";
+// import DownloadUser from "";
 
 interface AddMemberProps {
   show: boolean;
@@ -78,6 +80,12 @@ const ImportUsers = ({ show, onHide, onSubmit }: AddMemberProps) => {
           <Modal.Title className="m-0">Import Renters</Modal.Title>
         </Modal.Header>
         <Modal.Body className="p-4">
+          <FormLabel>
+            Sample user import:{" "}
+            <Link to="/users.xlsx" target="_blank">
+              Download
+            </Link>
+          </FormLabel>
           {toast && <div className="alert alert-success">{toast}</div>}
           {error && (
             <div

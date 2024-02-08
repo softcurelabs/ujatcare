@@ -133,7 +133,7 @@ const Users = () => {
     <React.Fragment>
       <PageTitle
         breadCrumbItems={[{ label: "Users", path: "/user", active: true }]}
-        title={"Users"}
+        title={"Staff"}
       />
 
       <Row>

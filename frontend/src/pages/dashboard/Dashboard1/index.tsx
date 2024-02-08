@@ -8,14 +8,20 @@ import NoticeHighlight from "./NoticeHighlight";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store";
 import { noticeHighlightAsync } from "../../../store/notice/NoticeSlice";
+import { Navigate } from "react-router-dom";
 
 const Dashboard1 = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
 
-  const { notices } = useSelector((state: RootState) => ({
+  let { notices, user, userCustomer } = useSelector((state: RootState) => ({
     notices: state.Notice.notices,
+    user: state.Auth.user,
+    userCustomer: state.CustomerAuth.user,
   }));
+  if (userCustomer) {
+    user = userCustomer;
+  }
 
   useEffect(() => {
     dispatch(noticeHighlightAsync(1));
@@ -23,6 +29,7 @@ const Dashboard1 = () => {
 
   return (
     <>
+      {user && user.user_role.includes("admin") && <Navigate to={"/dashboard-2"}></Navigate>}
       <Row>
         <Col>
           <div className="page-title-box">

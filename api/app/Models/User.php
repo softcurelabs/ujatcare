@@ -21,6 +21,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'role',
         'flat',
         'profile',
+        'flat_name',
+        'apartment_name',
     ];
     /**
      * The attributes that are mass assignable.
@@ -61,6 +63,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function flat(): HasOne
     {
         return $this->hasOne(FlatOwner::class, 'user_id', 'id');
+    }
+
+    public function getFlatNameAttribute()
+    {
+        return null !== $this->flat()->first() ?  $this->flat()->first()->flat()->first()->name : "";
+    }
+    public function getApartmentNameAttribute()
+    {
+        return null !== $this->flat()->first()    ? $this->flat()->first()->flat()->first()->apartment()->first()->name : "";
     }
 
     public function getRoleAttribute()

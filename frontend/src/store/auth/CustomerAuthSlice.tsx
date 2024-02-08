@@ -27,8 +27,9 @@ const CustomerAuthSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(loggedInAsync.pending, () => {
+      .addCase(loggedInAsync.pending, (state) => {
         // console.log("incrementAsync.pending");
+        state.error = "";
       })
       .addCase(loggedInAsync.fulfilled, (state, action) => {
         state.user = action.payload;

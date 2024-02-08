@@ -8,6 +8,7 @@ import Statistics from "./Statistics";
 
 import AppMenu from "../../../layouts/Menu";
 import { getAdminItems } from "../../../helpers/menu";
+import Calandar from "./Calandar";
 
 const Dashboard2 = () => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -42,7 +43,9 @@ const Dashboard2 = () => {
             </Card.Body>
           </Card>
         </Col>
-        <Col xl={6}></Col>
+        <Col xl={6}>
+          <Calandar />
+        </Col>
       </Row>
     </>
   );

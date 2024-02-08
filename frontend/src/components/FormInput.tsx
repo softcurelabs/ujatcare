@@ -105,6 +105,7 @@ const FormInput = ({
           id={name}
           {...(register ? register(name) : {})}
           {...otherProps}
+          className={className}
         />
       ) : (
         <>

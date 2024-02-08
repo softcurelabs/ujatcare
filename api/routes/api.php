@@ -3,6 +3,7 @@
 use App\Constants\Role;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FlatController;
+use App\Http\Controllers\MaintanceController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\VerifyEmailController;
@@ -59,7 +60,22 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|renter']], function (
   Route::post('upload/{user_id}', [UserProfileController::class, 'upload']);
   Route::put('set-password/{user_id}', [UserProfileController::class, 'setPassword']);
   Route::put('user/{user_id}', [UserProfileController::class, 'update']);
+
+  Route::get('maintanance/{id}', [MaintanceController::class, 'show']);
 });
+
+Route::group(['middleware' => ['auth:sanctum', 'role:renter']], function () {
+  Route::get('maintanance', [MaintanceController::class, 'list']);
+  Route::post('maintanance', [MaintanceController::class, 'store']);
+  Route::put('maintanance/{id}', [MaintanceController::class, 'update']);
+});
+
+Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
+  Route::get('maintanance-admin', [MaintanceController::class, 'listAll']);
+  Route::put('maintanance-admin/{id}', [MaintanceController::class, 'updateAdmin']);
+  Route::get('maintanance-dashboard', [MaintanceController::class, 'dashboard']);
+});
+
 
 
 Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])

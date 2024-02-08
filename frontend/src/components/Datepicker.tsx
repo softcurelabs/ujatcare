@@ -66,6 +66,7 @@ interface HyperDatepickerProps {
   showTimeSelectOnly?: boolean;
   monthsShown?: number;
   inline?: boolean;
+  disabled?: boolean;
 }
 
 const HyperDatepicker = (props: HyperDatepickerProps) => {
@@ -89,24 +90,43 @@ const HyperDatepicker = (props: HyperDatepickerProps) => {
   return (
     <>
       {/* date picker control */}
-      <DatePicker
-        name={props.name}
-        customInput={input}
-        timeIntervals={props.tI}
-        selected={props.value}
-        value={props.value.toDateString()}
-        onChange={(date) => props.onChange(date)}
-        showTimeSelect={props.showTimeSelect}
-        timeFormat={props.timeFormat || "hh:mm a"}
-        timeCaption={props.timeCaption}
-        dateFormat={props.dateFormat || "MM/dd/yyyy"}
-        minDate={props.minDate}
-        maxDate={props.maxDate}
-        monthsShown={props.monthsShown}
-        showTimeSelectOnly={props.showTimeSelectOnly}
-        inline={props.inline}
-        autoComplete="off"
-      />
+      {props.showTimeSelectOnly ? (
+        <DatePicker
+          name={props.name}
+          timeIntervals={props.tI}
+          selected={props.value}
+          onChange={(date) => props.onChange(date)}
+          showTimeSelect={props.showTimeSelect}
+          timeFormat={"hh:mm a"}
+          timeCaption={props.timeCaption}
+          dateFormat={"hh:mm"}
+          minDate={props.minDate}
+          maxDate={props.maxDate}
+          disabled={props.disabled}
+          monthsShown={props.monthsShown}
+          showTimeSelectOnly={props.showTimeSelectOnly}
+          inline={props.inline}
+          autoComplete="off"
+        />
+      ) : (
+        <DatePicker
+          name={props.name}
+          timeIntervals={props.tI}
+          selected={props.value}
+          onChange={(date) => props.onChange(date)}
+          showTimeSelect={props.showTimeSelect}
+          timeFormat={"hh:mm a"}
+          timeCaption={props.timeCaption}
+          dateFormat={"MM/dd/yyyy"}
+          minDate={props.minDate}
+          disabled={props.disabled}
+          maxDate={props.maxDate}
+          monthsShown={props.monthsShown}
+          showTimeSelectOnly={props.showTimeSelectOnly}
+          inline={props.inline}
+          autoComplete="off"
+        />
+      )}
     </>
   );
 };

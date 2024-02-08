@@ -148,10 +148,10 @@ const NewUser = () => {
       <PageTitle
         breadCrumbItems={[
           { label: "Dashboard", path: "/dashboard-2" },
-          { label: "Notices", path: "/notice" },
-          { label: "Notice", path: "/notice/new", active: true },
+          { label: "Users", path: "/user" },
+          { label: "New Staff", path: "/notice/new", active: true },
         ]}
-        title={"Notice"}
+        title={"New Staff"}
       />
 
       <Row>

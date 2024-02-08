@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import LogoLight from "../../assets/images/logo-light.png";
 interface AccountLayoutProps {
   bottomLinks?: any;
   isCombineForm?: boolean;
@@ -34,13 +35,13 @@ const AuthCustomerLayout = ({ bottomLinks, children, isCombineForm }: AccountLay
                   <div className="text-center w-95 m-auto row">
                     <div className="col-lg-2"></div>
                     <div className="auth-brand col-lg-8">
-                      {/* <Link to="/" className="logo logo-dark text-center">
+                      <Link to="/" className="logo logo-dark text-center">
                         <span className="logo-lg">
-                          <img src={LogoDark} alt="" height="50" />
+                          <img src={LogoLight} alt="" height="100" />
                         </span>
-                      </Link> */}
-                      <h2 className="text-muted">Society</h2>
-                      <h3 className="text-muted">North Park Manor & Fisgard House</h3>
+                      </Link>
+                      {/* <h2 className="text-muted">Society</h2>
+                      <h3 className="text-muted">North Park Manor & Fisgard House</h3> */}
 
                       {/* <Link to="/" className="logo logo-light text-center">
                         <span className="logo-lg">

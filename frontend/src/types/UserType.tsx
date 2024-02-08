@@ -2,13 +2,15 @@ import { PaginationType } from "./PaginationType";
 import { TimeStampType } from "./TimeStampType";
 
 export interface FlatType {
-  flat_id: Number;
+  flat_id: number;
 }
 export interface UserType extends TimeStampType {
   name: string;
   email: string;
   role: string;
   flat?: FlatType;
+  flat_name?: string;
+  apartment_name?: string;
 }
 
 export interface UserProfileType extends TimeStampType {

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Row, Col, Card, Button } from "react-bootstrap";
+import { Row, Col, Card, Button, FormLabel } from "react-bootstrap";
 
 // components
 import PageTitle from "../../components/PageTitle";
 import { FormInput } from "../../components/";
 import HyperDatepicker from "../../components/Datepicker";
-import { useNavigate, useParams } from "react-router-dom";
+import { Form, useNavigate, useParams } from "react-router-dom";
 import { UserEditType, UserProfileType } from "../../types/UserType";
 import { userEditAsync, userShowAsync } from "../../store/user/UserSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,6 +17,7 @@ import * as yup from "yup";
 import { flatAsync } from "../../store/flat/FlatSlice";
 import { ResetPassword } from "./ResetPassword";
 import { UploadImage } from "./UploadImage";
+import { Documents } from "./Documents";
 
 const BasicInputElements = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -45,7 +46,6 @@ const BasicInputElements = () => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [disabled, setDisabled] = useState<boolean>(true);
   const navigate = useNavigate();
-  const params = useParams();
   /*
    * handle date change
    */
@@ -121,7 +121,7 @@ const BasicInputElements = () => {
             setValue("movein_date", response.movein_date);
             // setSelectedDate(new Date(response.movein_date));
           })
-          .catch((error) => setNewError(error));
+          .catch((error) => setNewError(error.message));
       });
   }, []);
 
@@ -306,7 +306,52 @@ const BasicInputElements = () => {
                       }}
                     />
                   </div>
+                  <div className="mb-3">
+                    <label className="form-label">Birth Date</label> <br />
+                    <HyperDatepicker
+                      hideAddon={true}
+                      showTimeSelect={false}
+                      showTimeSelectOnly={false}
+                      // maxDate={new Date()}
+                      value={selectedDate}
+                      onChange={(date) => {}}
+                    />
+                  </div>
+                  <div className="mb-3 input-group">
+                    <FormLabel htmlFor="small" className="me-2">
+                      I am
+                    </FormLabel>
+                    <FormInput
+                      type="radio"
+                      className="form-check-inline"
+                      name="confidential"
+                      label="Handicapped"
+                      value="1"
+                      register={register}
+                    />
+                    <FormInput
+                      type="radio"
+                      className="form-check-inline"
+                      name="confidential"
+                      label="Diabetes"
+                      value="2"
+                      register={register}
+                    />
+                  </div>
+                  {user.user_role.includes("admin") && (
+                    <FormInput
+                      label="Staff Note"
+                      type="textarea"
+                      name="staff_notes"
+                      rows="5"
+                      containerClass={"mb-3"}
+                      register={register}
+                      key="staff_notes"
+                      errors={errors}
+                    />
+                  )}
                 </fieldset>
+
                 <Button
                   onClick={() => navigate(-1)}
                   variant="primary"
@@ -336,10 +381,15 @@ const BasicInputElements = () => {
                 )}
               </div>
 
-              <UploadImage id={user.user_id} />
+              <div>
+                <UploadImage id={user.user_id} />
+              </div>
 
-              <div className="pt-5">
+              <div className="pt-2">
                 <ResetPassword id={user.user_id} />
+              </div>
+              <div className="pt-2">
+                <Documents id={user.user_id} />
               </div>
             </Col>
           </Row>
