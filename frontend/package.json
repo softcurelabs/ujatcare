@@ -61,7 +61,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "format": "prettier --write 'src/**/*.{ts,tsx}'",
-    "eslint": "eslint 'src/**/*.ts'",
+    "eslint": "eslint 'src/**/*.{ts,tsx}'",
     "eslint:fix": "eslint --fix 'src/**/*.{ts,tsx}'"
   },
   "eslintConfig": {
@@ -105,13 +105,16 @@
     "@types/react-text-mask": "^5.4.9",
     "@types/redux-saga": "^0.10.5",
     "@types/sortablejs": "^1.10.7",
-    "@typescript-eslint/eslint-plugin": "6.19.0",
-    "@typescript-eslint/parser": "6.19.0",
-    "eslint": "8.56.0",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.56.0",
     "eslint-config-airbnb": "19.0.4",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-config-react-app": "^7.0.1",
-    "postcss-custom-properties": "^12.1.4",
-    "prettier": "^2.3.2"
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-prettier": "^5.1.3",
+    "postcss-custom-properties": "^12.1.4"
   },
   "resolutions": {
     "postcss-custom-properties": "^12.1.4",

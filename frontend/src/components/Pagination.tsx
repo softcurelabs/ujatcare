@@ -15,7 +15,9 @@ const Pagination = ({ tableProps, sizePerPageList }: PaginationProps) => {
    * pagination count , index
    */
   const [pageCount, setPageCount] = useState<number>(tableProps.pageCount);
-  const [pageIndex, setPageIndex] = useState<number>(tableProps.state.pageIndex);
+  const [pageIndex, setPageIndex] = useState<number>(
+    tableProps.state.pageIndex
+  );
 
   useEffect(() => {
     setPageCount(tableProps.pageCount);
@@ -75,7 +77,9 @@ const Pagination = ({ tableProps, sizePerPageList }: PaginationProps) => {
     setVisiblePages(visiblePages);
   }, [pageCount, getVisiblePages]);
 
-  const [visiblePages, setVisiblePages] = useState<number[]>(getVisiblePages(null, pageCount));
+  const [visiblePages, setVisiblePages] = useState<number[]>(
+    getVisiblePages(null, pageCount)
+  );
   const activePage: number = pageIndex;
 
   return (
@@ -148,9 +152,14 @@ const Pagination = ({ tableProps, sizePerPageList }: PaginationProps) => {
                   </Link>
                 </li>
                 <li
-                  className={classNames("page-item", "d-none", "d-xl-inline-block", {
-                    active: activePage === page,
-                  })}
+                  className={classNames(
+                    "page-item",
+                    "d-none",
+                    "d-xl-inline-block",
+                    {
+                      active: activePage === page,
+                    }
+                  )}
                   onClick={(e: any) => changePage(page)}
                 >
                   <Link to="#" className="page-link">
@@ -161,9 +170,14 @@ const Pagination = ({ tableProps, sizePerPageList }: PaginationProps) => {
             ) : (
               <li
                 key={page}
-                className={classNames("page-item", "d-none", "d-xl-inline-block", {
-                  active: activePage === page,
-                })}
+                className={classNames(
+                  "page-item",
+                  "d-none",
+                  "d-xl-inline-block",
+                  {
+                    active: activePage === page,
+                  }
+                )}
                 onClick={(e: any) => changePage(page)}
               >
                 <Link to="#" className="page-link">

@@ -11,7 +11,11 @@ import { SideBarTypes } from "../../constants/layout";
 // store
 import { RootState, AppDispatch } from "../../store";
 
-import { findAllParent, findMenuItem, getTwoColumnMenuItems } from "../../helpers/menu";
+import {
+  findAllParent,
+  findMenuItem,
+  getTwoColumnMenuItems,
+} from "../../helpers/menu";
 
 // components
 import IconMenu from "./IconMenu";
@@ -53,7 +57,11 @@ const LeftSidebar = () => {
       // dispatch(changeSidebarType(SideBarTypes.LEFT_SIDEBAR_TYPE_DEFAULT));
     }
 
-    if (show) setActiveMenuItems([menuItem["key"], ...findAllParent(menuItems, menuItem)]);
+    if (show)
+      setActiveMenuItems([
+        menuItem["key"],
+        ...findAllParent(menuItems, menuItem),
+      ]);
   };
 
   /**
@@ -66,11 +74,17 @@ const LeftSidebar = () => {
     if (div) {
       let items: any = div.getElementsByClassName("nav-link-ref");
       for (let i = 0; i < items.length; ++i) {
-        let trimmedURL = location?.pathname?.replaceAll(process.env.PUBLIC_URL, "");
+        let trimmedURL = location?.pathname?.replaceAll(
+          process.env.PUBLIC_URL,
+          ""
+        );
         // console.log(trimmedURL);
         // console.log("pathname", items[i]?.pathname?.replaceAll("/ubold_r/default",""));
         // debugger
-        if (trimmedURL === items[i]?.pathname?.replaceAll(process.env.PUBLIC_URL, "")) {
+        if (
+          trimmedURL ===
+          items[i]?.pathname?.replaceAll(process.env.PUBLIC_URL, "")
+        ) {
           matchingMenuItem = items[i];
           break;
         }
@@ -80,7 +94,10 @@ const LeftSidebar = () => {
         const mid = matchingMenuItem.getAttribute("data-menu-key");
         const activeMt = findMenuItem(menuItems, mid);
         if (activeMt) {
-          setActiveMenuItems([activeMt["key"], ...findAllParent(menuItems, activeMt)]);
+          setActiveMenuItems([
+            activeMt["key"],
+            ...findAllParent(menuItems, activeMt),
+          ]);
         }
       }
     }
@@ -91,12 +108,21 @@ const LeftSidebar = () => {
   }, [activeMenu]);
 
   useEffect(() => {
-    if (activeMenuItems && activeMenuItems.length && activeMenuItems.length === 1) {
+    if (
+      activeMenuItems &&
+      activeMenuItems.length &&
+      activeMenuItems.length === 1
+    ) {
       const parentLevel0 = findMenuItem(menuItems, activeMenuItems[0]);
       const hasChildren =
-        parentLevel0 && parentLevel0["children"] && parentLevel0["children"].length;
+        parentLevel0 &&
+        parentLevel0["children"] &&
+        parentLevel0["children"].length;
 
-      if (!hasChildren && (leftSideBarType === "default" || leftSideBarType === "compact")) {
+      if (
+        !hasChildren &&
+        (leftSideBarType === "default" || leftSideBarType === "compact")
+      ) {
         // dispatch(changeSidebarType(SideBarTypes.LEFT_SIDEBAR_TYPE_CONDENSED));
       } else {
         // dispatch(changeSidebarType(leftSideBarType));
@@ -113,7 +139,11 @@ const LeftSidebar = () => {
           activeMenuItems={activeMenuItems}
         />
 
-        <MainMenu menuItems={menuItems} activeMenuItems={activeMenuItems} toggleMenu={toggleMenu} />
+        <MainMenu
+          menuItems={menuItems}
+          activeMenuItems={activeMenuItems}
+          toggleMenu={toggleMenu}
+        />
         <div className="clearfix" />
       </div>
     </>

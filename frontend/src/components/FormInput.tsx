@@ -94,7 +94,8 @@ const FormInput = ({
   ...otherProps
 }: FormInputProps) => {
   // handle input type
-  const comp = type === "textarea" ? "textarea" : type === "select" ? "select" : "input";
+  const comp =
+    type === "textarea" ? "textarea" : type === "select" ? "select" : "input";
 
   return (
     <>
@@ -115,7 +116,10 @@ const FormInput = ({
                 {label ? (
                   <>
                     {" "}
-                    <Form.Label className={labelClassName}>{label}</Form.Label> {children}{" "}
+                    <Form.Label className={labelClassName}>
+                      {label}
+                    </Form.Label>{" "}
+                    {children}{" "}
                   </>
                 ) : null}
                 <PasswordInput
@@ -162,7 +166,9 @@ const FormInput = ({
                 </>
               ) : (
                 <Form.Group className={containerClass}>
-                  {label ? <Form.Label className={labelClassName}>{label}</Form.Label> : null}
+                  {label ? (
+                    <Form.Label className={labelClassName}>{label}</Form.Label>
+                  ) : null}
 
                   <Form.Control
                     type={type}

@@ -5,10 +5,9 @@ import { Row, Col, Card, Button } from "react-bootstrap";
 // components
 import PageTitle from "../../components/PageTitle";
 import { FormInput } from "../../components/";
-import FileUploader from "../../components/FileUploader";
 import HyperDatepicker from "../../components/Datepicker";
 import { useNavigate, useParams } from "react-router-dom";
-import { UserEditType, UserProfileType } from "../../types/UserType";
+import { UserEditType } from "../../types/UserType";
 import { userEditAsync, userShowAsync } from "../../store/user/UserSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
@@ -18,11 +17,6 @@ import * as yup from "yup";
 import { flatAsync } from "../../store/flat/FlatSlice";
 import { ResetPassword } from "./ResetPassword";
 import { UploadImage } from "./UploadImage";
-
-interface Colors {
-  variant: string;
-  name: string;
-}
 
 const BasicInputElements = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -80,6 +74,10 @@ const BasicInputElements = () => {
         if (response && response.status === true) {
           setToast(response.message);
           //   reset();
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
         }
       })
       .catch((reason) => {
@@ -107,14 +105,16 @@ const BasicInputElements = () => {
               setValue("flat_id", response.user.flat.flat_id);
             }
             setValue("parking_space", response.parking_space);
-            setValue("emergency_contact_number", response.emergency_contact_number);
+            setValue(
+              "emergency_contact_number",
+              response.emergency_contact_number
+            );
             setValue("emergency_contact_name", response.emergency_contact_name);
             setValue("income_verification", response.income_verification);
             setValue("rent_calculation", response.rent_calculation);
             setValue("special_instruction", response.special_instruction);
             setValue("relationship", response.relationship);
             setValue("movein_date", response.movein_date);
-            // setSelectedDate(new Date(response.movein_date));
           })
           .catch((error) => setNewError(error));
       });
@@ -133,7 +133,10 @@ const BasicInputElements = () => {
 
           <Row>
             <Col lg={6}>
-              <form onSubmit={onSubmit} className={disabled ? "form-readonly" : ""}>
+              <form
+                onSubmit={onSubmit}
+                className={disabled ? "form-readonly" : ""}
+              >
                 <fieldset>
                   <FormInput
                     label="Emergency Contact"
@@ -217,9 +220,15 @@ const BasicInputElements = () => {
                   >
                     {flats.length &&
                       flats.map((flat) => (
-                        <optgroup key={`apartment${flat.id}`} label={flat.name.toString()}>
+                        <optgroup
+                          key={`apartment${flat.id}`}
+                          label={flat.name.toString()}
+                        >
                           {flat.flats.map((aprtment) => (
-                            <option key={"flat" + aprtment.id} value={aprtment.id}>
+                            <option
+                              key={"flat" + aprtment.id}
+                              value={aprtment.id}
+                            >
                               {aprtment.name}
                             </option>
                           ))}
@@ -322,7 +331,11 @@ const BasicInputElements = () => {
             <Col lg={6}>
               <div className="text-end pb-2">
                 {disabled ? (
-                  <Button variant="primary" type="submit" onClick={() => setDisabled(false)}>
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    onClick={() => setDisabled(false)}
+                  >
                     Edit
                   </Button>
                 ) : (

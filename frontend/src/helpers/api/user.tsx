@@ -8,6 +8,11 @@ export function user(page: Number = 1) {
   return api.get(`${baseUrl}`, { page });
 }
 
+export function recident(page: Number = 1) {
+  const baseUrl = "/recident";
+  return api.get(`${baseUrl}`, { page });
+}
+
 export function edit(params: any) {
   const baseUrl = `/user/${params.id}`;
   return api.update(`${baseUrl}`, params);

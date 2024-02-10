@@ -257,13 +257,11 @@ const InputMasks = () => {
             <div className="mb-3">
               <label className="form-label">Phone Number with Area Code</label>{" "}
               <br />
-              
             </div>
           </Col>
           <Col lg={6}>
             <div className="mb-3">
               <label className="form-label">US Phone Number</label> <br />
-              
             </div>
           </Col>
         </Row>
@@ -272,13 +270,11 @@ const InputMasks = () => {
           <Col lg={6}>
             <div className="mb-3">
               <label className="form-label">Date</label> <br />
-              
             </div>
           </Col>
           <Col lg={6}>
             <div className="mb-3">
               <label className="form-label">Time</label> <br />
-              
             </div>
           </Col>
         </Row>

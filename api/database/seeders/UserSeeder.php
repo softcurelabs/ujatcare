@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
         ]);
         $flat = DB::table('flat')->join('apartment', 'flat.apartment_id', '=', 'apartment.id')->where('flat.name', '101')->where('apartment.name', 'North Park Manor')->first();
         FlatOwner::create(['user_id' => $user->id, 'flat_id' => $flat->id]);
-        $user->assignRole(Role::Renter);
+        $user->assignRole(Role::Recident);
         UserProfile::create(['user_id' => $user->id, 'unit' => 10, 'phone_number' => "9601277532", "parking_space" => 120, 'emergency_contact_number' => "9601277532", 'emergency_contact_name' => "jasmin", 'income_verification' => 230, 'rent_calculation' => 123, 'language' => 'eng']);
 
         $user = \App\Models\User::factory()->create([
@@ -44,6 +44,6 @@ class UserSeeder extends Seeder
         $flat = DB::table('flat')->join('apartment', 'flat.apartment_id', '=', 'apartment.id')->where('flat.name', '101')->where('apartment.name', 'Fisgard House')->first();
         FlatOwner::create(['user_id' => $user->id, 'flat_id' => $flat->id]);
         UserProfile::create(['user_id' => $user->id, 'unit' => 10, 'phone_number' => "9601277532", "parking_space" => 120, 'emergency_contact_number' => "9601277532", 'emergency_contact_name' => "jasmin", 'income_verification' => 230, 'rent_calculation' => 123, 'language' => 'eng']);
-        $user->assignRole(Role::Renter);
+        $user->assignRole(Role::Recident);
     }
 }

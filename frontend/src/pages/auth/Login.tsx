@@ -45,19 +45,24 @@ const Login = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
 
-  const { user, userLoggedIn, error, loading } = useSelector((state: RootState) => ({
-    user: state.Auth.user,
-    loading: state.Auth.loading,
-    error: state.Auth.error,
-    userLoggedIn: state.Auth.userLoggedIn,
-  }));
+  const { user, userLoggedIn, error, loading } = useSelector(
+    (state: RootState) => ({
+      user: state.Auth.user,
+      loading: state.Auth.loading,
+      error: state.Auth.error,
+      userLoggedIn: state.Auth.userLoggedIn,
+    })
+  );
 
   /*
   form validation schema
   */
   const schemaResolver = yupResolver(
     yup.object().shape({
-      email: yup.string().required(t("Please enter Email")).email("Please enter valid email"),
+      email: yup
+        .string()
+        .required(t("Please enter Email"))
+        .email("Please enter valid email"),
       password: yup.string().required(t("Please enter Password")),
     })
   );

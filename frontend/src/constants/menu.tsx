@@ -134,7 +134,7 @@ const CUSTOMER_ITEMS: MenuItemTypes[] = [
     key: "rent-payment",
     label: "Rent Payment",
     isTitle: false,
-    url: "/apps/ecommerce/orders",
+    url: "/rent-payment",
   },
   {
     key: "rent-history",
@@ -179,7 +179,7 @@ const ADMIN_ITEMS: MenuItemTypes[] = [
     key: "users",
     label: "Recidents",
     isTitle: false,
-    url: "/user",
+    url: "/recident",
   },
   {
     key: "maintanance-report",
@@ -1911,4 +1911,10 @@ const TWO_COl_MENU_ITEMS: MenuItemTypes[] = [
   // },
 ];
 
-export { ADMIN_ITEMS, MENU_ITEMS, TWO_COl_MENU_ITEMS, HORIZONTAL_MENU_ITEMS, CUSTOMER_ITEMS };
+export {
+  ADMIN_ITEMS,
+  MENU_ITEMS,
+  TWO_COl_MENU_ITEMS,
+  HORIZONTAL_MENU_ITEMS,
+  CUSTOMER_ITEMS,
+};

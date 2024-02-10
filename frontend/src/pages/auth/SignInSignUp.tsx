@@ -34,7 +34,10 @@ const SignInSignUp = () => {
     yup.object().shape({
       password: yup.string().required(t("Please enter Password")),
       fullname: yup.string().required(t("Please enter Fullname")),
-      email: yup.string().required("Please enter Email").email("Please enter valid Email"),
+      email: yup
+        .string()
+        .required("Please enter Email")
+        .email("Please enter valid Email"),
     })
   );
 
@@ -85,7 +88,10 @@ const SignInSignUp = () => {
                   placeholder="Enter your password"
                   containerClass={"mb-3"}
                 >
-                  <Link to="/auth/forget-password" className="text-muted float-end">
+                  <Link
+                    to="/auth/forget-password"
+                    className="text-muted float-end"
+                  >
                     <small>{t("Forgot your password?")}</small>
                   </Link>
                 </FormInput>
@@ -113,10 +119,16 @@ const SignInSignUp = () => {
             <div className="p-sm-3">
               <h4 className="mt-0">{t("Free Sign Up")}</h4>
               <p className="text-muted mb-4">
-                {t("Don't have an account? Create your account, it takes less than a minute")}
+                {t(
+                  "Don't have an account? Create your account, it takes less than a minute"
+                )}
               </p>
 
-              <VerticalForm onSubmit={onSignUp} resolver={signUpSchema} defaultValues={{}}>
+              <VerticalForm
+                onSubmit={onSignUp}
+                resolver={signUpSchema}
+                defaultValues={{}}
+              >
                 <FormInput
                   label={t("Full Name")}
                   type="text"

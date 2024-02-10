@@ -40,7 +40,8 @@ const ProductsColumn = ({ row }: { row: any }) => {
 const OrderDateColumn = ({ row }: { row: any }) => {
   return (
     <>
-      {row.original.order_date} <small className="text-muted">{row.original.order_time}</small>
+      {row.original.order_date}{" "}
+      <small className="text-muted">{row.original.order_time}</small>
     </>
   );
 };
@@ -52,18 +53,24 @@ const PaymentStatusColumn = ({ row }: { row: any }) => {
       <h5>
         <span
           className={classNames("badge", {
-            "bg-soft-success text-success": row.original.payment_status === "Paid",
-            "bg-soft-danger text-danger": row.original.payment_status === "Payment Failed",
+            "bg-soft-success text-success":
+              row.original.payment_status === "Paid",
+            "bg-soft-danger text-danger":
+              row.original.payment_status === "Payment Failed",
             "bg-soft-info text-info": row.original.payment_status === "Unpaid",
             "bg-soft-warning text-warning":
               row.original.payment_status === "Awaiting Authorization",
           })}
         >
-          {row.original.payment_status === "Paid" && <i className="mdi mdi-bitcoin me-1"></i>}
+          {row.original.payment_status === "Paid" && (
+            <i className="mdi mdi-bitcoin me-1"></i>
+          )}
           {row.original.payment_status === "Payment Failed" && (
             <i className="mdi mdi-cancel me-1"></i>
           )}
-          {row.original.payment_status === "Unpaid" && <i className="mdi mdi-cash me-1"></i>}
+          {row.original.payment_status === "Unpaid" && (
+            <i className="mdi mdi-cash me-1"></i>
+          )}
           {row.original.payment_status === "Awaiting Authorization" && (
             <i className="mdi mdi-timer-sand me-1"></i>
           )}
@@ -178,14 +185,22 @@ const Orders = () => {
     updatedData =
       OrderStatusGroup === "All"
         ? orders
-        : [...orders].filter((o) => o.payment_status?.includes(OrderStatusGroup));
+        : [...orders].filter((o) =>
+            o.payment_status?.includes(OrderStatusGroup)
+          );
     setOrderList(updatedData);
   };
 
   return (
     <>
       <PageTitle
-        breadCrumbItems={[{ label: "Rent history", path: "/apps/ecommerce/orders", active: true }]}
+        breadCrumbItems={[
+          {
+            label: "Rent history",
+            path: "/apps/ecommerce/orders",
+            active: true,
+          },
+        ]}
         title={"Rent History"}
       />
 
@@ -204,11 +219,15 @@ const Orders = () => {
                         <select
                           className="form-select"
                           id="status-select"
-                          onChange={(e: any) => changeOrderStatusGroup(e.target.value)}
+                          onChange={(e: any) =>
+                            changeOrderStatusGroup(e.target.value)
+                          }
                         >
                           <option value="All">All</option>
                           <option value="Paid">Paid</option>
-                          <option value="Authorization">Awaiting Authorization</option>
+                          <option value="Authorization">
+                            Awaiting Authorization
+                          </option>
                           <option value="Failed">Payment failed</option>
                           <option value="Unpaid">Unpaid</option>
                         </select>

@@ -1,12 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Row, Col, Card, Form, FloatingLabel, Button, FormGroup, FormLabel } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Card,
+  Form,
+  Button,
+  FormGroup,
+  FormLabel,
+} from "react-bootstrap";
 // components
 import PageTitle from "../../components/PageTitle";
-import {
-  maintananceAddAsync,
-  maintananceShowAsync,
-} from "../../store/maintanance/MaintananceSlice";
+import { maintananceAddAsync } from "../../store/maintanance/MaintananceSlice";
 import { AppDispatch, RootState } from "../../store";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
@@ -99,6 +104,10 @@ const BasicInputElements = () => {
           setLocalError("");
           reset();
           signCanvas.current?.clear();
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
         }
       })
       .catch((reason) => {
@@ -337,7 +346,12 @@ const BasicInputElements = () => {
                     <Form.Label htmlFor="small" className="me-2">
                       Time In
                     </Form.Label>
-                    <FormInput type="hidden" register={register} name="time_in" key="time_in" />
+                    <FormInput
+                      type="hidden"
+                      register={register}
+                      name="time_in"
+                      key="time_in"
+                    />
                     <HyperDatepicker
                       value={timeIn}
                       disabled={true}
@@ -356,7 +370,12 @@ const BasicInputElements = () => {
                     <Form.Label htmlFor="small" className="me-2">
                       Time Out
                     </Form.Label>
-                    <FormInput type="hidden" register={register} name="time_out" key="time_out" />
+                    <FormInput
+                      type="hidden"
+                      register={register}
+                      name="time_out"
+                      key="time_out"
+                    />
                     <HyperDatepicker
                       value={timeOut}
                       disabled={true}
@@ -365,7 +384,10 @@ const BasicInputElements = () => {
                       inputClass="form-control-sm"
                       onChange={(date) => {
                         setTimeIn(date);
-                        setValue("time_out", timeOut.toLocaleTimeString("it-IT"));
+                        setValue(
+                          "time_out",
+                          timeOut.toLocaleTimeString("it-IT")
+                        );
                       }}
                     />
                   </FormGroup>
@@ -389,7 +411,9 @@ const BasicInputElements = () => {
               <Row>
                 <Col lg={12}>
                   <FormGroup className="mb-3">
-                    <FormLabel className="me-1 ">Service Person Signature</FormLabel>
+                    <FormLabel className="me-1 ">
+                      Service Person Signature
+                    </FormLabel>
                     <Controller
                       control={control}
                       name="service_signature"
@@ -461,7 +485,11 @@ const Create = () => {
       <PageTitle
         breadCrumbItems={[
           { label: "Dashboard", path: "/dashboard-1" },
-          { label: "Maintanance Create", path: "/maintanance/create", active: true },
+          {
+            label: "Maintanance Create",
+            path: "/maintanance/create",
+            active: true,
+          },
         ]}
         title={"Maintanance Request"}
       />

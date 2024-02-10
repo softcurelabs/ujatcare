@@ -12,14 +12,25 @@ interface AccountLayoutProps {
   children?: any;
 }
 
-const AuthLayout = ({ helpText, bottomLinks, children, isCombineForm }: AccountLayoutProps) => {
+const AuthLayout = ({
+  helpText,
+  bottomLinks,
+  children,
+  isCombineForm,
+}: AccountLayoutProps) => {
   useEffect(() => {
     if (document.body)
-      document.body.classList.add("authentication-bg", "authentication-bg-pattern");
+      document.body.classList.add(
+        "authentication-bg",
+        "authentication-bg-pattern"
+      );
 
     return () => {
       if (document.body)
-        document.body.classList.remove("authentication-bg", "authentication-bg-pattern");
+        document.body.classList.remove(
+          "authentication-bg",
+          "authentication-bg-pattern"
+        );
     };
   }, []);
 

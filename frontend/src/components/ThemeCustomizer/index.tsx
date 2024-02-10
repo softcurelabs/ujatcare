@@ -8,7 +8,8 @@ const ThemeCustomizer = () => {
       </h6>
       <div className="p-3">
         <div className="alert alert-warning" role="alert">
-          <strong>Customize </strong> the overall color scheme, sidebar menu, etc.
+          <strong>Customize </strong> the overall color scheme, sidebar menu,
+          etc.
         </div>
 
         <div className="d-grid mt-4">

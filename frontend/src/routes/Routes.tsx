@@ -7,7 +7,10 @@ import { useSelector } from "react-redux";
 import DefaultLayout from "../layouts/Default";
 import VerticalLayout from "../layouts/Vertical";
 
-import { authProtectedFlattenRoutes, publicProtectedFlattenRoutes } from "./index";
+import {
+  authProtectedFlattenRoutes,
+  publicProtectedFlattenRoutes,
+} from "./index";
 import { RootState } from "../store";
 import PrivateRoute from "./PrivateRoute";
 

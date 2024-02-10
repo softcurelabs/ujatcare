@@ -92,7 +92,10 @@ const Register = () => {
   const schemaResolver = yupResolver(
     yup.object().shape({
       fullname: yup.string().required(t("Please enter Fullname")),
-      email: yup.string().required("Please enter Email").email("Please enter valid Email"),
+      email: yup
+        .string()
+        .required("Please enter Email")
+        .email("Please enter valid Email"),
       password: yup.string().required(t("Please enter Password")),
     })
   );
@@ -105,10 +108,16 @@ const Register = () => {
   return (
     <>
       <AuthLayout
-        helpText={t("Don't have an account? Create your account, it takes less than a minute")}
+        helpText={t(
+          "Don't have an account? Create your account, it takes less than a minute"
+        )}
         bottomLinks={<BottomLink />}
       >
-        <VerticalForm<UserData> onSubmit={onSubmit} resolver={schemaResolver} defaultValues={{}}>
+        <VerticalForm<UserData>
+          onSubmit={onSubmit}
+          resolver={schemaResolver}
+          defaultValues={{}}
+        >
           <FormInput
             label={t("Full Name")}
             type="text"

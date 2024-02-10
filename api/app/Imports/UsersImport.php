@@ -49,9 +49,9 @@ class UsersImport implements OnEachRow, SkipsOnError, WithHeadingRow
                 'email' => $row['email'],
                 'password' => bcrypt('p@ssword')
             ]);
-            if (strtolower($row['role']) == 'renter') {
+            if (strtolower($row['role']) == 'recident') {
                 FlatOwner::create(['user_id' => $user->id, 'flat_id' => $flat->id]);
-                $user->assignRole(Role::Renter);
+                $user->assignRole(Role::Recident);
             } else {
                 $user->assignRole(Role::Admin);
             }

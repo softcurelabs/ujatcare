@@ -68,7 +68,9 @@ const VerticalLayout = ({ children }: VerticalLayoutProps) => {
       // document.getElementsByTagName('html')[0].classList.add('sidebar-enable')
     } else if (width >= 1140) {
       // dispatch(changeSidebarType(SideBarTypes.LEFT_SIDEBAR_TYPE_DEFAULT));
-      document.getElementsByTagName("html")[0].classList.remove("sidebar-enable");
+      document
+        .getElementsByTagName("html")[0]
+        .classList.remove("sidebar-enable");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [width]);
@@ -106,7 +108,10 @@ const VerticalLayout = ({ children }: VerticalLayoutProps) => {
   }, [topbarTheme]);
 
   useEffect(() => {
-    changeHTMLAttribute("data-menu-icon", showTwoToneIcons ? "twotones" : "default");
+    changeHTMLAttribute(
+      "data-menu-icon",
+      showTwoToneIcons ? "twotones" : "default"
+    );
   }, [showTwoToneIcons]);
 
   useEffect(() => {
@@ -128,7 +133,8 @@ const VerticalLayout = ({ children }: VerticalLayoutProps) => {
     }
   };
 
-  const isCondensed: boolean = leftSideBarType === SideBarTypes.LEFT_SIDEBAR_TYPE_CONDENSED;
+  const isCondensed: boolean =
+    leftSideBarType === SideBarTypes.LEFT_SIDEBAR_TYPE_CONDENSED;
 
   return (
     <>

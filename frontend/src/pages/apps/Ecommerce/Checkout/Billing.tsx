@@ -91,7 +91,6 @@ const Billing = () => {
             <Col md={6}>
               <div className="mb-3">
                 <label className="form-label">Phone</label>
-                
               </div>
             </Col>
           </Row>

@@ -5,28 +5,17 @@ import { Row, Col, Card, Button } from "react-bootstrap";
 // components
 import PageTitle from "../../components/PageTitle";
 import { FormInput } from "../../components/";
-import FileUploader from "../../components/FileUploader";
-import HyperDatepicker from "../../components/Datepicker";
 import { useNavigate, useParams } from "react-router-dom";
-import { UserEditType, UserPermissionType, UserProfileType } from "../../types/UserType";
-import { userEditAsync, userPermissionAsync, userShowAsync } from "../../store/user/UserSlice";
+import { UserPermissionType } from "../../types/UserType";
+import { userPermissionAsync, userShowAsync } from "../../store/user/UserSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
-import { useTranslation } from "react-i18next";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { flatAsync } from "../../store/flat/FlatSlice";
-import { ResetPassword } from "./ResetPassword";
-import { UploadImage } from "./UploadImage";
-
-interface Colors {
-  variant: string;
-  name: string;
-}
 
 const BasicInputElements = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { t } = useTranslation();
   const [toast, setToast] = useState("");
   const [error, setNewError] = useState("");
   const schemaResolver = yupResolver(
@@ -41,18 +30,10 @@ const BasicInputElements = () => {
   /*
    * form methods
    */
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [disabled, setDisabled] = useState<boolean>(true);
   const navigate = useNavigate();
   const params = useParams();
-  /*
-   * handle date change
-   */
-  const onDateChange = (date: Date) => {
-    if (date) {
-      setSelectedDate(date);
-    }
-  };
+
   const {
     register,
     handleSubmit,
@@ -97,7 +78,7 @@ const BasicInputElements = () => {
           })
           .catch((error) => setNewError(error));
       });
-  }, []);
+  }, [params.id]);
 
   return (
     <>
@@ -112,7 +93,10 @@ const BasicInputElements = () => {
 
           <Row>
             <Col lg={6}>
-              <form onSubmit={onSubmit} className={disabled ? "form-readonly" : ""}>
+              <form
+                onSubmit={onSubmit}
+                className={disabled ? "form-readonly" : ""}
+              >
                 <fieldset>
                   <FormInput
                     label="Email"
@@ -132,8 +116,8 @@ const BasicInputElements = () => {
                     errors={errors}
                   >
                     <option value="">Select Role</option>
-                    <option value="renter">Renter</option>
-                    <option value="admin">Admin</option>
+                    <option value="recident">Recident</option>
+                    <option value="staff">Staff</option>
                   </FormInput>
 
                   <FormInput
@@ -146,9 +130,15 @@ const BasicInputElements = () => {
                   >
                     {flats.length &&
                       flats.map((flat) => (
-                        <optgroup key={`apartment${flat.id}`} label={flat.name.toString()}>
+                        <optgroup
+                          key={`apartment${flat.id}`}
+                          label={flat.name.toString()}
+                        >
                           {flat.flats.map((aprtment) => (
-                            <option key={"flat" + aprtment.id} value={aprtment.id}>
+                            <option
+                              key={"flat" + aprtment.id}
+                              value={aprtment.id}
+                            >
                               {aprtment.name}
                             </option>
                           ))}

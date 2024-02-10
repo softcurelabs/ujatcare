@@ -49,13 +49,15 @@ const CustomerLogin = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
 
-  const { user, userLoggedIn, loading, flats, error } = useSelector((state: RootState) => ({
-    user: state.CustomerAuth.user,
-    loading: state.CustomerAuth.loading,
-    userLoggedIn: state.CustomerAuth.userLoggedIn,
-    error: state.CustomerAuth.error,
-    flats: state.Flat.flats,
-  }));
+  const { user, userLoggedIn, loading, flats, error } = useSelector(
+    (state: RootState) => ({
+      user: state.CustomerAuth.user,
+      loading: state.CustomerAuth.loading,
+      userLoggedIn: state.CustomerAuth.userLoggedIn,
+      error: state.CustomerAuth.error,
+      flats: state.Flat.flats,
+    })
+  );
 
   useEffect(() => {
     dispatch(flatAsync());
@@ -97,7 +99,9 @@ const CustomerLogin = () => {
         <Row>
           <Col md={8} lg={8} xl={6}>
             <div>
-              <h4 className="text-center text-muted">{flats.length && flats[0].name}</h4>
+              <h4 className="text-center text-muted">
+                {flats.length && flats[0].name}
+              </h4>
             </div>
 
             <div>
@@ -109,9 +113,18 @@ const CustomerLogin = () => {
               defaultValues={{ email: "", password: "" }}
             >
               {flats.length && (
-                <FormInput type="hidden" name="apartment_id" value={flats[0].id}></FormInput>
+                <FormInput
+                  type="hidden"
+                  name="apartment_id"
+                  value={flats[0].id}
+                ></FormInput>
               )}
-              <FormInput type="select" label="Apartment#" name="flat_id" containerClass="mb-3">
+              <FormInput
+                type="select"
+                label="Apartment#"
+                name="flat_id"
+                containerClass="mb-3"
+              >
                 <option value="">Select Apartment Number</option>
                 {flats.length &&
                   flats[0].flats.map((flat) => (
@@ -145,7 +158,9 @@ const CustomerLogin = () => {
 
           <Col md={8} lg={8} xl={6}>
             <div>
-              <h4 className="text-center text-muted">{flats.length && flats[1].name}</h4>
+              <h4 className="text-center text-muted">
+                {flats.length && flats[1].name}
+              </h4>
             </div>
 
             <div>
@@ -157,9 +172,18 @@ const CustomerLogin = () => {
               defaultValues={{ username: "", password: "" }}
             >
               {flats.length && (
-                <FormInput type="hidden" name="apartment_id" value={flats[1].id}></FormInput>
+                <FormInput
+                  type="hidden"
+                  name="apartment_id"
+                  value={flats[1].id}
+                ></FormInput>
               )}
-              <FormInput type="select" label="Apartment#" name="flat_id" containerClass="mb-3">
+              <FormInput
+                type="select"
+                label="Apartment#"
+                name="flat_id"
+                containerClass="mb-3"
+              >
                 <option value="">Select Apartment Number</option>
                 {flats.length &&
                   flats[1].flats.map((flat) => (

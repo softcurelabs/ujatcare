@@ -7,7 +7,10 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import Pagination from "../../components/Pagination";
-import { maintananceAdminAsync, maintananceAsync } from "../../store/maintanance/MaintananceSlice";
+import {
+  maintananceAdminAsync,
+  maintananceAsync,
+} from "../../store/maintanance/MaintananceSlice";
 import { MaintanancesType } from "../../types/MaintananceType";
 
 interface MaintananceListType {
@@ -63,12 +66,17 @@ const BasicTable = ({ maintanance }: MaintananceListType) => {
                         <React.Fragment>
                           <>
                             <Dropdown className="btn-group" align="end">
-                              <Dropdown.Toggle variant="light" className="table-action-btn btn-sm">
+                              <Dropdown.Toggle
+                                variant="light"
+                                className="table-action-btn btn-sm"
+                              >
                                 <i className="mdi mdi-dots-horizontal"></i>
                               </Dropdown.Toggle>
                               <Dropdown.Menu>
                                 {" "}
-                                <Dropdown.Item href={`maintanance-admin/${record.id}`}>
+                                <Dropdown.Item
+                                  href={`maintanance-admin/${record.id}`}
+                                >
                                   <i className="mdi mdi-check-all me-2 text-muted font-18 vertical-middle"></i>
                                   Edit Maintanance
                                 </Dropdown.Item>
@@ -97,7 +105,11 @@ const StatusColumn = ({ status }: { status: string }) => {
       <span
         className={classNames("badge", {
           "bg-success": status === "Done",
-          "bg-secondary text-light": ["In Progress", "Pending", "On Hold"].includes(status),
+          "bg-secondary text-light": [
+            "In Progress",
+            "Pending",
+            "On Hold",
+          ].includes(status),
         })}
       >
         {status}
@@ -120,7 +132,9 @@ const ListAdmin = () => {
   return (
     <React.Fragment>
       <PageTitle
-        breadCrumbItems={[{ label: "Maintanance", path: "/maintanance", active: true }]}
+        breadCrumbItems={[
+          { label: "Maintanance", path: "/maintanance", active: true },
+        ]}
         title={"Maintanance"}
       />
 

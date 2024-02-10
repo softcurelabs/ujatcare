@@ -1,5 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { add, edit, notice, noticeHighlight, remove, show } from "../../helpers/api/notice";
+import {
+  add,
+  edit,
+  notice,
+  noticeHighlight,
+  remove,
+  show,
+} from "../../helpers/api/notice";
 import { NoticeData, NoticesType } from "../../types/NoticeType";
 
 const initialState: StateType = {
@@ -51,19 +58,22 @@ export const noticeAsync = createAsyncThunk<NoticesType | null, Number>(
   }
 );
 
-export const noticeHighlightAsync = createAsyncThunk<NoticesType | null, Number>(
-  "noticeHighlightAsync",
-  async (page = 1) => {
-    const response = await noticeHighlight(page);
-    return response.data;
-  }
-);
+export const noticeHighlightAsync = createAsyncThunk<
+  NoticesType | null,
+  Number
+>("noticeHighlightAsync", async (page = 1) => {
+  const response = await noticeHighlight(page);
+  return response.data;
+});
 
 export const noticeAddAsync = createAsyncThunk<StateType | null, any>(
   "noticeAsync/add",
   async (params: NoticeData, { rejectWithValue }) => {
     try {
-      const response = await add({ title: params.title, schedule_date: params.schedule_date });
+      const response = await add({
+        title: params.title,
+        schedule_date: params.schedule_date,
+      });
       return response.data;
     } catch (error) {
       return rejectWithValue(error);

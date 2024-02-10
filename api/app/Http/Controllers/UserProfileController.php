@@ -26,7 +26,16 @@ class UserProfileController extends Controller
      */
     public function index(Request $request)
     {
-        return UserProfile::with('user')->orderBy('id')->paginate($request->get('limit', 10));
+        return UserProfile::with('user')->whereHas('user.roles', static function ($query) {
+            return $query->whereIn('name', ['admin', 'staff']);
+        })->orderBy('id')->paginate($request->get('limit', 10));
+    }
+
+    public function recidents(Request $request)
+    {
+        return UserProfile::with('user')->whereHas('user.roles', static function ($query) {
+            return $query->whereIn('name', ['recident']);
+        })->orderBy('id')->paginate($request->get('limit', 10));
     }
 
     /**

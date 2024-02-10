@@ -97,7 +97,9 @@ const ProductEdit = () => {
           <Col lg={6}>
             <Card>
               <Card.Body>
-                <h5 className="text-uppercase bg-light p-2 mt-0 mb-3">General</h5>
+                <h5 className="text-uppercase bg-light p-2 mt-0 mb-3">
+                  General
+                </h5>
                 <FormInput
                   name="name"
                   label="Product Name"
@@ -215,14 +217,18 @@ const ProductEdit = () => {
           <Col lg={6}>
             <Card>
               <Card.Body>
-                <h5 className="text-uppercase mt-0 mb-3 bg-light p-2">Product Images</h5>
+                <h5 className="text-uppercase mt-0 mb-3 bg-light p-2">
+                  Product Images
+                </h5>
                 <FileUploader />
               </Card.Body>
             </Card>
 
             <Card>
               <Card.Body>
-                <h5 className="text-uppercase mt-0 mb-3 bg-light p-2">Meta Data</h5>
+                <h5 className="text-uppercase mt-0 mb-3 bg-light p-2">
+                  Meta Data
+                </h5>
                 <FormInput
                   name="metatitle"
                   label="Meta title"
@@ -263,13 +269,22 @@ const ProductEdit = () => {
         <Row>
           <Col>
             <div className="text-center mb-3">
-              <button type="button" className="btn w-sm btn-light waves-effect me-1">
+              <button
+                type="button"
+                className="btn w-sm btn-light waves-effect me-1"
+              >
                 Cancel
               </button>
-              <button type="submit" className="btn w-sm btn-success waves-effect waves-light me-1">
+              <button
+                type="submit"
+                className="btn w-sm btn-success waves-effect waves-light me-1"
+              >
                 Save
               </button>
-              <button type="button" className="btn w-sm btn-danger waves-effect waves-light me-1">
+              <button
+                type="button"
+                className="btn w-sm btn-danger waves-effect waves-light me-1"
+              >
                 Delete
               </button>
             </div>

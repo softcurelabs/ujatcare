@@ -3,14 +3,11 @@ import { Row, Col, Card, Button } from "react-bootstrap";
 
 // components
 import PageTitle from "../../components/PageTitle";
-import { FormInput, VerticalForm } from "../../components";
-import HyperDatepicker from "../../components/Datepicker";
+import { FormInput } from "../../components";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
-import { NoticeData } from "../../types/NoticeType";
-import { noticeAddAsync } from "../../store/notice/NoticeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { flatAsync } from "../../store/flat/FlatSlice";
@@ -22,7 +19,10 @@ const BasicInputElements = () => {
   const schemaResolver = yupResolver(
     yup.object().shape({
       name: yup.string().required(t("Please select name")),
-      email: yup.string().required(t("Please select name")).email(t("Please valid Email")),
+      email: yup
+        .string()
+        .required(t("Please select name"))
+        .email(t("Please valid Email")),
       role_id: yup.string().required(t("Please select role")),
     })
   );
@@ -40,8 +40,6 @@ const BasicInputElements = () => {
     register,
     handleSubmit,
     setError,
-    setValue,
-    reset,
     formState: { errors },
   } = useForm<UserData>({ defaultValues: {}, resolver: schemaResolver });
   const onSubmit = handleSubmit(async (data) => {
@@ -105,8 +103,8 @@ const BasicInputElements = () => {
                   errors={errors}
                 >
                   <option value="">Select Role</option>
-                  <option value="renter">Renter</option>
-                  <option value="admin">Admin</option>
+                  <option value="recident">Recident</option>
+                  <option value="staff">Staff</option>
                 </FormInput>
                 <FormInput
                   type="select"
@@ -118,9 +116,15 @@ const BasicInputElements = () => {
                 >
                   {flats.length &&
                     flats.map((flat) => (
-                      <optgroup key={`apartment${flat.id}`} label={flat.name.toString()}>
+                      <optgroup
+                        key={`apartment${flat.id}`}
+                        label={flat.name.toString()}
+                      >
                         {flat.flats.map((aprtment) => (
-                          <option key={"flat" + aprtment.id} value={aprtment.id}>
+                          <option
+                            key={"flat" + aprtment.id}
+                            value={aprtment.id}
+                          >
                             {aprtment.name}
                           </option>
                         ))}

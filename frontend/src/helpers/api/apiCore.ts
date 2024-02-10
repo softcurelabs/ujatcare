@@ -14,10 +14,10 @@ axios.interceptors.response.use(
   },
   (error) => {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
-    let message:String = "";
+    let message: String = "";
 
     if (error && error.response && error.response.status === 404) {
-      window.location.href = '/not-found';
+      window.location.href = "/not-found";
     } else if (error && error.response && error.response.status === 403) {
       window.location.href = "/access-denied";
     } else {
@@ -31,7 +31,7 @@ axios.interceptors.response.use(
         case 404:
           message = "Sorry! the data you are looking for could not be found";
           break;
-        case 422: 
+        case 422:
           return Promise.reject(error.response.data);
       }
       return Promise.reject(message);

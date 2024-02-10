@@ -47,9 +47,12 @@ const FlatSlice = createSlice({
   },
 });
 
-export const flatAsync = createAsyncThunk<Array<ApartmentType>>("flatAsync", async () => {
-  const response = await flats();
-  return response.data;
-});
+export const flatAsync = createAsyncThunk<Array<ApartmentType>>(
+  "flatAsync",
+  async () => {
+    const response = await flats();
+    return response.data;
+  }
+);
 
 export default FlatSlice.reducer;

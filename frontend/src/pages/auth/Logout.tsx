@@ -12,7 +12,11 @@ import { AppDispatch } from "../../store";
 
 const LogoutIcon = () => {
   return (
-    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+    <svg
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 130.2 130.2"
+    >
       {" "}
       <circle
         className="path circle"
@@ -74,7 +78,10 @@ const Logout = () => {
 
           <h3>{t("See you again !")}</h3>
 
-          <p className="text-muted"> {t("You are now successfully sign out.")} </p>
+          <p className="text-muted">
+            {" "}
+            {t("You are now successfully sign out.")}{" "}
+          </p>
         </div>
       </AuthLayout>
     </>

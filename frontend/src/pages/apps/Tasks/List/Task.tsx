@@ -10,15 +10,12 @@ import {
 } from "react-bootstrap";
 import classNames from "classnames";
 
-
 // dummy data
 import { TaskItemTypes } from "./data";
 
 const Task = (task: TaskItemTypes) => {
   const [completed, setCompleted] = useState<boolean>(task.stage === "Done");
   const [editorState, setEditorState] = useState<any>();
-
-
 
   /**
    * On editor body change
@@ -112,9 +109,7 @@ const Task = (task: TaskItemTypes) => {
               </Row>
 
               <Row className="mt-3">
-                <Col>
-                  
-                </Col>
+                <Col></Col>
               </Row>
 
               <h5 className="mt-4 mb-2 font-size-16">Checklists/Sub-tasks</h5>

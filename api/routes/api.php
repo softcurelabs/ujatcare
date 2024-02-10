@@ -36,7 +36,7 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 Route::get('flats', [FlatController::class, 'index']);
-Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
+Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff']], function () {
   Route::get('notice/{id}', [NoticeController::class, 'show']);
   Route::post('notice', [NoticeController::class, 'store']);
   Route::delete('notice/{id}', [NoticeController::class, 'delete']);
@@ -48,13 +48,14 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
   Route::delete('user/{id}', [UserProfileController::class, 'delete']);
 
   Route::get('user', [UserProfileController::class, 'index']);
+  Route::get('recident', [UserProfileController::class, 'recidents']);
 
   Route::post('user/import', [UserProfileController::class, 'import']);
 
   Route::put('permission/{user_id}', [UserProfileController::class, 'permission']);
 });
 
-Route::group(['middleware' => ['auth:sanctum', 'role:admin|renter']], function () {
+Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff|recident']], function () {
   Route::get('notice-highlight', [NoticeController::class, 'highlight']);
   Route::get('user/{id}', [UserProfileController::class, 'show']);
   Route::post('upload/{user_id}', [UserProfileController::class, 'upload']);
@@ -64,13 +65,13 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|renter']], function (
   Route::get('maintanance/{id}', [MaintanceController::class, 'show']);
 });
 
-Route::group(['middleware' => ['auth:sanctum', 'role:renter']], function () {
+Route::group(['middleware' => ['auth:sanctum', 'role:recident']], function () {
   Route::get('maintanance', [MaintanceController::class, 'list']);
   Route::post('maintanance', [MaintanceController::class, 'store']);
   Route::put('maintanance/{id}', [MaintanceController::class, 'update']);
 });
 
-Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
+Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff']], function () {
   Route::get('maintanance-admin', [MaintanceController::class, 'listAll']);
   Route::put('maintanance-admin/{id}', [MaintanceController::class, 'updateAdmin']);
   Route::get('maintanance-dashboard', [MaintanceController::class, 'dashboard']);

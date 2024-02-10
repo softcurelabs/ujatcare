@@ -83,7 +83,7 @@ class AuthController extends Controller
         }
 
         $user = $request->user();
-        if (!$user->hasRole(Role::Admin)) {
+        if (!($user->hasRole(Role::Admin) || $user->hasRole(Role::Staff))) {
             return response()->json([
                 'message' => 'User is not authorized'
             ], 401);
@@ -120,7 +120,7 @@ class AuthController extends Controller
 
         $user = $request->user();
 
-        if (!$user->hasRole(Role::Staff) && null === $this->userRepository->isValid($user->id, $request->get('flat_id'), $request->get('apartment_id'))) {
+        if (!$user->hasRole(Role::Recident) && null === $this->userRepository->isValid($user->id, $request->get('flat_id'), $request->get('apartment_id'))) {
             return response()->json([
                 'message' => 'User is not authorized'
             ], 401);

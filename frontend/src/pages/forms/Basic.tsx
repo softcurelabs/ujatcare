@@ -70,7 +70,10 @@ const BasicInputElements = () => {
 
           <Row>
             <Col lg={6}>
-              <form onSubmit={handleSubmit(() => {})} className={disabled ? "form-readonly" : ""}>
+              <form
+                onSubmit={handleSubmit(() => {})}
+                className={disabled ? "form-readonly" : ""}
+              >
                 <fieldset disabled={disabled ? true : undefined}>
                   <FormInput
                     label="Emergency Contact"
@@ -205,7 +208,11 @@ const BasicInputElements = () => {
             <Col lg={6}>
               <div className="text-end pb-2">
                 {disabled ? (
-                  <Button variant="primary" type="submit" onClick={() => setDisabled(false)}>
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    onClick={() => setDisabled(false)}
+                  >
                     Edit
                   </Button>
                 ) : (
@@ -252,7 +259,12 @@ const BasicInputElements = () => {
               </div>
             </Col>
             <Col lg={3}>
-              <Button onClick={() => navigate(-1)} variant="primary" className="me-2" type="submit">
+              <Button
+                onClick={() => navigate(-1)}
+                variant="primary"
+                className="me-2"
+                type="submit"
+              >
                 Back
               </Button>
               {!disabled ? (
@@ -277,20 +289,30 @@ const FloatingLabels = () => {
         <Card.Body>
           <h4 className="header-title">Floating labels</h4>
           <p className="sub-header">
-            Wrap a <code>&lt;Form.Control&gt;</code> element in <code>&lt;FloatingLabel&gt;</code>
+            Wrap a <code>&lt;Form.Control&gt;</code> element in{" "}
+            <code>&lt;FloatingLabel&gt;</code>
             to enable floating labels with Bootstrap’s textual form fields. A{" "}
             <code>placeholder</code>
-            is required on each <code>&lt;Form.Control&gt;</code> as our method of CSS-only floating
-            labels uses the <code>:placeholder-shown</code> pseudo-element.
+            is required on each <code>&lt;Form.Control&gt;</code> as our method
+            of CSS-only floating labels uses the <code>:placeholder-shown</code>{" "}
+            pseudo-element.
           </p>
 
           <Row>
             <Col lg={6}>
               <h5 className="mb-3">Floating Example</h5>
-              <FloatingLabel controlId="floatingInput" label="Email address" className="mb-3">
+              <FloatingLabel
+                controlId="floatingInput"
+                label="Email address"
+                className="mb-3"
+              >
                 <Form.Control type="email" placeholder="name@example.com" />
               </FloatingLabel>
-              <FloatingLabel controlId="floatingPassword" label="Password" className="mb-3">
+              <FloatingLabel
+                controlId="floatingPassword"
+                label="Password"
+                className="mb-3"
+              >
                 <Form.Control type="password" placeholder="Password" />
               </FloatingLabel>
               <FloatingLabel controlId="floatingTextarea2" label="Comments">
@@ -304,7 +326,11 @@ const FloatingLabels = () => {
 
             <Col lg={6}>
               <h5 className="mb-3">Selects</h5>
-              <FloatingLabel controlId="floatingSelect" label="Works with selects" className="mb-3">
+              <FloatingLabel
+                controlId="floatingSelect"
+                label="Works with selects"
+                className="mb-3"
+              >
                 <Form.Select aria-label="Floating label select example">
                   <option>Open this select menu</option>
                   <option value="1">One</option>
@@ -315,7 +341,10 @@ const FloatingLabels = () => {
 
               <Row className="g-2">
                 <Col md>
-                  <FloatingLabel controlId="floatingInputGrid" label="Email address">
+                  <FloatingLabel
+                    controlId="floatingInputGrid"
+                    label="Email address"
+                  >
                     <Form.Control
                       type="email"
                       placeholder="name@example.com"
@@ -324,7 +353,10 @@ const FloatingLabels = () => {
                   </FloatingLabel>
                 </Col>
                 <Col md>
-                  <FloatingLabel controlId="floatingSelectGrid" label="Works with selects">
+                  <FloatingLabel
+                    controlId="floatingSelectGrid"
+                    label="Works with selects"
+                  >
                     <Form.Select aria-label="Floating label select example">
                       <option>Open this select menu</option>
                       <option value="1">One</option>
@@ -368,12 +400,17 @@ const Switches = () => {
     <React.Fragment>
       <h4 className="header-title mt-4">Switches</h4>
       <p className="text-muted">
-        A switch has the markup of a custom checkbox but uses the <code>.custom-switch</code> class
-        to render a toggle switch. Switches also support the <code>disabled</code> attribute.
+        A switch has the markup of a custom checkbox but uses the{" "}
+        <code>.custom-switch</code> class to render a toggle switch. Switches
+        also support the <code>disabled</code> attribute.
       </p>
 
       <Form>
-        <Form.Check type="switch" id="custom-switch" label="Toggle this switch element" />
+        <Form.Check
+          type="switch"
+          id="custom-switch"
+          label="Toggle this switch element"
+        />
         <Form.Check
           disabled
           type="switch"
@@ -389,8 +426,16 @@ const Switches = () => {
 const CustomCheckboxes = () => {
   return (
     <>
-      <Form.Check type="checkbox" id="default-checkbox1" label="Check this custom checkbox" />
-      <Form.Check type="checkbox" id="default-checkbox2" label="Check this custom checkbox" />
+      <Form.Check
+        type="checkbox"
+        id="default-checkbox1"
+        label="Check this custom checkbox"
+      />
+      <Form.Check
+        type="checkbox"
+        id="default-checkbox2"
+        label="Check this custom checkbox"
+      />
     </>
   );
 };
@@ -420,31 +465,54 @@ const InputSizes = () => {
       <Card.Body>
         <h4 className="header-title">Input Sizes</h4>
         <p className="sub-header">
-          Use size on <code>&lt;FormControl&gt;</code> and <code>&lt;FormLabel&gt;</code> to change
-          the size of inputs and labels respectively.
+          Use size on <code>&lt;FormControl&gt;</code> and{" "}
+          <code>&lt;FormLabel&gt;</code> to change the size of inputs and labels
+          respectively.
         </p>
 
         <Form>
           <Form.Group className="mb-3">
             <Form.Label htmlFor="small">Small</Form.Label>
-            <Form.Control type="text" name="small" id="small" placeholder="Small" size="sm" />
+            <Form.Control
+              type="text"
+              name="small"
+              id="small"
+              placeholder="Small"
+              size="sm"
+            />
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label htmlFor="Normal">Normal</Form.Label>
-            <Form.Control type="text" name="Normal" id="Normal" placeholder="Normal" />
+            <Form.Control
+              type="text"
+              name="Normal"
+              id="Normal"
+              placeholder="Normal"
+            />
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label htmlFor="Large">Large</Form.Label>
-            <Form.Control type="text" name="Large" id="Large" placeholder="Large" size="lg" />
+            <Form.Control
+              type="text"
+              name="Large"
+              id="Large"
+              placeholder="Large"
+              size="lg"
+            />
           </Form.Group>
 
           <Form.Group className="mb-0">
             <Form.Label htmlFor="grid">Grid Sizes</Form.Label>
             <Row>
               <Col sm={4}>
-                <Form.Control type="text" name="grid" id="grid" placeholder=".col-sm-4" />
+                <Form.Control
+                  type="text"
+                  name="grid"
+                  id="grid"
+                  placeholder=".col-sm-4"
+                />
               </Col>
             </Row>
           </Form.Group>
@@ -460,8 +528,9 @@ const InputGroups = () => {
       <Card.Body>
         <h4 className="header-title">Input Group</h4>
         <p className="sub-header">
-          Easily extend form conrols by adding text, buttons, or button groups on either side of
-          textual inputs, custom selects, and custom file inputs
+          Easily extend form conrols by adding text, buttons, or button groups
+          on either side of textual inputs, custom selects, and custom file
+          inputs
         </p>
 
         <Form>
@@ -480,7 +549,11 @@ const InputGroups = () => {
           <Form.Group>
             <Form.Label htmlFor="Dropdown">Dropdown</Form.Label>
             <InputGroup className="mb-3">
-              <DropdownButton variant="primary" title="Dropdown" id="input-group-dropdown-1">
+              <DropdownButton
+                variant="primary"
+                title="Dropdown"
+                id="input-group-dropdown-1"
+              >
                 <Dropdown.Item href="#">Action</Dropdown.Item>
                 <Dropdown.Item href="#">Another action</Dropdown.Item>
                 <Dropdown.Item href="#">Something else here</Dropdown.Item>
@@ -514,7 +587,9 @@ const InputGroups = () => {
             </Col>
             <Col sm={6}>
               <Form.Group>
-                <Form.Label htmlFor="formFileMultiple01">Multiple input</Form.Label>
+                <Form.Label htmlFor="formFileMultiple01">
+                  Multiple input
+                </Form.Label>
                 <Form.Control type="file" multiple />
               </Form.Group>
             </Col>
@@ -540,7 +615,9 @@ const DefaultForm = () => {
               id="exampleEmail2"
               placeholder="Enter your email"
             />
-            <Form.Text>We'll never share your email with anyone else.</Form.Text>
+            <Form.Text>
+              We'll never share your email with anyone else.
+            </Form.Text>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -555,7 +632,11 @@ const DefaultForm = () => {
           </Form.Group>
 
           <Form.Group className="mb-3" id="formGridCheckbox">
-            <Form.Check type="checkbox" id="formGridCheckbox" label="Check me out" />
+            <Form.Check
+              type="checkbox"
+              id="formGridCheckbox"
+              label="Check me out"
+            />
           </Form.Group>
 
           <Button variant="primary" type="submit">
@@ -578,7 +659,12 @@ const HorizontalForm = () => {
               Email
             </Form.Label>
             <Col sm={9}>
-              <Form.Control type="email" name="email" id="exampleEmail3" placeholder="Email" />
+              <Form.Control
+                type="email"
+                name="email"
+                id="exampleEmail3"
+                placeholder="Email"
+              />
             </Col>
           </Form.Group>
 
@@ -636,8 +722,8 @@ const InlineForm = () => {
         <h4 className="header-title">Column sizing</h4>
 
         <p className="sub-header">
-          As shown in the previous examples, our grid system allows you to place any number of{" "}
-          <code>.col</code>s within a <code>.row</code>.
+          As shown in the previous examples, our grid system allows you to place
+          any number of <code>.col</code>s within a <code>.row</code>.
         </p>
         <Form className="row row-cols-lg-auto g-3 align-items-center">
           <div className="col-12">
@@ -679,7 +765,11 @@ const InlineForm = () => {
               <Form.Label htmlFor="inlineFormInput" visuallyHidden>
                 Name
               </Form.Label>
-              <Form.Control className="mb-2" id="inlineFormInput" placeholder="Jane Doe" />
+              <Form.Control
+                className="mb-2"
+                id="inlineFormInput"
+                placeholder="Jane Doe"
+              />
             </Col>
             <Col xs="auto">
               <Form.Label htmlFor="inlineFormInputGroup" visuallyHidden>
@@ -687,7 +777,10 @@ const InlineForm = () => {
               </Form.Label>
               <InputGroup className="mb-2">
                 <InputGroup.Text>@</InputGroup.Text>
-                <Form.Control id="inlineFormInputGroup" placeholder="Username" />
+                <Form.Control
+                  id="inlineFormInputGroup"
+                  placeholder="Username"
+                />
               </InputGroup>
             </Col>
             <Col xs="auto">
@@ -764,10 +857,18 @@ const FormGrid = () => {
             </Row>
 
             <Form.Group className="mb-3" id="formGridCheckbox">
-              <Form.Check type="checkbox" label="Check me out" id="formGridCheckbox" />
+              <Form.Check
+                type="checkbox"
+                label="Check me out"
+                id="formGridCheckbox"
+              />
             </Form.Group>
 
-            <Button variant="primary" type="submit" className="waves-effect waves-light">
+            <Button
+              variant="primary"
+              type="submit"
+              className="waves-effect waves-light"
+            >
               Sign in
             </Button>
           </Form>
@@ -817,7 +918,8 @@ const CheckboxBasic = () => {
       <h4 className="header-title">Custom checkbox - Basic</h4>
 
       <p className="sub-header">
-        Supports bootstrap brand colors: <code>.form-check</code>,<code>.form-check-*</code> etc.
+        Supports bootstrap brand colors: <code>.form-check</code>,
+        <code>.form-check-*</code> etc.
       </p>
 
       {(colors || []).map((item, index) => {
@@ -885,7 +987,11 @@ const CheckboxCircled = () => {
           <Form.Check
             key={index}
             id={`circle-checkbox-${index}`}
-            className={classNames("mb-2", "form-check", "form-check-" + item.variant)}
+            className={classNames(
+              "mb-2",
+              "form-check",
+              "form-check-" + item.variant
+            )}
           >
             <Form.Check.Input
               type="checkbox"
@@ -989,7 +1095,8 @@ const RadioBasic = () => {
       <h4 className="header-title">Custom radio - Basic</h4>
 
       <p className="sub-header">
-        Supports bootstrap brand colors: <code>.form-check</code>,<code>.form-check-*</code> etc.
+        Supports bootstrap brand colors: <code>.form-check</code>,
+        <code>.form-check-*</code> etc.
       </p>
       <Row>
         <Col sm={6}>

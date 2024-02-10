@@ -29,7 +29,11 @@ const Dashboard1 = () => {
 
   return (
     <>
-      {user && user.user_role.includes("admin") && <Navigate to={"/dashboard-2"}></Navigate>}
+      {user &&
+        (user.user_role.includes("admin") ||
+          user.user_role.includes("staff")) && (
+          <Navigate to={"/dashboard-2"}></Navigate>
+        )}
       <Row>
         <Col>
           <div className="page-title-box">
@@ -48,7 +52,9 @@ const Dashboard1 = () => {
             </Card.Body>
           </Card>
         </Col>
-        <Col xl={6}>{notices && <NoticeHighlight noticeHighlights={notices} />}</Col>
+        <Col xl={6}>
+          {notices && <NoticeHighlight noticeHighlights={notices} />}
+        </Col>
       </Row>
     </>
   );

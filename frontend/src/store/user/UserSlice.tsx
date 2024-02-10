@@ -9,6 +9,7 @@ import {
   upload,
   permission,
   importUser,
+  recident,
 } from "../../helpers/api/user";
 import {
   PasswordDataType,
@@ -52,6 +53,10 @@ const UserSlice = createSlice({
         state.users = action.payload;
         state.loading = false;
       })
+      .addCase(recidentAsync.fulfilled, (state, action) => {
+        state.users = action.payload;
+        state.loading = false;
+      })
       .addCase(userAsync.rejected, (state, action) => {
         state.loading = false;
       });
@@ -62,6 +67,14 @@ export const userAsync = createAsyncThunk<UsersType | null, Number>(
   "userAsync",
   async (page = 1) => {
     const response = await user(page);
+    return response.data;
+  }
+);
+
+export const recidentAsync = createAsyncThunk<UsersType | null, Number>(
+  "recidentAsync",
+  async (page = 1) => {
+    const response = await recident(page);
     return response.data;
   }
 );

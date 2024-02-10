@@ -1,6 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Row, Col, Card, Form, FloatingLabel, Button, FormGroup, FormLabel } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Card,
+  Form,
+  FloatingLabel,
+  Button,
+  FormGroup,
+  FormLabel,
+} from "react-bootstrap";
 // components
 import PageTitle from "../../components/PageTitle";
 import {
@@ -138,6 +147,10 @@ const BasicInputElements = () => {
           setToast(response.message);
           setLocalError("");
           //   signCanvas.current?.clear();
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
         }
       })
       .catch((reason) => {
@@ -174,7 +187,9 @@ const BasicInputElements = () => {
               <Col lg={4}>
                 <Form.Group className="mb-3">
                   <Form.Label className="me-2">Building</Form.Label>
-                  <Form.Label>{localUser && localUser.user.apartment_name}</Form.Label>
+                  <Form.Label>
+                    {localUser && localUser.user.apartment_name}
+                  </Form.Label>
                   <FormInput
                     type="hidden"
                     name="user_id"
@@ -183,7 +198,12 @@ const BasicInputElements = () => {
                     register={register}
                   />
 
-                  <FormInput type="hidden" name="id" register={register} disabled={true} />
+                  <FormInput
+                    type="hidden"
+                    name="id"
+                    register={register}
+                    disabled={true}
+                  />
                 </Form.Group>
               </Col>
 
@@ -192,7 +212,9 @@ const BasicInputElements = () => {
                   <Form.Label htmlFor="small" className="me-2">
                     Apt
                   </Form.Label>
-                  <Form.Label>{localUser && localUser.user.flat_name}</Form.Label>
+                  <Form.Label>
+                    {localUser && localUser.user.flat_name}
+                  </Form.Label>
                   <FormInput
                     type="hidden"
                     disabled={true}
@@ -369,13 +391,18 @@ const BasicInputElements = () => {
                     hideAddon={true}
                     value={actionDate}
                     showTimeSelect={false}
-                    inputClass="form-control-sm"
+                    inputClass="form-control-sm "
                     dateFormat="MM-DD-YYYY"
                     onChange={(date) => {
                       setActionDate(date);
                       setValue("action_date", date.toLocaleString("sv-SE"));
                     }}
                   />
+                  {errors && errors["action_date"] ? (
+                    <Form.Control.Feedback type="invalid">
+                      {errors["action_date"]!.message}
+                    </Form.Control.Feedback>
+                  ) : null}
                 </FormGroup>
               </Col>
               <Col lg={4}>
@@ -400,6 +427,11 @@ const BasicInputElements = () => {
                       setValue("time_in", timeIn.toLocaleTimeString("it-IT"));
                     }}
                   />
+                  {errors && errors["time_in"] ? (
+                    <Form.Control.Feedback type="invalid">
+                      {errors["time_in"]!.message}
+                    </Form.Control.Feedback>
+                  ) : null}
                 </FormGroup>
               </Col>
               <Col lg={4}>
@@ -424,6 +456,11 @@ const BasicInputElements = () => {
                       setValue("time_out", timeOut.toLocaleTimeString("it-IT"));
                     }}
                   />
+                  {errors && errors["time_out"] ? (
+                    <Form.Control.Feedback type="invalid">
+                      {errors["time_out"]!.message}
+                    </Form.Control.Feedback>
+                  ) : null}
                 </FormGroup>
               </Col>
             </Row>
@@ -444,7 +481,9 @@ const BasicInputElements = () => {
             <Row>
               <Col lg={12}>
                 <FormGroup className="mb-3">
-                  <FormLabel className="me-1 ">Service Person Signature</FormLabel>
+                  <FormLabel className="me-1 ">
+                    Service Person Signature
+                  </FormLabel>
                   <Controller
                     control={control}
                     name="service_signature"

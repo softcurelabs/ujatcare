@@ -15,7 +15,11 @@ const List = () => {
     <>
       <PageTitle
         breadCrumbItems={[
-          { label: "Maintanance Request History", path: "/apps/tickets/list", active: true },
+          {
+            label: "Maintanance Request History",
+            path: "/apps/tickets/list",
+            active: true,
+          },
         ]}
         title={"Maintanance Request History"}
       />

@@ -292,11 +292,7 @@ const ChatArea = ({ selectedUser }: ChatAreaProps) => {
           <Row>
             <Col>
               <div className="mt-3 bg-light p-3 rounded">
-                <form
-                  noValidate
-                  name="chat-form"
-                  id="chat-form"
-                >
+                <form noValidate name="chat-form" id="chat-form">
                   <div className="row">
                     <div className="col mb-2 mb-sm-0">
                       <FormInput

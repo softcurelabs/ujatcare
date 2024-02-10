@@ -77,7 +77,7 @@ const ImportUsers = ({ show, onHide, onSubmit }: AddMemberProps) => {
         dialogClassName="modal-xl"
       >
         <Modal.Header className="bg-light" onHide={onHide} closeButton>
-          <Modal.Title className="m-0">Import Renters</Modal.Title>
+          <Modal.Title className="m-0">Import Recidents</Modal.Title>
         </Modal.Header>
         <Modal.Body className="p-4">
           <FormLabel>
@@ -113,11 +113,19 @@ const ImportUsers = ({ show, onHide, onSubmit }: AddMemberProps) => {
               {isLoading ? (
                 <Loader />
               ) : (
-                <Button variant="success" type="submit" className="waves-effect waves-light me-1">
+                <Button
+                  variant="success"
+                  type="submit"
+                  className="waves-effect waves-light me-1"
+                >
                   Save
                 </Button>
               )}
-              <Button variant="danger" className="waves-effect waves-light" onClick={onHide}>
+              <Button
+                variant="danger"
+                className="waves-effect waves-light"
+                onClick={onHide}
+              >
                 Exit
               </Button>
             </div>

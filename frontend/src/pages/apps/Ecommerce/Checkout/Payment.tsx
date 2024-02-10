@@ -108,13 +108,11 @@ const Payment = () => {
               <Col md={3}>
                 <div className="mb-3">
                   <label className="form-label">Expiry date</label>
-                  
                 </div>
               </Col>
               <Col md={3}>
                 <div className="mb-3">
                   <label className="form-label">CVV</label>
-                  
                 </div>
               </Col>
             </Row>

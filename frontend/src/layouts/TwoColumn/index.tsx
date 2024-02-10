@@ -109,7 +109,10 @@ const TwoColumnLayout = ({ children }: VerticalLayoutProps) => {
   }, [leftSideBarType]);
 
   useEffect(() => {
-    changeHTMLAttribute("data-menu-icon", showTwoToneIcons ? "twotones" : "default");
+    changeHTMLAttribute(
+      "data-menu-icon",
+      showTwoToneIcons ? "twotones" : "default"
+    );
   }, [showTwoToneIcons]);
 
   /**

@@ -22,7 +22,8 @@ interface RightSideBarProps {
 const RightSideBar = (props: RightSideBarProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const rightBarNodeRef: any = useRef(null);
-  const [showRightSideNav, setShowRightSideNav] = useState<boolean>(rightBarNodeRef);
+  const [showRightSideNav, setShowRightSideNav] =
+    useState<boolean>(rightBarNodeRef);
 
   const { isOpenRightSideBar } = useSelector((state: RootState) => ({
     isOpenRightSideBar: state.Layout.isOpenRightSideBar,
@@ -68,7 +69,10 @@ const RightSideBar = (props: RightSideBarProps) => {
             // timeout={500}
             scrollbarMaxSize={320}
           >
-            <Tab.Container id="left-tabs-example" defaultActiveKey="themecustomizer">
+            <Tab.Container
+              id="left-tabs-example"
+              defaultActiveKey="themecustomizer"
+            >
               <Nav variant="tabs" className="nav-bordered nav-justified">
                 <Nav.Item as="li">
                   <Nav.Link eventKey="chats" className="py-2 cursor-pointer">
@@ -81,7 +85,10 @@ const RightSideBar = (props: RightSideBarProps) => {
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item as="li">
-                  <Nav.Link eventKey="themecustomizer" className="py-2 cursor-pointer">
+                  <Nav.Link
+                    eventKey="themecustomizer"
+                    className="py-2 cursor-pointer"
+                  >
                     <i className="mdi mdi-cog-outline d-block font-22 my-1"></i>
                   </Nav.Link>
                 </Nav.Item>

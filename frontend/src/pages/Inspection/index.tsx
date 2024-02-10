@@ -13,7 +13,11 @@ const Inspection = () => {
     <>
       <PageTitle
         breadCrumbItems={[
-          { label: "Maintanance Inspection History", path: "/apps/tickets/list", active: true },
+          {
+            label: "Maintanance Inspection History",
+            path: "/apps/tickets/list",
+            active: true,
+          },
         ]}
         title={"Maintanance Inspection History"}
       />
