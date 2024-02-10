@@ -18,7 +18,6 @@ import {
   UserEditType,
   UserPermissionType,
   UserProfileDataType,
-  UserProfileType,
   UsersType,
 } from "../../types/UserType";
 

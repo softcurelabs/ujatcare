@@ -34,66 +34,30 @@ const Dashboard4 = React.lazy(() => import("../pages/dashboard/Dashboard4/"));
 
 // apps
 const CalendarApp = React.lazy(() => import("../pages/apps/Calendar/"));
-const Projects = React.lazy(() => import("../pages/apps/Projects/"));
-const ProjectDetail = React.lazy(
-  () => import("../pages/apps/Projects/Detail/")
-);
-const ProjectForm = React.lazy(
-  () => import("../pages/apps/Projects/ProjectForm")
-);
 // - chat
 const ChatApp = React.lazy(() => import("../pages/apps/Chat/"));
 // - ecommece pages
-const EcommerceDashboard = React.lazy(
-  () => import("../pages/apps/Ecommerce/Dashboard/")
-);
-const EcommerceProducts = React.lazy(
-  () => import("../pages/apps/Ecommerce/Products")
-);
-const ProductDetails = React.lazy(
-  () => import("../pages/apps/Ecommerce/ProductDetails")
-);
-const ProductEdit = React.lazy(
-  () => import("../pages/apps/Ecommerce/ProductEdit")
-);
+const EcommerceDashboard = React.lazy(() => import("../pages/apps/Ecommerce/Dashboard/"));
+const ProductDetails = React.lazy(() => import("../pages/apps/Ecommerce/ProductDetails"));
+const ProductEdit = React.lazy(() => import("../pages/apps/Ecommerce/ProductEdit"));
 const Customers = React.lazy(() => import("../pages/apps/Ecommerce/Customers"));
 const Orders = React.lazy(() => import("../pages/apps/Ecommerce/Orders"));
-const OrderDetails = React.lazy(
-  () => import("../pages/apps/Ecommerce/OrderDetails")
-);
+const OrderDetails = React.lazy(() => import("../pages/apps/Ecommerce/OrderDetails"));
 const Sellers = React.lazy(() => import("../pages/apps/Ecommerce/Sellers"));
 const Cart = React.lazy(() => import("../pages/apps/Ecommerce/Cart"));
 const Checkout = React.lazy(() => import("../pages/apps/Ecommerce/Checkout"));
-// - crm pages
-const CRMDashboard = React.lazy(() => import("../pages/apps/CRM/Dashboard/"));
-const CRMContacts = React.lazy(() => import("../pages/apps/CRM/Contacts/"));
-const Opportunities = React.lazy(
-  () => import("../pages/apps/CRM/Opportunities/")
-);
-const CRMLeads = React.lazy(() => import("../pages/apps/CRM/Leads/"));
-const CRMCustomers = React.lazy(() => import("../pages/apps/CRM/Customers/"));
-// - social
-const SocialFeed = React.lazy(() => import("../pages/apps/SocialFeed/"));
-// - companies
-const Companies = React.lazy(() => import("../pages/apps/Companies/"));
 // - tasks
 const TaskList = React.lazy(() => import("../pages/apps/Tasks/List/"));
 const TaskDetails = React.lazy(() => import("../pages/apps/Tasks/Details"));
 const Kanban = React.lazy(() => import("../pages/apps/Tasks/Board/"));
 // -contacts
 const ContactsList = React.lazy(() => import("../pages/apps/Contacts/List/"));
-const ContactsProfile = React.lazy(
-  () => import("../pages/apps/Contacts/Profile/")
-);
+const ContactsProfile = React.lazy(() => import("../pages/apps/Contacts/Profile/"));
 // -tickets
 const TicketsList = React.lazy(() => import("../pages/apps/Tickets/List/"));
 
 const RequestList = React.lazy(() => import("../pages/apps/Request/List/"));
-const TicketsDetails = React.lazy(
-  () => import("../pages/apps/Tickets/Details/")
-);
-// - file
-const FileManager = React.lazy(() => import("../pages/apps/FileManager"));
+const TicketsDetails = React.lazy(() => import("../pages/apps/Tickets/Details/"));
 
 // extra pages
 const Starter = React.lazy(() => import("../pages/other/Starter"));
@@ -117,27 +81,19 @@ const Inspection = React.lazy(() => import("../pages/Inspection"));
 const NoticeList = React.lazy(() => import("../pages/notice/Notices"));
 const NewNotice = React.lazy(() => import("../pages/notice/NewNotice"));
 const EditNotice = React.lazy(() => import("../pages/notice/EditNotice"));
-const NoticeHighlight = React.lazy(
-  () => import("../pages/notice/CustomerNotices")
-);
+const NoticeHighlight = React.lazy(() => import("../pages/notice/CustomerNotices"));
 
 const UserList = React.lazy(() => import("../pages/user/Users"));
 const RecidentList = React.lazy(() => import("../pages/user/Recidents"));
 const EditUser = React.lazy(() => import("../pages/user/EditUser"));
 const NewUser = React.lazy(() => import("../pages/user/NewUser"));
 
-const AssignPermission = React.lazy(
-  () => import("../pages/user/AssignPermission")
-);
+const AssignPermission = React.lazy(() => import("../pages/user/AssignPermission"));
 const MyAccount = React.lazy(() => import("../pages/user/MyAccount"));
 const MaintananceList = React.lazy(() => import("../pages/maintanance/List"));
 const MaintananceEdit = React.lazy(() => import("../pages/maintanance/Edit"));
-const MaintananceEditAdmin = React.lazy(
-  () => import("../pages/maintanance/EditAdmin")
-);
-const MaintananceListAdmin = React.lazy(
-  () => import("../pages/maintanance/ListAdmin")
-);
+const MaintananceEditAdmin = React.lazy(() => import("../pages/maintanance/EditAdmin"));
+const MaintananceListAdmin = React.lazy(() => import("../pages/maintanance/ListAdmin"));
 
 const RentPayment = React.lazy(() => import("../pages/rent/RentPayment"));
 // uikit
@@ -184,13 +140,9 @@ const TwoToneIcons = React.lazy(() => import("../pages/icons/TwoToneIcons/"));
 const FeatherIcons = React.lazy(() => import("../pages/icons/FeatherIcons/"));
 const Dripicons = React.lazy(() => import("../pages/icons/Dripicons/"));
 const MDIIcons = React.lazy(() => import("../pages/icons/MDIIcons/"));
-const FontAwesomeIcons = React.lazy(
-  () => import("../pages/icons/FontAwesomeIcons/")
-);
+const FontAwesomeIcons = React.lazy(() => import("../pages/icons/FontAwesomeIcons/"));
 const ThemifyIcons = React.lazy(() => import("../pages/icons/ThemifyIcons/"));
-const SimpleLineIcons = React.lazy(
-  () => import("../pages/icons/SimpleLineIcons/")
-);
+const SimpleLineIcons = React.lazy(() => import("../pages/icons/SimpleLineIcons/"));
 const WeatherIcons = React.lazy(() => import("../pages/icons/WeatherIcons/"));
 
 // forms
@@ -360,93 +312,6 @@ const ecommerceAppRoutes = {
   ],
 };
 
-const crmAppRoutes = {
-  path: "/apps/crm",
-  name: "CRM",
-  route: PrivateRoute,
-  roles: ["Admin"],
-  icon: "users",
-  children: [
-    {
-      path: "/apps/crm/dashboard",
-      name: "Dashboard",
-      element: <CRMDashboard />,
-      route: PrivateRoute,
-    },
-    {
-      path: "/apps/crm/contacts",
-      name: "Contacts",
-      element: <CRMContacts />,
-      route: PrivateRoute,
-    },
-    {
-      path: "/apps/crm/opportunities",
-      name: "Opportunities",
-      element: <Opportunities />,
-      route: PrivateRoute,
-    },
-    {
-      path: "/apps/crm/leads",
-      name: "Leads",
-      element: <CRMLeads />,
-      route: PrivateRoute,
-    },
-    {
-      path: "/apps/crm/customers",
-      name: "Customers",
-      element: <CRMCustomers />,
-      route: PrivateRoute,
-    },
-  ],
-};
-
-const socialAppRoutes = {
-  path: "/apps/social-feed",
-  name: "Social Feed",
-  route: PrivateRoute,
-  roles: ["Admin"],
-  icon: "rss",
-  element: <SocialFeed />,
-};
-
-const companiesAppRoutes = {
-  path: "/apps/companies",
-  name: "Companies",
-  route: PrivateRoute,
-  roles: ["Admin"],
-  icon: "activity",
-  element: <Companies />,
-};
-
-const projectAppRoutes = {
-  path: "/apps/projects",
-  name: "Projects",
-  route: PrivateRoute,
-  roles: ["Admin"],
-  icon: "uil-briefcase",
-
-  children: [
-    {
-      path: "/apps/projects/list",
-      name: "List",
-      element: <Projects />,
-      route: PrivateRoute,
-    },
-    {
-      path: "/apps/projects/:id/details",
-      name: "Detail",
-      element: <ProjectDetail />,
-      route: PrivateRoute,
-    },
-    {
-      path: "/apps/projects/create",
-      name: "Create Project",
-      element: <ProjectForm />,
-      route: PrivateRoute,
-    },
-  ],
-};
-
 const taskAppRoutes = {
   path: "/apps/tasks",
   name: "Tasks",
@@ -523,15 +388,6 @@ const ticketsRoutes = {
       route: PrivateRoute,
     },
   ],
-};
-
-const fileAppRoutes = {
-  path: "/apps/file-manager",
-  name: "File Manager",
-  route: PrivateRoute,
-  roles: ["Admin"],
-  icon: "folder-plus",
-  element: <FileManager />,
 };
 
 const appRoutes = [
@@ -1199,12 +1055,7 @@ const flattenRoutes = (routes: RoutesProps[]) => {
 };
 
 // All routes
-const authProtectedRoutes = [
-  dashboardRoutes,
-  ...appRoutes,
-  extrapagesRoutes,
-  uiRoutes,
-];
+const authProtectedRoutes = [dashboardRoutes, ...appRoutes, extrapagesRoutes, uiRoutes];
 const publicRoutes = [...authRoutes, ...otherPublicRoutes];
 
 const authProtectedFlattenRoutes = flattenRoutes([...authProtectedRoutes]);

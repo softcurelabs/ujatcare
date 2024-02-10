@@ -1,11 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { NoticeData, NoticesType } from "../../types/NoticeType";
-import {
-  DashboardType,
-  MaintananceData,
-  MaintananceType,
-  MaintanancesType,
-} from "../../types/MaintananceType";
+import { DashboardType, MaintananceData, MaintanancesType } from "../../types/MaintananceType";
 import {
   maintanance,
   maintananceAdmin,
@@ -54,29 +48,29 @@ const MaintananceSlice = createSlice({
   },
 });
 
-export const maintananceAsync = createAsyncThunk<
-  MaintanancesType | null,
-  Number
->("maintananceAsync", async (page = 1) => {
-  const response = await maintanance(page);
-  return response.data;
-});
+export const maintananceAsync = createAsyncThunk<MaintanancesType | null, Number>(
+  "maintananceAsync",
+  async (page = 1) => {
+    const response = await maintanance(page);
+    return response.data;
+  }
+);
 
-export const maintananceAdminAsync = createAsyncThunk<
-  MaintanancesType | null,
-  Number
->("maintananceAdminAsync", async (page = 1) => {
-  const response = await maintananceAdmin(page);
-  return response.data;
-});
+export const maintananceAdminAsync = createAsyncThunk<MaintanancesType | null, Number>(
+  "maintananceAdminAsync",
+  async (page = 1) => {
+    const response = await maintananceAdmin(page);
+    return response.data;
+  }
+);
 
-export const maintananceShowAsync = createAsyncThunk<
-  MaintananceData | null,
-  any
->("maintananceShowAsync", async (id: string) => {
-  const response = await maintananceShow(id);
-  return response.data;
-});
+export const maintananceShowAsync = createAsyncThunk<MaintananceData | null, any>(
+  "maintananceShowAsync",
+  async (id: string) => {
+    const response = await maintananceShow(id);
+    return response.data;
+  }
+);
 
 export const maintananceAddAsync = createAsyncThunk<StateType | null, any>(
   "maintananceAsync/add",
@@ -90,17 +84,17 @@ export const maintananceAddAsync = createAsyncThunk<StateType | null, any>(
   }
 );
 
-export const maintananceDashboardAsync = createAsyncThunk<
-  DashboardType | null,
-  any
->("maintananceAsync/dashboard", async ({ rejectWithValue }) => {
-  try {
-    const response = await maintananceDashboard();
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error);
+export const maintananceDashboardAsync = createAsyncThunk<DashboardType | null, any>(
+  "maintananceAsync/dashboard",
+  async ({ rejectWithValue }) => {
+    try {
+      const response = await maintananceDashboard();
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
   }
-});
+);
 
 export const maintananceEditAsync = createAsyncThunk<StateType | null, any>(
   "maintananceAsync/edit",
@@ -114,10 +108,7 @@ export const maintananceEditAsync = createAsyncThunk<StateType | null, any>(
   }
 );
 
-export const maintananceAdminEditAsync = createAsyncThunk<
-  StateType | null,
-  any
->(
+export const maintananceAdminEditAsync = createAsyncThunk<StateType | null, any>(
   "maintananceAdminAsync/edit",
   async (param: MaintananceData, { rejectWithValue }) => {
     try {
