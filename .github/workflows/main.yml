@@ -9,19 +9,18 @@ jobs:
     - name: Upload ftp
       uses: sebastianpopp/ftp-action@releases/v2
       with:
-        host: appt.ujatech.com
+        host: appt.ujatech.com:4121
         user: github_action@appt.ujatech.com
         password: ${{ secrets.FTP_PASSWORD }}
         localDir: "./api"
         remoteDir: "./backend"
-        options: "-p 4121 --delete --asci"
+        options: "--delete --asci"
     - name: Sync UI code
       uses: sebastianpopp/ftp-action@releases/v2
       with:
         host: appt.ujatech.com
         user: github_action@appt.ujatech.com
         password: ${{ secrets.FTP_PASSWORD }}
-        port: 4121
         localDir: "./frontend/build"
         remoteDir: "./"
-        options: "-p 4121 --delete --asci"
+        options: "--delete --asci"
