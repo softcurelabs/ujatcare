@@ -12,10 +12,9 @@ jobs:
         host: appt.ujatech.com
         user: github_action@appt.ujatech.com
         password: ${{ secrets.FTP_PASSWORD }}
-        port: 4121
         localDir: "./api"
         remoteDir: "./backend"
-        options: "--delete --asci"
+        options: "-p 4121 --delete --asci"
     - name: Sync UI code
       uses: sebastianpopp/ftp-action@releases/v2
       with:
@@ -25,4 +24,4 @@ jobs:
         port: 4121
         localDir: "./frontend/build"
         remoteDir: "./"
-        options: "--delete --asci"
+        options: "-p 4121 --delete --asci"
