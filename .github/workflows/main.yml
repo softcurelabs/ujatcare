@@ -1,6 +1,31 @@
 on: push
 name: 🚀 Deploy website on push
 jobs:
+ deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Upload ftp
+      uses: sebastianpopp/ftp-action@releases/v2
+      with:
+        host: appt.ujatech.com
+        user: github_action@appt.ujatech.com
+        password: ${{ secrets.FTP_PASSWORD }}
+        port: 4121
+        localDir: "api"
+        remoteDir: "backend"
+        options: "--delete --asci"
+    - name: Sync UI code
+      uses: sebastianpopp/ftp-action@releases/v2
+      with:
+        host: appt.ujatech.com
+        user: github_action@appt.ujatech.com
+        password: ${{ secrets.FTP_PASSWORD }}
+        port: 4121
+        localDir: "frontend/build"
+        remoteDir: "./"
+        options: "--delete --asci"
   web-deploy:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
