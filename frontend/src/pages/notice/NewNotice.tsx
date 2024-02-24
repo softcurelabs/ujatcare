@@ -19,10 +19,7 @@ const BasicInputElements = () => {
   const { t } = useTranslation();
   const schemaResolver = yupResolver(
     yup.object().shape({
-      title: yup
-        .string()
-        .required(t("Please select title"))
-        .min(10, "Atleast 10 char required"),
+      title: yup.string().required(t("Please select title")).min(10, "Atleast 10 char required"),
     })
   );
   const [toast, setToast] = useState("");
@@ -121,10 +118,10 @@ const NewNotice = () => {
       <PageTitle
         breadCrumbItems={[
           { label: "Dashboard", path: "/dashboard-2" },
-          { label: "Notices", path: "/notice" },
-          { label: "Notice", path: "/notice/new", active: true },
+          { label: "Bulletin Board", path: "/notice" },
+          { label: "Bulletin Board", path: "/notice/new", active: true },
         ]}
-        title={"Notice"}
+        title={"Bulletin Board"}
       />
 
       <Row>

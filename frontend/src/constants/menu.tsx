@@ -115,7 +115,7 @@ const MENU_ITEMS: MenuItemTypes[] = [
       },
       {
         key: "maintanance-inspection-history",
-        label: "Notices",
+        label: "Bulletin Board",
         isTitle: false,
         url: "/inspection",
       },
@@ -132,7 +132,7 @@ const CUSTOMER_ITEMS: MenuItemTypes[] = [
   },
   {
     key: "rent-payment",
-    label: "Rent Payment",
+    label: "Payment Setup",
     isTitle: false,
     url: "/rent-payment",
   },
@@ -156,28 +156,40 @@ const CUSTOMER_ITEMS: MenuItemTypes[] = [
   },
   {
     key: "maintanance-inspection-history",
-    label: "Notices",
+    label: "Bulletin Board",
     isTitle: false,
     url: "/notice-highlight",
+  },
+  {
+    key: "maintanance-inspection-history",
+    label: "Apartment Inspection Calendar",
+    isTitle: false,
+    url: "/apps/calendar",
+  },
+  {
+    key: "maintanance-inspection-history",
+    label: "Calendar",
+    isTitle: false,
+    url: "/apps/calendar",
   },
 ];
 
 const ADMIN_ITEMS: MenuItemTypes[] = [
   {
     key: "users",
-    label: "Post a Notice",
+    label: "Post a Bulletin",
     isTitle: false,
     url: "/notice/new",
   },
   {
     key: "request",
-    label: "All Request",
+    label: "All Maintenance Requests",
     isTitle: false,
     url: "/maintanance-admin",
   },
   {
     key: "users",
-    label: "Recidents",
+    label: "Residence",
     isTitle: false,
     url: "/recident",
   },
@@ -1911,10 +1923,4 @@ const TWO_COl_MENU_ITEMS: MenuItemTypes[] = [
   // },
 ];
 
-export {
-  ADMIN_ITEMS,
-  MENU_ITEMS,
-  TWO_COl_MENU_ITEMS,
-  HORIZONTAL_MENU_ITEMS,
-  CUSTOMER_ITEMS,
-};
+export { ADMIN_ITEMS, MENU_ITEMS, TWO_COl_MENU_ITEMS, HORIZONTAL_MENU_ITEMS, CUSTOMER_ITEMS };

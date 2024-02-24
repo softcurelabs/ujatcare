@@ -55,7 +55,7 @@ class UserProfileController extends Controller
             'email' => 'required|string|unique:users',
             'role_id' => 'required|string',
         ];
-        if ($request->get('role_id') == Role::Renter->value) {
+        if ($request->get('role_id') == Role::Recident->value) {
             $validations['flat_id'] = 'required|unique:flat_owner,flat_id';
         }
 
@@ -69,9 +69,10 @@ class UserProfileController extends Controller
 
         $user->assignRole($request->get('role_id'));
         if ($user->save()) {
-            if ($request->get('role_id') === Role::Renter->value) {
+            if ($request->get('role_id') === Role::Recident->value) {
                 FlatOwner::create(['user_id' => $user->getKey(), 'flat_id' => $request->get('flat_id')]);
             }
+            UserProfile::create(['user_id' => $user->getKey()]);
 
             $status = Password::sendResetLink(
                 $request->only('email')

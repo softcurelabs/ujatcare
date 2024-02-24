@@ -8,24 +8,14 @@ interface AccountLayoutProps {
   children?: any;
 }
 
-const AuthCustomerLayout = ({
-  bottomLinks,
-  children,
-  isCombineForm,
-}: AccountLayoutProps) => {
+const AuthCustomerLayout = ({ bottomLinks, children, isCombineForm }: AccountLayoutProps) => {
   useEffect(() => {
     if (document.body)
-      document.body.classList.add(
-        "authentication-bg",
-        "authentication-bg-pattern"
-      );
+      document.body.classList.add("authentication-bg", "authentication-bg-pattern");
 
     return () => {
       if (document.body)
-        document.body.classList.remove(
-          "authentication-bg",
-          "authentication-bg-pattern"
-        );
+        document.body.classList.remove("authentication-bg", "authentication-bg-pattern");
     };
   }, []);
   let navigate = useNavigate();
@@ -43,7 +33,11 @@ const AuthCustomerLayout = ({
               <Card className="bg-pattern">
                 <Card.Body className="p-4">
                   <div className="text-center w-95 m-auto row">
-                    <div className="col-lg-2"></div>
+                    <div className="col-lg-2">
+                      <Button onClick={() => {}} className="btn-sm">
+                        Start Application
+                      </Button>
+                    </div>
                     <div className="auth-brand col-lg-8">
                       <Link to="/" className="logo logo-dark text-center">
                         <span className="logo-lg">
@@ -60,7 +54,9 @@ const AuthCustomerLayout = ({
                       </Link> */}
                     </div>
                     <div className="col-lg-2">
-                      <Button onClick={routeChange}>Staff Login</Button>
+                      <Button onClick={routeChange} className="btn-sm">
+                        Staff Login
+                      </Button>
                     </div>
                     {/* <p className="text-muted mb-4 mt-3">{helpText}</p> */}
                   </div>

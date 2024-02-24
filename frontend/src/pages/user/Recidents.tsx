@@ -40,6 +40,8 @@ const BasicTable = ({ users }: UsersDataType) => {
           <Table className="mb-0 table-striped dt-responsive nowrap w-100">
             <thead className="table-light">
               <tr>
+                <th>Unit</th>
+                <th>Apartment</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Role</th>
@@ -51,22 +53,19 @@ const BasicTable = ({ users }: UsersDataType) => {
                 users.data.map((record, index) => {
                   return (
                     <tr key={index}>
+                      <td>{record.user.flat_name}</td>
+                      <td>{record.user.apartment_name}</td>
                       <td>{record.user.name}</td>
                       <td>{record.user.email}</td>
                       <td>{record.user.role}</td>
                       <td>
                         <>
                           <Dropdown className="btn-group" align="end">
-                            <Dropdown.Toggle
-                              variant="light"
-                              className="table-action-btn btn-sm"
-                            >
+                            <Dropdown.Toggle variant="light" className="table-action-btn btn-sm">
                               <i className="mdi mdi-dots-horizontal"></i>
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                              <Dropdown.Item
-                                href={`assign-permission/${record.user.id}`}
-                              >
+                              <Dropdown.Item href={`assign-permission/${record.user.id}`}>
                                 <i className="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>
                                 Manage Permission
                               </Dropdown.Item>
@@ -137,7 +136,7 @@ const Recidents = () => {
     <React.Fragment>
       <PageTitle
         breadCrumbItems={[{ label: "Users", path: "/user", active: true }]}
-        title={"Recidents"}
+        title={"Residence"}
       />
 
       <Row>
@@ -145,7 +144,7 @@ const Recidents = () => {
           <Button
             className="waves-effect waves-light mb-3 me-3"
             onClick={() => {
-              let path = `/user/new`;
+              let path = `/user-recident/new`;
               navigate(path);
             }}
           >

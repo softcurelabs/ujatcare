@@ -112,10 +112,7 @@ const BasicInputElements = () => {
               setValue("flat_id", response.user.flat.flat_id);
             }
             setValue("parking_space", response.parking_space);
-            setValue(
-              "emergency_contact_number",
-              response.emergency_contact_number
-            );
+            setValue("emergency_contact_number", response.emergency_contact_number);
             setValue("emergency_contact_name", response.emergency_contact_name);
             setValue("income_verification", response.income_verification);
             setValue("rent_calculation", response.rent_calculation);
@@ -141,31 +138,8 @@ const BasicInputElements = () => {
 
           <Row>
             <Col lg={6}>
-              <form
-                onSubmit={onSubmit}
-                className={disabled ? "form-readonly" : ""}
-              >
+              <form onSubmit={onSubmit} className={disabled ? "form-readonly" : ""}>
                 <fieldset>
-                  <FormInput
-                    label="Emergency Contact"
-                    type="text"
-                    name="emergency_contact_number"
-                    placeholder="Emergency Contact Number"
-                    containerClass={"mb-3"}
-                    register={register}
-                    key="emergency_contact_number"
-                    errors={errors}
-                  />
-                  <FormInput
-                    label="Emergency Contact Name"
-                    type="text"
-                    name="emergency_contact_name"
-                    placeholder="Emergency Contact Name"
-                    containerClass={"mb-3"}
-                    register={register}
-                    key="emergency_contact_name"
-                    errors={errors}
-                  />
                   <FormInput
                     label="Name"
                     type="text"
@@ -208,15 +182,58 @@ const BasicInputElements = () => {
                     errors={errors}
                   />
                   <FormInput
-                    label="Relationship"
+                    label="Parking Space"
                     type="text"
-                    name="relationship"
-                    placeholder="relationship"
+                    name="parking"
+                    placeholder="Parking"
                     containerClass={"mb-3"}
                     register={register}
-                    key="relationship"
+                    key="parking"
                     errors={errors}
                   />
+
+                  <FormInput
+                    label="Language"
+                    type="text"
+                    name="language"
+                    placeholder="Language"
+                    containerClass={"mb-3"}
+                    register={register}
+                    key="language"
+                    errors={errors}
+                  />
+                  <div className="border border-success rounded">
+                    <FormInput
+                      label="Emergency Contact"
+                      type="text"
+                      name="emergency_contact_number"
+                      placeholder="Emergency Contact Number"
+                      containerClass={"mb-3"}
+                      register={register}
+                      key="emergency_contact_number"
+                      errors={errors}
+                    />
+                    <FormInput
+                      label="Emergency Contact Name"
+                      type="text"
+                      name="emergency_contact_name"
+                      placeholder="Emergency Contact Name"
+                      containerClass={"mb-3"}
+                      register={register}
+                      key="emergency_contact_name"
+                      errors={errors}
+                    />
+                    <FormInput
+                      label="Relationship"
+                      type="text"
+                      name="relationship"
+                      placeholder="relationship"
+                      containerClass={"mb-3"}
+                      register={register}
+                      key="relationship"
+                      errors={errors}
+                    />
+                  </div>
 
                   <FormInput
                     type="select"
@@ -229,32 +246,15 @@ const BasicInputElements = () => {
                   >
                     {flats.length &&
                       flats.map((flat) => (
-                        <optgroup
-                          key={`apartment${flat.id}`}
-                          label={flat.name.toString()}
-                        >
+                        <optgroup key={`apartment${flat.id}`} label={flat.name.toString()}>
                           {flat.flats.map((aprtment) => (
-                            <option
-                              key={"flat" + aprtment.id}
-                              value={aprtment.id}
-                            >
+                            <option key={"flat" + aprtment.id} value={aprtment.id}>
                               {aprtment.name}
                             </option>
                           ))}
                         </optgroup>
                       ))}
                   </FormInput>
-
-                  <FormInput
-                    label="Parking Space"
-                    type="text"
-                    name="parking"
-                    placeholder="Parking"
-                    containerClass={"mb-3"}
-                    register={register}
-                    key="parking"
-                    errors={errors}
-                  />
 
                   <FormInput
                     label="Income Verification"
@@ -274,17 +274,6 @@ const BasicInputElements = () => {
                     containerClass={"mb-3"}
                     register={register}
                     key="rent_calculation"
-                    errors={errors}
-                  />
-
-                  <FormInput
-                    label="Language"
-                    type="text"
-                    name="language"
-                    placeholder="Language"
-                    containerClass={"mb-3"}
-                    register={register}
-                    key="language"
                     errors={errors}
                   />
 
@@ -329,7 +318,7 @@ const BasicInputElements = () => {
                       onChange={(date) => {}}
                     />
                   </div>
-                  <div className="mb-3 input-group">
+                  {/* <div className="mb-3 input-group">
                     <FormLabel htmlFor="small" className="me-2">
                       I am
                     </FormLabel>
@@ -349,7 +338,7 @@ const BasicInputElements = () => {
                       value="2"
                       register={register}
                     />
-                  </div>
+                  </div> */}
                   {user.user_role.includes("admin") && (
                     <FormInput
                       label="Staff Note"
@@ -385,11 +374,7 @@ const BasicInputElements = () => {
             <Col lg={6}>
               <div className="text-end pb-2">
                 {disabled ? (
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    onClick={() => setDisabled(false)}
-                  >
+                  <Button variant="primary" type="submit" onClick={() => setDisabled(false)}>
                     Edit
                   </Button>
                 ) : (

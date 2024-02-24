@@ -10,10 +10,7 @@ import * as yup from "yup";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { NoticeData } from "../../types/NoticeType";
-import {
-  noticeEditAsync,
-  noticeShowAsync,
-} from "../../store/notice/NoticeSlice";
+import { noticeEditAsync, noticeShowAsync } from "../../store/notice/NoticeSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { useParams } from "react-router-dom";
@@ -22,10 +19,7 @@ const BasicInputElements = () => {
   const { t } = useTranslation();
   const schemaResolver = yupResolver(
     yup.object().shape({
-      title: yup
-        .string()
-        .required(t("Please select title"))
-        .min(10, "Atleast 10 char required"),
+      title: yup.string().required(t("Please select title")).min(10, "Atleast 10 char required"),
     })
   );
   const [toast, setToast] = useState("");
@@ -98,12 +92,7 @@ const BasicInputElements = () => {
                   name="schedule_date"
                   key="schedule_date"
                 />
-                <FormInput
-                  type="hidden"
-                  register={register}
-                  name="id"
-                  key="id"
-                />
+                <FormInput type="hidden" register={register} name="id" key="id" />
                 <div className="mb-3">
                   <label className="form-label">Schedule Date</label> <br />
                   <HyperDatepicker
@@ -138,10 +127,10 @@ const EditNotice = () => {
       <PageTitle
         breadCrumbItems={[
           { label: "Dashboard", path: "/dashboard-2" },
-          { label: "Notices", path: "/notice" },
+          { label: "Bulletin Board", path: "/notice" },
           { label: "Edit", path: "#", active: true },
         ]}
-        title={"Notice"}
+        title={"Bulletin Board"}
       />
 
       <Row>

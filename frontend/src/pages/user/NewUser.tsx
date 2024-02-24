@@ -19,10 +19,7 @@ const BasicInputElements = () => {
   const schemaResolver = yupResolver(
     yup.object().shape({
       name: yup.string().required(t("Please select name")),
-      email: yup
-        .string()
-        .required(t("Please select name"))
-        .email(t("Please valid Email")),
+      email: yup.string().required(t("Please select name")).email(t("Please valid Email")),
       role_id: yup.string().required(t("Please select role")),
     })
   );
@@ -103,10 +100,10 @@ const BasicInputElements = () => {
                   errors={errors}
                 >
                   <option value="">Select Role</option>
-                  <option value="recident">Recident</option>
                   <option value="staff">Staff</option>
+                  <option value="admin">Admin</option>
                 </FormInput>
-                <FormInput
+                {/* <FormInput
                   type="select"
                   label="Apartment#"
                   name="flat_id"
@@ -130,7 +127,7 @@ const BasicInputElements = () => {
                         ))}
                       </optgroup>
                     ))}
-                </FormInput>
+                </FormInput> */}
                 <Button variant="primary" type="submit">
                   Create User
                 </Button>

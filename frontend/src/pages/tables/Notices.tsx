@@ -80,9 +80,9 @@ const Notices = () => {
       <PageTitle
         breadCrumbItems={[
           { label: "Tables", path: "/ui/tables/basic" },
-          { label: "Notices", path: "/ui/tables/basic", active: true },
+          { label: "Bulletin Board", path: "/ui/tables/basic", active: true },
         ]}
-        title={"Notices"}
+        title={"Bulletin Board"}
       />
 
       <Row>

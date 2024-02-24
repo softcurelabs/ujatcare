@@ -87,9 +87,11 @@ const UserList = React.lazy(() => import("../pages/user/Users"));
 const RecidentList = React.lazy(() => import("../pages/user/Recidents"));
 const EditUser = React.lazy(() => import("../pages/user/EditUser"));
 const NewUser = React.lazy(() => import("../pages/user/NewUser"));
+const NewRecident = React.lazy(() => import("../pages/user/NewRecident"));
 
 const AssignPermission = React.lazy(() => import("../pages/user/AssignPermission"));
 const MyAccount = React.lazy(() => import("../pages/user/MyAccount"));
+const MyAccountStaff = React.lazy(() => import("../pages/user/MyAccountStaff"));
 const MaintananceList = React.lazy(() => import("../pages/maintanance/List"));
 const MaintananceEdit = React.lazy(() => import("../pages/maintanance/Edit"));
 const MaintananceEditAdmin = React.lazy(() => import("../pages/maintanance/EditAdmin"));
@@ -226,8 +228,6 @@ const dashboardRoutes: RoutesProps = {
 const calendarAppRoutes: RoutesProps = {
   path: "/apps/calendar",
   name: "Calendar",
-  route: PrivateRoute,
-  roles: ["admin", "staff"],
   icon: "calendar",
   element: <CalendarApp />,
   header: "Apps",
@@ -858,6 +858,11 @@ const uiRoutes = {
           element: <NewUser />,
         },
         {
+          path: "/user-recident/new",
+          name: "Basic",
+          element: <NewRecident />,
+        },
+        {
           path: "/user/:id",
           name: "Basic",
           element: <EditUser />,
@@ -871,6 +876,11 @@ const uiRoutes = {
           path: "/my-account",
           name: "Basic",
           element: <MyAccount />,
+        },
+        {
+          path: "/staff-account",
+          name: "Basic",
+          element: <MyAccountStaff />,
         },
       ],
     },

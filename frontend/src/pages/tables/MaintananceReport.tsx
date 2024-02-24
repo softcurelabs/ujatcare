@@ -18,51 +18,21 @@ interface TableRecords {
 // dummy records
 const records: TableRecords[] = [
   {
-    date: "2023-12-12",
-    builds: "TEst",
-    unit: "Airplane",
-    name: "Apple",
-    phone: "98989898988",
+    date: "1",
+    builds: "Admin",
+    unit: "10",
+    name: "20",
+    phone: "5",
     request: "fist request",
     notes: "Bell",
     compDate: "2023-12-14",
   },
   {
-    date: "2023-12-12",
-    builds: "TEst",
-    unit: "Airplane",
-    name: "Apple",
-    phone: "98989898988",
-    request: "fist request",
-    notes: "Bell",
-    compDate: "2023-12-14",
-  },
-  {
-    date: "2023-12-12",
-    builds: "TEst",
-    unit: "Airplane",
-    name: "Apple",
-    phone: "98989898988",
-    request: "fist request",
-    notes: "Bell",
-    compDate: "2023-12-14",
-  },
-  {
-    date: "2023-12-12",
-    builds: "TEst",
-    unit: "Airplane",
-    name: "Apple",
-    phone: "98989898988",
-    request: "fist request",
-    notes: "Bell",
-    compDate: "2023-12-14",
-  },
-  {
-    date: "2023-12-12",
-    builds: "TEst",
-    unit: "Airplane",
-    name: "Apple",
-    phone: "98989898988",
+    date: "2",
+    builds: "Jasmin",
+    unit: "5",
+    name: "16",
+    phone: "4",
     request: "fist request",
     notes: "Bell",
     compDate: "2023-12-14",
@@ -105,14 +75,11 @@ const BasicTable = () => {
           <Table className="mb-0">
             <thead className="table-light">
               <tr>
-                <th>Date</th>
-                <th>Builds</th>
-                <th>Apartment</th>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Request</th>
-                <th>Note</th>
-                <th>Due Date</th>
+                <th>Id</th>
+                <th>Staff</th>
+                <th>Open Tickets</th>
+                <th>Resolved Tickets</th>
+                <th>Rating</th>
               </tr>
             </thead>
             <tbody>
@@ -124,9 +91,6 @@ const BasicTable = () => {
                     <td>{record.unit}</td>
                     <td>{record.name}</td>
                     <td>{record.phone}</td>
-                    <td>{record.request}</td>
-                    <td>{record.notes}</td>
-                    <td>{record.compDate}</td>
                   </tr>
                 );
               })}
