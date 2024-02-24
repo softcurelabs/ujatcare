@@ -9,7 +9,7 @@ jobs:
     - name: Upload ftp
       uses: sebastianpopp/ftp-action@releases/v2
       with:
-        host: appt.ujatech.com:4121
+        host: appt.ujatech.com
         user: github_action@appt.ujatech.com
         password: ${{ secrets.FTP_PASSWORD }}
         localDir: "./api"
