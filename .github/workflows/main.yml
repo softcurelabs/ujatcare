@@ -13,8 +13,8 @@ jobs:
         user: github_action@appt.ujatech.com
         password: ${{ secrets.FTP_PASSWORD }}
         port: 4121
-        localDir: "api"
-        remoteDir: "backend"
+        localDir: "./api"
+        remoteDir: "./backend"
         options: "--delete --asci"
     - name: Sync UI code
       uses: sebastianpopp/ftp-action@releases/v2
@@ -23,33 +23,6 @@ jobs:
         user: github_action@appt.ujatech.com
         password: ${{ secrets.FTP_PASSWORD }}
         port: 4121
-        localDir: "frontend/build"
+        localDir: "./frontend/build"
         remoteDir: "./"
         options: "--delete --asci"
-  web-deploy:
-    name: 🎉 Deploy
-    runs-on: ubuntu-latest
-    steps:
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v3
-
-    - name: Sync Laravel code
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-      with:
-        server: appt.ujatech.com
-        username: github_action@appt.ujatech.com
-        password: ${{ secrets.password }}
-        local-dir: "./api/"
-        server-dir: "./backend/"
-        port: 4121
-        timeout: 3000000
-    - name: Sync UI code
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-      with:
-        server: appt.ujatech.com
-        username: github_action@appt.ujatech.com
-        password: ${{ secrets.password }}
-        port: 4121
-        local-dir: "./frontend/build/"
-        server-dir: "./"
-        timeout: 300000
