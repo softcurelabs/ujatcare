@@ -13,8 +13,8 @@ jobs:
           server: appt.ujatech.com
           user: github_action@appt.ujatech.com
           password: ${{ secrets.FTP_PASSWORD }}
-          localDir: "./api"
-          remoteDir: "./backend"
+          local_dir: "./api"
+          remote_dir: "./backend"
           no_symlinks: "false"
           ftp_ssl_allow: "true"
           ftp_use_feat: "true"
@@ -25,15 +25,14 @@ jobs:
           dns_max_retries: "17"
           dns_fatal_timeout: "never"
           lftp_settings: "set cache:cache-empty-listings true; set cmd:status-interval 1s; set http:user-agent 'firefox';"
-
       - name: Sync UI code
         uses: airvzxf/ftp-deployment-action@latest
         with:
           server: appt.ujatech.com
           user: github_action@appt.ujatech.com
           password: ${{ secrets.FTP_PASSWORD }}
-          localDir: "./frontend/build"
-          remoteDir: "./"
+          local_dir: "./frontend/build"
+          remote_dir: "./"
           no_symlinks: "false"
           ftp_ssl_allow: "true"
           ftp_use_feat: "true"
