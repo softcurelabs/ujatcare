@@ -5,22 +5,41 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+     - uses: actions/checkout@v4
     - name: Upload ftp
-      uses: sebastianpopp/ftp-action@releases/v2
+      uses: airvzxf/ftp-deployment-action@latest
       with:
-        host: appt.ujatech.com
+        server: appt.ujatech.com
         user: github_action@appt.ujatech.com
         password: ${{ secrets.FTP_PASSWORD }}
         localDir: "./api"
         remoteDir: "./backend"
-        options: "--delete --asci"
+        no_symlinks: "false"
+        ftp_ssl_allow: "true"
+        ftp_use_feat: "true"
+        ftp_nop_interval: "9"
+        net_max_retries: "0"
+        net_persist_retries: "11"
+        net_timeout: "13s"
+        dns_max_retries: "17"
+        dns_fatal_timeout: "never"
+        lftp_settings: "set cache:cache-empty-listings true; set cmd:status-interval 1s; set http:user-agent 'firefox';"
+
     - name: Sync UI code
-      uses: sebastianpopp/ftp-action@releases/v2
+      uses: airvzxf/ftp-deployment-action@latest
       with:
-        host: appt.ujatech.com
+        server: appt.ujatech.com
         user: github_action@appt.ujatech.com
         password: ${{ secrets.FTP_PASSWORD }}
         localDir: "./frontend/build"
         remoteDir: "./"
-        options: "--delete --asci"
+        no_symlinks: "false"
+        ftp_ssl_allow: "true"
+        ftp_use_feat: "true"
+        ftp_nop_interval: "9"
+        net_max_retries: "0"
+        net_persist_retries: "11"
+        net_timeout: "13s"
+        dns_max_retries: "17"
+        dns_fatal_timeout: "never"
+        lftp_settings: "set cache:cache-empty-listings true; set cmd:status-interval 1s; set http:user-agent 'firefox';"
