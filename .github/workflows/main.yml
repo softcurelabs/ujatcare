@@ -24,7 +24,7 @@ jobs:
           net_timeout: "13s"
           dns_max_retries: "17"
           dns_fatal_timeout: "never"
-          lftp_settings: "set cache:cache-empty-listings true; set cmd:status-interval 1s; set http:user-agent 'firefox';"
+          lftp_settings: "set cache:cache-empty-listings true; set cmd:status-interval 1s; set http:user-agent 'firefox';set ssl:check-hostname no;"
       - name: Sync UI code
         uses: airvzxf/ftp-deployment-action@latest
         with:
