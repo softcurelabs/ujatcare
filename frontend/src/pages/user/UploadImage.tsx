@@ -3,41 +3,26 @@ import { Button } from "react-bootstrap";
 import { FormInput } from "../../components";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
-import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
-import { PasswordDataType } from "../../types/UserType";
-import { userResetAsync, userUploadAsync } from "../../store/user/UserSlice";
+import { userUploadAsync } from "../../store/user/UserSlice";
 import * as yup from "yup";
-import { useParams } from "react-router-dom";
 import { profileAsync } from "../../store/auth/AuthSlice";
 import Loader from "../../components/Loader";
 
-interface IdType {
-  id: Number;
-}
-
 export const UploadImage = ({ id }: { id?: string }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { t } = useTranslation();
   const [toast, setToast] = useState("");
   const [error, setNewError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const schemaResolver = yupResolver(
     yup.object().shape({
       //   title: yup.string().required(t("Please select title")).min(10, "Atleast 10 char required"),
-    }),
+    })
   );
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    setError,
-    control,
-    formState: { errors },
-  } = useForm<any>({
+  const { register, handleSubmit, setValue, control } = useForm<any>({
     defaultValues: {
       id: id,
     },

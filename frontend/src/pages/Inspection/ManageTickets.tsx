@@ -1,52 +1,23 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Card, Button, Dropdown } from "react-bootstrap";
+import React, { useState } from "react";
+import { Link, useNavigate, useRouteLoaderData } from "react-router-dom";
+import { Card, Button, Dropdown, Table } from "react-bootstrap";
 import classNames from "classnames";
 
 // components
-import Table from "../../components/Table";
+// import Table from "../../components/Table";
 
 // dummy data
-import { TicketDetailsItems } from "./data";
+import { InspectionsType, Priority, Status } from "../../types/InspectionType";
+import { inspectionAsync, inspectionDeleteAsync } from "../../store/inspection/InspectionSlice";
+import { Confirmation } from "../../components/Confirmation";
+import { AppDispatch } from "../../store";
+import { useDispatch } from "react-redux";
 
 /* id column render */
 const IdColumn = ({ row }: { row: any }) => {
   return (
     <>
-      <b>{row.original.id}</b>
-    </>
-  );
-};
-
-/* requested by column render */
-const RequestedBy = ({ row }: { row: any }) => {
-  return (
-    <>
-      <Link to="#" className="text-body">
-        <img
-          src={row.original.requested_by.image}
-          alt=""
-          title="contact-img"
-          className="rounded-circle avatar-xs"
-        />
-        <span className="ms-2">{row.original.requested_by.name}</span>
-      </Link>
-    </>
-  );
-};
-
-/* assignee column render */
-const AssigneeColumn = ({ row }: { row: any }) => {
-  return (
-    <>
-      <Link to="#">
-        <img
-          src={row.original.assignee}
-          alt=""
-          title="contact-img"
-          className="rounded-circle avatar-xs"
-        />
-      </Link>
+      <b>{row.id}</b>
     </>
   );
 };
@@ -57,12 +28,12 @@ const PriorityColumn = ({ row }: { row: any }) => {
     <>
       <span
         className={classNames("badge", {
-          "bg-soft-secondary text-secondary": row.original.priority === "Low",
-          "bg-soft-warning text-warning": row.original.priority === "Medium",
-          "bg-soft-danger text-danger": row.original.priority === "High",
+          "bg-soft-secondary text-secondary": row.priority === 1,
+          "bg-soft-warning text-warning": row.priority === 2,
+          "bg-soft-danger text-danger": row.priority === 3,
         })}
       >
-        {row.original.priority}
+        {Priority[row.priority.toString()]}
       </span>
     </>
   );
@@ -74,142 +45,151 @@ const StatusColumn = ({ row }: { row: any }) => {
     <>
       <span
         className={classNames("badge", {
-          "bg-success": row.original.status === "Open",
-          "bg-secondary text-light": row.original.status === "Closed",
+          "bg-success": row.status === 1,
+          "bg-warning": row.status === 2,
+          "bg-secondary text-light": row.status === 3,
         })}
       >
-        {row.original.status}
+        {Status[row.status.toString()]}
       </span>
     </>
   );
 };
 
-/* action column render */
-const ActionColumn = () => {
-  return (
-    <>
-      <Dropdown className="btn-group" align="end">
-        <Dropdown.Toggle variant="light" className="table-action-btn btn-sm">
-          <i className="mdi mdi-dots-horizontal"></i>
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-          <Dropdown.Item>
-            <i className="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>
-            Edit Ticket
-          </Dropdown.Item>
-          <Dropdown.Item>
-            <i className="mdi mdi-check-all me-2 text-muted font-18 vertical-middle"></i>
-            Close
-          </Dropdown.Item>
-          <Dropdown.Item>
-            <i className="mdi mdi-delete me-2 text-muted font-18 vertical-middle"></i>
-            Remove
-          </Dropdown.Item>
-          <Dropdown.Item>
-            <i className="mdi mdi-star me-2 text-muted font-18 vertical-middle"></i>
-            Mark as Unread
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-    </>
-  );
-};
-
-// get all columns
-const columns = [
-  {
-    Header: "ID",
-    accessor: "id",
-    sort: true,
-    Cell: IdColumn,
-  },
-  {
-    Header: "Requested By",
-    accessor: "requested_by",
-    sort: true,
-    Cell: RequestedBy,
-  },
-  {
-    Header: "Subject",
-    accessor: "subject",
-    sort: true,
-  },
-
-  {
-    Header: "Assignee",
-    accessor: "assignee",
-    Cell: AssigneeColumn,
-  },
-  {
-    Header: "Priority",
-    accessor: "priority",
-    sort: true,
-    Cell: PriorityColumn,
-  },
-  {
-    Header: "Status",
-    accessor: "status",
-    sort: true,
-    Cell: StatusColumn,
-  },
-  {
-    Header: "Created Date",
-    accessor: "created_date",
-    sort: true,
-  },
-  {
-    Header: "Completion Date",
-    accessor: "due_date",
-    sort: true,
-  },
-  {
-    Header: "Action",
-    accessor: "action",
-    Cell: ActionColumn,
-    sort: false,
-  },
-];
-
-// get pagelist to display
-const sizePerPageList = [
-  {
-    text: "10",
-    value: 10,
-  },
-  {
-    text: "25",
-    value: 25,
-  },
-  {
-    text: "50",
-    value: 50,
-  },
-];
-
 interface ManageTicketsProps {
-  ticketDetails: TicketDetailsItems[];
+  inspection: InspectionsType;
+  reload: Function;
 }
 
-const ManageTickets = ({ ticketDetails }: ManageTicketsProps) => {
+const ManageTickets = ({ inspection, reload }: ManageTicketsProps) => {
+  let navigate = useNavigate();
+
+  const [show, setShow] = useState<boolean>(false);
+  const [id, setId] = useState<Number>(0);
+  const [toast, setToast] = useState("");
+  const dispatch = useDispatch<AppDispatch>();
+  const [error, setError] = useState("");
   return (
     <>
       <Card>
         <Card.Body>
-          <Button className="btn-sm btn-blue waves-effect waves-light float-end">
-            <i className="mdi mdi-plus-circle"></i> Add Ticket
+          {toast && <div className="alert alert-success">{toast}</div>}
+          {error && (
+            <div className="alert alert-danger mt-3" role="alert">
+              {error}
+            </div>
+          )}
+          <Button
+            className="waves-effect waves-light mb-3"
+            onClick={() => {
+              let path = `/inspection/new`;
+              navigate(path);
+            }}
+          >
+            <i className="mdi mdi-plus-circle me-1"></i> Add New
           </Button>
           {/* <h4 className="header-title mb-4">Manage Tickets</h4> */}
 
-          <Table
-            columns={columns}
-            data={ticketDetails}
-            pageSize={10}
-            sizePerPageList={sizePerPageList}
-            isSortable={true}
-            pagination={true}
-            isSearchable={true}
-            theadClass="table-light"
-            searchBoxClass="mt-2 mb-3"
+          <Table className="mb-0 table-striped dt-responsive react-table nowrap w-100">
+            <thead className="table-light">
+              <tr>
+                <th>Id</th>
+                <th>Created By</th>
+                <th>Subject</th>
+                <th>Assignee</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Created Date</th>
+                <th>Completion Date</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {inspection.data.length > 0 ? (
+                inspection.data.map((record, index) => {
+                  return (
+                    <tr key={index} className="">
+                      <td>
+                        #<IdColumn row={record} />
+                      </td>
+                      <td>{record.user ? record.user.name : ""}</td>
+                      <td>{record.title}</td>
+                      <td>
+                        {!(record.inspection_by instanceof Number) ? record.inspection_by.name : ""}
+                      </td>
+                      <td>
+                        <PriorityColumn row={record} />
+                      </td>
+                      <td>
+                        <StatusColumn row={record} />
+                      </td>
+                      <td>{record.created_at}</td>
+                      <td>{record.inspection_date}</td>
+                      <td>
+                        <React.Fragment>
+                          <>
+                            <Button
+                              className="btn-secondary"
+                              onClick={() => {
+                                let path = `/inspection/${record.id}`;
+                                navigate(path);
+                              }}
+                              size="sm"
+                            >
+                              Edit
+                            </Button>
+                            <Button
+                              className="btn-secondary ms-2"
+                              onClick={() => {
+                                setId(record.id);
+                                setShow(true);
+                              }}
+                              size="sm"
+                            >
+                              Delete
+                            </Button>
+                            {/* {record.status === 0 && (
+                              <Button
+                                className="btn-secondary ms-2"
+                                onClick={() => {
+                                  setId(record.id);
+                                  setShow(true);
+                                }}
+                                size="sm"
+                              >
+                                Assign Flat
+                              </Button>
+                            )} */}
+                          </>
+                        </React.Fragment>
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <p>No Data Found</p>
+              )}
+            </tbody>
+          </Table>
+          <Confirmation
+            show={show}
+            targetId={id}
+            submitForm={(id) => {
+              dispatch(inspectionDeleteAsync(id))
+                .unwrap()
+                .then((response) => {
+                  if (response && response.status === true) {
+                    setToast(response.message);
+                    setShow(false);
+                    reload();
+                  }
+                })
+                .catch((reason) => {
+                  setError(reason.message);
+                  setShow(false);
+                });
+            }}
+            handleClose={() => setShow(false)}
           />
         </Card.Body>
       </Card>

@@ -1,56 +1,5 @@
-import React, { forwardRef } from "react";
 import DatePicker from "react-datepicker";
-import classNames from "classnames";
 import "react-datepicker/dist/react-datepicker.css";
-
-interface DatepickerInputProps {
-  onClick?: () => void;
-  value?: string;
-  inputClass: string;
-  name?: string;
-  register?: any;
-  children?: React.ReactNode;
-}
-
-/* Datepicker with Input */
-const DatepickerInput = forwardRef<HTMLInputElement, DatepickerInputProps>(
-  (props, ref) => {
-    const onDateValueChange = () => {
-      // console.log("date value changed");
-    };
-    return (
-      <input
-        name={props.name}
-        type="text"
-        className={classNames("form-control", props.inputClass)}
-        onClick={props.onClick}
-        value={props.value}
-        onChange={onDateValueChange}
-        ref={ref}
-      />
-    );
-  },
-);
-
-/* Datepicker with Addon Input */
-const DatepickerInputWithAddon = forwardRef<
-  HTMLInputElement,
-  DatepickerInputProps
->((props, ref) => (
-  <div className="input-group input-group-sm" ref={ref}>
-    <input
-      type="text"
-      name={props.name}
-      className={classNames("form-control", props.inputClass)}
-      onClick={props.onClick}
-      value={props.value}
-      readOnly
-    />
-    <span className="input-group-text bg-blue border-blue text-white">
-      <i className="mdi mdi-calendar-range"></i>
-    </span>
-  </div>
-));
 
 interface HyperDatepickerProps {
   name?: string;
@@ -107,7 +56,7 @@ const HyperDatepicker = (props: HyperDatepickerProps) => {
           showTimeSelect={props.showTimeSelect}
           timeFormat={"hh:mm a"}
           timeCaption={props.timeCaption}
-          dateFormat={"MM/dd/yyyy"}
+          dateFormat={props.dateFormat}
           minDate={props.minDate}
           disabled={props.disabled}
           wrapperClassName="is-invalid"

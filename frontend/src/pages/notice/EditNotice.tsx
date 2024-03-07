@@ -10,10 +10,7 @@ import * as yup from "yup";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { NoticeData } from "../../types/NoticeType";
-import {
-  noticeEditAsync,
-  noticeShowAsync,
-} from "../../store/notice/NoticeSlice";
+import { noticeEditAsync, noticeShowAsync } from "../../store/notice/NoticeSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { useParams } from "react-router-dom";
@@ -22,11 +19,8 @@ const BasicInputElements = () => {
   const { t } = useTranslation();
   const schemaResolver = yupResolver(
     yup.object().shape({
-      title: yup
-        .string()
-        .required(t("Please select title"))
-        .min(10, "Atleast 10 char required"),
-    }),
+      title: yup.string().required(t("Please select title")).min(10, "Atleast 10 char required"),
+    })
   );
   const [toast, setToast] = useState("");
   const [error, setError] = useState("");
@@ -98,19 +92,14 @@ const BasicInputElements = () => {
                   name="schedule_date"
                   key="schedule_date"
                 />
-                <FormInput
-                  type="hidden"
-                  register={register}
-                  name="id"
-                  key="id"
-                />
+                <FormInput type="hidden" register={register} name="id" key="id" />
                 <div className="mb-3">
                   <label className="form-label">Schedule Date</label> <br />
                   <HyperDatepicker
                     value={sechduleDate}
                     minDate={new Date()}
                     showTimeSelect={true}
-                    dateFormat="MM-DD-YYYY HH:mm"
+                    dateFormat="MM-dd-yyyy HH:mm"
                     onChange={(date) => {
                       setSechduleDate(date);
                       setValue("schedule_date", date.toLocaleString("sv-SE"));

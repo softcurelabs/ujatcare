@@ -1,3 +1,4 @@
+import { KeyValueType } from "./KeyValueType";
 import { PaginationType } from "./PaginationType";
 import { TimeStampType } from "./TimeStampType";
 
@@ -86,22 +87,19 @@ export interface AssignFlatType {
   id: Number;
 }
 
-export const gender: GenderType = {
+export const gender: KeyValueType = {
   "1": "Mr.",
   "2": "Miss.",
   "3": "Mrs.",
   "4": "Ms.",
 };
 
-export const sex: GenderType = {
+export const sex: KeyValueType = {
   "1": "Male",
   "2": "Female",
 };
 
-export const boolType: GenderType = {
+export const boolType: KeyValueType = {
   "1": "Yes",
   "2": "No",
 };
-interface GenderType {
-  [key: string]: string;
-}

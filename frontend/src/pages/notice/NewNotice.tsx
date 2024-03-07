@@ -19,11 +19,8 @@ const BasicInputElements = () => {
   const { t } = useTranslation();
   const schemaResolver = yupResolver(
     yup.object().shape({
-      title: yup
-        .string()
-        .required(t("Please select title"))
-        .min(10, "Atleast 10 char required"),
-    }),
+      title: yup.string().required(t("Please select title")).min(10, "Atleast 10 char required"),
+    })
   );
   const [toast, setToast] = useState("");
   const [error, setError] = useState("");
@@ -93,7 +90,7 @@ const BasicInputElements = () => {
                     value={sechduleDate}
                     minDate={new Date()}
                     showTimeSelect={true}
-                    dateFormat="MM-DD-YYYY HH:mm"
+                    dateFormat="MM-dd-yyyy HH:mm"
                     onChange={(date) => {
                       setSechduleDate(date);
                       setValue("schedule_date", date.toLocaleString("sv-SE"));

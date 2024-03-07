@@ -5,15 +5,14 @@ import { Route, Navigate, RouteProps } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 const Notices = React.lazy(() => import("../pages/tables/Notices"));
 const CustomerLogin = React.lazy(() => import("../pages/auth/CustomerLogin"));
-const MaintananceReport = React.lazy(
-  () => import("../pages/tables/MaintananceReport"),
-);
+const MaintananceReport = React.lazy(() => import("../pages/tables/MaintananceReport"));
 const Ticket = React.lazy(() => import("../pages/forms/Ticket"));
 const Orders = React.lazy(() => import("../pages/apps/Ecommerce/Orders"));
 const Create = React.lazy(() => import("../pages/maintanance/Create"));
-const CreateApplication = React.lazy(
-  () => import("../pages/application/Create"),
-);
+const CreateApplication = React.lazy(() => import("../pages/application/Create"));
+
+const CreateInspection = React.lazy(() => import("../pages/inspection/Create"));
+const EditInspection = React.lazy(() => import("../pages/inspection/Edit"));
 const ListApplication = React.lazy(() => import("../pages/application/List"));
 
 // import Root from './Root';
@@ -50,13 +49,11 @@ const Error500Two = React.lazy(() => import("../pages/error/Error500Two"));
 const Upcoming = React.lazy(() => import("../pages/other/Upcoming"));
 const Maintenance = React.lazy(() => import("../pages/other/Maintenance"));
 
-const Inspection = React.lazy(() => import("../pages/Inspection"));
+const Inspection = React.lazy(() => import("../pages/inspection"));
 const NoticeList = React.lazy(() => import("../pages/notice/Notices"));
 const NewNotice = React.lazy(() => import("../pages/notice/NewNotice"));
 const EditNotice = React.lazy(() => import("../pages/notice/EditNotice"));
-const NoticeHighlight = React.lazy(
-  () => import("../pages/notice/CustomerNotices"),
-);
+const NoticeHighlight = React.lazy(() => import("../pages/notice/CustomerNotices"));
 
 const UserList = React.lazy(() => import("../pages/user/Users"));
 const RecidentList = React.lazy(() => import("../pages/user/Recidents"));
@@ -65,22 +62,14 @@ const EditUserStaff = React.lazy(() => import("../pages/user/EditUserStaff"));
 const NewUser = React.lazy(() => import("../pages/user/NewUser"));
 const NewRecident = React.lazy(() => import("../pages/user/NewRecident"));
 
-const AssignPermission = React.lazy(
-  () => import("../pages/user/AssignPermission"),
-);
-const AssignPermissionAdmin = React.lazy(
-  () => import("../pages/user/AssignPermissionAdmin"),
-);
+const AssignPermission = React.lazy(() => import("../pages/user/AssignPermission"));
+const AssignPermissionAdmin = React.lazy(() => import("../pages/user/AssignPermissionAdmin"));
 const MyAccount = React.lazy(() => import("../pages/user/MyAccount"));
 const MyAccountStaff = React.lazy(() => import("../pages/user/MyAccountStaff"));
 const MaintananceList = React.lazy(() => import("../pages/maintanance/List"));
 const MaintananceEdit = React.lazy(() => import("../pages/maintanance/Edit"));
-const MaintananceEditAdmin = React.lazy(
-  () => import("../pages/maintanance/EditAdmin"),
-);
-const MaintananceListAdmin = React.lazy(
-  () => import("../pages/maintanance/ListAdmin"),
-);
+const MaintananceEditAdmin = React.lazy(() => import("../pages/maintanance/EditAdmin"));
+const MaintananceListAdmin = React.lazy(() => import("../pages/maintanance/ListAdmin"));
 
 const RentPayment = React.lazy(() => import("../pages/rent/RentPayment"));
 // icons
@@ -88,13 +77,9 @@ const TwoToneIcons = React.lazy(() => import("../pages/icons/TwoToneIcons/"));
 const FeatherIcons = React.lazy(() => import("../pages/icons/FeatherIcons/"));
 const Dripicons = React.lazy(() => import("../pages/icons/Dripicons/"));
 const MDIIcons = React.lazy(() => import("../pages/icons/MDIIcons/"));
-const FontAwesomeIcons = React.lazy(
-  () => import("../pages/icons/FontAwesomeIcons/"),
-);
+const FontAwesomeIcons = React.lazy(() => import("../pages/icons/FontAwesomeIcons/"));
 const ThemifyIcons = React.lazy(() => import("../pages/icons/ThemifyIcons/"));
-const SimpleLineIcons = React.lazy(
-  () => import("../pages/icons/SimpleLineIcons/"),
-);
+const SimpleLineIcons = React.lazy(() => import("../pages/icons/SimpleLineIcons/"));
 const WeatherIcons = React.lazy(() => import("../pages/icons/WeatherIcons/"));
 
 // forms
@@ -353,6 +338,18 @@ const uiRoutes = {
           path: "/inspection",
           name: "Basic",
           element: <Inspection />,
+          route: PrivateRoute,
+        },
+        {
+          path: "/inspection/new",
+          name: "Basic",
+          element: <CreateInspection />,
+          route: PrivateRoute,
+        },
+        {
+          path: "/inspection/:id",
+          name: "Basic",
+          element: <EditInspection />,
           route: PrivateRoute,
         },
       ],
