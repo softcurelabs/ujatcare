@@ -31,11 +31,17 @@ const DefaultLayout = (props: DefaultLayoutProps) => {
 
   useEffect(() => {
     if (document.body)
-      document.body.classList.add("authentication-bg", "authentication-bg-pattern");
+      document.body.classList.add(
+        "authentication-bg",
+        "authentication-bg-pattern",
+      );
 
     return () => {
       if (document.body)
-        document.body.classList.remove("authentication-bg", "authentication-bg-pattern");
+        document.body.classList.remove(
+          "authentication-bg",
+          "authentication-bg-pattern",
+        );
     };
   }, []);
 

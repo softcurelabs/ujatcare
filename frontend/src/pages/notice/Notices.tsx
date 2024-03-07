@@ -53,7 +53,10 @@ const BasicTable = ({ notices }: NoticeHighlightType) => {
                         <React.Fragment>
                           <>
                             <Dropdown className="btn-group" align="end">
-                              <Dropdown.Toggle variant="light" className="table-action-btn btn-sm">
+                              <Dropdown.Toggle
+                                variant="light"
+                                className="table-action-btn btn-sm"
+                              >
                                 <i className="mdi mdi-dots-horizontal"></i>
                               </Dropdown.Toggle>
                               <Dropdown.Menu>
@@ -124,7 +127,9 @@ const Notices = () => {
   return (
     <React.Fragment>
       <PageTitle
-        breadCrumbItems={[{ label: "Bulletin Board", path: "/notice", active: true }]}
+        breadCrumbItems={[
+          { label: "Bulletin Board", path: "/notice", active: true },
+        ]}
         title={"Bulletin Board"}
       />
 

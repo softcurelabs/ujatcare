@@ -27,7 +27,7 @@ const Error404Two = () => {
     if (document.body)
       document.body.classList.remove(
         "authentication-bg",
-        "authentication-bg-pattern"
+        "authentication-bg-pattern",
       );
     if (document.body) document.body.classList.add("auth-fluid-pages", "pb-0");
 

@@ -51,7 +51,7 @@ const Login = () => {
       loading: state.Auth.loading,
       error: state.Auth.error,
       userLoggedIn: state.Auth.userLoggedIn,
-    })
+    }),
   );
 
   /*
@@ -64,7 +64,7 @@ const Login = () => {
         .required(t("Please enter Email"))
         .email("Please enter valid email"),
       password: yup.string().required(t("Please enter Password")),
-    })
+    }),
   );
 
   /*

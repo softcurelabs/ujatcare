@@ -16,7 +16,10 @@ export const IncomeInformation = ({ data }: { data: ApplicationType }) => {
           <ViewRaw label="Source" value={data.ii_income_source_first} />
         </Col>
         <Col lg={4}>
-          <ViewRaw label="Gross Monthly Income ($)" value={data.ii_income_first} />
+          <ViewRaw
+            label="Gross Monthly Income ($)"
+            value={data.ii_income_first}
+          />
         </Col>
       </Row>
       <Row>
@@ -28,7 +31,10 @@ export const IncomeInformation = ({ data }: { data: ApplicationType }) => {
           <ViewRaw label="Source" value={data.ii_income_source_second} />
         </Col>
         <Col lg={4}>
-          <ViewRaw label="Gross Monthly Income ($)" value={data.ii_income_second} />
+          <ViewRaw
+            label="Gross Monthly Income ($)"
+            value={data.ii_income_second}
+          />
         </Col>
       </Row>
     </FormGroup>

@@ -56,7 +56,7 @@ const CustomerLogin = () => {
       userLoggedIn: state.CustomerAuth.userLoggedIn,
       error: state.CustomerAuth.error,
       flats: state.Flat.flats,
-    })
+    }),
   );
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const CustomerLogin = () => {
       flat_id: yup.string().required(t("Please select Apartment")),
       email: yup.string().required(t("Please enter Email")),
       password: yup.string().required(t("Please enter Password")),
-    })
+    }),
   );
 
   /*

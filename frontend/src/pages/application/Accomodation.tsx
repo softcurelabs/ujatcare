@@ -14,10 +14,12 @@ export const Accomodation = ({
 }) => {
   return (
     <FormGroup>
-      <FormLabel className="fw-bolder fs-4 ">F. Current Accommodation:</FormLabel>
+      <FormLabel className="fw-bolder fs-4 ">
+        F. Current Accommodation:
+      </FormLabel>
       <FormLabel className="fw-bolder fs-6 ms-2">
-        (please describe your current accommodation as completely as possible in the space provided
-        below)
+        (please describe your current accommodation as completely as possible in
+        the space provided below)
       </FormLabel>
 
       <Row>

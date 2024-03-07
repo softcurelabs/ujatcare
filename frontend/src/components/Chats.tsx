@@ -63,7 +63,7 @@ const Chats = ({ chats }: ChatsProps) => {
                   <i
                     className={classNames(
                       "mdi mdi-circle user-status",
-                      item.userStatus
+                      item.userStatus,
                     )}
                   ></i>
                 </div>
@@ -101,7 +101,7 @@ const Chats = ({ chats }: ChatsProps) => {
                     <i
                       className={classNames(
                         "mdi mdi-circle user-status",
-                        item.userStatus
+                        item.userStatus,
                       )}
                     ></i>
                   </div>
@@ -114,7 +114,7 @@ const Chats = ({ chats }: ChatsProps) => {
                 </div>
               </Link>
             );
-          }
+          },
         )}
 
         <div className="text-center mt-3">

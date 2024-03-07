@@ -36,7 +36,7 @@ axios.interceptors.response.use(
       }
       return Promise.reject(message);
     }
-  }
+  },
 );
 
 const AUTH_SESSION_KEY = "ujatcare_user";
@@ -141,12 +141,11 @@ class APICore {
     for (const k in data) {
       if (data[k] instanceof Array) {
         for (const file in data[k]) {
-          formData.append(k+'[]', data[k][file]);
+          formData.append(k + "[]", data[k][file]);
         }
       } else {
         formData.append(k, data[k]);
       }
-      
     }
 
     const config = {

@@ -12,7 +12,10 @@ export const ResidenceHistory = ({ data }: { data: ApplicationType }) => {
 
       <Row>
         <Col lg={4}>
-          <ViewRaw label="How long have you lived in B.C.?" value={data.long_term} />
+          <ViewRaw
+            label="How long have you lived in B.C.?"
+            value={data.long_term}
+          />
         </Col>
       </Row>
       <Row>

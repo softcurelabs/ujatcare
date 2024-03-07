@@ -85,29 +85,62 @@ const BasicInputElements = () => {
         <Col>
           <form onSubmit={onSubmit}>
             <FormLabel>
-              Note: When you have completed this application call the North Park Manor for an
-              appointment.
+              Note: When you have completed this application call the North Park
+              Manor for an appointment.
             </FormLabel>
-            <Applicant register={register} errors={errors} setValue={setValue} />
-            <HouseHoldComposition register={register} errors={errors} setValue={setValue} />
-            <ResidenceHistory register={register} errors={errors} setValue={setValue} />
-            <IncomeInformation register={register} errors={errors} setValue={setValue} />
+            <Applicant
+              register={register}
+              errors={errors}
+              setValue={setValue}
+            />
+            <HouseHoldComposition
+              register={register}
+              errors={errors}
+              setValue={setValue}
+            />
+            <ResidenceHistory
+              register={register}
+              errors={errors}
+              setValue={setValue}
+            />
+            <IncomeInformation
+              register={register}
+              errors={errors}
+              setValue={setValue}
+            />
             <Assets register={register} errors={errors} setValue={setValue} />
-            <Accomodation register={register} errors={errors} setValue={setValue} />
-            <ReasonForMove register={register} errors={errors} setValue={setValue} />
+            <Accomodation
+              register={register}
+              errors={errors}
+              setValue={setValue}
+            />
+            <ReasonForMove
+              register={register}
+              errors={errors}
+              setValue={setValue}
+            />
             <UploadDocuments
               register={register}
               errors={errors}
               setValue={setValue}
               control={control}
             />
-            <Comms register={register} errors={errors} setValue={setValue} control={control} />
+            <Comms
+              register={register}
+              errors={errors}
+              setValue={setValue}
+              control={control}
+            />
             <Row>
               <Col lg={12} className="d-flex justify-content-center">
                 {isLoading ? (
                   <Loader />
                 ) : (
-                  <Button variant="primary" type="submit" className="waves-effect waves-light me-1">
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    className="waves-effect waves-light me-1"
+                  >
                     Submit
                   </Button>
                 )}

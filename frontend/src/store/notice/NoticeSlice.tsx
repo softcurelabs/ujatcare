@@ -55,7 +55,7 @@ export const noticeAsync = createAsyncThunk<NoticesType | null, Number>(
   async (page = 1) => {
     const response = await notice(page);
     return response.data;
-  }
+  },
 );
 
 export const noticeHighlightAsync = createAsyncThunk<
@@ -78,7 +78,7 @@ export const noticeAddAsync = createAsyncThunk<StateType | null, any>(
     } catch (error) {
       return rejectWithValue(error);
     }
-  }
+  },
 );
 
 export const noticeDeleteAsync = createAsyncThunk<StateType | null, any>(
@@ -90,7 +90,7 @@ export const noticeDeleteAsync = createAsyncThunk<StateType | null, any>(
     } catch (error) {
       return rejectWithValue(error);
     }
-  }
+  },
 );
 
 export const noticeEditAsync = createAsyncThunk<StateType | null, any>(
@@ -102,7 +102,7 @@ export const noticeEditAsync = createAsyncThunk<StateType | null, any>(
     } catch (error) {
       return rejectWithValue(error);
     }
-  }
+  },
 );
 
 export const noticeShowAsync = createAsyncThunk<NoticeData, any>(
@@ -114,7 +114,7 @@ export const noticeShowAsync = createAsyncThunk<NoticeData, any>(
     } catch (error) {
       return rejectWithValue(error);
     }
-  }
+  },
 );
 
 export const { clearData } = NoticeSlice.actions;

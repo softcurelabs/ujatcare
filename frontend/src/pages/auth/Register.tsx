@@ -70,7 +70,7 @@ const SocialLinks = () => {
                 className={classNames(
                   "social-list-item",
                   "border-" + item.variant,
-                  "text-" + item.variant
+                  "text-" + item.variant,
                 )}
               >
                 <i className={classNames("mdi", "mdi-" + item.icon)}></i>
@@ -97,7 +97,7 @@ const Register = () => {
         .required("Please enter Email")
         .email("Please enter valid Email"),
       password: yup.string().required(t("Please enter Password")),
-    })
+    }),
   );
 
   /*
@@ -109,7 +109,7 @@ const Register = () => {
     <>
       <AuthLayout
         helpText={t(
-          "Don't have an account? Create your account, it takes less than a minute"
+          "Don't have an account? Create your account, it takes less than a minute",
         )}
         bottomLinks={<BottomLink />}
       >

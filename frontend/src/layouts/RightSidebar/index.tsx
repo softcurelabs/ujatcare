@@ -45,7 +45,7 @@ const RightSideBar = (props: RightSideBarProps) => {
         }
       }
     },
-    [rightBarNodeRef, dispatch, isOpenRightSideBar]
+    [rightBarNodeRef, dispatch, isOpenRightSideBar],
   );
 
   useEffect(() => {

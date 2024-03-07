@@ -13,21 +13,21 @@ const FontAwesomeIcons = () => {
     FAICONS_LIST.data &&
     FAICONS_LIST.data.length &&
     FAICONS_LIST.data.filter((icon) =>
-      icon.attributes.membership.free.includes("solid")
+      icon.attributes.membership.free.includes("solid"),
     );
 
   const regularIcons =
     FAICONS_LIST.data &&
     FAICONS_LIST.data.length &&
     FAICONS_LIST.data.filter((icon) =>
-      icon.attributes.membership.free.includes("regular")
+      icon.attributes.membership.free.includes("regular"),
     );
 
   const brandsIcons =
     FAICONS_LIST.data &&
     FAICONS_LIST.data.length &&
     FAICONS_LIST.data.filter((icon) =>
-      icon.attributes.membership.free.includes("brands")
+      icon.attributes.membership.free.includes("brands"),
     );
 
   return (
@@ -61,7 +61,7 @@ const FontAwesomeIcons = () => {
                         className={classNames(
                           "fas",
                           "fa-" + icon.attributes.id,
-                          "mdi-account"
+                          "mdi-account",
                         )}
                       ></i>
                       <span>fas fa-{icon.attributes.id}</span>
@@ -89,7 +89,7 @@ const FontAwesomeIcons = () => {
                         className={classNames(
                           "far",
                           "fa-" + icon.attributes.id,
-                          "mdi-account"
+                          "mdi-account",
                         )}
                       ></i>
                       <span>far fa-{icon.attributes.id}</span>
@@ -116,7 +116,7 @@ const FontAwesomeIcons = () => {
                         className={classNames(
                           "fab",
                           "fa-" + icon.attributes.id,
-                          "mdi-account"
+                          "mdi-account",
                         )}
                       ></i>
                       <span>far fa-{icon.attributes.id}</span>

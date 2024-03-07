@@ -59,7 +59,9 @@ const CustomerNotices = () => {
   return (
     <React.Fragment>
       <PageTitle
-        breadCrumbItems={[{ label: "Bulletin Board", path: "/notice", active: true }]}
+        breadCrumbItems={[
+          { label: "Bulletin Board", path: "/notice", active: true },
+        ]}
         title={"Bulletin Board"}
       />
 

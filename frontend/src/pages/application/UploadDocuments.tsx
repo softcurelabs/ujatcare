@@ -25,7 +25,8 @@ export const UploadDocuments = ({
   return (
     <FormGroup>
       <FormLabel className="fw-bolder fs-4 ">
-        G. For communications purposes only, please list the languages that you speak.
+        G. For communications purposes only, please list the languages that you
+        speak.
       </FormLabel>
       <Row>
         <Col lg={6}>
@@ -60,7 +61,8 @@ export const UploadDocuments = ({
         <Col lg={12}>
           <Form.Group className="mb-3 input-group">
             <FormLabel className="d-block">
-              If English is NOT your first language, do you have access to a translator?
+              If English is NOT your first language, do you have access to a
+              translator?
             </FormLabel>
             <FormInput
               type="radio"
@@ -89,13 +91,22 @@ export const UploadDocuments = ({
           <li>3 months of all bank account statements.</li>
           <li>3 months of pay stubs if employed.</li>
           <li>Most recent Tax Assessment.</li>
-          <li>Documents that indicate any payments currently received from E.I. or W.C.B.</li>
           <li>
-            Seniors (65 plus) are required to provide a Rate Benefit letter which is provided by
-            Service Canada (1-800-277-9914).
+            Documents that indicate any payments currently received from E.I. or
+            W.C.B.
           </li>
-          <li>Information on assets worth over $10,000 (cash, investments, real estate).</li>
-          <li>Applicants that are not Canadian Citizens Require Confirmation of their Status.</li>
+          <li>
+            Seniors (65 plus) are required to provide a Rate Benefit letter
+            which is provided by Service Canada (1-800-277-9914).
+          </li>
+          <li>
+            Information on assets worth over $10,000 (cash, investments, real
+            estate).
+          </li>
+          <li>
+            Applicants that are not Canadian Citizens Require Confirmation of
+            their Status.
+          </li>
         </ul>
       </div>
       <Controller
@@ -111,7 +122,9 @@ export const UploadDocuments = ({
         control={control}
       />
       {errors && errors["documents"] ? (
-        <Form.Control.Feedback type="invalid">{errors["documents"]!.message}</Form.Control.Feedback>
+        <Form.Control.Feedback type="invalid">
+          {errors["documents"]!.message}
+        </Form.Control.Feedback>
       ) : null}
     </FormGroup>
   );

@@ -16,7 +16,8 @@ export const IncomeInformation = ({
     <FormGroup>
       <FormLabel className="fw-bolder fs-4 ">D. Income Information:</FormLabel>
       <FormLabel className="fw-bolder fs-6 ms-2">
-        List gross monthly income, before deductions, for yourself and 2nd applicant, if applicable
+        List gross monthly income, before deductions, for yourself and 2nd
+        applicant, if applicable
       </FormLabel>
 
       <Row>

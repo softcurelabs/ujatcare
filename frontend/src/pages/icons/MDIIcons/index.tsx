@@ -61,7 +61,7 @@ const MDIIcons = () => {
                         className={classNames(
                           "mdi",
                           "mdi-" + size + "px",
-                          "mdi-account"
+                          "mdi-account",
                         )}
                       ></i>
                       <span>mdi-{size}px</span>
@@ -88,7 +88,7 @@ const MDIIcons = () => {
                         className={classNames(
                           "mdi",
                           "mdi-rotate-" + angle,
-                          "mdi-account"
+                          "mdi-account",
                         )}
                       ></i>
                       <span>mdi-rotate-{angle}</span>

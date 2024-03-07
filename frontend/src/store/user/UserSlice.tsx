@@ -67,7 +67,7 @@ export const userAsync = createAsyncThunk<UsersType | null, Number>(
   async (page = 1) => {
     const response = await user(page);
     return response.data;
-  }
+  },
 );
 
 export const recidentAsync = createAsyncThunk<UsersType | null, Number>(
@@ -75,7 +75,7 @@ export const recidentAsync = createAsyncThunk<UsersType | null, Number>(
   async (page = 1) => {
     const response = await recident(page);
     return response.data;
-  }
+  },
 );
 
 export const userAddAsync = createAsyncThunk<StateType | null, any>(
@@ -87,7 +87,7 @@ export const userAddAsync = createAsyncThunk<StateType | null, any>(
     } catch (error) {
       return rejectWithValue(error);
     }
-  }
+  },
 );
 
 export const userDeleteAsync = createAsyncThunk<StateType | null, any>(
@@ -99,7 +99,7 @@ export const userDeleteAsync = createAsyncThunk<StateType | null, any>(
     } catch (error) {
       return rejectWithValue(error);
     }
-  }
+  },
 );
 
 export const userEditAsync = createAsyncThunk<StateType | null, any>(
@@ -111,7 +111,7 @@ export const userEditAsync = createAsyncThunk<StateType | null, any>(
     } catch (error) {
       return rejectWithValue(error);
     }
-  }
+  },
 );
 
 export const userShowAsync = createAsyncThunk<UserEditType, any>(
@@ -123,7 +123,7 @@ export const userShowAsync = createAsyncThunk<UserEditType, any>(
     } catch (error) {
       return rejectWithValue(error);
     }
-  }
+  },
 );
 
 export const userResetAsync = createAsyncThunk<StateType, any>(
@@ -135,7 +135,7 @@ export const userResetAsync = createAsyncThunk<StateType, any>(
     } catch (error) {
       return rejectWithValue(error);
     }
-  }
+  },
 );
 
 export const userPermissionAsync = createAsyncThunk<StateType, any>(
@@ -147,7 +147,7 @@ export const userPermissionAsync = createAsyncThunk<StateType, any>(
     } catch (error) {
       return rejectWithValue(error);
     }
-  }
+  },
 );
 
 export const userUploadAsync = createAsyncThunk<StateType, any>(
@@ -159,7 +159,7 @@ export const userUploadAsync = createAsyncThunk<StateType, any>(
     } catch (error) {
       return rejectWithValue(error);
     }
-  }
+  },
 );
 
 export const userImportAsync = createAsyncThunk<StateType, any>(
@@ -171,7 +171,7 @@ export const userImportAsync = createAsyncThunk<StateType, any>(
     } catch (error) {
       return rejectWithValue(error);
     }
-  }
+  },
 );
 
 export const { clearData } = UserSlice.actions;

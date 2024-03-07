@@ -122,7 +122,7 @@ const Maintenance = () => {
                               className={classNames(
                                 item.icon,
                                 "font-22",
-                                "avatar-title"
+                                "avatar-title",
                               )}
                             ></i>
                           </div>

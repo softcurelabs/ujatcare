@@ -34,7 +34,9 @@ const MenuItemWithChildren = ({
   activeMenuItems,
   toggleMenu,
 }: SubMenus) => {
-  const [open, setOpen] = useState<boolean>(activeMenuItems!.includes(item.key));
+  const [open, setOpen] = useState<boolean>(
+    activeMenuItems!.includes(item.key),
+  );
   //
   useEffect(() => {
     setOpen(activeMenuItems!.includes(item.key));
@@ -60,15 +62,23 @@ const MenuItemWithChildren = ({
           onClick={toggleMenuItem}
           data-menu-key={item.key}
           aria-expanded={open}
-          className={classNames("menu-link justify-content-between", linkClassName, {
-            "menuitem-active": activeMenuItems!.includes(item.key) ? "active" : "",
-          })}
+          className={classNames(
+            "menu-link justify-content-between",
+            linkClassName,
+            {
+              "menuitem-active": activeMenuItems!.includes(item.key)
+                ? "active"
+                : "",
+            },
+          )}
         >
           <span className="menu-text"> {item.label} </span>
           {!item.badge ? (
             <span className="menu-arrow"></span>
           ) : (
-            <span className={`badge bg-${item.badge.variant} rounded-pill float-end`}>
+            <span
+              className={`badge bg-${item.badge.variant} rounded-pill float-end`}
+            >
               {item.badge.text}
             </span>
           )}
@@ -84,7 +94,9 @@ const MenuItemWithChildren = ({
                         {/* parent */}
                         <MenuItemWithChildren
                           item={child}
-                          linkClassName={activeMenuItems!.includes(child.key) ? "active" : ""}
+                          linkClassName={
+                            activeMenuItems!.includes(child.key) ? "active" : ""
+                          }
                           activeMenuItems={activeMenuItems}
                           subMenuClassNames="sub-menu"
                           toggleMenu={toggleMenu}
@@ -95,8 +107,14 @@ const MenuItemWithChildren = ({
                         {/* child */}
                         <MenuItem
                           item={child}
-                          className={activeMenuItems!.includes(child.key) ? "menuitem-active" : ""}
-                          linkClassName={activeMenuItems!.includes(child.key) ? "active" : ""}
+                          className={
+                            activeMenuItems!.includes(child.key)
+                              ? "menuitem-active"
+                              : ""
+                          }
+                          linkClassName={
+                            activeMenuItems!.includes(child.key) ? "active" : ""
+                          }
                         />
                       </>
                     )}
@@ -126,12 +144,17 @@ const MenuItemLink = ({ item, className }: SubMenus) => {
     <Link
       to={item.url!}
       target={item.target}
-      className={classNames("menu-link nav-link-ref justify-content-between", className)}
+      className={classNames(
+        "menu-link nav-link-ref justify-content-between",
+        className,
+      )}
       data-menu-key={item.key}
     >
       <span className="menu-text"> {item.label} </span>
       {item.badge && (
-        <span className={`badge bg-${item.badge.variant} float-end`}>{item.badge.text}</span>
+        <span className={`badge bg-${item.badge.variant} float-end`}>
+          {item.badge.text}
+        </span>
       )}
     </Link>
   );
@@ -143,7 +166,11 @@ interface MainMenuProps {
   activeMenuItems: string[];
 }
 
-const MainMenu = ({ menuItems, toggleMenu, activeMenuItems }: MainMenuProps) => {
+const MainMenu = ({
+  menuItems,
+  toggleMenu,
+  activeMenuItems,
+}: MainMenuProps) => {
   //
 
   const { layoutType } = useSelector((state: RootState) => ({
@@ -162,7 +189,11 @@ const MainMenu = ({ menuItems, toggleMenu, activeMenuItems }: MainMenuProps) => 
               </span>
               <span className="logo-lg">
                 <img
-                  src={layoutType === LayoutTypes.LAYOUT_TWO_COLUMN ? logoDark2 : logoDark}
+                  src={
+                    layoutType === LayoutTypes.LAYOUT_TWO_COLUMN
+                      ? logoDark2
+                      : logoDark
+                  }
                   alt=""
                   height="20"
                 />
@@ -174,7 +205,11 @@ const MainMenu = ({ menuItems, toggleMenu, activeMenuItems }: MainMenuProps) => 
               </span>
               <span className="logo-lg">
                 <img
-                  src={layoutType === LayoutTypes.LAYOUT_TWO_COLUMN ? logoLight2 : logoLight}
+                  src={
+                    layoutType === LayoutTypes.LAYOUT_TWO_COLUMN
+                      ? logoLight2
+                      : logoLight
+                  }
                   alt=""
                   height="20"
                 />
@@ -188,7 +223,8 @@ const MainMenu = ({ menuItems, toggleMenu, activeMenuItems }: MainMenuProps) => 
                 const activeParent =
                   activeMenuItems &&
                   activeMenuItems.length &&
-                  activeMenuItems[activeMenuItems.length - 1] === menuItem["key"];
+                  activeMenuItems[activeMenuItems.length - 1] ===
+                    menuItem["key"];
                 return (
                   <div
                     key={key}
@@ -199,7 +235,9 @@ const MainMenu = ({ menuItems, toggleMenu, activeMenuItems }: MainMenuProps) => 
                   >
                     {/* <div className="title-box"> */}
                     <ul className="menu">
-                      {menuItem.isTitle && <li className="menu-title">{menuItem.label}</li>}
+                      {menuItem.isTitle && (
+                        <li className="menu-title">{menuItem.label}</li>
+                      )}
                       {(menuItem.children || []).map((item, idx) => {
                         return (
                           <React.Fragment key={idx}>
@@ -216,7 +254,9 @@ const MainMenu = ({ menuItems, toggleMenu, activeMenuItems }: MainMenuProps) => 
                                 item={item}
                                 linkClassName=""
                                 className={
-                                  activeMenuItems!.includes(item.key) ? "menuitem-active" : ""
+                                  activeMenuItems!.includes(item.key)
+                                    ? "menuitem-active"
+                                    : ""
                                 }
                               />
                             )}

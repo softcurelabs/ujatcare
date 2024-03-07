@@ -72,7 +72,7 @@ const ProjectsDetails = ({ projectsDetails }: ProjectsDetailsProps) => {
                               project.status === "Completed",
                             "bg-soft-dark text-dark":
                               project.status === "Coming Soon",
-                          }
+                          },
                         )}
                       >
                         {project.status}

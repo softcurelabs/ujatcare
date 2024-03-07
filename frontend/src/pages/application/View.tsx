@@ -26,7 +26,9 @@ const List = () => {
   return (
     <React.Fragment>
       <PageTitle
-        breadCrumbItems={[{ label: "Application", path: "/applications", active: true }]}
+        breadCrumbItems={[
+          { label: "Application", path: "/applications", active: true },
+        ]}
         title={"View Application"}
       />
 

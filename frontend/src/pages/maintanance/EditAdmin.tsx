@@ -34,7 +34,7 @@ const BasicInputElements = () => {
     yup.object().shape({
       work_requested: yup.string().required("Please select Work Requested"),
       tanent_name: yup.string().required("Please enter tanent name"),
-    })
+    }),
   );
   const [toast, setToast] = useState("");
   const [error, setLocalError] = useState("");

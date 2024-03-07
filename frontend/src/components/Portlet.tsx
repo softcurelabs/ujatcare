@@ -34,9 +34,12 @@ const BasicPortlet = (props: PortletProps) => {
    */
   const reloadContent = () => {
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 500 + 300 * (Math.random() * 5));
+    setTimeout(
+      () => {
+        setLoading(false);
+      },
+      500 + 300 * (Math.random() * 5),
+    );
   };
 
   /**
@@ -110,9 +113,12 @@ const PortletWithHeader = (props: PortletProps) => {
    */
   const reloadContent = () => {
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 500 + 300 * (Math.random() * 5));
+    setTimeout(
+      () => {
+        setLoading(false);
+      },
+      500 + 300 * (Math.random() * 5),
+    );
   };
 
   /**

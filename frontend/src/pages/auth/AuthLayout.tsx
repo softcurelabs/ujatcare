@@ -22,14 +22,14 @@ const AuthLayout = ({
     if (document.body)
       document.body.classList.add(
         "authentication-bg",
-        "authentication-bg-pattern"
+        "authentication-bg-pattern",
       );
 
     return () => {
       if (document.body)
         document.body.classList.remove(
           "authentication-bg",
-          "authentication-bg-pattern"
+          "authentication-bg-pattern",
         );
     };
   }, []);

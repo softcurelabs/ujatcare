@@ -64,7 +64,7 @@ const ResetPassword = () => {
         .required("Please retype your password.")
         .oneOf([yup.ref("password")], "Your passwords do not match."),
       //   password_confirmation: yup.mat
-    })
+    }),
   );
 
   /*

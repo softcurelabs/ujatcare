@@ -71,7 +71,7 @@ const ChatItem = ({
       className={classNames(
         "clearfix",
         { odd: placement === "left" },
-        className
+        className,
       )}
     >
       {children}
@@ -103,7 +103,7 @@ const ChatForm = ({
   const schemaResolver = yupResolver(
     yup.object().shape({
       newMessage: yup.string().required("Please enter your messsage"),
-    })
+    }),
   );
 
   const methods = useForm<FormValues>({ resolver: schemaResolver });
@@ -193,7 +193,7 @@ const ChatList = (props: ChatListProps) => {
         userName: "Dominic",
         text: message,
         postedOn: new Date().getHours() + ":" + new Date().getMinutes(),
-      })
+      }),
     );
   };
 

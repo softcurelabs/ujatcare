@@ -40,7 +40,7 @@ const NotificationDropdown = (props: NotificationDropdownProps) => {
     setNotificationContentStyles(
       notificationContentStyle === notificationContainerStyle
         ? notificationShowContainerStyle
-        : notificationContainerStyle
+        : notificationContainerStyle,
     );
   };
 
@@ -57,7 +57,7 @@ const NotificationDropdown = (props: NotificationDropdownProps) => {
         onClick={toggleDropdown}
         className={classNames(
           "nav-link waves-effect waves-light arrow-none notification-list",
-          { show: dropdownOpen }
+          { show: dropdownOpen },
         )}
       >
         <i className="fe-bell noti-icon font-22"></i>

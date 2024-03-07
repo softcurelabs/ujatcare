@@ -8,7 +8,12 @@ import ReactSignatureCanvas from "react-signature-canvas";
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import GeneralInfo from "./GeneralInfo";
-import { FieldErrors, UseFormRegister, UseFormSetValue, Control } from "react-hook-form";
+import {
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+  Control,
+} from "react-hook-form";
 
 export const Comms = ({
   register,
@@ -52,8 +57,8 @@ export const Comms = ({
                   <span>This is my application; and</span>
                 </li>
                 <li>
-                  All the information in it is correct and complete to the best of my knowledge and
-                  belief.
+                  All the information in it is correct and complete to the best
+                  of my knowledge and belief.
                 </li>
               </ul>
             </div>
@@ -62,20 +67,23 @@ export const Comms = ({
               <ul className="fs-5">
                 <li>
                   <span>
-                    Pursuant to the Freedom of Information and Protection of Privacy Act (the FOI
-                    Act), the North Park Manor Society to make any inquiries that are necessary to
-                    verify the information given in this application; and
+                    Pursuant to the Freedom of Information and Protection of
+                    Privacy Act (the FOI Act), the North Park Manor Society to
+                    make any inquiries that are necessary to verify the
+                    information given in this application; and
                   </span>
                 </li>
                 <li>
-                  Pursuant to the FOI Act, any person, corporation, or social agency to release to
-                  the North Park Manor Society any information pertinent to the assessment of my/our
-                  application; and
+                  Pursuant to the FOI Act, any person, corporation, or social
+                  agency to release to the North Park Manor Society any
+                  information pertinent to the assessment of my/our application;
+                  and
                 </li>
                 <li>
-                  The North Park manor Society to receive an exchange with credit bureaus and my/our
-                  previous landlords’ credit and other information about me/us, to be used in the
-                  decision-making process to provide me/us with rental accommodation.
+                  The North Park manor Society to receive an exchange with
+                  credit bureaus and my/our previous landlords’ credit and other
+                  information about me/us, to be used in the decision-making
+                  process to provide me/us with rental accommodation.
                 </li>
               </ul>
             </div>
@@ -84,19 +92,22 @@ export const Comms = ({
               <ul className="fs-5">
                 <li>
                   <span>
-                    That, in accordance with section 33 (c) of the FOI Act, the information on this
-                    application may be shared with other affordable housing providers in order to
-                    increase my/our opportunities for rent-to-geared-income housing; and
+                    That, in accordance with section 33 (c) of the FOI Act, the
+                    information on this application may be shared with other
+                    affordable housing providers in order to increase my/our
+                    opportunities for rent-to-geared-income housing; and
                   </span>
                 </li>
                 <li>
-                  That this application does not constitute any agreement on the part of North Park
-                  Manor Society to provide me/us with rental accommodation; and
+                  That this application does not constitute any agreement on the
+                  part of North Park Manor Society to provide me/us with rental
+                  accommodation; and
                 </li>
                 <li>
-                  That it is my/our responsibility to advise North Park Manor Society of any changes
-                  to the information given in this application and to provide any supporting
-                  materials required for my/our application.
+                  That it is my/our responsibility to advise North Park Manor
+                  Society of any changes to the information given in this
+                  application and to provide any supporting materials required
+                  for my/our application.
                 </li>
               </ul>
             </div>

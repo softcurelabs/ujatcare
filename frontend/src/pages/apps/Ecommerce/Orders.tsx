@@ -186,7 +186,7 @@ const Orders = () => {
       OrderStatusGroup === "All"
         ? orders
         : [...orders].filter((o) =>
-            o.payment_status?.includes(OrderStatusGroup)
+            o.payment_status?.includes(OrderStatusGroup),
           );
     setOrderList(updatedData);
   };

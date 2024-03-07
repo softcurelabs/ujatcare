@@ -27,7 +27,7 @@ const SignInSignUp = () => {
     yup.object().shape({
       email: yup.string().required(t("Please enter Username")),
       loginpassword: yup.string().required(t("Please enter Password")),
-    })
+    }),
   );
 
   const signUpSchema = yupResolver(
@@ -38,7 +38,7 @@ const SignInSignUp = () => {
         .string()
         .required("Please enter Email")
         .email("Please enter valid Email"),
-    })
+    }),
   );
 
   /*
@@ -120,7 +120,7 @@ const SignInSignUp = () => {
               <h4 className="mt-0">{t("Free Sign Up")}</h4>
               <p className="text-muted mb-4">
                 {t(
-                  "Don't have an account? Create your account, it takes less than a minute"
+                  "Don't have an account? Create your account, it takes less than a minute",
                 )}
               </p>
 

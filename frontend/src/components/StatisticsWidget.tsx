@@ -24,7 +24,7 @@ const StatisticsWidget = (props: StatisticsWidgetProps) => {
                   "rounded-circle",
                   "bg-soft-" + props["variant"],
                   "border-" + props["variant"],
-                  "border"
+                  "border",
                 )}
               >
                 <i
@@ -32,7 +32,7 @@ const StatisticsWidget = (props: StatisticsWidgetProps) => {
                     props["icon"],
                     "avatar-title",
                     "font-22",
-                    "text-" + props["variant"]
+                    "text-" + props["variant"],
                   )}
                 ></i>
               </div>

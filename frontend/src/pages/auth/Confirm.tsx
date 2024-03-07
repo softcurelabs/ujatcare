@@ -129,7 +129,7 @@ const Confirm = () => {
             {t("A email has been send to ")}
             <b>{t("youremail@domain.com")}</b>
             {t(
-              ". Please check for an email from company and click on the included link to reset your password."
+              ". Please check for an email from company and click on the included link to reset your password.",
             )}
           </p>
           <Link

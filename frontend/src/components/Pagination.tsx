@@ -16,7 +16,7 @@ const Pagination = ({ tableProps, sizePerPageList }: PaginationProps) => {
    */
   const [pageCount, setPageCount] = useState<number>(tableProps.pageCount);
   const [pageIndex, setPageIndex] = useState<number>(
-    tableProps.state.pageIndex
+    tableProps.state.pageIndex,
   );
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const Pagination = ({ tableProps, sizePerPageList }: PaginationProps) => {
     (visiblePages: any, totalPages: number) => {
       return visiblePages.filter((page: any) => page <= pageCount);
     },
-    [pageCount]
+    [pageCount],
   );
 
   /**
@@ -51,7 +51,7 @@ const Pagination = ({ tableProps, sizePerPageList }: PaginationProps) => {
         }
       }
     },
-    [filterPages]
+    [filterPages],
   );
 
   /**
@@ -78,7 +78,7 @@ const Pagination = ({ tableProps, sizePerPageList }: PaginationProps) => {
   }, [pageCount, getVisiblePages]);
 
   const [visiblePages, setVisiblePages] = useState<number[]>(
-    getVisiblePages(null, pageCount)
+    getVisiblePages(null, pageCount),
   );
   const activePage: number = pageIndex;
 
@@ -158,7 +158,7 @@ const Pagination = ({ tableProps, sizePerPageList }: PaginationProps) => {
                     "d-xl-inline-block",
                     {
                       active: activePage === page,
-                    }
+                    },
                   )}
                   onClick={(e: any) => changePage(page)}
                 >
@@ -176,7 +176,7 @@ const Pagination = ({ tableProps, sizePerPageList }: PaginationProps) => {
                   "d-xl-inline-block",
                   {
                     active: activePage === page,
-                  }
+                  },
                 )}
                 onClick={(e: any) => changePage(page)}
               >

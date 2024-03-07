@@ -27,7 +27,7 @@ const ImportUsers = ({ show, onHide, onSubmit }: AddMemberProps) => {
   const schemaResolver = yupResolver(
     yup.object().shape({
       //   name: yup.string().required("Please enter name"),
-    })
+    }),
   );
 
   const dispatch = useDispatch<AppDispatch>();
@@ -113,11 +113,19 @@ const ImportUsers = ({ show, onHide, onSubmit }: AddMemberProps) => {
               {isLoading ? (
                 <Loader />
               ) : (
-                <Button variant="success" type="submit" className="waves-effect waves-light me-1">
+                <Button
+                  variant="success"
+                  type="submit"
+                  className="waves-effect waves-light me-1"
+                >
                   Save
                 </Button>
               )}
-              <Button variant="danger" className="waves-effect waves-light" onClick={onHide}>
+              <Button
+                variant="danger"
+                className="waves-effect waves-light"
+                onClick={onHide}
+              >
                 Exit
               </Button>
             </div>

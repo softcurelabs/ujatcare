@@ -205,7 +205,7 @@ const Table = (props: TableProps) => {
           },
           ...columns,
         ]);
-    }
+    },
   );
 
   let rows = pagination ? dataTable.page : dataTable.rows;
@@ -226,7 +226,7 @@ const Table = (props: TableProps) => {
           {...dataTable.getTableProps()}
           className={classNames(
             "table table-centered react-table",
-            props["tableClass"]
+            props["tableClass"],
           )}
         >
           <thead className={props["theadClass"]}>
@@ -235,7 +235,7 @@ const Table = (props: TableProps) => {
                 {(headerGroup.headers || []).map((column: any) => (
                   <th
                     {...column.getHeaderProps(
-                      column.sort && column.getSortByToggleProps()
+                      column.sort && column.getSortByToggleProps(),
                     )}
                     className={classNames({
                       sorting_desc: column.isSortedDesc === true,

@@ -10,7 +10,8 @@ export const UploadDocuments = ({ data }: { data: ApplicationType }) => {
   return (
     <div>
       <FormLabel className="fw-bolder fs-4 ">
-        G. For communications purposes only, please list the languages that you speak.
+        G. For communications purposes only, please list the languages that you
+        speak.
       </FormLabel>
       <Row>
         <Col lg={6}>

@@ -40,7 +40,7 @@ const MenuItemWithChildren = ({
   const { width } = useViewport();
 
   const [open, setOpen] = useState<boolean>(
-    activeMenuItems!.includes(item.key)
+    activeMenuItems!.includes(item.key),
   );
 
   const showMenu = width <= 768 && open;
@@ -48,7 +48,7 @@ const MenuItemWithChildren = ({
   const hasChild =
     item.children &&
     (item.children || []).filter(
-      (child) => child.children?.length && child.children
+      (child) => child.children?.length && child.children,
     );
 
   const hasGrandChild =
@@ -76,7 +76,7 @@ const MenuItemWithChildren = ({
     <Tag
       className={classNames(
         className,
-        activeMenuItems!.includes(item.key) ? "manuitem-active" : ""
+        activeMenuItems!.includes(item.key) ? "manuitem-active" : "",
       )}
     >
       <Link
@@ -140,7 +140,7 @@ const MenuItemWithChildren = ({
                           "dropdown-item",
                           activeMenuItems!.includes(child.key)
                             ? "menuitem-active"
-                            : ""
+                            : "",
                         )}
                         activeMenuItems={activeMenuItems}
                         className="menu-item"
@@ -259,7 +259,7 @@ const AppMenu = ({ menuItems }: AppMenuProps) => {
       for (let i: number = 0; i < items.length; ++i) {
         let trimmedURL = location?.pathname?.replaceAll(
           process.env.PUBLIC_URL,
-          ""
+          "",
         );
         if (
           trimmedURL ===

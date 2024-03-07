@@ -1,6 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { list, add, assignFlat } from "../../helpers/api/application";
-import { ApplicationType, ApplicationsType, AssignFlatType } from "../../types/ApplicationType";
+import {
+  ApplicationType,
+  ApplicationsType,
+  AssignFlatType,
+} from "../../types/ApplicationType";
 
 const initialState: StateType = {
   application: null,
@@ -41,7 +45,7 @@ export const applicationAddAsync = createAsyncThunk<StateType | null, any>(
     } catch (error) {
       return rejectWithValue(error);
     }
-  }
+  },
 );
 
 export const applicationAsync = createAsyncThunk<ApplicationsType, Number>(
@@ -49,7 +53,7 @@ export const applicationAsync = createAsyncThunk<ApplicationsType, Number>(
   async (page = 1) => {
     const response = await list(page);
     return response.data;
-  }
+  },
 );
 
 export const applicationAssignAsync = createAsyncThunk<StateType | null, any>(
@@ -61,7 +65,7 @@ export const applicationAssignAsync = createAsyncThunk<StateType | null, any>(
     } catch (error) {
       return rejectWithValue(error);
     }
-  }
+  },
 );
 
 export const { clearData } = ApplicationSlice.actions;

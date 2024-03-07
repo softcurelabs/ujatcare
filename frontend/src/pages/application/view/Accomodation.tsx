@@ -6,7 +6,9 @@ import { ApplicationType } from "../../../types/ApplicationType";
 export const Accomodation = ({ data }: { data: ApplicationType }) => {
   return (
     <FormGroup>
-      <FormLabel className="fw-bolder fs-4 ">F. Current Accommodation:</FormLabel>
+      <FormLabel className="fw-bolder fs-4 ">
+        F. Current Accommodation:
+      </FormLabel>
       <Row>
         <Col lg={8}>
           <ViewRaw label="Accommodation" value={data.accomodation} />
@@ -14,7 +16,10 @@ export const Accomodation = ({ data }: { data: ApplicationType }) => {
       </Row>
       <Row>
         <Col lg={6}>
-          <ViewRaw label="Please state your current monthly rent: ($)" value={data.monthly_rent} />
+          <ViewRaw
+            label="Please state your current monthly rent: ($)"
+            value={data.monthly_rent}
+          />
         </Col>
         <Col lg={6}>
           <ViewRaw

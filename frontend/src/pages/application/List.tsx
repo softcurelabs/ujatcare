@@ -122,7 +122,9 @@ const List = () => {
   return (
     <React.Fragment>
       <PageTitle
-        breadCrumbItems={[{ label: "Application", path: "/notice", active: true }]}
+        breadCrumbItems={[
+          { label: "Application", path: "/notice", active: true },
+        ]}
         title={"Application"}
       />
 

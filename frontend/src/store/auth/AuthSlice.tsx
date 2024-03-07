@@ -1,6 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { APICore, setAuthorization } from "../../helpers/api/apiCore";
-import { forgotPassword, login, profile, resetPassword } from "../../helpers/api/auth";
+import {
+  forgotPassword,
+  login,
+  profile,
+  resetPassword,
+} from "../../helpers/api/auth";
 import { ResetPasswordType } from "../../types/ResetPasswordType";
 const api = new APICore();
 
@@ -52,17 +57,20 @@ const AuthSlice = createSlice({
   },
 });
 
-export const loggedInAsync = createAsyncThunk<any, UserData>("loggedIn", async (userData) => {
-  const response = await login({
-    email: userData.email,
-    password: userData.password,
-  });
-  const user = response.data;
-  // NOTE - You can change this according to response format from your api
-  api.setLoggedInUser(user);
-  setAuthorization(user.accessToken);
-  return user;
-});
+export const loggedInAsync = createAsyncThunk<any, UserData>(
+  "loggedIn",
+  async (userData) => {
+    const response = await login({
+      email: userData.email,
+      password: userData.password,
+    });
+    const user = response.data;
+    // NOTE - You can change this according to response format from your api
+    api.setLoggedInUser(user);
+    setAuthorization(user.accessToken);
+    return user;
+  },
+);
 
 export const forgotPasswordAsync = createAsyncThunk<any, string>(
   "forgotPassword",
@@ -70,7 +78,7 @@ export const forgotPasswordAsync = createAsyncThunk<any, string>(
     const response = await forgotPassword({ email: email });
     const data = response.data;
     return data;
-  }
+  },
 );
 
 export const resetPasswordAsync = createAsyncThunk<any, ResetPasswordType>(
@@ -79,16 +87,19 @@ export const resetPasswordAsync = createAsyncThunk<any, ResetPasswordType>(
     const response = await resetPassword(params);
     const data = response.data;
     return data;
-  }
+  },
 );
 
-export const profileAsync = createAsyncThunk<any, void>("profile", async (userData) => {
-  const response = await profile();
-  const user = response.data;
-  // NOTE - You can change this according to response format from your api
-  api.setUserInSession(user);
-  return user;
-});
+export const profileAsync = createAsyncThunk<any, void>(
+  "profile",
+  async (userData) => {
+    const response = await profile();
+    const user = response.data;
+    // NOTE - You can change this according to response format from your api
+    api.setUserInSession(user);
+    return user;
+  },
+);
 
 export const logoutAsync = createAsyncThunk<any>("logout", async () => {
   //await logout();

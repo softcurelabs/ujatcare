@@ -113,7 +113,7 @@ const Pricing = () => {
                         <div
                           className={classNames(
                             "pricing-header text-center",
-                            plan.isRecommended ? "text-white" : ""
+                            plan.isRecommended ? "text-white" : "",
                           )}
                         >
                           <h5 className="plan-title text-uppercase mb-4">
@@ -129,7 +129,7 @@ const Pricing = () => {
                           <div
                             className={classNames(
                               "plan-duration",
-                              plan.isRecommended ? "" : "plan-duration "
+                              plan.isRecommended ? "" : "plan-duration ",
                             )}
                           >
                             Per {plan.duration}
@@ -139,7 +139,7 @@ const Pricing = () => {
                         <ul
                           className={classNames(
                             "list-unstyled pricing-list mt-4",
-                            plan.isRecommended ? "text-white" : ""
+                            plan.isRecommended ? "text-white" : "",
                           )}
                         >
                           {(plan.features || []).map((featureItem, idx1) => {
@@ -161,7 +161,7 @@ const Pricing = () => {
                               "mt-4",
                               "mb-2",
                               "width-sm",
-                              plan.isRecommended ? "btn-light" : "btn-primary"
+                              plan.isRecommended ? "btn-light" : "btn-primary",
                             )}
                           >
                             Purchase Now

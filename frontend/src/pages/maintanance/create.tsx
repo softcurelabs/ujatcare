@@ -37,9 +37,9 @@ const BasicInputElements = () => {
         .required()
         .matches(
           /^data:image\/(?:gif|png|jpeg|bmp|webp|svg\+xml)(?:;charset=utf-8)?;base64,(?:[A-Za-z0-9]|[+/])+={0,2}/,
-          "Signature must be png"
+          "Signature must be png",
         ),
-    })
+    }),
   );
   const [toast, setToast] = useState("");
   const [error, setLocalError] = useState("");
@@ -386,7 +386,7 @@ const BasicInputElements = () => {
                         setTimeIn(date);
                         setValue(
                           "time_out",
-                          timeOut.toLocaleTimeString("it-IT")
+                          timeOut.toLocaleTimeString("it-IT"),
                         );
                       }}
                     />

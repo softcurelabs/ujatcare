@@ -54,7 +54,7 @@ const StatisticsChartWidget = ({
                 className={classNames(
                   "avatar-sm",
                   "rounded-circle",
-                  "bg-" + variant
+                  "bg-" + variant,
                 )}
               >
                 <i
@@ -62,7 +62,7 @@ const StatisticsChartWidget = ({
                     icon,
                     "avatar-title",
                     "font-22",
-                    "text-white"
+                    "text-white",
                   )}
                 ></i>
               </div>

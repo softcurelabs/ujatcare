@@ -88,7 +88,7 @@ const HorizontalLayout = ({ children }: HorizontalLayoutProps) => {
   useEffect(() => {
     changeHTMLAttribute(
       "data-menu-icon",
-      showTwoToneIcons ? "twotones" : "default"
+      showTwoToneIcons ? "twotones" : "default",
     );
   }, [showTwoToneIcons]);
 

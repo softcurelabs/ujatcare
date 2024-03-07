@@ -20,7 +20,7 @@ const ContactUs = () => {
       fullname: yup.string().required("Please enter your name"),
       emailaddress: yup.string().required("Please enter your name"),
       subject: yup.string().required("Please enter your name"),
-    })
+    }),
   );
 
   /*

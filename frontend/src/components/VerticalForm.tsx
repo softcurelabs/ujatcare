@@ -10,7 +10,7 @@ interface VerticalFromProps<TFormValues> {
 }
 
 const VerticalForm = <
-  TFormValues extends Record<string, any> = Record<string, any>
+  TFormValues extends Record<string, any> = Record<string, any>,
 >({
   defaultValues,
   resolver,

@@ -73,7 +73,7 @@ const TodoList = ({ addTodo, height }: TodoListProps) => {
   const schemaResolver = yupResolver(
     yup.object().shape({
       newTodo: yup.string().required("Please enter your task name"),
-    })
+    }),
   );
 
   /*

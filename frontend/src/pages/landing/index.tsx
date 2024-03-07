@@ -29,7 +29,7 @@ const Landing = () => {
     if (document.body)
       document.body.classList.remove(
         "authentication-bg",
-        "authentication-bg-pattern"
+        "authentication-bg-pattern",
       );
 
     // manage go to top button

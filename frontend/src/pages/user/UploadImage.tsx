@@ -27,7 +27,7 @@ export const UploadImage = ({ id }: { id?: string }) => {
   const schemaResolver = yupResolver(
     yup.object().shape({
       //   title: yup.string().required(t("Please select title")).min(10, "Atleast 10 char required"),
-    })
+    }),
   );
 
   const {

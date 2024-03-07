@@ -42,7 +42,7 @@ const AddEditEvent = ({
     yup.object().shape({
       title: yup.string().required("Please enter event name"),
       className: yup.string().required("Please select category"),
-    })
+    }),
   );
 
   /*

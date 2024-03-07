@@ -807,7 +807,7 @@ const CheckboxCircled = () => {
             className={classNames(
               "mb-2",
               "form-check",
-              "form-check-" + item.variant
+              "form-check-" + item.variant,
             )}
           >
             <Form.Check.Input

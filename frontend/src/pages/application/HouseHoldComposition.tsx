@@ -17,7 +17,9 @@ export const HouseHoldComposition = ({
   const [actionDate, setActionDate] = useState(new Date());
   return (
     <FormGroup>
-      <FormLabel className="fw-bolder fs-4">B. Household Composition:</FormLabel>
+      <FormLabel className="fw-bolder fs-4">
+        B. Household Composition:
+      </FormLabel>
       <Row>
         <FormLabel className="fw-bolder fs-6">First Applicant:</FormLabel>
         <Col lg={2}>

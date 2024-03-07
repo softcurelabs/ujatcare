@@ -28,7 +28,7 @@ const Statistics = ({
                 className={classNames(
                   "avatar-lg",
                   "rounded-circle",
-                  "bg-" + variant
+                  "bg-" + variant,
                 )}
               >
                 <i
@@ -36,7 +36,7 @@ const Statistics = ({
                     icon,
                     "font-22",
                     "avatar-title",
-                    "text-white"
+                    "text-white",
                   )}
                 ></i>
               </div>

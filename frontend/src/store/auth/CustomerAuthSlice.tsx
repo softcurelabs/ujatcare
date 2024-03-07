@@ -63,7 +63,7 @@ export const loggedInAsync = createAsyncThunk<any, UserData>(
     api.setLoggedInUser(user);
     setAuthorization(user.accessToken);
     return user;
-  }
+  },
 );
 
 export const logoutAsync = createAsyncThunk<any>("logout", async () => {

@@ -19,8 +19,11 @@ const BasicInputElements = () => {
   const { t } = useTranslation();
   const schemaResolver = yupResolver(
     yup.object().shape({
-      title: yup.string().required(t("Please select title")).min(10, "Atleast 10 char required"),
-    })
+      title: yup
+        .string()
+        .required(t("Please select title"))
+        .min(10, "Atleast 10 char required"),
+    }),
   );
   const [toast, setToast] = useState("");
   const [error, setError] = useState("");

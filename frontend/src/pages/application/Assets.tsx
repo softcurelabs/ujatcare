@@ -16,7 +16,8 @@ export const Assets = ({
     <FormGroup>
       <FormLabel className="fw-bolder fs-4 ">E. Assets:</FormLabel>
       <FormLabel className="fw-bolder fs-6 ms-2">
-        Please list the current value of all assets held by you and members of your household
+        Please list the current value of all assets held by you and members of
+        your household
       </FormLabel>
       <Row>
         <Col lg={4}>

@@ -24,7 +24,9 @@ const NoticeHighlight = ({ noticeHighlights }: NoticeHighlightType) => {
                   return (
                     <tr key={"notice" + item.id}>
                       <td>
-                        <h5 className="m-0 fw-normal text-dark">{item.title}</h5>
+                        <h5 className="m-0 fw-normal text-dark">
+                          {item.title}
+                        </h5>
                       </td>
                       <td className="text-dark">{item.schedule_date}</td>
                     </tr>

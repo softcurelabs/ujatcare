@@ -18,5 +18,5 @@ root.render(
         <App />
       </BrowserRouter>
     </React.Fragment>
-  </Provider>
+  </Provider>,
 );

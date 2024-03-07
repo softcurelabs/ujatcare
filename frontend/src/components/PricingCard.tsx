@@ -35,7 +35,7 @@ const PricingCard = ({
                   {
                     "card-pricing-recommended": plan.isRecommended,
                   },
-                  pricingCardClass
+                  pricingCardClass,
                 )}
               >
                 <Card.Body className="text-center">
@@ -45,7 +45,7 @@ const PricingCard = ({
                   <span
                     className={classNames(
                       "card-pricing-icon",
-                      plan.isRecommended ? "text-white" : "text-primary"
+                      plan.isRecommended ? "text-white" : "text-primary",
                     )}
                   >
                     <i className={plan.icon}></i>
@@ -70,7 +70,7 @@ const PricingCard = ({
                       "mt-4",
                       "mb-2",
                       "width-sm",
-                      plan.isRecommended ? "btn-light" : "btn-primary"
+                      plan.isRecommended ? "btn-light" : "btn-primary",
                     )}
                   >
                     Sign Up

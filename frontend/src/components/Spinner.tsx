@@ -29,7 +29,7 @@ const Spinner = (props: SpinnerProps) => {
         },
         [`text-${color}`],
         { [`avatar-${size}`]: size },
-        props.className
+        props.className,
       )}
     >
       {children}

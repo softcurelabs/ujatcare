@@ -53,7 +53,7 @@ const ForgetPassword = () => {
   const schemaResolver = yupResolver(
     yup.object().shape({
       email: yup.string().email().required(t("Please enter email")),
-    })
+    }),
   );
 
   /*
@@ -78,7 +78,7 @@ const ForgetPassword = () => {
     <>
       <AuthLayout
         helpText={t(
-          "Enter your email address and we'll send you an email with instructions to reset your password."
+          "Enter your email address and we'll send you an email with instructions to reset your password.",
         )}
         bottomLinks={<BottomLink />}
       >

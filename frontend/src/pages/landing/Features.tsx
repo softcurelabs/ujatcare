@@ -46,7 +46,7 @@ const Features = ({ features }: FeaturesProps) => {
                           feature.icon,
                           "h4",
                           "text-white",
-                          "text-center"
+                          "text-center",
                         )}
                       ></i>
                     </div>
@@ -69,7 +69,7 @@ const Features = ({ features }: FeaturesProps) => {
                           feature.icon,
                           "h4",
                           "text-white",
-                          "text-center"
+                          "text-center",
                         )}
                       ></i>
                     </div>

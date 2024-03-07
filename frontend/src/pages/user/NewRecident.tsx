@@ -19,9 +19,12 @@ const BasicInputElements = () => {
   const schemaResolver = yupResolver(
     yup.object().shape({
       name: yup.string().required(t("Please select name")),
-      email: yup.string().required(t("Please select name")).email(t("Please valid Email")),
+      email: yup
+        .string()
+        .required(t("Please select name"))
+        .email(t("Please valid Email")),
       role_id: yup.string().required(t("Please select role")),
-    })
+    }),
   );
   const [toast, setToast] = useState("");
   const [error, setNewError] = useState("");
@@ -112,9 +115,15 @@ const BasicInputElements = () => {
                 >
                   {flats.length &&
                     flats.map((flat) => (
-                      <optgroup key={`apartment${flat.id}`} label={flat.name.toString()}>
+                      <optgroup
+                        key={`apartment${flat.id}`}
+                        label={flat.name.toString()}
+                      >
                         {flat.flats.map((aprtment) => (
-                          <option key={"flat" + aprtment.id} value={aprtment.id}>
+                          <option
+                            key={"flat" + aprtment.id}
+                            value={aprtment.id}
+                          >
                             {aprtment.name}
                           </option>
                         ))}

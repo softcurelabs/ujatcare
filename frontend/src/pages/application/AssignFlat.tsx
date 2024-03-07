@@ -73,7 +73,12 @@ export const AssignFlat = ({
         )}
         <form onSubmit={onSubmit}>
           <fieldset>
-            <FormInput type="hidden" name="id" value={targetId.toString()} register={register} />
+            <FormInput
+              type="hidden"
+              name="id"
+              value={targetId.toString()}
+              register={register}
+            />
             <FormInput
               type="select"
               label="Apartment#"
@@ -84,10 +89,17 @@ export const AssignFlat = ({
             >
               {flats.length &&
                 flats.map((flat) => (
-                  <optgroup key={`apartment${flat.id}`} label={flat.name.toString()}>
+                  <optgroup
+                    key={`apartment${flat.id}`}
+                    label={flat.name.toString()}
+                  >
                     {flat.flats.map((aprtment) =>
                       aprtment.has_occupied ? (
-                        <option key={"flat" + aprtment.id} value={aprtment.id} disabled>
+                        <option
+                          key={"flat" + aprtment.id}
+                          value={aprtment.id}
+                          disabled
+                        >
                           {aprtment.name}
                           {aprtment.has_occupied}
                         </option>
@@ -96,7 +108,7 @@ export const AssignFlat = ({
                           {aprtment.name}
                           {aprtment.has_occupied}
                         </option>
-                      )
+                      ),
                     )}
                   </optgroup>
                 ))}
@@ -104,7 +116,11 @@ export const AssignFlat = ({
             {isLoading ? (
               <Loader />
             ) : (
-              <Button variant="primary" type="submit" className="waves-effect waves-light me-1">
+              <Button
+                variant="primary"
+                type="submit"
+                className="waves-effect waves-light me-1"
+              >
                 Submit
               </Button>
             )}

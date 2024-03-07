@@ -46,7 +46,7 @@ const StatisticsWidget3 = (props: StatisticsWidgetProps) => {
                   "me-1",
                   "fa",
                   props["trend"]["icon"],
-                  "text-" + props["trend"]["variant"]
+                  "text-" + props["trend"]["variant"],
                 )}
               ></i>
               {props["trend"]["trendStats"]}

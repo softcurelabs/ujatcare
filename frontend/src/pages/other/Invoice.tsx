@@ -29,7 +29,7 @@ interface Items {
 const Invoice = () => {
   const [customer] = useState<string>("Stanley Jones");
   const [notes] = useState<string>(
-    "Thanks a lot because you keep purchasing our products. Our company promises to provide high quality products for you as well as outstanding customer service for every transaction."
+    "Thanks a lot because you keep purchasing our products. Our company promises to provide high quality products for you as well as outstanding customer service for every transaction.",
   );
   const [order_date] = useState<string>("Jan 17, 2016");
   const [order_status] = useState<string>("Unpaid");

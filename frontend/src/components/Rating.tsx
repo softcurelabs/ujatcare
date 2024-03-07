@@ -23,7 +23,7 @@ const Rating = (props: RatingProps) => {
           "text-muted",
           "float-start",
           "me-3",
-          props.className
+          props.className,
         )}
         id="rating-container"
       >

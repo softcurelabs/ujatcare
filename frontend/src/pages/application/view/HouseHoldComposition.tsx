@@ -5,11 +5,16 @@ import { ApplicationType, boolType, sex } from "../../../types/ApplicationType";
 export const HouseHoldComposition = ({ data }: { data: ApplicationType }) => {
   return (
     <FormGroup>
-      <FormLabel className="fw-bolder fs-4">B. Household Composition:</FormLabel>
+      <FormLabel className="fw-bolder fs-4">
+        B. Household Composition:
+      </FormLabel>
       <Row>
         <FormLabel className="fw-bolder fs-6">First Applicant:</FormLabel>
         <Col lg={3}>
-          <ViewRaw label="Name" value={data.hc_last_name_first + " " + data.hc_first_name_first} />
+          <ViewRaw
+            label="Name"
+            value={data.hc_last_name_first + " " + data.hc_first_name_first}
+          />
         </Col>
         <Col lg={3}>
           <ViewRaw label="Birth Date" value={data.hc_birth_date_first} />
@@ -27,7 +32,10 @@ export const HouseHoldComposition = ({ data }: { data: ApplicationType }) => {
           <ViewRaw label="Disability" value={data.hc_disability_first} />
         </Col>
         <Col lg={3} className="p-0">
-          <ViewRaw label="Wheelchair?" value={boolType[data.hc_wheelchair_first]} />
+          <ViewRaw
+            label="Wheelchair?"
+            value={boolType[data.hc_wheelchair_first]}
+          />
         </Col>
       </Row>
       <Row>
@@ -35,7 +43,11 @@ export const HouseHoldComposition = ({ data }: { data: ApplicationType }) => {
         <Col lg={3}>
           <ViewRaw
             label="Name"
-            value={(data.hc_last_name_second ?? "") + " " + (data.hc_first_name_second ?? "")}
+            value={
+              (data.hc_last_name_second ?? "") +
+              " " +
+              (data.hc_first_name_second ?? "")
+            }
           />
         </Col>
         <Col lg={3}>
@@ -54,7 +66,10 @@ export const HouseHoldComposition = ({ data }: { data: ApplicationType }) => {
           <ViewRaw label="Disability" value={data.hc_disability_second} />
         </Col>
         <Col lg={3} className="p-0">
-          <ViewRaw label="Wheelchair?" value={boolType[data.hc_wheelchair_second]} />
+          <ViewRaw
+            label="Wheelchair?"
+            value={boolType[data.hc_wheelchair_second]}
+          />
         </Col>
       </Row>
     </FormGroup>

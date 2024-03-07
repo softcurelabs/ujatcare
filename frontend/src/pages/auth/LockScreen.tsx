@@ -42,7 +42,7 @@ const LockScreen = () => {
   const schemaResolver = yupResolver(
     yup.object().shape({
       password: yup.string().required(t("Please enter Password")),
-    })
+    }),
   );
 
   /*

@@ -34,7 +34,7 @@ const getTwoColumnMenuItems = () => {
 
 const findAllParent = (
   menuItems: MenuItemTypes[],
-  menuItem: MenuItemTypes
+  menuItem: MenuItemTypes,
 ): string[] => {
   let parents: string[] = [];
   const parent = findMenuItem(menuItems, menuItem["parentKey"]);
@@ -50,7 +50,7 @@ const findAllParent = (
 
 const findMenuItem = (
   menuItems: MenuItemTypes[] | undefined,
-  menuItemKey: MenuItemTypes["key"] | undefined
+  menuItemKey: MenuItemTypes["key"] | undefined,
 ): MenuItemTypes | null => {
   if (menuItems && menuItemKey) {
     for (var i = 0; i < menuItems.length; i++) {

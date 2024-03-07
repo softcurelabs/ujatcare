@@ -22,13 +22,13 @@ const StatisticsWidget2 = (props: StatisticsWidgetProps) => {
                 className={classNames(
                   "avatar-sm",
                   "rounded",
-                  "bg-" + props["variant"]
+                  "bg-" + props["variant"],
                 )}
               >
                 <i
                   className={classNames(
                     props["icon"],
-                    "avatar-title font-22 text-white"
+                    "avatar-title font-22 text-white",
                   )}
                 ></i>
               </div>

@@ -21,7 +21,7 @@ const BasicInputElements = () => {
   const schemaResolver = yupResolver(
     yup.object().shape({
       //   title: yup.string().required(t("Please select title")).min(10, "Atleast 10 char required"),
-    })
+    }),
   );
 
   /*
@@ -90,7 +90,10 @@ const BasicInputElements = () => {
 
           <Row>
             <Col lg={6}>
-              <form onSubmit={onSubmit} className={disabled ? "form-readonly" : ""}>
+              <form
+                onSubmit={onSubmit}
+                className={disabled ? "form-readonly" : ""}
+              >
                 <fieldset>
                   <FormInput
                     label="Email"
