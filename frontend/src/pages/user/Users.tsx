@@ -58,20 +58,15 @@ const BasicTable = ({ users }: UsersDataType) => {
                       <td>
                         <>
                           <Dropdown className="btn-group" align="end">
-                            <Dropdown.Toggle
-                              variant="light"
-                              className="table-action-btn btn-sm"
-                            >
+                            <Dropdown.Toggle variant="light" className="table-action-btn btn-sm">
                               <i className="mdi mdi-dots-horizontal"></i>
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                              <Dropdown.Item
-                                href={`assign-permission/${record.user.id}`}
-                              >
+                              <Dropdown.Item href={`assign-permission-staff/${record.user.id}`}>
                                 <i className="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>
                                 Manage Permission
                               </Dropdown.Item>
-                              <Dropdown.Item href={`user/${record.user.id}`}>
+                              <Dropdown.Item href={`/user-staff/${record.user.id}`}>
                                 <i className="mdi mdi-check-all me-2 text-muted font-18 vertical-middle"></i>
                                 Edit Profile
                               </Dropdown.Item>
@@ -137,7 +132,7 @@ const Users = () => {
   return (
     <React.Fragment>
       <PageTitle
-        breadCrumbItems={[{ label: "Users", path: "/user", active: true }]}
+        breadCrumbItems={[{ label: "Staff", path: "/user", active: true }]}
         title={"Staff"}
       />
 

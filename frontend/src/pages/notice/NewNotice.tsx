@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Row, Col, Card, Button } from "react-bootstrap";
 
 // components
 import PageTitle from "../../components/PageTitle";
-import { FormInput, VerticalForm } from "../../components";
+import { FormInput } from "../../components";
 import HyperDatepicker from "../../components/Datepicker";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";

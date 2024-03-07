@@ -30,7 +30,7 @@ const BasicInputElements = () => {
   /*
    * form methods
    */
-  const [disabled, setDisabled] = useState<boolean>(true);
+  const [disabled] = useState<boolean>(true);
   const navigate = useNavigate();
   const params = useParams();
 
@@ -93,10 +93,7 @@ const BasicInputElements = () => {
 
           <Row>
             <Col lg={6}>
-              <form
-                onSubmit={onSubmit}
-                className={disabled ? "form-readonly" : ""}
-              >
+              <form onSubmit={onSubmit} className={disabled ? "form-readonly" : ""}>
                 <fieldset>
                   <FormInput
                     label="Email"
@@ -117,31 +114,33 @@ const BasicInputElements = () => {
                   >
                     <option value="">Select Role</option>
                     <option value="recident">Recident</option>
-                    <option value="staff">Staff</option>
+                    {/* <option value="staff">Staff</option> */}
                   </FormInput>
 
                   <FormInput
                     type="select"
                     label="Apartment#"
                     name="flat_id"
-                    containerClass="mb-3"
+                    containerClass="mb-3 "
                     register={register}
                     errors={errors}
                   >
                     {flats.length &&
                       flats.map((flat) => (
-                        <optgroup
-                          key={`apartment${flat.id}`}
-                          label={flat.name.toString()}
-                        >
-                          {flat.flats.map((aprtment) => (
-                            <option
-                              key={"flat" + aprtment.id}
-                              value={aprtment.id}
-                            >
-                              {aprtment.name}
-                            </option>
-                          ))}
+                        <optgroup key={`apartment${flat.id}`} label={flat.name.toString()}>
+                          {flat.flats.map((aprtment) =>
+                            aprtment.has_occupied ? (
+                              <option key={"flat" + aprtment.id} value={aprtment.id} disabled>
+                                {aprtment.name}
+                                {aprtment.has_occupied}
+                              </option>
+                            ) : (
+                              <option key={"flat" + aprtment.id} value={aprtment.id}>
+                                {aprtment.name}
+                                {aprtment.has_occupied}
+                              </option>
+                            )
+                          )}
                         </optgroup>
                       ))}
                   </FormInput>
@@ -171,7 +170,7 @@ const AssignPermission = () => {
     <React.Fragment>
       <PageTitle
         breadCrumbItems={[
-          { label: "Users", path: "/user" },
+          { label: "Recidents", path: "/recident" },
           { label: "Assign Permission", path: "/user", active: true },
         ]}
         title={"Assign Permission"}

@@ -11,6 +11,7 @@ class Apartment extends Model
     protected $table = 'apartment';
     use HasFactory;
 
+
     public function flats(): HasMany
     {
         return $this->hasMany(Flat::class);

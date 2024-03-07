@@ -103,16 +103,12 @@ const Topbar = ({ hideLogo, navCssClasses }: TopbarProps) => {
     heading = (
       <>
         <h4 className="text-white"> Apt#: {user.flat}</h4>
-        <h4 className="text-white">Name: {name}</h4>
+        {/* <h4 className="text-white">Name: {name}</h4> */}
       </>
     );
   } else {
     link = "/dashboard-2";
-    heading = (
-      <>
-        <h4 className="text-muted">Name: {name}</h4>
-      </>
-    );
+    heading = <>{/* <h4 className="text-muted">Name: {name}</h4> */}</>;
   }
   const pathname = location.pathname;
   const BackButton =

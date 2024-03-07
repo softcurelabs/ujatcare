@@ -29,8 +29,7 @@ const BasicInputElements = () => {
       //   title: yup.string().required(t("Please select title")).min(10, "Atleast 10 char required"),
     })
   );
-  let { flats, user, customerUser } = useSelector((state: RootState) => ({
-    flats: state.Flat.flats,
+  let { user, customerUser } = useSelector((state: RootState) => ({
     user: state.Auth.user,
     customerUser: state.CustomerAuth.user,
   }));

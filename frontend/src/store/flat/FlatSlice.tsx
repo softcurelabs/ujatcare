@@ -17,6 +17,7 @@ interface FlatType {
   apartment_id: number;
   created_at: Date;
   updated_at: Date;
+  has_occupied: boolean;
 }
 
 interface ApartmentType {
@@ -47,12 +48,9 @@ const FlatSlice = createSlice({
   },
 });
 
-export const flatAsync = createAsyncThunk<Array<ApartmentType>>(
-  "flatAsync",
-  async () => {
-    const response = await flats();
-    return response.data;
-  }
-);
+export const flatAsync = createAsyncThunk<Array<ApartmentType>>("flatAsync", async () => {
+  const response = await flats();
+  return response.data;
+});
 
 export default FlatSlice.reducer;

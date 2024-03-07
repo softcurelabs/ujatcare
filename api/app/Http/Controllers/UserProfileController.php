@@ -97,6 +97,11 @@ class UserProfileController extends Controller
     {
         $userProfile = UserProfile::with('user')->where('user_id', $user_id)->first();
         $user = Auth::user();
+
+        if ($userProfile->hasRole(Role::Staff)) {
+            throw ValidationException::withMessages(['Staff can\'t edit any user.']);
+        }
+
         $validations = [
             'unit' => 'required|integer|min:1|max:1000',
             'phone_number' => 'required|max:10|min:10',
@@ -111,6 +116,10 @@ class UserProfileController extends Controller
             'flat_id' => "required|integer",
             'movein_date' => 'date'
         ];
+
+        if ($userProfile->user->hasRole([Role::Admin, Role::Staff])) {
+            $validations = ['phone_number' => 'required|max:10|min:10',];
+        }
 
         if ($user->id === $user_id) {
             $validations['flat_id'] = 'exclude';
@@ -207,7 +216,7 @@ class UserProfileController extends Controller
         $validations = [
             'role_id' => 'required|string',
         ];
-        if ($request->get('role_id') == Role::Renter->value) {
+        if ($request->get('role_id') == Role::Recident->value) {
             $validations['flat_id'] = 'required|unique:flat_owner,flat_id';
         }
         $user = Auth::user();
@@ -222,7 +231,7 @@ class UserProfileController extends Controller
 
         $user->syncRoles($request->get('role_id'));
         if ($user->save()) {
-            if ($request->get('role_id') === Role::Renter->value) {
+            if ($request->get('role_id') === Role::Recident->value) {
                 $flatOwner = $user->flat;
                 if (!$flatOwner) {
                     $flatOwner = new FlatOwner();

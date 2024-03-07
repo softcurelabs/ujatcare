@@ -139,7 +139,14 @@ class APICore {
   createWithFile = (url: string, data: any) => {
     const formData = new FormData();
     for (const k in data) {
-      formData.append(k, data[k]);
+      if (data[k] instanceof Array) {
+        for (const file in data[k]) {
+          formData.append(k+'[]', data[k][file]);
+        }
+      } else {
+        formData.append(k, data[k]);
+      }
+      
     }
 
     const config = {

@@ -44,7 +44,7 @@ const BasicTable = ({ users }: UsersDataType) => {
                 <th>Apartment</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Role</th>
+                <th>Phone</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -57,7 +57,7 @@ const BasicTable = ({ users }: UsersDataType) => {
                       <td>{record.user.apartment_name}</td>
                       <td>{record.user.name}</td>
                       <td>{record.user.email}</td>
-                      <td>{record.user.role}</td>
+                      <td>{record.phone_number}</td>
                       <td>
                         <>
                           <Dropdown className="btn-group" align="end">
@@ -135,7 +135,7 @@ const Recidents = () => {
   return (
     <React.Fragment>
       <PageTitle
-        breadCrumbItems={[{ label: "Users", path: "/user", active: true }]}
+        breadCrumbItems={[{ label: "Residence", path: "/user", active: true }]}
         title={"Residence"}
       />
 

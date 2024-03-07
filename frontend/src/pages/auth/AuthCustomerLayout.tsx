@@ -34,7 +34,12 @@ const AuthCustomerLayout = ({ bottomLinks, children, isCombineForm }: AccountLay
                 <Card.Body className="p-4">
                   <div className="text-center w-95 m-auto row">
                     <div className="col-lg-2">
-                      <Button onClick={() => {}} className="btn-sm">
+                      <Button
+                        onClick={() => {
+                          navigate("/application");
+                        }}
+                        className="btn-sm"
+                      >
                         Start Application
                       </Button>
                     </div>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Constants\Role;
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FlatController;
 use App\Http\Controllers\MaintanceController;
@@ -29,6 +30,8 @@ Route::group(['prefix' => 'auth'], function () {
   Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
   Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
 
+
+
   Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('logout', [AuthController::class, 'logout']);
     Route::get('profile', [AuthController::class, 'user']);
@@ -36,13 +39,15 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 Route::get('flats', [FlatController::class, 'index']);
+Route::post('application', [ApplicationController::class, 'index']);
 Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff']], function () {
   Route::get('notice/{id}', [NoticeController::class, 'show']);
   Route::post('notice', [NoticeController::class, 'store']);
   Route::delete('notice/{id}', [NoticeController::class, 'delete']);
   Route::put('notice/{id}', [NoticeController::class, 'update']);
   Route::get('notice', [NoticeController::class, 'index']);
-
+  Route::get('application', [ApplicationController::class, 'list']);
+  Route::post('application-to-user/{id}', [ApplicationController::class, 'convertToUser']);
 
   Route::post('user', [UserProfileController::class, 'store']);
   Route::delete('user/{id}', [UserProfileController::class, 'delete']);

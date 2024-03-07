@@ -9,6 +9,7 @@ import AuthReducer from "./auth/AuthSlice";
 import NoticeReducer from "./notice/NoticeSlice";
 import UserReducer from "./user/UserSlice";
 import MaintananceReducer from "./maintanance/MaintananceSlice";
+import ApplicationReducer from "./application/ApplicationSlice";
 
 const store = configureStore({
   reducer: {
@@ -19,6 +20,7 @@ const store = configureStore({
     Notice: NoticeReducer,
     User: UserReducer,
     Maintanance: MaintananceReducer,
+    Application: ApplicationReducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

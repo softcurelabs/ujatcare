@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Apartment;
 use App\Models\Flat;
+use App\Models\FlatOwner;
 use Illuminate\Http\Request;
 
 class FlatController extends Controller

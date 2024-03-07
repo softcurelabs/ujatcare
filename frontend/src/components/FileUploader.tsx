@@ -26,14 +26,11 @@ const FileUploader = (props: FileUploaderProps) => {
     if (props.showPreview) {
       (files || []).map((file) =>
         Object.assign(file, {
-          preview:
-            file["type"].split("/")[0] === "image"
-              ? URL.createObjectURL(file)
-              : null,
+          preview: file["type"].split("/")[0] === "image" ? URL.createObjectURL(file) : null,
           formattedSize: formatBytes(file.size),
         })
       );
-      allFiles = [];
+      allFiles = selectedFiles;
       allFiles.push(...files);
       setSelectedFiles(allFiles);
     }
@@ -66,16 +63,13 @@ const FileUploader = (props: FileUploaderProps) => {
 
   return (
     <>
-      <Dropzone
-        {...props}
-        onDrop={(acceptedFiles) => handleAcceptedFiles(acceptedFiles)}
-      >
+      <Dropzone {...props} onDrop={(acceptedFiles) => handleAcceptedFiles(acceptedFiles)}>
         {({ getRootProps, getInputProps }) => (
           <div className="dropzone">
             <div className="dz-message needsclick" {...getRootProps()}>
               <input {...getInputProps()} />
               <i className="h3 text-muted dripicons-cloud-upload"></i>
-              <h4>Drop Image here or click to upload.</h4>
+              <h4>Drop Image or Document here or click to upload.</h4>
               <span className="text-muted font-13"></span>
             </div>
           </div>
@@ -117,14 +111,8 @@ const FileUploader = (props: FileUploaderProps) => {
                       </p>
                     </Col>
                     <Col className="text-end">
-                      <Link
-                        to="#"
-                        className="btn btn-link btn-lg text-muted shadow-none"
-                      >
-                        <i
-                          className="dripicons-cross"
-                          onClick={() => removeFile(i)}
-                        ></i>
+                      <Link to="#" className="btn btn-link btn-lg text-muted shadow-none">
+                        <i className="dripicons-cross" onClick={() => removeFile(i)}></i>
                       </Link>
                     </Col>
                   </Row>

@@ -13,44 +13,41 @@ interface DatepickerInputProps {
 }
 
 /* Datepicker with Input */
-const DatepickerInput = forwardRef<HTMLInputElement, DatepickerInputProps>(
-  (props, ref) => {
-    const onDateValueChange = () => {
-      // console.log("date value changed");
-    };
-    return (
-      <input
-        name={props.name}
-        type="text"
-        className={classNames("form-control", props.inputClass)}
-        onClick={props.onClick}
-        value={props.value}
-        onChange={onDateValueChange}
-        ref={ref}
-      />
-    );
-  }
-);
-
-/* Datepicker with Addon Input */
-const DatepickerInputWithAddon = forwardRef<
-  HTMLInputElement,
-  DatepickerInputProps
->((props, ref) => (
-  <div className="input-group input-group-sm" ref={ref}>
+const DatepickerInput = forwardRef<HTMLInputElement, DatepickerInputProps>((props, ref) => {
+  const onDateValueChange = () => {
+    // console.log("date value changed");
+  };
+  return (
     <input
-      type="text"
       name={props.name}
+      type="text"
       className={classNames("form-control", props.inputClass)}
       onClick={props.onClick}
       value={props.value}
-      readOnly
+      onChange={onDateValueChange}
+      ref={ref}
     />
-    <span className="input-group-text bg-blue border-blue text-white">
-      <i className="mdi mdi-calendar-range"></i>
-    </span>
-  </div>
-));
+  );
+});
+
+/* Datepicker with Addon Input */
+const DatepickerInputWithAddon = forwardRef<HTMLInputElement, DatepickerInputProps>(
+  (props, ref) => (
+    <div className="input-group input-group-sm" ref={ref}>
+      <input
+        type="text"
+        name={props.name}
+        className={classNames("form-control", props.inputClass)}
+        onClick={props.onClick}
+        value={props.value}
+        readOnly
+      />
+      <span className="input-group-text bg-blue border-blue text-white">
+        <i className="mdi mdi-calendar-range"></i>
+      </span>
+    </div>
+  )
+);
 
 interface HyperDatepickerProps {
   name?: string;
@@ -73,23 +70,6 @@ interface HyperDatepickerProps {
 }
 
 const HyperDatepicker = (props: HyperDatepickerProps) => {
-  // handle custom input
-  // ;
-  const input =
-    (props.hideAddon || false) === true ? (
-      <DatepickerInput
-        name={props.name}
-        inputClass={props.inputClass!}
-        value={props.value?.toDateString()}
-      />
-    ) : (
-      <DatepickerInputWithAddon
-        name={props.name}
-        inputClass={props.inputClass!}
-        value={props.value?.toDateString()}
-      />
-    );
-
   return (
     <>
       {/* date picker control */}
@@ -105,6 +85,8 @@ const HyperDatepicker = (props: HyperDatepickerProps) => {
           dateFormat={"hh:mm"}
           className="is-invalid"
           minDate={props.minDate}
+          scrollableYearDropdown={true}
+          scrollableMonthYearDropdown={true}
           maxDate={props.maxDate}
           disabled={props.disabled}
           monthsShown={props.monthsShown}
@@ -127,6 +109,9 @@ const HyperDatepicker = (props: HyperDatepickerProps) => {
           disabled={props.disabled}
           wrapperClassName="is-invalid"
           maxDate={props.maxDate}
+          showMonthDropdown={true}
+          showYearDropdown={true}
+          scrollableMonthYearDropdown={true}
           monthsShown={props.monthsShown}
           showTimeSelectOnly={props.showTimeSelectOnly}
           inline={props.inline}

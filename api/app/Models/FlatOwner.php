@@ -22,8 +22,8 @@ class FlatOwner extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function flat(): HasOne
+    public function flat(): BelongsTo
     {
-        return $this->hasOne(Flat::class, 'id', 'flat_id');
+        return $this->belongsTo(Flat::class);
     }
 }

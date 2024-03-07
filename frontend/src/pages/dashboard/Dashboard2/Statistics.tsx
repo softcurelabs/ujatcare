@@ -39,7 +39,7 @@ const Statistics = () => {
               variant="warning"
               description="In Progress"
               stats={statastics.in_progress.toString()}
-              icon="fa-plug"
+              icon="fe-compass"
             />
           </Col>
           <Col md={6} xl={3}>
@@ -47,7 +47,7 @@ const Statistics = () => {
               variant="success"
               description="Resolved"
               stats={statastics.close.toString()}
-              icon="fe-bar-chart-2"
+              icon="fe-camera-off"
             />
           </Col>
           <Col md={6} xl={3}>

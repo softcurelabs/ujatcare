@@ -32,6 +32,7 @@ const MENU_ITEMS: MenuItemTypes[] = [
         isTitle: false,
         url: "/apps/request/list",
       },
+
       {
         key: "inspect",
         label: "Inspect",
@@ -186,6 +187,12 @@ const ADMIN_ITEMS: MenuItemTypes[] = [
     label: "All Maintenance Requests",
     isTitle: false,
     url: "/maintanance-admin",
+  },
+  {
+    key: "application",
+    label: "Applications",
+    isTitle: false,
+    url: "/applications",
   },
   {
     key: "users",

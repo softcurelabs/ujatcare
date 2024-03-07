@@ -105,10 +105,7 @@ const BasicInputElements = () => {
               setValue("flat_id", response.user.flat.flat_id);
             }
             setValue("parking_space", response.parking_space);
-            setValue(
-              "emergency_contact_number",
-              response.emergency_contact_number
-            );
+            setValue("emergency_contact_number", response.emergency_contact_number);
             setValue("emergency_contact_name", response.emergency_contact_name);
             setValue("income_verification", response.income_verification);
             setValue("rent_calculation", response.rent_calculation);
@@ -133,10 +130,7 @@ const BasicInputElements = () => {
 
           <Row>
             <Col lg={6}>
-              <form
-                onSubmit={onSubmit}
-                className={disabled ? "form-readonly" : ""}
-              >
+              <form onSubmit={onSubmit} className={disabled ? "form-readonly" : ""}>
                 <fieldset>
                   <FormInput
                     label="Emergency Contact"
@@ -220,15 +214,9 @@ const BasicInputElements = () => {
                   >
                     {flats.length &&
                       flats.map((flat) => (
-                        <optgroup
-                          key={`apartment${flat.id}`}
-                          label={flat.name.toString()}
-                        >
+                        <optgroup key={`apartment${flat.id}`} label={flat.name.toString()}>
                           {flat.flats.map((aprtment) => (
-                            <option
-                              key={"flat" + aprtment.id}
-                              value={aprtment.id}
-                            >
+                            <option key={"flat" + aprtment.id} value={aprtment.id}>
                               {aprtment.name}
                             </option>
                           ))}
@@ -331,11 +319,7 @@ const BasicInputElements = () => {
             <Col lg={6}>
               <div className="text-end pb-2">
                 {disabled ? (
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    onClick={() => setDisabled(false)}
-                  >
+                  <Button variant="primary" type="submit" onClick={() => setDisabled(false)}>
                     Edit
                   </Button>
                 ) : (
@@ -361,7 +345,7 @@ const EditUser = () => {
     <React.Fragment>
       <PageTitle
         breadCrumbItems={[
-          { label: "Users", path: "/user" },
+          { label: "Recidents", path: "/user" },
           { label: "My Account", path: "/user", active: true },
         ]}
         title={"My Account"}
