@@ -17,6 +17,7 @@ import * as yup from "yup";
 import { flatAsync } from "../../store/flat/FlatSlice";
 import { ResetPassword } from "./ResetPassword";
 import { UploadImage } from "./UploadImage";
+import config from "../../config";
 
 const BasicInputElements = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -26,11 +27,12 @@ const BasicInputElements = () => {
   const schemaResolver = yupResolver(
     yup.object().shape({
       //   title: yup.string().required(t("Please select title")).min(10, "Atleast 10 char required"),
-    }),
+    })
   );
   const { flats } = useSelector((state: RootState) => ({
     flats: state.Flat.flats,
   }));
+  const [profilePic, setProfilePic] = useState<null | string>(null);
 
   /*
    * form methods
@@ -96,6 +98,8 @@ const BasicInputElements = () => {
         dispatch(userShowAsync(params.id))
           .unwrap()
           .then((response) => {
+            if (config.BASE_URL && response.image_path)
+              setProfilePic(`${config.BASE_URL}/${response.image_path}`);
             setValue("id", response.user.id);
             setValue("unit", response.unit);
             setValue("name", response.user.name);
@@ -105,10 +109,7 @@ const BasicInputElements = () => {
               setValue("flat_id", response.user.flat.flat_id);
             }
             setValue("parking_space", response.parking_space);
-            setValue(
-              "emergency_contact_number",
-              response.emergency_contact_number,
-            );
+            setValue("emergency_contact_number", response.emergency_contact_number);
             setValue("emergency_contact_name", response.emergency_contact_name);
             setValue("income_verification", response.income_verification);
             setValue("rent_calculation", response.rent_calculation);
@@ -133,10 +134,7 @@ const BasicInputElements = () => {
 
           <Row>
             <Col lg={6}>
-              <form
-                onSubmit={onSubmit}
-                className={disabled ? "form-readonly" : ""}
-              >
+              <form onSubmit={onSubmit} className={disabled ? "form-readonly" : ""}>
                 <fieldset>
                   {/* <FormInput
                     label="Emergency Contact"
@@ -162,7 +160,9 @@ const BasicInputElements = () => {
                     label="Name"
                     type="text"
                     name="name"
-                    containerClass={"mb-3"}
+                    className="form-control-sm "
+                    containerClass={"mb-3 input-group"}
+                    labelClassName="me-2"
                     register={register}
                     key="name"
                     errors={errors}
@@ -172,7 +172,9 @@ const BasicInputElements = () => {
                     type="text"
                     name="phone_number"
                     placeholder="phone_number"
-                    containerClass={"mb-3"}
+                    className="form-control-sm "
+                    containerClass={"mb-3 input-group"}
+                    labelClassName="me-2"
                     register={register}
                     key="phone_number"
                     errors={errors}
@@ -183,7 +185,9 @@ const BasicInputElements = () => {
                     type="email"
                     name="email"
                     placeholder="Email"
-                    containerClass={"mb-3"}
+                    className="form-control-sm "
+                    containerClass={"mb-3 input-group"}
+                    labelClassName="me-2"
                     register={register}
                     key="email"
                     errors={errors}
@@ -209,13 +213,12 @@ const BasicInputElements = () => {
             </Col>
 
             <Col lg={6}>
+              <div className="text-center">
+                {profilePic && <img src={profilePic} className="rounded-4" alt="{}" width={125} />}
+              </div>
               <div className="text-end pb-2">
                 {disabled ? (
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    onClick={() => setDisabled(false)}
-                  >
+                  <Button variant="primary" type="submit" onClick={() => setDisabled(false)}>
                     Edit
                   </Button>
                 ) : (

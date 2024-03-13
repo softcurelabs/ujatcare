@@ -76,7 +76,7 @@ export const ResidenceHistory = ({
               value={fstartDate}
               showTimeSelect={false}
               inputClass="form-control-sm"
-              dateFormat="MM-DD-YYYY"
+              dateFormat="MM-dd-yyyy"
               onChange={(date) => {
                 fsetStartDate(date);
                 setValue("rh_start_date_first", date.toLocaleString("sv-SE"));
@@ -106,7 +106,7 @@ export const ResidenceHistory = ({
               value={fendDate}
               showTimeSelect={false}
               inputClass="form-control-sm"
-              dateFormat="MM-DD-YYYY"
+              dateFormat="MM-dd-yyyy"
               onChange={(date) => {
                 fsetEndDate(date);
                 setValue("rh_end_date_first", date.toLocaleString("sv-SE"));
@@ -181,7 +181,7 @@ export const ResidenceHistory = ({
               value={sstartDate}
               showTimeSelect={false}
               inputClass="form-control-sm"
-              dateFormat="MM-DD-YYYY"
+              dateFormat="MM-dd-yyyy"
               onChange={(date) => {
                 ssetStartDate(date);
                 setValue("rh_start_date_second", date.toLocaleString("sv-SE"));
@@ -211,7 +211,7 @@ export const ResidenceHistory = ({
               value={sendDate}
               showTimeSelect={false}
               inputClass="form-control-sm"
-              dateFormat="MM-DD-YYYY"
+              dateFormat="MM-dd-yyyy"
               onChange={(date) => {
                 ssetEndDate(date);
                 setValue("rh_end_date_second", date.toLocaleString("sv-SE"));
@@ -286,7 +286,7 @@ export const ResidenceHistory = ({
               value={tstartDate}
               showTimeSelect={false}
               inputClass="form-control-sm"
-              dateFormat="MM-DD-YYYY"
+              dateFormat="MM-dd-yyyy"
               onChange={(date) => {
                 tsetStartDate(date);
                 setValue("rh_start_date_third", date.toLocaleString("sv-SE"));
@@ -316,7 +316,7 @@ export const ResidenceHistory = ({
               value={tendDate}
               showTimeSelect={false}
               inputClass="form-control-sm"
-              dateFormat="MM-DD-YYYY"
+              dateFormat="MM-dd-yyyy"
               onChange={(date) => {
                 tsetEndDate(date);
                 setValue("rh_end_date_third", date.toLocaleString("sv-SE"));

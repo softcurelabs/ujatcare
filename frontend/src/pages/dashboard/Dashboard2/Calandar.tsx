@@ -8,6 +8,8 @@ import classNames from "classnames";
 // components
 import PageTitle from "../../../components/PageTitle";
 import Calandar from "../../apps/Calendar/Calendar";
+import { useAppDispatch } from "../../../store";
+import { inspectionEventAsync } from "../../../store/inspection/InspectionSlice";
 
 // dummy data
 
@@ -16,6 +18,8 @@ const Calendar = () => {
   
    * modal handeling
    */
+  //const event = { title: "test", date: "2024-03-12" };
+  const dispatch = useAppDispatch();
   const defaultEvents: EventInput[] = [];
   const [show, setShow] = useState<boolean>(false);
   const onCloseModal = () => {
@@ -32,6 +36,14 @@ const Calendar = () => {
   const [events, setEvents] = useState<EventInput[]>([...defaultEvents]);
   const [eventData, setEventData] = useState<EventInput>({});
   const [dateInfo, setDateInfo] = useState<any>({});
+
+  useEffect(() => {
+    dispatch(inspectionEventAsync())
+      .unwrap()
+      .then((data) => {
+        setEvents(data);
+      });
+  }, []);
 
   /*
     calendar events

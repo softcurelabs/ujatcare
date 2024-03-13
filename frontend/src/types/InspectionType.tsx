@@ -1,7 +1,8 @@
+import { FlatType } from "./FlatType";
 import { KeyValueType } from "./KeyValueType";
 import { PaginationType } from "./PaginationType";
 import { TimeStampType } from "./TimeStampType";
-import { FlatType, UserType } from "./UserType";
+import { UserType } from "./UserType";
 
 export interface InspectionType extends TimeStampType {
   title: string;
@@ -15,6 +16,7 @@ export interface InspectionType extends TimeStampType {
   inspection_by: UserType | Number;
   user?: UserType;
   flat?: FlatType;
+  documents: Array<any>;
 }
 
 export interface InspectionsType extends PaginationType {

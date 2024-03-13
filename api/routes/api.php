@@ -60,9 +60,11 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff']], function ()
 
     Route::get('inspection', [InspectionController::class, 'list']);
     Route::post('inspection', [InspectionController::class, 'create']);
-    Route::put('inspection/{id}', [InspectionController::class, 'update']);
+    Route::post('inspection/{id}', [InspectionController::class, 'update']);
     Route::get('inspection/{id}', [InspectionController::class, 'show']);
+    Route::get('event-inspection', [InspectionController::class, 'events']);
     Route::delete('inspection/{id}', [InspectionController::class, 'delete']);
+    Route::delete('inspection-document/{id}', [InspectionController::class, 'deleteDocument']);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff|recident']], function () {

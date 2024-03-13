@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { flats } from "../../helpers";
+import { FlatType } from "../../types/FlatType";
 const initialState: StateType = {
   flats: [],
   error: "",
@@ -11,14 +12,7 @@ interface StateType {
   error: String;
   loading: Boolean;
 }
-interface FlatType {
-  id: number;
-  name: String;
-  apartment_id: number;
-  created_at: Date;
-  updated_at: Date;
-  has_occupied: boolean;
-}
+
 
 interface ApartmentType {
   id: number;

@@ -10,7 +10,7 @@ export function list(page: Number = 1) {
 
 export function edit(params: any) {
   const baseUrl = `/inspection/${params.id}`;
-  return api.update(`${baseUrl}`, params);
+  return api.createWithFile(`${baseUrl}`, params);
 }
 
 export function show(id: any) {
@@ -26,4 +26,14 @@ export function add(params: any) {
 export function remove(id: Number) {
   const baseUrl = `/inspection/${id}`;
   return api.delete(`${baseUrl}`);
+}
+
+export function removeDocument(id: Number) {
+  const baseUrl = `/inspection-document/${id}`;
+  return api.delete(`${baseUrl}`);
+}
+
+export function events() {
+  const baseUrl = "/event-inspection";
+  return api.get(`${baseUrl}`, {});
 }

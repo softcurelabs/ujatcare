@@ -3,6 +3,8 @@ import { Route, Navigate, RouteProps } from "react-router-dom";
 
 // components
 import PrivateRoute from "./PrivateRoute";
+import FAQ from "../pages/other/FAQ";
+import AboutUs from "../pages/other/AboutUs";
 const Notices = React.lazy(() => import("../pages/tables/Notices"));
 const CustomerLogin = React.lazy(() => import("../pages/auth/CustomerLogin"));
 const MaintananceReport = React.lazy(() => import("../pages/tables/MaintananceReport"));
@@ -122,12 +124,6 @@ const dashboardRoutes: RoutesProps = {
   icon: "airplay",
   header: "Navigation",
   children: [
-    {
-      path: "/",
-      name: "Root",
-      element: <Navigate to="/dashboard-1" />,
-      route: PrivateRoute,
-    },
     {
       path: "/dashboard-1",
       name: "Dashboard 1",
@@ -486,6 +482,11 @@ const uiRoutes = {
 
 // auth
 const authRoutes: RoutesProps[] = [
+  {
+    path: "/",
+    name: "Root",
+    element: <AboutUs />,
+  },
   {
     path: "/auth/login",
     name: "Login",

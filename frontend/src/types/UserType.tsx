@@ -45,6 +45,7 @@ export interface UserEditType extends TimeStampType {
   movein_date: Date;
   special_instruction: null | string;
   image_path: null | string;
+  profile_pic: null | string;
   user: UserType;
 }
 

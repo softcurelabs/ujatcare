@@ -17,9 +17,7 @@ export const HouseHoldComposition = ({
   const [actionDate, setActionDate] = useState(new Date());
   return (
     <FormGroup>
-      <FormLabel className="fw-bolder fs-4">
-        B. Household Composition:
-      </FormLabel>
+      <FormLabel className="fw-bolder fs-4">B. Household Composition:</FormLabel>
       <Row>
         <FormLabel className="fw-bolder fs-6">First Applicant:</FormLabel>
         <Col lg={2}>
@@ -67,7 +65,7 @@ export const HouseHoldComposition = ({
               value={actionDate}
               showTimeSelect={false}
               inputClass="form-control-sm"
-              dateFormat="MM-DD-YYYY"
+              dateFormat="MM-dd-yyyy"
               onChange={(date) => {
                 setActionDate(date);
                 setValue("hc_birth_date_first", date.toLocaleString("sv-SE"));
@@ -218,7 +216,7 @@ export const HouseHoldComposition = ({
               value={actionDate}
               showTimeSelect={false}
               inputClass="form-control-sm"
-              dateFormat="MM-DD-YYYY"
+              dateFormat="MM-dd-yyyy"
               onChange={(date) => {
                 setActionDate(date);
                 setValue("hc_birth_date_second", date.toLocaleString("sv-SE"));

@@ -129,7 +129,7 @@ th.fc-day-header {
     margin: 5px 7px;
     padding: 5px 5px;
     text-align: center;
-    color: $white;
+    color: $primary;
 
     &.bg-dark {
         .fc-event-time,
@@ -140,6 +140,13 @@ th.fc-day-header {
             border-color: var(--#{$prefix}gray-100);
         }
     }
+    .fc-event-time,
+        .fc-event-title {
+            color: var(--#{$prefix}black-100);
+        }
+        .fc-daygrid-event-dot {
+            border-color: var(--#{$prefix}black-100);
+        }
 }
 
 .external-event {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Card, Button, Form, FormLabel } from "react-bootstrap";
+import { Row, Col, Card, Button, Form, FormLabel, FormGroup } from "react-bootstrap";
 
 // components
 import PageTitle from "../../components/PageTitle";
@@ -8,15 +8,22 @@ import HyperDatepicker from "../../components/Datepicker";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useTranslation } from "react-i18next";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { Link, useParams } from "react-router-dom";
 import { InspectionType } from "../../types/InspectionType";
 import { flatAsync } from "../../store/flat/FlatSlice";
 import { userAsync } from "../../store/user/UserSlice";
-import { inspectionShowAsync, inspectionUpdateAsync } from "../../store/inspection/InspectionSlice";
+import {
+  inspectionDocumentDeleteAsync,
+  inspectionShowAsync,
+  inspectionUpdateAsync,
+} from "../../store/inspection/InspectionSlice";
 import Loader from "../../components/Loader";
+import FileUploader from "../../components/FileUploader";
+import App from "../../App";
+import config from "../../config";
 
 const BasicInputElements = () => {
   const { t } = useTranslation();
@@ -27,6 +34,7 @@ const BasicInputElements = () => {
   );
   const [loading, setIsLoading] = useState(false);
   const [toast, setToast] = useState("");
+  const [data, setData] = useState<InspectionType | null>(null);
   const [error, setLocalError] = useState("");
   const dispatch = useDispatch<AppDispatch>();
   const { flats, users } = useSelector((state: RootState) => ({
@@ -41,6 +49,7 @@ const BasicInputElements = () => {
         dispatch(inspectionShowAsync(params.id))
           .unwrap()
           .then((response) => {
+            setData(response);
             setValue("id", response.id);
             setValue("title", response.title);
             setValue("description", response.description);
@@ -64,7 +73,7 @@ const BasicInputElements = () => {
     handleSubmit,
     setValue,
     setError,
-    reset,
+    control,
     formState: { errors },
   } = useForm<InspectionType>({ defaultValues: {}, resolver: schemaResolver });
   const onSubmit = handleSubmit(async (data) => {
@@ -85,7 +94,17 @@ const BasicInputElements = () => {
         for (var element in reason.errors) {
           try {
             // @ts-ignore
-            setError(element, { message: reason.errors[element].toString() });
+            if (element.includes("documents")) {
+              [...Array(10)].map((_, index) =>
+                // @ts-ignore
+                setError("documents", {
+                  message: reason.errors["documents." + index].toString(),
+                })
+              );
+            } else {
+              // @ts-ignore
+              setError(element, { message: reason.errors[element].toString() });
+            }
           } catch (errror) {}
         }
         setIsLoading(false);
@@ -283,6 +302,65 @@ const BasicInputElements = () => {
                     containerClass={"mb-3"}
                     key="notes"
                   />
+
+                  <FormLabel className="">Documents</FormLabel>
+                  {data?.documents.map((val) => (
+                    <div>
+                      <Card className="mt-1 mb-1 shadow-none border" key={val.id + "-file"}>
+                        <div className="p-2">
+                          <Row className="align-items-center">
+                            <Col className="ps-0 ms-2">
+                              <Link
+                                to={`${config.BASE_URL}/${val.document_path}`}
+                                className="text-muted fw-bold"
+                                target="_blank"
+                              >
+                                {val.document_name}
+                              </Link>
+                            </Col>
+                            <Col className="text-end">
+                              <Link to="#" className="btn btn-link btn-lg text-muted shadow-none">
+                                <i
+                                  className="dripicons-cross"
+                                  onClick={() => {
+                                    dispatch(inspectionDocumentDeleteAsync(val.id))
+                                      .unwrap()
+                                      .then((response) => {
+                                        if (response && response.status) {
+                                          dispatch(inspectionShowAsync(params.id))
+                                            .unwrap()
+                                            .then((response) => {
+                                              setData(response);
+                                            });
+                                        }
+                                      });
+                                  }}
+                                ></i>
+                              </Link>
+                            </Col>
+                          </Row>
+                        </div>
+                      </Card>
+                    </div>
+                  ))}
+
+                  <FormGroup>
+                    <Controller
+                      render={() => (
+                        <FileUploader
+                          maxFiles={10}
+                          onFileUpload={(files) => {
+                            setValue("documents", files);
+                          }}
+                        ></FileUploader>
+                      )}
+                      name="documents"
+                      control={control}
+                    />
+                    {errors && errors["documents"] ? (
+                      <Form.Text className="text-danger">{errors["documents"]!.message}</Form.Text>
+                    ) : null}
+                  </FormGroup>
                 </Row>
                 {loading ? (
                   <Loader />

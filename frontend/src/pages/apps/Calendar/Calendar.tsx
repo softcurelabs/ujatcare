@@ -14,13 +14,7 @@ interface CalendarProps {
   events: EventInput[];
 }
 
-const Calendar = ({
-  onDateClick,
-  onEventClick,
-  onDrop,
-  onEventDrop,
-  events,
-}: CalendarProps) => {
+const Calendar = ({ onDateClick, onEventClick, onDrop, onEventDrop, events }: CalendarProps) => {
   /*
    * handle calendar methods
    */
@@ -43,12 +37,7 @@ const Calendar = ({
       <div id="calendar">
         <FullCalendar
           initialView="dayGridMonth"
-          plugins={[
-            dayGridPlugin,
-            interactionPlugin,
-            listPlugin,
-            BootstrapTheme,
-          ]}
+          plugins={[dayGridPlugin, interactionPlugin, listPlugin, BootstrapTheme]}
           handleWindowResize={true}
           themeSystem="bootstrap"
           buttonText={{

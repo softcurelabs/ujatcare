@@ -10,6 +10,7 @@ import { Accomodation } from "./view/Accomodation";
 import { ReasonForMove } from "./view/ReasonForMove";
 import { Comms } from "./view/Comms";
 import { UploadDocuments } from "./view/UploadDocuments";
+import { useEffect } from "react";
 
 export const ViewApplicationModal = ({
   okLabel = "OK",
@@ -20,9 +21,13 @@ export const ViewApplicationModal = ({
   handleClose,
   data,
 }: ConfimationType) => {
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
     data && (
-      <Modal show={show} onHide={handleClose} size="xl">
+      <Modal show={show} onHide={handleClose} className="print-me" size="xl">
         <Modal.Header closeButton>
           <Modal.Title>{title}</Modal.Title>
         </Modal.Header>
@@ -40,6 +45,9 @@ export const ViewApplicationModal = ({
         <Modal.Footer>
           <Button variant="primary" onClick={() => handleClose()}>
             {okLabel}
+          </Button>
+          <Button variant="primary" onClick={() => handlePrint()}>
+            Print
           </Button>
         </Modal.Footer>
       </Modal>

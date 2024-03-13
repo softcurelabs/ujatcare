@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PDFSignController;
 use App\Http\Controllers\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('signin', [PDFSignController::class, "index"]);
+Route::get('callback', [PDFSignController::class, "callback"]);

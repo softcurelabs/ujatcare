@@ -1,6 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { list, add, edit, remove, show } from "../../helpers/api/inspection";
+import {
+  list,
+  add,
+  edit,
+  remove,
+  show,
+  removeDocument,
+  events,
+} from "../../helpers/api/inspection";
 import { InspectionType, InspectionsType } from "../../types/InspectionType";
+import { EventInput } from "@fullcalendar/react";
 
 const initialState: StateType = {
   inspection: null,
@@ -77,7 +86,7 @@ export const inspectionUpdateAsync = createAsyncThunk<StateType | null, any>(
 );
 
 export const inspectionDeleteAsync = createAsyncThunk<StateType | null, any>(
-  "inspectionDeleteAsync/add",
+  "inspectionDeleteAsync/delete",
   async (id: number, { rejectWithValue }) => {
     try {
       const response = await remove(id);
@@ -85,6 +94,26 @@ export const inspectionDeleteAsync = createAsyncThunk<StateType | null, any>(
     } catch (error) {
       return rejectWithValue(error);
     }
+  }
+);
+
+export const inspectionDocumentDeleteAsync = createAsyncThunk<StateType | null, any>(
+  "inspectionDocumentDeleteAsync/delete",
+  async (id: number, { rejectWithValue }) => {
+    try {
+      const response = await removeDocument(id);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const inspectionEventAsync = createAsyncThunk<EventInput[]>(
+  "inspectionAsync/event",
+  async () => {
+    const response = await events();
+    return response.data;
   }
 );
 

@@ -94,7 +94,7 @@ const ManageTickets = ({ inspection, reload }: ManageTicketsProps) => {
             <thead className="table-light">
               <tr>
                 <th>Id</th>
-                <th>Created By</th>
+                <th>Flat Number</th>
                 <th>Subject</th>
                 <th>Assignee</th>
                 <th>Priority</th>
@@ -112,7 +112,7 @@ const ManageTickets = ({ inspection, reload }: ManageTicketsProps) => {
                       <td>
                         #<IdColumn row={record} />
                       </td>
-                      <td>{record.user ? record.user.name : ""}</td>
+                      <td>{record.flat ? record.flat.name : ""}</td>
                       <td>{record.title}</td>
                       <td>
                         {!(record.inspection_by instanceof Number) ? record.inspection_by.name : ""}

@@ -18,6 +18,7 @@ import { flatAsync } from "../../store/flat/FlatSlice";
 import { ResetPassword } from "./ResetPassword";
 import { UploadImage } from "./UploadImage";
 import { Documents } from "./Documents";
+import config from "../../config";
 
 const BasicInputElements = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -27,7 +28,7 @@ const BasicInputElements = () => {
   const schemaResolver = yupResolver(
     yup.object().shape({
       //   title: yup.string().required(t("Please select title")).min(10, "Atleast 10 char required"),
-    }),
+    })
   );
   let { user, customerUser } = useSelector((state: RootState) => ({
     user: state.Auth.user,
@@ -45,6 +46,7 @@ const BasicInputElements = () => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [disabled, setDisabled] = useState<boolean>(true);
   const navigate = useNavigate();
+  const [profilePic, setProfilePic] = useState<null | string>(null);
   /*
    * handle date change
    */
@@ -102,6 +104,8 @@ const BasicInputElements = () => {
         dispatch(userShowAsync(user.user_id))
           .unwrap()
           .then((response) => {
+            if (config.BASE_URL && response.image_path)
+              setProfilePic(`${config.BASE_URL}/${response.image_path}`);
             setValue("id", response.user.id);
             setValue("unit", response.unit);
             setValue("name", response.user.name);
@@ -111,10 +115,7 @@ const BasicInputElements = () => {
               setValue("flat_id", response.user.flat.flat_id);
             }
             setValue("parking_space", response.parking_space);
-            setValue(
-              "emergency_contact_number",
-              response.emergency_contact_number,
-            );
+            setValue("emergency_contact_number", response.emergency_contact_number);
             setValue("emergency_contact_name", response.emergency_contact_name);
             setValue("income_verification", response.income_verification);
             setValue("rent_calculation", response.rent_calculation);
@@ -140,16 +141,14 @@ const BasicInputElements = () => {
 
           <Row>
             <Col lg={6}>
-              <form
-                onSubmit={onSubmit}
-                className={disabled ? "form-readonly" : ""}
-              >
+              <form onSubmit={onSubmit} className={disabled ? "form-readonly" : ""}>
                 <fieldset>
                   <FormInput
                     label="Name"
                     type="text"
                     name="name"
-                    containerClass={"mb-3"}
+                    className="form-control-sm fs-5"
+                    containerClass={"mb-3 input-group"}
                     register={register}
                     key="name"
                     errors={errors}
@@ -159,7 +158,8 @@ const BasicInputElements = () => {
                     type="text"
                     name="phone_number"
                     placeholder="phone_number"
-                    containerClass={"mb-3"}
+                    className="form-control-sm fs-5"
+                    containerClass={"mb-3 input-group"}
                     register={register}
                     key="phone_number"
                     errors={errors}
@@ -170,7 +170,8 @@ const BasicInputElements = () => {
                     type="email"
                     name="email"
                     placeholder="Email"
-                    containerClass={"mb-3"}
+                    className="form-control-sm fs-5"
+                    containerClass={"mb-3 input-group"}
                     register={register}
                     key="email"
                     errors={errors}
@@ -180,7 +181,8 @@ const BasicInputElements = () => {
                     type="select"
                     label="Role"
                     name="role_id"
-                    containerClass="mb-3"
+                    className="form-control-sm fs-5"
+                    containerClass={"mb-3 input-group"}
                     register={register}
                     errors={errors}
                   >
@@ -195,7 +197,8 @@ const BasicInputElements = () => {
                     type="text"
                     name="unit"
                     placeholder="Unit"
-                    containerClass={"mb-3"}
+                    className="form-control-sm fs-5"
+                    containerClass={"mb-3 input-group"}
                     register={register}
                     key="unit"
                     errors={errors}
@@ -205,7 +208,8 @@ const BasicInputElements = () => {
                     type="text"
                     name="parking"
                     placeholder="Parking"
-                    containerClass={"mb-3"}
+                    className="form-control-sm fs-5"
+                    containerClass={"mb-3 input-group"}
                     register={register}
                     key="parking"
                     errors={errors}
@@ -216,7 +220,8 @@ const BasicInputElements = () => {
                     type="text"
                     name="language"
                     placeholder="Language"
-                    containerClass={"mb-3"}
+                    className="form-control-sm fs-5"
+                    containerClass={"mb-3 input-group"}
                     register={register}
                     key="language"
                     errors={errors}
@@ -226,7 +231,8 @@ const BasicInputElements = () => {
                     type="text"
                     name="emergency_contact_number"
                     placeholder="Emergency Contact Number"
-                    containerClass={"mb-3"}
+                    className="form-control-sm fs-5"
+                    containerClass={"mb-3 input-group"}
                     register={register}
                     key="emergency_contact_number"
                     errors={errors}
@@ -236,7 +242,8 @@ const BasicInputElements = () => {
                     type="text"
                     name="emergency_contact_name"
                     placeholder="Emergency Contact Name"
-                    containerClass={"mb-3"}
+                    className="form-control-sm fs-5"
+                    containerClass={"mb-3 input-group"}
                     register={register}
                     key="emergency_contact_name"
                     errors={errors}
@@ -247,7 +254,8 @@ const BasicInputElements = () => {
                     type="text"
                     name="relationship"
                     placeholder="relationship"
-                    containerClass={"mb-3"}
+                    className="form-control-sm fs-5"
+                    containerClass={"mb-3 input-group"}
                     register={register}
                     key="relationship"
                     errors={errors}
@@ -279,7 +287,8 @@ const BasicInputElements = () => {
                     type="text"
                     name="income_verification"
                     placeholder="Contact"
-                    containerClass={"mb-3"}
+                    className="form-control-sm fs-5"
+                    containerClass={"mb-3 input-group"}
                     register={register}
                     key="income_verification"
                     errors={errors}
@@ -289,7 +298,8 @@ const BasicInputElements = () => {
                     type="text"
                     name="rent_calculation"
                     placeholder="Rent"
-                    containerClass={"mb-3"}
+                    className="form-control-sm fs-5"
+                    containerClass={"mb-3 input-group"}
                     register={register}
                     key="rent_calculation"
                     errors={errors}
@@ -300,7 +310,8 @@ const BasicInputElements = () => {
                     type="textarea"
                     name="special_instruction"
                     rows="5"
-                    containerClass={"mb-3"}
+                    className="form-control-sm fs-5"
+                    containerClass={"mb-3 input-group"}
                     register={register}
                     key="special_instruction"
                     errors={errors}
@@ -363,7 +374,8 @@ const BasicInputElements = () => {
                       type="textarea"
                       name="staff_notes"
                       rows="5"
-                      containerClass={"mb-3"}
+                      className="form-control-sm fs-5"
+                    containerClass={"mb-3 input-group"}
                       register={register}
                       key="staff_notes"
                       errors={errors}
@@ -390,13 +402,12 @@ const BasicInputElements = () => {
             </Col>
 
             <Col lg={6}>
+              <div className="text-center">
+                {profilePic && <img src={profilePic} className="rounded-4" alt="{}" width={125} />}
+              </div>
               <div className="text-end pb-2">
                 {disabled ? (
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    onClick={() => setDisabled(false)}
-                  >
+                  <Button variant="primary" type="submit" onClick={() => setDisabled(false)}>
                     Edit
                   </Button>
                 ) : (

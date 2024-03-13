@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Inspection extends Model
 {
@@ -36,6 +37,11 @@ class Inspection extends Model
     public function flat(): BelongsTo
     {
         return $this->belongsTo(Flat::class, 'flat_id', 'id');
+    }
+
+    public function documents(): HasMany
+    {
+        return $this->hasMany(InspectionDocument::class);
     }
 
     public function save(array $options = array())
