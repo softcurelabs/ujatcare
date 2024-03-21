@@ -17,6 +17,7 @@ import { flatAsync } from "../../store/flat/FlatSlice";
 import { userAsync } from "../../store/user/UserSlice";
 import { inspectionAddAsync } from "../../store/inspection/InspectionSlice";
 import Loader from "../../components/Loader";
+import { ButtonLoader } from "../../components/ButtonLoader";
 
 const BasicInputElements = () => {
   const { t } = useTranslation();
@@ -253,7 +254,7 @@ const BasicInputElements = () => {
                   />
                 </Row>
                 {loading ? (
-                  <Loader />
+                  <ButtonLoader />
                 ) : (
                   <Button variant="primary" type="submit">
                     Create

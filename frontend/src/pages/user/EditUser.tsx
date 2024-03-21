@@ -18,12 +18,14 @@ import { flatAsync } from "../../store/flat/FlatSlice";
 import { ResetPassword } from "./ResetPassword";
 import { UploadImage } from "./UploadImage";
 import config from "../../config";
+import { ButtonLoader } from "../../components/ButtonLoader";
 
 const BasicInputElements = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { t } = useTranslation();
   const [toast, setToast] = useState("");
   const [error, setNewError] = useState("");
+  const [loading, setIsLoading] = useState(false);
   const schemaResolver = yupResolver(
     yup.object().shape({
       //   title: yup.string().required(t("Please select title")).min(10, "Atleast 10 char required"),
@@ -70,6 +72,7 @@ const BasicInputElements = () => {
     resolver: schemaResolver,
   });
   const onSubmit = handleSubmit((data) => {
+    setIsLoading(true);
     dispatch(userEditAsync(data))
       .unwrap()
       .then((response) => {
@@ -81,6 +84,7 @@ const BasicInputElements = () => {
             behavior: "smooth",
           });
         }
+        setIsLoading(false);
       })
       .catch((reason) => {
         for (var element in reason.errors) {
@@ -89,6 +93,7 @@ const BasicInputElements = () => {
             setError(element, { message: reason.errors[element].toString() });
           } catch (errror) {}
         }
+        setIsLoading(false);
       });
   });
   useEffect(() => {
@@ -340,9 +345,13 @@ const BasicInputElements = () => {
                   Back
                 </Button>
                 {!disabled ? (
-                  <Button variant="primary" type="submit">
-                    Submit
-                  </Button>
+                  loading ? (
+                    <ButtonLoader />
+                  ) : (
+                    <Button variant="primary" type="submit">
+                      Submit
+                    </Button>
+                  )
                 ) : (
                   <div />
                 )}

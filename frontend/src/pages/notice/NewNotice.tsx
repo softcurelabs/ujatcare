@@ -14,6 +14,7 @@ import { noticeAddAsync } from "../../store/notice/NoticeSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { Link } from "react-router-dom";
+import { ButtonLoader } from "../../components/ButtonLoader";
 
 const BasicInputElements = () => {
   const { t } = useTranslation();
@@ -24,6 +25,7 @@ const BasicInputElements = () => {
   );
   const [toast, setToast] = useState("");
   const [error, setError] = useState("");
+  const [loading, setIsLoading] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
 
   const {
@@ -34,6 +36,7 @@ const BasicInputElements = () => {
     formState: { errors },
   } = useForm<NoticeData>({ defaultValues: {}, resolver: schemaResolver });
   const onSubmit = handleSubmit(async (data) => {
+    setIsLoading(true);
     await dispatch(noticeAddAsync(data))
       .unwrap()
       .then((response) => {
@@ -41,9 +44,11 @@ const BasicInputElements = () => {
           setToast(response.message);
           reset();
         }
+        setIsLoading(false);
       })
       .catch((reason) => {
         setError(reason.message);
+        setIsLoading(false);
       });
   });
 
@@ -97,9 +102,13 @@ const BasicInputElements = () => {
                     }}
                   />
                 </div>
-                <Button variant="primary" type="submit">
-                  Publish
-                </Button>
+                {loading ? (
+                  <ButtonLoader />
+                ) : (
+                  <Button variant="primary" type="submit">
+                    Publish
+                  </Button>
+                )}
               </form>
             </Col>
 

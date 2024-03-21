@@ -12,6 +12,7 @@ import { AppDispatch } from "../../store";
 import { userImportAsync } from "../../store/user/UserSlice";
 import Loader from "../../components/Loader";
 import { Link } from "react-router-dom";
+import { ButtonLoader } from "../../components/ButtonLoader";
 // import DownloadUser from "";
 
 interface AddMemberProps {
@@ -27,7 +28,7 @@ const ImportUsers = ({ show, onHide, onSubmit }: AddMemberProps) => {
   const schemaResolver = yupResolver(
     yup.object().shape({
       //   name: yup.string().required("Please enter name"),
-    }),
+    })
   );
 
   const dispatch = useDispatch<AppDispatch>();
@@ -111,21 +112,13 @@ const ImportUsers = ({ show, onHide, onSubmit }: AddMemberProps) => {
 
             <div className="text-end mt-2">
               {isLoading ? (
-                <Loader />
+                <ButtonLoader />
               ) : (
-                <Button
-                  variant="success"
-                  type="submit"
-                  className="waves-effect waves-light me-1"
-                >
+                <Button variant="success" type="submit" className="waves-effect waves-light me-1">
                   Save
                 </Button>
               )}
-              <Button
-                variant="danger"
-                className="waves-effect waves-light"
-                onClick={onHide}
-              >
+              <Button variant="danger" className="waves-effect waves-light" onClick={onHide}>
                 Exit
               </Button>
             </div>

@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { PasswordDataType } from "../../types/UserType";
 import { userResetAsync } from "../../store/user/UserSlice";
 import * as yup from "yup";
+import { ButtonLoader } from "../../components/ButtonLoader";
 
 interface IdType {
   id: Number;
@@ -19,10 +20,11 @@ export const ResetPassword = ({ id }: { id?: string }) => {
   const { t } = useTranslation();
   const [toast, setToast] = useState("");
   const [error, setNewError] = useState("");
+  const [loading, setIsLoading] = useState(false);
   const schemaResolver = yupResolver(
     yup.object().shape({
       //   title: yup.string().required(t("Please select title")).min(10, "Atleast 10 char required"),
-    }),
+    })
   );
   const {
     register,
@@ -37,6 +39,7 @@ export const ResetPassword = ({ id }: { id?: string }) => {
   });
 
   const onSubmit = handleSubmit((data) => {
+    setIsLoading(true);
     dispatch(userResetAsync(data))
       .unwrap()
       .then((response) => {
@@ -44,6 +47,7 @@ export const ResetPassword = ({ id }: { id?: string }) => {
           setToast(response.message);
           //   reset();
         }
+        setIsLoading(false);
       })
       .catch((reason) => {
         for (var element in reason.errors) {
@@ -52,6 +56,7 @@ export const ResetPassword = ({ id }: { id?: string }) => {
             setError(element, { message: reason.errors[element].toString() });
           } catch (errror) {}
         }
+        setIsLoading(false);
       });
   });
 
@@ -74,9 +79,13 @@ export const ResetPassword = ({ id }: { id?: string }) => {
         errors={errors}
       />
       <FormInput type="hidden" name="id" register={register} />
-      <Button variant="primary" type="submit">
-        Reset
-      </Button>
+      {loading ? (
+        <ButtonLoader />
+      ) : (
+        <Button variant="primary" type="submit">
+          Reset
+        </Button>
+      )}
     </form>
   );
 };

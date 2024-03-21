@@ -19,6 +19,7 @@ import { MaintananceData } from "../../types/MaintananceType";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import HyperDatepicker from "../../components/Datepicker";
+import { ButtonLoader } from "../../components/ButtonLoader";
 
 const BasicInputElements = () => {
   const schemaResolver = yupResolver(
@@ -38,6 +39,7 @@ const BasicInputElements = () => {
   );
   const [toast, setToast] = useState("");
   const [error, setLocalError] = useState("");
+  const [loading, setIsLoading] = useState(false);
   const [localUser, setLocalUser] = useState<UserProfileDataType>();
   let { user, customerUser } = useSelector((state: RootState) => ({
     user: state.Auth.user,
@@ -132,6 +134,7 @@ const BasicInputElements = () => {
   }, [user.user_id]);
 
   const onSubmit = handleSubmit(async (data) => {
+    setIsLoading(true);
     dispatch(maintananceEditAsync(data))
       .unwrap()
       .then((response) => {
@@ -146,6 +149,7 @@ const BasicInputElements = () => {
         } else {
           setLocalError(response?.message);
         }
+        setIsLoading(false);
       })
       .catch((reason) => {
         for (var element in reason.errors) {
@@ -154,6 +158,7 @@ const BasicInputElements = () => {
             setError(element, { message: reason.errors[element].toString() });
           } catch (errror) {}
         }
+        setIsLoading(false);
       });
   });
 
@@ -493,9 +498,14 @@ const BasicInputElements = () => {
               </Row>
               <Row>
                 <Col lg={3}>
-                  <Button variant="primary" type="submit">
-                    Submit
-                  </Button>
+                  {" "}
+                  {loading ? (
+                    <ButtonLoader />
+                  ) : (
+                    <Button variant="primary" type="submit">
+                      Submit
+                    </Button>
+                  )}
                 </Col>
               </Row>
             </form>

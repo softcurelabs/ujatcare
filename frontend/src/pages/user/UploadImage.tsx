@@ -10,6 +10,7 @@ import { userUploadAsync } from "../../store/user/UserSlice";
 import * as yup from "yup";
 import { profileAsync } from "../../store/auth/AuthSlice";
 import Loader from "../../components/Loader";
+import { ButtonLoader } from "../../components/ButtonLoader";
 
 export const UploadImage = ({ id }: { id?: string }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -71,7 +72,7 @@ export const UploadImage = ({ id }: { id?: string }) => {
         />
         <FormInput type="hidden" name="id" register={register} />
         {isLoading ? (
-          <Loader />
+          <ButtonLoader />
         ) : (
           <Button type="submit" className="waves-effect waves-light me-1">
             Submit

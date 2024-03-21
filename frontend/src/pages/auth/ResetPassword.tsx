@@ -13,6 +13,7 @@ import AuthLayout from "./AuthLayout";
 import { AppDispatch } from "../../store";
 import { ResetPasswordType } from "../../types/ResetPasswordType";
 import { resetPasswordAsync } from "../../store/auth/AuthSlice";
+import { ButtonLoader } from "../../components/ButtonLoader";
 
 interface UserData {
   email: string;
@@ -46,6 +47,7 @@ const ResetPassword = () => {
 
   const [toast, setToast] = useState("");
   const [error, setError] = useState("");
+  const [loading, setIsLoading] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const params = useParams();
 
@@ -64,7 +66,7 @@ const ResetPassword = () => {
         .required("Please retype your password.")
         .oneOf([yup.ref("password")], "Your passwords do not match."),
       //   password_confirmation: yup.mat
-    }),
+    })
   );
 
   /*
@@ -73,15 +75,18 @@ const ResetPassword = () => {
   const onSubmit = (formData: ResetPasswordType) => {
     setToast("");
     setError("");
+    setIsLoading(true);
     dispatch(resetPasswordAsync(formData))
       .unwrap()
       .then((response) => {
         if (response && response.status === true) {
           setToast(response.message);
         }
+        setIsLoading(false);
       })
       .catch((reason) => {
         setError(reason.message);
+        setIsLoading(false);
       });
   };
 
@@ -125,9 +130,13 @@ const ResetPassword = () => {
             <FormInput type="hidden" name="token" />
 
             <div className="d-grid text-center">
-              <Button variant="primary" type="submit">
-                {t("Reset Password")}
-              </Button>
+              {loading ? (
+                <ButtonLoader />
+              ) : (
+                <Button variant="primary" type="submit">
+                  {t("Reset Password")}
+                </Button>
+              )}
             </div>
           </VerticalForm>
         }

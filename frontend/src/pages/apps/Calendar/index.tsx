@@ -13,6 +13,8 @@ import AddEditEvent from "./AddEditEvent";
 
 // dummy data
 import { defaultEvents } from "./data";
+import { inspectionEventAsync } from "../../../store/inspection/InspectionSlice";
+import { useAppDispatch } from "../../../store";
 
 const SidePanel = () => {
   // external events
@@ -58,11 +60,12 @@ const CalendarApp = () => {
   };
   const onOpenModal = () => setShow(true);
   const [isEditable, setIsEditable] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
 
   /*
    * event data
    */
-  const [events, setEvents] = useState<EventInput[]>([...defaultEvents]);
+  const [events, setEvents] = useState<EventInput[]>([]);
   const [eventData, setEventData] = useState<EventInput>({});
   const [dateInfo, setDateInfo] = useState<any>({});
 
@@ -174,6 +177,14 @@ const CalendarApp = () => {
     setIsEditable(false);
     onOpenModal();
   };
+
+  useEffect(() => {
+    dispatch(inspectionEventAsync())
+      .unwrap()
+      .then((data) => {
+        setEvents(data);
+      });
+  }, []);
 
   return (
     <>

@@ -13,21 +13,20 @@ import { AppDispatch, RootState } from "../../store";
 import { flatAsync } from "../../store/flat/FlatSlice";
 import { UserData } from "../../types/UserType";
 import { userAddAsync } from "../../store/user/UserSlice";
+import { ButtonLoader } from "../../components/ButtonLoader";
 
 const BasicInputElements = () => {
   const { t } = useTranslation();
   const schemaResolver = yupResolver(
     yup.object().shape({
       name: yup.string().required(t("Please select name")),
-      email: yup
-        .string()
-        .required(t("Please select name"))
-        .email(t("Please valid Email")),
+      email: yup.string().required(t("Please select name")).email(t("Please valid Email")),
       role_id: yup.string().required(t("Please select role")),
-    }),
+    })
   );
   const [toast, setToast] = useState("");
   const [error, setNewError] = useState("");
+  const [loading, setIsLoading] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const { flats } = useSelector((state: RootState) => ({
     flats: state.Flat.flats,
@@ -43,6 +42,7 @@ const BasicInputElements = () => {
     formState: { errors },
   } = useForm<UserData>({ defaultValues: {}, resolver: schemaResolver });
   const onSubmit = handleSubmit(async (data) => {
+    setIsLoading(true);
     dispatch(userAddAsync(data))
       .unwrap()
       .then((response) => {
@@ -50,6 +50,7 @@ const BasicInputElements = () => {
           setToast(response.message);
           //   reset();
         }
+        setIsLoading(false);
       })
       .catch((reason) => {
         for (var element in reason.errors) {
@@ -58,6 +59,7 @@ const BasicInputElements = () => {
             setError(element, { message: reason.errors[element].toString() });
           } catch (errror) {}
         }
+        setIsLoading(false);
       });
   });
 
@@ -115,24 +117,22 @@ const BasicInputElements = () => {
                 >
                   {flats.length &&
                     flats.map((flat) => (
-                      <optgroup
-                        key={`apartment${flat.id}`}
-                        label={flat.name.toString()}
-                      >
+                      <optgroup key={`apartment${flat.id}`} label={flat.name.toString()}>
                         {flat.flats.map((aprtment) => (
-                          <option
-                            key={"flat" + aprtment.id}
-                            value={aprtment.id}
-                          >
+                          <option key={"flat" + aprtment.id} value={aprtment.id}>
                             {aprtment.name}
                           </option>
                         ))}
                       </optgroup>
                     ))}
                 </FormInput>
-                <Button variant="primary" type="submit">
-                  Create User
-                </Button>
+                {loading ? (
+                  <ButtonLoader />
+                ) : (
+                  <Button variant="primary" type="submit">
+                    Create User
+                  </Button>
+                )}
               </form>
             </Col>
 

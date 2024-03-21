@@ -13,6 +13,7 @@ import * as yup from "yup";
 import { useParams } from "react-router-dom";
 import { profileAsync } from "../../store/auth/AuthSlice";
 import Loader from "../../components/Loader";
+import { ButtonLoader } from "../../components/ButtonLoader";
 
 interface IdType {
   id: Number;
@@ -27,7 +28,7 @@ export const Documents = ({ id }: { id?: string }) => {
   const schemaResolver = yupResolver(
     yup.object().shape({
       //   title: yup.string().required(t("Please select title")).min(10, "Atleast 10 char required"),
-    }),
+    })
   );
 
   const {
@@ -129,7 +130,7 @@ export const Documents = ({ id }: { id?: string }) => {
         />
         <FormInput type="hidden" name="id" register={register} />
         {isLoading ? (
-          <Loader />
+          <ButtonLoader />
         ) : (
           <Button type="submit" className="waves-effect waves-light me-1">
             Submit

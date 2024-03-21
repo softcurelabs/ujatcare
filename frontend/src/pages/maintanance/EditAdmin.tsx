@@ -19,6 +19,7 @@ import { MaintananceData } from "../../types/MaintananceType";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import HyperDatepicker from "../../components/Datepicker";
+import { ButtonLoader } from "../../components/ButtonLoader";
 
 const BasicInputElements = () => {
   const schemaResolver = yupResolver(
@@ -73,6 +74,7 @@ const BasicInputElements = () => {
   const [actionDate, setActionDate] = useState<Date>(new Date());
   const [timeIn, setTimeIn] = useState<Date>(new Date());
   const [timeOut, setTimeOut] = useState<Date>(new Date());
+  const [loading, setIsLoading] = useState(false);
 
   useEffect(() => {
     dispatch(maintananceShowAsync(params.id))
@@ -131,6 +133,7 @@ const BasicInputElements = () => {
   }, []);
 
   const onSubmit = handleSubmit(async (data) => {
+    setIsLoading(true);
     dispatch(maintananceAdminEditAsync(data))
       .unwrap()
       .then((response) => {
@@ -142,6 +145,7 @@ const BasicInputElements = () => {
             top: 0,
             behavior: "smooth",
           });
+          setIsLoading(false);
         }
       })
       .catch((reason) => {
@@ -151,6 +155,7 @@ const BasicInputElements = () => {
             setError(element, { message: reason.errors[element].toString() });
           } catch (errror) {}
         }
+        setIsLoading(false);
       });
   });
 
@@ -160,20 +165,20 @@ const BasicInputElements = () => {
 
   return (
     <>
-      <Card>
-        <Card.Body>
-          {toast && (
-            <div className="alert alert-success">
-              {toast}
-              <Link to={"/maintanance-admin"}> Back to Maintanance.</Link>
-            </div>
-          )}
-          {error && (
-            <div className="alert alert-danger mt-3" role="alert">
-              {error}
-            </div>
-          )}
-          <form onSubmit={onSubmit}>
+      {toast && (
+        <div className="alert alert-success">
+          {toast}
+          <Link to={"/maintanance-admin"}> Back to Maintanance.</Link>
+        </div>
+      )}
+      {error && (
+        <div className="alert alert-danger mt-3" role="alert">
+          {error}
+        </div>
+      )}
+      <form onSubmit={onSubmit}>
+        <Card>
+          <Card.Body>
             <Row>
               <Col lg={4}>
                 <Form.Group className="mb-3">
@@ -315,6 +320,10 @@ const BasicInputElements = () => {
                 </FormGroup>
               </Col>
             </Row>
+          </Card.Body>
+        </Card>
+        <Card>
+          <Card.Body>
             <Row>
               <Col lg={12}>
                 <Form.Group className="mb-3 input-group">
@@ -561,16 +570,21 @@ const BasicInputElements = () => {
                 </Form.Group>
               </Col>
             </Row>
-            <Row>
-              <Col lg={3}>
-                <Button variant="primary" type="submit">
-                  Submit
-                </Button>
-              </Col>
-            </Row>
-          </form>
-        </Card.Body>
-      </Card>
+          </Card.Body>
+        </Card>
+        <Row>
+          <Col lg={3}>
+            {loading ? (
+              <ButtonLoader />
+            ) : (
+              <Button variant="primary" type="submit">
+                Submit
+              </Button>
+            )}
+          </Col>
+        </Row>
+      </form>
+      {/*  */}
     </>
   );
 };

@@ -19,6 +19,7 @@ import { ResetPassword } from "./ResetPassword";
 import { UploadImage } from "./UploadImage";
 import { Documents } from "./Documents";
 import config from "../../config";
+import { ButtonLoader } from "../../components/ButtonLoader";
 
 const BasicInputElements = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -47,6 +48,7 @@ const BasicInputElements = () => {
    */
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [disabled, setDisabled] = useState<boolean>(true);
+  const [loading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   /*
    * handle date change
@@ -77,6 +79,7 @@ const BasicInputElements = () => {
     resolver: schemaResolver,
   });
   const onSubmit = handleSubmit((data) => {
+    setIsLoading(true);
     dispatch(userEditAsync(data))
       .unwrap()
       .then((response) => {
@@ -88,6 +91,7 @@ const BasicInputElements = () => {
           });
           //   reset();
         }
+        setIsLoading(false);
       })
       .catch((reason) => {
         for (var element in reason.errors) {
@@ -96,6 +100,7 @@ const BasicInputElements = () => {
             setError(element, { message: reason.errors[element].toString() });
           } catch (errror) {}
         }
+        setIsLoading(false);
       });
   });
   useEffect(() => {
@@ -380,9 +385,13 @@ const BasicInputElements = () => {
                   Back
                 </Button>
                 {!disabled ? (
-                  <Button variant="primary" type="submit">
-                    Submit
-                  </Button>
+                  loading ? (
+                    <ButtonLoader />
+                  ) : (
+                    <Button variant="primary" type="submit">
+                      Submit
+                    </Button>
+                  )
                 ) : (
                   <div />
                 )}

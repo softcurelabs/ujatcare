@@ -12,6 +12,7 @@ import { VerticalForm, FormInput } from "../../components/";
 import AuthLayout from "./AuthLayout";
 import { AppDispatch } from "../../store";
 import { forgotPasswordAsync } from "../../store/auth/AuthSlice";
+import { ButtonLoader } from "../../components/ButtonLoader";
 
 interface UserData {
   email: string;
@@ -45,6 +46,7 @@ const ForgetPassword = () => {
 
   const [toast, setToast] = useState("");
   const [error, setError] = useState("");
+  const [loading, setIsLoading] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
 
   /*
@@ -53,14 +55,14 @@ const ForgetPassword = () => {
   const schemaResolver = yupResolver(
     yup.object().shape({
       email: yup.string().email().required(t("Please enter email")),
-    }),
+    })
   );
 
   /*
    * handle form submission
    */
   const onSubmit = (formData: UserData) => {
-    console.log(formData);
+    setIsLoading(true);
     // dispatch(forgotPassword(formData["username"]));
     dispatch(forgotPasswordAsync(formData.email))
       .unwrap()
@@ -68,9 +70,11 @@ const ForgetPassword = () => {
         if (response && response.status === true) {
           setToast(response.message);
         }
+        setIsLoading(false);
       })
       .catch((reason) => {
         setError(reason.message);
+        setIsLoading(false);
       });
   };
 
@@ -78,7 +82,7 @@ const ForgetPassword = () => {
     <>
       <AuthLayout
         helpText={t(
-          "Enter your email address and we'll send you an email with instructions to reset your password.",
+          "Enter your email address and we'll send you an email with instructions to reset your password."
         )}
         bottomLinks={<BottomLink />}
       >
@@ -100,9 +104,13 @@ const ForgetPassword = () => {
             />
 
             <div className="d-grid text-center">
-              <Button variant="primary" type="submit">
-                {t("Reset Password")}
-              </Button>
+              {loading ? (
+                <ButtonLoader />
+              ) : (
+                <Button variant="primary" type="submit">
+                  {t("Reset Password")}
+                </Button>
+              )}
             </div>
           </VerticalForm>
         }

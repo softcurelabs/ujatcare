@@ -24,6 +24,7 @@ import Loader from "../../components/Loader";
 import FileUploader from "../../components/FileUploader";
 import App from "../../App";
 import config from "../../config";
+import { ButtonLoader } from "../../components/ButtonLoader";
 
 const BasicInputElements = () => {
   const { t } = useTranslation();
@@ -363,7 +364,7 @@ const BasicInputElements = () => {
                   </FormGroup>
                 </Row>
                 {loading ? (
-                  <Loader />
+                  <ButtonLoader />
                 ) : (
                   <Button variant="primary" type="submit">
                     Create
