@@ -76,3 +76,8 @@ html[data-bs-theme="dark"] {
         }
     }
 }
+
+.btn-group.show.dropdown {
+    display: block;
+    position: absolute;
+}
