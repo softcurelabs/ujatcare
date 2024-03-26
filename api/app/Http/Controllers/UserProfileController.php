@@ -98,7 +98,7 @@ class UserProfileController extends Controller
         $userProfile = UserProfile::with('user')->where('user_id', $user_id)->first();
         $user = Auth::user();
 
-        if ($userProfile->hasRole(Role::Staff)) {
+        if ($userProfile->user->hasRole(Role::Staff)) {
             throw ValidationException::withMessages(['Staff can\'t edit any user.']);
         }
 

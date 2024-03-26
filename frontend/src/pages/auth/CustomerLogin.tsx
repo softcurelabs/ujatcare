@@ -15,6 +15,7 @@ import { VerticalForm, FormInput } from "../../components/";
 import AuthCustomerLayout from "./AuthCustomerLayout";
 import { loggedInAsync } from "../../store/auth/CustomerAuthSlice";
 import { flatAsync } from "../../store/flat/FlatSlice";
+import { ButtonLoader } from "../../components/ButtonLoader";
 interface UserData {
   email: string;
   password: string;
@@ -49,16 +50,14 @@ const CustomerLogin = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
 
-  const { user, userLoggedIn, loading, flats, error } = useSelector(
-    (state: RootState) => ({
-      user: state.CustomerAuth.user,
-      loading: state.CustomerAuth.loading,
-      userLoggedIn: state.CustomerAuth.userLoggedIn,
-      error: state.CustomerAuth.error,
-      flats: state.Flat.flats,
-    }),
-  );
-
+  const { user, userLoggedIn, loading, flats, error } = useSelector((state: RootState) => ({
+    user: state.CustomerAuth.user,
+    loading: state.CustomerAuth.loading,
+    userLoggedIn: state.CustomerAuth.userLoggedIn,
+    error: state.CustomerAuth.error,
+    flats: state.Flat.flats,
+  }));
+  console.log(loading);
   useEffect(() => {
     dispatch(flatAsync());
   }, []);
@@ -71,7 +70,7 @@ const CustomerLogin = () => {
       flat_id: yup.string().required(t("Please select Apartment")),
       email: yup.string().required(t("Please enter Email")),
       password: yup.string().required(t("Please enter Password")),
-    }),
+    })
   );
 
   /*
@@ -99,9 +98,7 @@ const CustomerLogin = () => {
         <Row>
           <Col md={8} lg={8} xl={6}>
             <div>
-              <h4 className="text-center text-muted">
-                {flats.length && flats[0].name}
-              </h4>
+              <h4 className="text-center text-muted">{flats.length && flats[0].name}</h4>
             </div>
 
             <div>
@@ -113,18 +110,9 @@ const CustomerLogin = () => {
               defaultValues={{ email: "", password: "" }}
             >
               {flats.length && (
-                <FormInput
-                  type="hidden"
-                  name="apartment_id"
-                  value={flats[0].id}
-                ></FormInput>
+                <FormInput type="hidden" name="apartment_id" value={flats[0].id}></FormInput>
               )}
-              <FormInput
-                type="select"
-                label="Apartment#"
-                name="flat_id"
-                containerClass="mb-3"
-              >
+              <FormInput type="select" label="Apartment#" name="flat_id" containerClass="mb-3">
                 <option value="">Select Apartment Number</option>
                 {flats.length &&
                   flats[0].flats.map((flat) => (
@@ -158,9 +146,7 @@ const CustomerLogin = () => {
 
           <Col md={8} lg={8} xl={6}>
             <div>
-              <h4 className="text-center text-muted">
-                {flats.length && flats[1].name}
-              </h4>
+              <h4 className="text-center text-muted">{flats.length && flats[1].name}</h4>
             </div>
 
             <div>
@@ -172,18 +158,9 @@ const CustomerLogin = () => {
               defaultValues={{ username: "", password: "" }}
             >
               {flats.length && (
-                <FormInput
-                  type="hidden"
-                  name="apartment_id"
-                  value={flats[1].id}
-                ></FormInput>
+                <FormInput type="hidden" name="apartment_id" value={flats[1].id}></FormInput>
               )}
-              <FormInput
-                type="select"
-                label="Apartment#"
-                name="flat_id"
-                containerClass="mb-3"
-              >
+              <FormInput type="select" label="Apartment#" name="flat_id" containerClass="mb-3">
                 <option value="">Select Apartment Number</option>
                 {flats.length &&
                   flats[1].flats.map((flat) => (
@@ -208,9 +185,13 @@ const CustomerLogin = () => {
               ></FormInput>
 
               <div className="text-center d-grid">
-                <Button variant="primary" type="submit" disabled={loading}>
-                  {t("Log In")}
-                </Button>
+                {loading ? (
+                  <ButtonLoader />
+                ) : (
+                  <Button variant="primary" type="submit">
+                    {t("Log In")}
+                  </Button>
+                )}
               </div>
             </VerticalForm>
           </Col>

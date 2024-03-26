@@ -12,6 +12,7 @@ import { VerticalForm, FormInput } from "../../components/";
 import AuthLayout from "./AuthLayout";
 import { loggedInAsync } from "../../store/auth/AuthSlice";
 import { AppDispatch, RootState } from "../../store";
+import { ButtonLoader } from "../../components/ButtonLoader";
 
 interface UserData {
   email: string;
@@ -45,26 +46,23 @@ const Login = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
 
-  const { user, userLoggedIn, error, loading } = useSelector(
-    (state: RootState) => ({
-      user: state.Auth.user,
-      loading: state.Auth.loading,
-      error: state.Auth.error,
-      userLoggedIn: state.Auth.userLoggedIn,
-    }),
-  );
+  const { user, userLoggedIn, error, loading } = useSelector((state: RootState) => ({
+    user: state.Auth.user,
+    loading: state.Auth.loading,
+    error: state.Auth.error,
+    userLoggedIn: state.Auth.userLoggedIn,
+  }));
+
+  console.log(loading, "Asd");
 
   /*
   form validation schema
   */
   const schemaResolver = yupResolver(
     yup.object().shape({
-      email: yup
-        .string()
-        .required(t("Please enter Email"))
-        .email("Please enter valid email"),
+      email: yup.string().required(t("Please enter Email")).email("Please enter valid email"),
       password: yup.string().required(t("Please enter Password")),
-    }),
+    })
   );
 
   /*
@@ -107,9 +105,13 @@ const Login = () => {
           ></FormInput>
 
           <div className="text-center d-grid">
-            <Button variant="primary" type="submit" disabled={loading}>
-              {t("Log In")}
-            </Button>
+            {loading ? (
+              <ButtonLoader />
+            ) : (
+              <Button variant="primary" type="submit">
+                {t("Log In")}
+              </Button>
+            )}
           </div>
         </VerticalForm>
 

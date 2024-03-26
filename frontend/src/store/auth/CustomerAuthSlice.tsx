@@ -29,6 +29,7 @@ const CustomerAuthSlice = createSlice({
     builder
       .addCase(loggedInAsync.pending, (state) => {
         // console.log("incrementAsync.pending");
+        state.loading = true;
         state.error = "";
       })
       .addCase(loggedInAsync.fulfilled, (state, action) => {
@@ -63,7 +64,7 @@ export const loggedInAsync = createAsyncThunk<any, UserData>(
     api.setLoggedInUser(user);
     setAuthorization(user.accessToken);
     return user;
-  },
+  }
 );
 
 export const logoutAsync = createAsyncThunk<any>("logout", async () => {
