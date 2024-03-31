@@ -9,7 +9,6 @@ import { Controller, useForm } from "react-hook-form";
 import { userUploadAsync } from "../../store/user/UserSlice";
 import * as yup from "yup";
 import { profileAsync } from "../../store/auth/AuthSlice";
-import Loader from "../../components/Loader";
 import { ButtonLoader } from "../../components/ButtonLoader";
 
 export const UploadImage = ({ id }: { id?: string }) => {
@@ -56,13 +55,13 @@ export const UploadImage = ({ id }: { id?: string }) => {
           {error}
         </div>
       )}
-      <fieldset>
+      <fieldset className="mt-4">
         <Controller
           render={() => (
             <FileUploader
+              title="Drag Profile pic or click here to upload"
               maxFiles={1}
               onFileUpload={(files) => {
-                console.log("Uploaded files - ", files);
                 setValue("image", files[0]);
               }}
             ></FileUploader>

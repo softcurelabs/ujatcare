@@ -253,7 +253,7 @@ const EditUser = () => {
     <React.Fragment>
       <PageTitle
         breadCrumbItems={[
-          { label: "Recidents", path: "/user" },
+          { label: "Residents", path: "/user" },
           { label: "My Account", path: "/user", active: true },
         ]}
         title={"My Account"}

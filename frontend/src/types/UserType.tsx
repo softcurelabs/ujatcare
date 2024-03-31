@@ -11,12 +11,20 @@ export interface UserType extends TimeStampType {
   flat?: FlatType;
   flat_name?: string;
   apartment_name?: string;
+  documents: Array<UserDocumentType>;
+}
+
+export interface UserDocumentType extends TimeStampType {
+  document_name: string;
+  document_path: string;
+  type: number;
 }
 
 export interface UserProfileType extends TimeStampType {
   unit: Number;
   phone_number: string;
   parking_space: Number;
+  locker: Number;
   emergency_contact_number: string;
   emergency_contact_name: string;
   income_verification: Number;
@@ -35,6 +43,7 @@ export interface UserEditType extends TimeStampType {
   email: string;
   phone_number: string;
   parking_space: Number;
+  locker: Number;
   flat_id: Number;
   emergency_contact_number: string;
   emergency_contact_name: string;
@@ -43,6 +52,8 @@ export interface UserEditType extends TimeStampType {
   language: string;
   relationship: string;
   movein_date: Date;
+  birth_date: Date;
+  staff_notes: string;
   special_instruction: null | string;
   image_path: null | string;
   profile_pic: null | string;

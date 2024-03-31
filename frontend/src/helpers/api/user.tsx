@@ -9,7 +9,7 @@ export function user(page: Number = 1) {
 }
 
 export function recident(page: Number = 1) {
-  const baseUrl = "/recident";
+  const baseUrl = "/resident";
   return api.get(`${baseUrl}`, { page });
 }
 
@@ -45,6 +45,16 @@ export function upload(id: Number, data: any) {
   const baseUrl = `/upload/${id}`;
 
   return api.createWithFile(baseUrl, data);
+}
+
+export function uploadDocuments(data: any) {
+  const baseUrl = `/user/documents`;
+  return api.createWithFile(`${baseUrl}`, data);
+}
+
+export function removeDocument(id: Number) {
+  const baseUrl = `/user/document/${id}`;
+  return api.delete(`${baseUrl}`);
 }
 
 export function importUser(data: any) {

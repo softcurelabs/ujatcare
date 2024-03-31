@@ -441,7 +441,7 @@ const BasicInputElements = () => {
   );
 };
 
-const MyAccount = () => {
+const MyAccountStaff = () => {
   return (
     <React.Fragment>
       <PageTitle
@@ -460,4 +460,4 @@ const MyAccount = () => {
     </React.Fragment>
   );
 };
-export default MyAccount;
+export default MyAccountStaff;

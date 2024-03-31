@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Row, Col, Card, Button, FormLabel } from "react-bootstrap";
+import { Row, Col, Card, Button, CardBody, Form } from "react-bootstrap";
 
 // components
 import PageTitle from "../../components/PageTitle";
 import { FormInput } from "../../components/";
 import HyperDatepicker from "../../components/Datepicker";
-import { Form, useNavigate, useParams } from "react-router-dom";
-import { UserEditType, UserProfileType } from "../../types/UserType";
+import { useNavigate, useParams } from "react-router-dom";
+import { UserEditType, UserProfileType, UserType } from "../../types/UserType";
 import { userEditAsync, userShowAsync } from "../../store/user/UserSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
@@ -25,6 +25,7 @@ const BasicInputElements = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { t } = useTranslation();
   const [toast, setToast] = useState("");
+  const [localUser, setLocalUser] = useState<UserEditType>();
   const [error, setNewError] = useState("");
   const schemaResolver = yupResolver(
     yup.object().shape({
@@ -47,6 +48,8 @@ const BasicInputElements = () => {
    * form methods
    */
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [birthDate, setBirthDate] = useState<Date>(new Date());
+
   const [disabled, setDisabled] = useState<boolean>(true);
   const [loading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -110,6 +113,7 @@ const BasicInputElements = () => {
         dispatch(userShowAsync(user.user_id))
           .unwrap()
           .then((response) => {
+            setLocalUser(response);
             if (config.BASE_URL && response.image_path)
               setProfilePic(`${config.BASE_URL}/${response.image_path}`);
             setValue("id", response.user.id);
@@ -121,14 +125,18 @@ const BasicInputElements = () => {
               setValue("flat_id", response.user.flat.flat_id);
             }
             setValue("parking_space", response.parking_space);
+            setValue("locker", response.locker);
             setValue("emergency_contact_number", response.emergency_contact_number);
             setValue("emergency_contact_name", response.emergency_contact_name);
             setValue("income_verification", response.income_verification);
             setValue("rent_calculation", response.rent_calculation);
             setValue("special_instruction", response.special_instruction);
             setValue("relationship", response.relationship);
+            setValue("birth_date", response.birth_date);
             setValue("movein_date", response.movein_date);
-            // setSelectedDate(new Date(response.movein_date));
+            //console.log(response.movein_date);
+            setSelectedDate(new Date(response.movein_date));
+            setBirthDate(new Date(response.birth_date));
           })
           .catch((error) => setNewError(error.message));
       });
@@ -136,246 +144,310 @@ const BasicInputElements = () => {
 
   return (
     <>
-      <Card>
-        <Card.Body>
-          {toast && <div className="alert alert-success">{toast}</div>}
-          {error && (
-            <div className="alert alert-danger mt-3" role="alert">
-              {error}
-            </div>
-          )}
+      {toast && <div className="alert alert-success">{toast}</div>}
+      {error && (
+        <div className="alert alert-danger mt-3" role="alert">
+          {error}
+        </div>
+      )}
 
-          <Row>
-            <Col lg={6}>
-              <form onSubmit={onSubmit} className={disabled ? "form-readonly" : ""}>
-                <fieldset>
-                  <FormInput
-                    label="Name"
-                    type="text"
-                    name="name"
-                    className="form-control-sm fs-5"
-                    containerClass={"mb-3 input-group"}
-                    register={register}
-                    key="name"
-                    errors={errors}
-                  />
-                  <FormInput
-                    label="Phone#"
-                    type="text"
-                    name="phone_number"
-                    placeholder="phone_number"
-                    className="form-control-sm fs-5"
-                    containerClass={"mb-3 input-group"}
-                    register={register}
-                    key="phone_number"
-                    errors={errors}
-                  />
+      <Row className="gutters">
+        <Col lg={3} xl={3} md={12}>
+          <Card>
+            {" "}
+            {localUser && (
+              <CardBody>
+                <div className="text-center">
+                  {profilePic && (
+                    <img src={profilePic} className="rounded-4" alt="{}" width={125} />
+                  )}
+                  <h5 className="text-dark">{localUser?.user.name}</h5>
+                  <h6 className="text-muted">{localUser?.user.email}</h6>
+                </div>
 
-                  <FormInput
-                    label="Email"
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    className="form-control-sm fs-5"
-                    containerClass={"mb-3 input-group"}
-                    register={register}
-                    key="email"
-                    errors={errors}
-                    disabled={true}
-                  />
-                  <FormInput
-                    label="Unit"
-                    type="text"
-                    name="unit"
-                    placeholder="Unit"
-                    className="form-control-sm fs-5"
-                    containerClass={"mb-3 input-group"}
-                    register={register}
-                    key="unit"
-                    errors={errors}
-                  />
-                  <FormInput
-                    label="Parking Space"
-                    type="text"
-                    name="parking"
-                    placeholder="Parking"
-                    className="form-control-sm fs-5"
-                    containerClass={"mb-3 input-group"}
-                    register={register}
-                    key="parking"
-                    errors={errors}
-                  />
+                <UploadImage id={localUser?.user.id.toString()} />
 
-                  <FormInput
-                    label="Language"
-                    type="text"
-                    name="language"
-                    placeholder="Language"
-                    className="form-control-sm fs-5"
-                    containerClass={"mb-3 input-group"}
-                    register={register}
-                    key="language"
-                    errors={errors}
-                  />
-                  <div className="border border-success rounded">
+                <div className="mt-4">
+                  <ResetPassword id={localUser?.user.id.toString()} />
+                </div>
+                <div className="mt-2">
+                  <Documents id={localUser?.user.id.toString()} />
+                </div>
+              </CardBody>
+            )}
+          </Card>
+        </Col>
+
+        <Col lg={9} xl={9} md={12}>
+          <Card>
+            <CardBody>
+              <form onSubmit={onSubmit}>
+                <Row className="gutters">
+                  <Col xl={12}>
+                    <h5 className="text-primary">Personal information</h5>
+                  </Col>
+                  <Col xl={6}>
+                    <FormInput
+                      label="Name"
+                      type="text"
+                      name="name"
+                      className="form-control-sm fs-5 "
+                      containerClass={"mb-3"}
+                      register={register}
+                      key="name"
+                      errors={errors}
+                    />
+                  </Col>
+                  <Col xl={6}>
+                    <FormInput
+                      label="Phone#"
+                      type="text"
+                      name="phone_number"
+                      placeholder="phone_number"
+                      className="form-control-sm fs-5 "
+                      containerClass={"mb-3 "}
+                      register={register}
+                      key="phone_number"
+                      errors={errors}
+                    />
+                  </Col>
+                  <Col xl={6}>
+                    <FormInput
+                      label="Email"
+                      type="email"
+                      name="email"
+                      placeholder="Email"
+                      className="form-control-sm fs-5 "
+                      containerClass={"mb-3"}
+                      register={register}
+                      key="email"
+                      errors={errors}
+                      disabled={true}
+                    />
+                  </Col>
+                  <Col xl={6}>
+                    <FormInput
+                      type="hidden"
+                      register={register}
+                      className="form-control-sm fs-5 "
+                      containerClass={"mb-3 input-group"}
+                      labelClassName="me-2"
+                      name="birth_date"
+                      key="birth_date"
+                    />
+
+                    <div className="mb-3">
+                      <label className="form-label">Birth Date</label> <br />
+                      <HyperDatepicker
+                        hideAddon={true}
+                        showTimeSelect={false}
+                        maxDate={new Date()}
+                        value={birthDate}
+                        onChange={(date) => {
+                          setBirthDate(date);
+                          setValue("birth_date", date.toLocaleString("sv-SE"));
+                        }}
+                      />
+                      {errors && errors["birth_date"] ? (
+                        <Form.Control.Feedback type="invalid">
+                          {errors["birth_date"]!.message}
+                        </Form.Control.Feedback>
+                      ) : null}
+                    </div>
+                  </Col>
+                </Row>
+                <Row className="gutters border border-success rounded">
+                  <Col xl={12}>
+                    <h5 className="text-primary">Emergency information</h5>
+                  </Col>
+                  <Col xl={6}>
                     <FormInput
                       label="Emergency Contact"
                       type="text"
                       name="emergency_contact_number"
                       placeholder="Emergency Contact Number"
                       className="form-control-sm fs-5"
-                      containerClass={"mb-3 input-group"}
+                      containerClass={"mb-3"}
                       register={register}
                       key="emergency_contact_number"
                       errors={errors}
                     />
+                  </Col>
+                  <Col xl={6}>
                     <FormInput
                       label="Emergency Contact Name"
                       type="text"
                       name="emergency_contact_name"
                       placeholder="Emergency Contact Name"
                       className="form-control-sm fs-5"
-                      containerClass={"mb-3 input-group"}
+                      containerClass={"mb-3 "}
                       register={register}
                       key="emergency_contact_name"
                       errors={errors}
                     />
+                  </Col>
+                  <Col xl={6}>
                     <FormInput
                       label="Relationship"
                       type="text"
                       name="relationship"
                       placeholder="relationship"
-                      className="form-control-sm fs-5"
-                      containerClass={"mb-3 input-group"}
+                      className="form-control-sm fs-5 "
+                      containerClass={"mb-3 "}
                       register={register}
                       key="relationship"
                       errors={errors}
                     />
-                  </div>
-
-                  <FormInput
-                    type="select"
-                    label="Apartment#"
-                    name="flat_id"
-                    className="form-control-sm fs-5"
-                    containerClass={"mb-3 input-group"}
-                    register={register}
-                    disabled={true}
-                    errors={errors}
-                  >
-                    {flats.length &&
-                      flats.map((flat) => (
-                        <optgroup key={`apartment${flat.id}`} label={flat.name.toString()}>
-                          {flat.flats.map((aprtment) => (
-                            <option key={"flat" + aprtment.id} value={aprtment.id}>
-                              {aprtment.name}
-                            </option>
-                          ))}
-                        </optgroup>
-                      ))}
-                  </FormInput>
-
-                  <FormInput
-                    label="Income Verification"
-                    type="text"
-                    name="income_verification"
-                    placeholder="Contact"
-                    className="form-control-sm fs-5"
-                    containerClass={"mb-3 input-group"}
-                    register={register}
-                    key="income_verification"
-                    errors={errors}
-                  />
-                  <FormInput
-                    label="Rent Calculation"
-                    type="text"
-                    name="rent_calculation"
-                    placeholder="Rent"
-                    className="form-control-sm fs-5"
-                    containerClass={"mb-3 input-group"}
-                    register={register}
-                    key="rent_calculation"
-                    errors={errors}
-                  />
-
-                  <FormInput
-                    label="Special information"
-                    type="textarea"
-                    name="special_instruction"
-                    rows="5"
-                    className="form-control-sm fs-5"
-                    containerClass={"mb-3 input-group"}
-                    register={register}
-                    key="special_instruction"
-                    errors={errors}
-                  />
-                  <FormInput
-                    type="hidden"
-                    register={register}
-                    name="movein_date"
-                    key="movein_date"
-                  />
-
-                  <div className="mb-3">
-                    <label className="form-label">Move In Date</label> <br />
-                    <HyperDatepicker
-                      hideAddon={true}
-                      showTimeSelect={false}
-                      // maxDate={new Date()}
-                      value={selectedDate}
-                      onChange={(date) => {
-                        onDateChange(date);
-                        setValue("movein_date", date.toLocaleString("sv-SE"));
-                      }}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label className="form-label">Birth Date</label> <br />
-                    <HyperDatepicker
-                      hideAddon={true}
-                      showTimeSelect={false}
-                      showTimeSelectOnly={false}
-                      // maxDate={new Date()}
-                      value={selectedDate}
-                      onChange={(date) => {}}
-                    />
-                  </div>
-                  {/* <div className="mb-3 input-group">
-                    <FormLabel htmlFor="small" className="me-2">
-                      I am
-                    </FormLabel>
+                  </Col>
+                </Row>
+                <Row className="gutters">
+                  <Col xl={12}>
+                    <h5 className="text-primary">Resident information</h5>
+                  </Col>
+                  <Col xl={6}>
                     <FormInput
-                      type="radio"
-                      className="form-check-inline"
-                      name="confidential"
-                      label="Handicapped"
-                      value="1"
+                      label="Unit"
+                      type="text"
+                      name="unit"
+                      placeholder="Unit"
+                      className="form-control-sm fs-5 "
+                      containerClass={"mb-3 "}
                       register={register}
-                    />
-                    <FormInput
-                      type="radio"
-                      className="form-check-inline"
-                      name="confidential"
-                      label="Diabetes"
-                      value="2"
-                      register={register}
-                    />
-                  </div> */}
-                  {user.user_role.includes("admin") && (
-                    <FormInput
-                      label="Staff Note"
-                      type="textarea"
-                      name="staff_notes"
-                      rows="5"
-                      className="form-control-sm fs-5"
-                      containerClass={"mb-3 input-group"}
-                      register={register}
-                      key="staff_notes"
+                      key="unit"
                       errors={errors}
                     />
-                  )}
-                </fieldset>
+                  </Col>
+                  <Col xl={6}>
+                    <FormInput
+                      type="select"
+                      label="Apartment#"
+                      name="flat_id"
+                      className="form-control-sm fs-5 "
+                      containerClass={"mb-3 "}
+                      register={register}
+                      errors={errors}
+                    >
+                      {flats.length &&
+                        flats.map((flat) => (
+                          <optgroup key={`apartment${flat.id}`} label={flat.name.toString()}>
+                            {flat.flats.map((aprtment) => (
+                              <option key={"flat" + aprtment.id} value={aprtment.id}>
+                                {aprtment.name}
+                              </option>
+                            ))}
+                          </optgroup>
+                        ))}
+                    </FormInput>
+                  </Col>
+                  <Col xl={6}>
+                    <FormInput
+                      label="Parking Space"
+                      type="text"
+                      name="parking_space"
+                      placeholder="Parking"
+                      className="form-control-sm fs-5 "
+                      containerClass={"mb-3"}
+                      register={register}
+                      key="parking_space"
+                      errors={errors}
+                    />
+                  </Col>
+                  <Col xl={6}>
+                    <FormInput
+                      label="Locker#"
+                      type="text"
+                      name="locker"
+                      placeholder="Locker"
+                      className="form-control-sm fs-5"
+                      containerClass={"mb-3"}
+                      register={register}
+                      key="locker"
+                      errors={errors}
+                    />
+                  </Col>
+                  <Col xl={6}>
+                    <FormInput
+                      label="Income Verification"
+                      type="text"
+                      name="income_verification"
+                      placeholder="Contact"
+                      className="form-control-sm fs-5 "
+                      containerClass={"mb-3 "}
+                      register={register}
+                      key="income_verification"
+                      errors={errors}
+                    />
+                  </Col>
+                  <Col xl={6}>
+                    <FormInput
+                      label="Rent Calculation"
+                      type="text"
+                      name="rent_calculation"
+                      placeholder="Rent"
+                      className="form-control-sm fs-5 "
+                      containerClass={"mb-3 "}
+                      register={register}
+                      key="rent_calculation"
+                      errors={errors}
+                    />
+                  </Col>
+                  <Col xl={6}>
+                    <FormInput
+                      label="Language"
+                      type="text"
+                      name="language"
+                      placeholder="Language"
+                      className="form-control-sm fs-5 "
+                      containerClass={"mb-3 "}
+                      register={register}
+                      key="language"
+                      errors={errors}
+                    />
+                  </Col>
+                  <Col xl={6}>
+                    <FormInput
+                      type="hidden"
+                      register={register}
+                      className="form-control-sm fs-5 "
+                      containerClass={"mb-3 input-group"}
+                      labelClassName="me-2"
+                      name="movein_date"
+                      key="movein_date"
+                    />
 
+                    <div className="mb-3">
+                      <label className="form-label">Move In Date</label> <br />
+                      <HyperDatepicker
+                        hideAddon={true}
+                        showTimeSelect={false}
+                        // maxDate={new Date()}
+                        value={selectedDate}
+                        onChange={(date) => {
+                          onDateChange(date);
+                          setValue("movein_date", date.toLocaleString("sv-SE"));
+                        }}
+                      />
+                      {errors && errors["movein_date"] ? (
+                        <Form.Control.Feedback type="invalid">
+                          {errors["movein_date"]!.message}
+                        </Form.Control.Feedback>
+                      ) : null}
+                    </div>
+                  </Col>
+                  <Col xl={6}>
+                    <FormInput
+                      label="Special information"
+                      type="textarea"
+                      name="special_instruction"
+                      rows="5"
+                      className="form-control-sm fs-5 "
+                      containerClass={"mb-3"}
+                      register={register}
+                      key="special_instruction"
+                      errors={errors}
+                    />
+                  </Col>
+                </Row>
                 <Button
                   onClick={() => navigate(-1)}
                   variant="primary"
@@ -384,48 +456,18 @@ const BasicInputElements = () => {
                 >
                   Back
                 </Button>
-                {!disabled ? (
-                  loading ? (
-                    <ButtonLoader />
-                  ) : (
-                    <Button variant="primary" type="submit">
-                      Submit
-                    </Button>
-                  )
+                {loading ? (
+                  <ButtonLoader />
                 ) : (
-                  <div />
+                  <Button variant="primary" type="submit">
+                    Submit
+                  </Button>
                 )}
               </form>
-            </Col>
-
-            <Col lg={6}>
-              <div className="text-center">
-                {profilePic && <img src={profilePic} className="rounded-4" alt="{}" width={125} />}
-              </div>
-              <div className="text-end pb-2">
-                {disabled ? (
-                  <Button variant="primary" type="submit" onClick={() => setDisabled(false)}>
-                    Edit
-                  </Button>
-                ) : (
-                  <div></div>
-                )}
-              </div>
-
-              <div>
-                <UploadImage id={user.user_id} />
-              </div>
-
-              <div className="pt-2">
-                <ResetPassword id={user.user_id} />
-              </div>
-              <div className="pt-2">
-                <Documents id={user.user_id} />
-              </div>
-            </Col>
-          </Row>
-        </Card.Body>
-      </Card>
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
     </>
   );
 };

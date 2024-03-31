@@ -66,7 +66,7 @@ const NewRecident = React.lazy(() => import("../pages/user/NewRecident"));
 
 const AssignPermission = React.lazy(() => import("../pages/user/AssignPermission"));
 const AssignPermissionAdmin = React.lazy(() => import("../pages/user/AssignPermissionAdmin"));
-const MyAccount = React.lazy(() => import("../pages/user/MyAccount"));
+const ProfileSelector = React.lazy(() => import("../pages/user/ProfileSelector"));
 const MyAccountStaff = React.lazy(() => import("../pages/user/MyAccountStaff"));
 const MaintananceList = React.lazy(() => import("../pages/maintanance/List"));
 const MaintananceEdit = React.lazy(() => import("../pages/maintanance/Edit"));
@@ -384,7 +384,7 @@ const uiRoutes = {
           element: <UserList />,
         },
         {
-          path: "/recident",
+          path: "/resident",
           name: "Basic",
           element: <RecidentList />,
         },
@@ -395,7 +395,7 @@ const uiRoutes = {
           element: <NewUser />,
         },
         {
-          path: "/user-recident/new",
+          path: "/user-resident/new",
           name: "Basic",
           element: <NewRecident />,
         },
@@ -428,7 +428,7 @@ const uiRoutes = {
         {
           path: "/my-account",
           name: "Basic",
-          element: <MyAccount />,
+          element: <ProfileSelector />,
         },
         {
           path: "/staff-account",

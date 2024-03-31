@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -63,6 +64,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function flat(): HasOne
     {
         return $this->hasOne(FlatOwner::class, 'user_id', 'id');
+    }
+
+    public function documents(): HasMany
+    {
+        return $this->hasMany(UserDocuments::class);
     }
 
     public function getFlatNameAttribute()

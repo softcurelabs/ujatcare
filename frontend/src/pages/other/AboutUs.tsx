@@ -93,7 +93,7 @@ const AboutUs = () => {
                       <Link to={"/auth/login"}>Staff Login</Link>
                     </p>
                     <p>
-                      <Link to={"/auth/customer-login"}>Customer Login</Link>
+                      <Link to={"/auth/customer-login"}>Recident Login</Link>
                     </p>
                   </Col>
                 </Row>

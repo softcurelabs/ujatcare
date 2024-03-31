@@ -61,16 +61,11 @@ const BasicTable = ({ users }: UsersDataType) => {
                       <td>
                         <>
                           <Dropdown className="btn-group" align="end">
-                            <Dropdown.Toggle
-                              variant="light"
-                              className="table-action-btn btn-sm"
-                            >
+                            <Dropdown.Toggle variant="light" className="table-action-btn btn-sm">
                               <i className="mdi mdi-dots-horizontal"></i>
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                              <Dropdown.Item
-                                href={`assign-permission/${record.user.id}`}
-                              >
+                              <Dropdown.Item href={`assign-permission/${record.user.id}`}>
                                 <i className="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>
                                 Manage Permission
                               </Dropdown.Item>
@@ -140,8 +135,8 @@ const Recidents = () => {
   return (
     <React.Fragment>
       <PageTitle
-        breadCrumbItems={[{ label: "Residence", path: "/user", active: true }]}
-        title={"Residence"}
+        breadCrumbItems={[{ label: "Residents", path: "/user", active: true }]}
+        title={"Residents"}
       />
 
       <Row>
@@ -149,7 +144,7 @@ const Recidents = () => {
           <Button
             className="waves-effect waves-light mb-3 me-3"
             onClick={() => {
-              let path = `/user-recident/new`;
+              let path = `/user-resident/new`;
               navigate(path);
             }}
           >
@@ -161,7 +156,7 @@ const Recidents = () => {
               setShow(true);
             }}
           >
-            <i className="mdi mdi-plus-circle me-1"></i> Import User
+            <i className="mdi mdi-plus-circle me-1"></i> Import Recidents
           </Button>
           {users && (
             <>

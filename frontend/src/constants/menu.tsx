@@ -196,9 +196,9 @@ const ADMIN_ITEMS: MenuItemTypes[] = [
   },
   {
     key: "users",
-    label: "Residence",
+    label: "Residents",
     isTitle: false,
-    url: "/recident",
+    url: "/resident",
   },
   {
     key: "maintanance-report",
@@ -1930,10 +1930,4 @@ const TWO_COl_MENU_ITEMS: MenuItemTypes[] = [
   // },
 ];
 
-export {
-  ADMIN_ITEMS,
-  MENU_ITEMS,
-  TWO_COl_MENU_ITEMS,
-  HORIZONTAL_MENU_ITEMS,
-  CUSTOMER_ITEMS,
-};
+export { ADMIN_ITEMS, MENU_ITEMS, TWO_COl_MENU_ITEMS, HORIZONTAL_MENU_ITEMS, CUSTOMER_ITEMS };

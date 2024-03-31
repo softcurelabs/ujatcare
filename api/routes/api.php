@@ -49,10 +49,12 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff']], function ()
     Route::post('application-to-user/{id}', [ApplicationController::class, 'convertToUser']);
 
     Route::post('user', [UserProfileController::class, 'store']);
+    Route::post('user/documents', [UserProfileController::class, 'uploadDocuments']);
+    Route::delete('user/document/{id}', [UserProfileController::class, 'deleteDocuments']);
     Route::delete('user/{id}', [UserProfileController::class, 'delete']);
 
     Route::get('user', [UserProfileController::class, 'index']);
-    Route::get('recident', [UserProfileController::class, 'recidents']);
+    Route::get('resident', [UserProfileController::class, 'recidents']);
 
     Route::post('user/import', [UserProfileController::class, 'import']);
 

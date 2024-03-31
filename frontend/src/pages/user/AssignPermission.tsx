@@ -21,7 +21,7 @@ const BasicInputElements = () => {
   const schemaResolver = yupResolver(
     yup.object().shape({
       //   title: yup.string().required(t("Please select title")).min(10, "Atleast 10 char required"),
-    }),
+    })
   );
   const { flats } = useSelector((state: RootState) => ({
     flats: state.Flat.flats,
@@ -93,10 +93,7 @@ const BasicInputElements = () => {
 
           <Row>
             <Col lg={6}>
-              <form
-                onSubmit={onSubmit}
-                className={disabled ? "form-readonly" : ""}
-              >
+              <form onSubmit={onSubmit} className={disabled ? "form-readonly" : ""}>
                 <fieldset>
                   <FormInput
                     label="Email"
@@ -116,7 +113,7 @@ const BasicInputElements = () => {
                     errors={errors}
                   >
                     <option value="">Select Role</option>
-                    <option value="recident">Recident</option>
+                    <option value="recident">Resident</option>
                     {/* <option value="staff">Staff</option> */}
                   </FormInput>
 
@@ -130,29 +127,19 @@ const BasicInputElements = () => {
                   >
                     {flats.length &&
                       flats.map((flat) => (
-                        <optgroup
-                          key={`apartment${flat.id}`}
-                          label={flat.name.toString()}
-                        >
+                        <optgroup key={`apartment${flat.id}`} label={flat.name.toString()}>
                           {flat.flats.map((aprtment) =>
                             aprtment.has_occupied ? (
-                              <option
-                                key={"flat" + aprtment.id}
-                                value={aprtment.id}
-                                disabled
-                              >
+                              <option key={"flat" + aprtment.id} value={aprtment.id} disabled>
                                 {aprtment.name}
                                 {aprtment.has_occupied}
                               </option>
                             ) : (
-                              <option
-                                key={"flat" + aprtment.id}
-                                value={aprtment.id}
-                              >
+                              <option key={"flat" + aprtment.id} value={aprtment.id}>
                                 {aprtment.name}
                                 {aprtment.has_occupied}
                               </option>
-                            ),
+                            )
                           )}
                         </optgroup>
                       ))}
@@ -183,7 +170,7 @@ const AssignPermission = () => {
     <React.Fragment>
       <PageTitle
         breadCrumbItems={[
-          { label: "Recidents", path: "/recident" },
+          { label: "Residents", path: "/resident" },
           { label: "Assign Permission", path: "/user", active: true },
         ]}
         title={"Assign Permission"}

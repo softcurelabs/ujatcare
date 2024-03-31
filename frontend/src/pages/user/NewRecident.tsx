@@ -105,7 +105,7 @@ const BasicInputElements = () => {
                   errors={errors}
                 >
                   <option value="">Select Role</option>
-                  <option value="recident">Recident</option>
+                  <option value="recident">Resident</option>
                 </FormInput>
                 <FormInput
                   type="select"
@@ -151,10 +151,10 @@ const NewUser = () => {
       <PageTitle
         breadCrumbItems={[
           { label: "Dashboard", path: "/dashboard-2" },
-          { label: "Users", path: "/recident" },
-          { label: "New Staff", path: "/notice/new", active: true },
+          { label: "Users", path: "/resident" },
+          { label: "Resident", path: "/notice/new", active: true },
         ]}
-        title={"New Staff"}
+        title={"Recident"}
       />
 
       <Row>

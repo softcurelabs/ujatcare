@@ -4,16 +4,22 @@ import { FormInput } from "../../components";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
-import { PasswordDataType } from "../../types/UserType";
-import { userResetAsync, userUploadAsync } from "../../store/user/UserSlice";
+import { PasswordDataType, UserDocumentType } from "../../types/UserType";
+import {
+  userResetAsync,
+  userShowAsync,
+  userUploadAsync,
+  userUploadDocumentsAsync,
+} from "../../store/user/UserSlice";
 import * as yup from "yup";
 import { useParams } from "react-router-dom";
 import { profileAsync } from "../../store/auth/AuthSlice";
 import Loader from "../../components/Loader";
 import { ButtonLoader } from "../../components/ButtonLoader";
+import UserDocuments from "./UserDocuments";
 
 interface IdType {
   id: Number;
@@ -21,6 +27,7 @@ interface IdType {
 
 export const Documents = ({ id }: { id?: string }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const [documents, setDocuments] = useState<Array<UserDocumentType>>([]);
   const { t } = useTranslation();
   const [toast, setToast] = useState("");
   const [error, setNewError] = useState("");
@@ -31,6 +38,23 @@ export const Documents = ({ id }: { id?: string }) => {
     })
   );
 
+  useEffect(() => {
+    dispatch(userShowAsync(id))
+      .unwrap()
+      .then((response) => {
+        console.log(response.user);
+        setDocuments(response.user.documents);
+      });
+  }, []);
+
+  const refresh = useCallback(() => {
+    dispatch(userShowAsync(id))
+      .unwrap()
+      .then((response) => {
+        setDocuments(response.user.documents);
+      });
+  }, []);
+
   const {
     register,
     handleSubmit,
@@ -40,28 +64,28 @@ export const Documents = ({ id }: { id?: string }) => {
     formState: { errors },
   } = useForm<any>({
     defaultValues: {
-      id: id,
+      user_id: id,
     },
     resolver: schemaResolver,
   });
 
   const onSubmit = handleSubmit((data) => {
-    // setIsLoading(true);
-    // dispatch(userUploadAsync(data))
-    //   .unwrap()
-    //   .then((response) => {
-    //     if (response && response.status === true) {
-    //       setToast(response.message);
-    //       setNewError("");
-    //       dispatch(profileAsync());
-    //     }
-    //     setIsLoading(false);
-    //   })
-    //   .catch((reason) => {
-    //     setNewError(reason.message);
-    //     setToast("");
-    //     setIsLoading(false);
-    //   });
+    setIsLoading(true);
+    dispatch(userUploadDocumentsAsync(data))
+      .unwrap()
+      .then((response) => {
+        if (response && response.status === true) {
+          setToast(response.message);
+          setNewError("");
+          dispatch(profileAsync());
+        }
+        setIsLoading(false);
+      })
+      .catch((reason) => {
+        setNewError(reason.message);
+        setToast("");
+        setIsLoading(false);
+      });
   });
   return (
     <form onSubmit={onSubmit}>
@@ -73,62 +97,67 @@ export const Documents = ({ id }: { id?: string }) => {
       )}
       <fieldset>
         <FormLabel>Licence</FormLabel>
+        <UserDocuments documents={documents} type={0} refresh={refresh}></UserDocuments>
         <Controller
           render={() => (
             <FileUploader
-              maxFiles={1}
+              maxFiles={2}
+              title="Drag or upload Licence"
               onFileUpload={(files) => {
-                console.log("Uploaded files - ", files);
-                setValue("image", files[0]);
+                setValue("licence", files);
               }}
             ></FileUploader>
           )}
-          name="image"
+          name="licence"
           control={control}
         />
         <FormLabel>Passport</FormLabel>
+        <UserDocuments documents={documents} type={1} refresh={refresh}></UserDocuments>
+
         <Controller
           render={() => (
             <FileUploader
-              maxFiles={1}
+              maxFiles={2}
+              title="Upload passport"
               onFileUpload={(files) => {
-                console.log("Uploaded files - ", files);
-                setValue("image", files[0]);
+                setValue("passport", files);
               }}
             ></FileUploader>
           )}
-          name="image"
+          name="passport"
           control={control}
         />
         <FormLabel>Other Documents</FormLabel>
+        <UserDocuments documents={documents} type={2} refresh={refresh}></UserDocuments>
         <Controller
           render={() => (
             <FileUploader
-              maxFiles={1}
+              maxFiles={2}
+              title="Drag or click Other documents"
               onFileUpload={(files) => {
-                console.log("Uploaded files - ", files);
-                setValue("image", files[0]);
+                setValue("other_document", files);
               }}
             ></FileUploader>
           )}
-          name="image"
+          name="other_document"
           control={control}
         />
         <FormLabel>Document</FormLabel>
+        <UserDocuments documents={documents} type={3} refresh={refresh}></UserDocuments>
         <Controller
           render={() => (
             <FileUploader
-              maxFiles={1}
+              maxFiles={2}
+              title="Drag or click documents"
               onFileUpload={(files) => {
-                console.log("Uploaded files - ", files);
-                setValue("image", files[0]);
+                setValue("documents", files);
               }}
             ></FileUploader>
           )}
-          name="image"
+          name="documents"
           control={control}
         />
-        <FormInput type="hidden" name="id" register={register} />
+        <FormInput type="hidden" name="user_id" register={register} />
         {isLoading ? (
           <ButtonLoader />
         ) : (

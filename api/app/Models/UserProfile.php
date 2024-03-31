@@ -19,11 +19,14 @@ class UserProfile extends Model
         'income_verification',
         'rent_calculation',
         'language',
+        'locker',
         'special_instruction',
         'user_id',
         'relationship',
         'movein_date',
-        'image_path'
+        'image_path',
+        'birth_date',
+        'staff_notes'
     ];
 
     public function user(): BelongsTo

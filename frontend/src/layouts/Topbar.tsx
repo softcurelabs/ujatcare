@@ -22,7 +22,7 @@ const ProfileMenus = [
   {
     label: "My Account",
     icon: "fe-user",
-    redirectTo: "/staff-account",
+    redirectTo: "/my-account",
   },
   {
     label: "Logout",

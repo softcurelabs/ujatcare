@@ -6,13 +6,16 @@ use App\Constants\Role;
 use App\Imports\UsersImport;
 use App\Models\FlatOwner;
 use App\Models\User;
+use App\Models\UserDocuments;
 use App\Models\UserProfile;
+use Exception;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Maatwebsite\Excel\Facades\Excel;
 use Nette\Utils\Random;
@@ -43,7 +46,7 @@ class UserProfileController extends Controller
      */
     public function show(int $id)
     {
-        $userProfile = UserProfile::with('user')->where('user_id', $id)->first();
+        $userProfile = UserProfile::with('user', 'user.documents')->where('user_id', $id)->first();
 
         return response()->json($userProfile);
     }
@@ -103,27 +106,39 @@ class UserProfileController extends Controller
         }
 
         $validations = [
-            'unit' => 'required|integer|min:1|max:1000',
             'phone_number' => 'required|max:10|min:10',
-            'parking_space' => 'required|integer|min:1|max:10000',
+            'relationship' => 'required',
+            'birth_date' => 'required|date|before:' . now()->subYears(18)->toDateString(),
             'emergency_contact_number'  => 'required|max:10|min:10',
             'emergency_contact_name' => 'required|min:3',
-            'income_verification' => 'required|integer|min:1|max:1000000',
-            'rent_calculation'  => 'required|integer|min:1|max:1000000',
-            'language' => 'required',
             'name' => 'required|min:3',
             'special_instruction' => 'min:3',
-            'flat_id' => "required|integer",
-            'movein_date' => 'date'
         ];
 
         if ($userProfile->user->hasRole([Role::Admin, Role::Staff])) {
-            $validations = ['phone_number' => 'required|max:10|min:10',];
+            $validations = [
+                'unit' => 'required|integer|min:1|max:1000',
+                'parking_space' => 'required|integer|min:1|max:10000',
+                'locker' => 'required|integer|min:1|max:10000',
+                'staff_notes' => 'required',
+                'flat_id' => "required|integer",
+                'movein_date' => 'date',
+                'income_verification' => 'required|integer|min:1|max:1000000',
+                'rent_calculation'  => 'required|integer|min:1|max:1000000',
+                'language' => 'required',
+            ];
         }
 
         if ($user->id === $user_id) {
             $validations['flat_id'] = 'exclude';
             $validations['movein_date'] = 'exclude';
+            $validations['unit'] = 'exclude';
+            $validations['parking_space'] = 'exclude';
+            $validations['locker'] = 'exclude';
+            $validations['staff_notes'] = 'exclude';
+            $validations['income_verification'] = 'exclude';
+            $validations['rent_calculation'] = 'exclude';
+            $validations['language'] = 'exclude';
         }
 
         $validated = $request->validate($validations);
@@ -278,6 +293,50 @@ class UserProfileController extends Controller
             'status' => true,
             'message' => "Users added Successfully",
             'errors' => $message
+        ]);
+    }
+
+    public function uploadDocuments(Request $request)
+    {
+        $request->validate([
+            'licence.*' => 'mimes:jpg,jpeg,pdf,png|max:20000|min:1',
+            'passport.*' => 'mimes:jpg,jpeg,pdf,png|max:20000|min:1',
+            'other_document.*' => 'mimes:jpg,jpeg,pdf,png|max:20000|min:1',
+            'documents.*' => 'mimes:jpg,jpeg,pdf,png|max:20000|min:1',
+            'user_id' => 'exists:users,id'
+        ]);
+
+        $allTypes = ['licence', 'passport', 'other_document', 'documents'];
+
+        foreach ($allTypes as $type => $typeValue) {
+            foreach ($request->file($typeValue, []) as $document) {
+                //s$document_path = $document->store($typeValue);
+                $licence = new UserDocuments();
+                $document_path = $document->store('documents');
+                $licence->fill(['document_name' => $document->getClientOriginalName(), 'document_path' => $document_path, 'user_id' => $request->get('user_id'), 'type' => $type]);
+                $licence->save();
+            }
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Document Uploaded Successfully',
+        ]);
+    }
+
+    public function deleteDocuments(int $id)
+    {
+        try {
+            $inspection = UserDocuments::findorFail($id);
+            Storage::delete($inspection->document_path);
+        } catch (Exception $e) {
+            throw ValidationException::withMessages(['title' => 'Document doesn\'t exists']);
+        }
+        $inspection->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Document Deleted Successfully',
         ]);
     }
 }
