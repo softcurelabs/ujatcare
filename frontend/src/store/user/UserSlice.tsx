@@ -12,8 +12,10 @@ import {
   recident,
   uploadDocuments,
   removeDocument,
+  createBug,
 } from "../../helpers/api/user";
 import {
+  BugDataType,
   PasswordDataType,
   UploadataType,
   UserData,
@@ -193,6 +195,18 @@ export const userImportAsync = createAsyncThunk<StateType, any>(
   async (params: UploadataType, { rejectWithValue }) => {
     try {
       const response = await importUser(params);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const userBugAsync = createAsyncThunk<StateType, any>(
+  "userAsync/Bug",
+  async (params: BugDataType, { rejectWithValue }) => {
+    try {
+      const response = await createBug(params);
       return response.data;
     } catch (error) {
       return rejectWithValue(error);

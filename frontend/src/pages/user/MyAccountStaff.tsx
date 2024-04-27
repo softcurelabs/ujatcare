@@ -192,7 +192,7 @@ const BasicInputElements = () => {
                   >
                     <option value="">Select Role</option>
                     <option value="admin" selected>
-                      admin
+                      Super Admin
                     </option>
                     <option value="staff">Staff</option>
                   </FormInput>
@@ -428,7 +428,7 @@ const BasicInputElements = () => {
               </div>
 
               <div className="pt-2">
-                <ResetPassword id={user.user_id} />
+                <ResetPassword email={user.email} />
               </div>
               {/* <div className="pt-2">
                 <Documents id={user.user_id} />

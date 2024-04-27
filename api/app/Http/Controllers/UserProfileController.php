@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Constants\Role;
+use App\Events\UserUpdated;
 use App\Imports\UsersImport;
 use App\Models\FlatOwner;
 use App\Models\User;
@@ -112,7 +113,6 @@ class UserProfileController extends Controller
             'emergency_contact_number'  => 'required|max:10|min:10',
             'emergency_contact_name' => 'required|min:3',
             'name' => 'required|min:3',
-            'special_instruction' => 'min:3',
         ];
 
         if ($userProfile->user->hasRole([Role::Admin, Role::Staff])) {
@@ -126,6 +126,7 @@ class UserProfileController extends Controller
                 'income_verification' => 'required|integer|min:1|max:1000000',
                 'rent_calculation'  => 'required|integer|min:1|max:1000000',
                 'language' => 'required',
+                'special_instruction' => 'min:3',
             ];
         }
 
@@ -139,6 +140,7 @@ class UserProfileController extends Controller
             $validations['income_verification'] = 'exclude';
             $validations['rent_calculation'] = 'exclude';
             $validations['language'] = 'exclude';
+            $validations['special_instruction'] = 'exclude';
         }
 
         $validated = $request->validate($validations);
@@ -147,7 +149,7 @@ class UserProfileController extends Controller
         if (null === $userProfile) {
             $userProfile = new UserProfile();
             $userProfile->create($validated);
-
+            UserUpdated::dispatch($userProfile);
             return response()->json([
                 'status' => true,
                 'message' => 'User Updated Successfully',
@@ -162,7 +164,7 @@ class UserProfileController extends Controller
         }
 
         $userProfile->update($validated);
-
+        UserUpdated::dispatch($userProfile);
         return response()->json([
             'status' => true,
             'message' => 'User Updated Successfully',

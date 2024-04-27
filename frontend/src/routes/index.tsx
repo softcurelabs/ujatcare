@@ -63,7 +63,8 @@ const EditUser = React.lazy(() => import("../pages/user/EditUser"));
 const EditUserStaff = React.lazy(() => import("../pages/user/EditUserStaff"));
 const NewUser = React.lazy(() => import("../pages/user/NewUser"));
 const NewRecident = React.lazy(() => import("../pages/user/NewRecident"));
-
+const Quickbook = React.lazy(() => import("../pages/user/Quickbook"));
+const QuickbookConnect = React.lazy(() => import("../pages/user/QuickbookConnect"));
 const AssignPermission = React.lazy(() => import("../pages/user/AssignPermission"));
 const AssignPermissionAdmin = React.lazy(() => import("../pages/user/AssignPermissionAdmin"));
 const ProfileSelector = React.lazy(() => import("../pages/user/ProfileSelector"));
@@ -435,6 +436,16 @@ const uiRoutes = {
           name: "Basic",
           element: <MyAccountStaff />,
         },
+        {
+          path: '/quickbook',
+          name: "Basic",
+          element: <Quickbook />
+        },
+        {
+          path: '/quickbook/connect',
+          name: "Basic",
+          element: <QuickbookConnect />
+        }
       ],
     },
     {

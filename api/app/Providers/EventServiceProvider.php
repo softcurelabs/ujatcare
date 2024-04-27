@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\InvoiceCreated;
+use App\Events\UserUpdated;
+use App\Listeners\SendInvoiceToQuickBook;
+use App\Listeners\SendUserToQuickbook;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -18,6 +22,12 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        // InvoiceCreated::class => [
+        //     SendInvoiceToQuickBook::class,
+        // ],
+        UserUpdated::class => [
+            SendUserToQuickbook::class,
+        ]
     ];
 
     /**

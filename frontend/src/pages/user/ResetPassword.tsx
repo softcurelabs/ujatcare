@@ -10,12 +10,13 @@ import { PasswordDataType } from "../../types/UserType";
 import { userResetAsync } from "../../store/user/UserSlice";
 import * as yup from "yup";
 import { ButtonLoader } from "../../components/ButtonLoader";
+import { forgotPasswordAsync } from "../../store/auth/AuthSlice";
 
 interface IdType {
   id: Number;
 }
 
-export const ResetPassword = ({ id }: { id?: string }) => {
+export const ResetPassword = ({ email }: { email: string }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { t } = useTranslation();
   const [toast, setToast] = useState("");
@@ -33,32 +34,26 @@ export const ResetPassword = ({ id }: { id?: string }) => {
     formState: { errors },
   } = useForm<PasswordDataType>({
     defaultValues: {
-      id: id,
     },
     resolver: schemaResolver,
   });
 
-  const onSubmit = handleSubmit((data) => {
-    setIsLoading(true);
-    dispatch(userResetAsync(data))
-      .unwrap()
-      .then((response) => {
-        if (response && response.status === true) {
-          setToast(response.message);
-          //   reset();
-        }
-        setIsLoading(false);
-      })
-      .catch((reason) => {
-        for (var element in reason.errors) {
-          try {
-            // @ts-ignore
-            setError(element, { message: reason.errors[element].toString() });
-          } catch (errror) {}
-        }
-        setIsLoading(false);
-      });
-  });
+const onSubmit = handleSubmit(() => {
+  setIsLoading(true);
+  // dispatch(forgotPassword(formData["username"]));
+  dispatch(forgotPasswordAsync(email))
+    .unwrap()
+    .then((response) => {
+      if (response && response.status === true) {
+        setToast(response.message);
+      }
+      setIsLoading(false);
+    })
+    .catch((reason) => {
+      setNewError(reason.message);
+      setIsLoading(false);
+    });
+});
 
   return (
     <form onSubmit={onSubmit}>
@@ -68,22 +63,11 @@ export const ResetPassword = ({ id }: { id?: string }) => {
           {error}
         </div>
       )}
-      <FormInput
-        label="Reset Password"
-        type="password"
-        name="password"
-        register={register}
-        placeholder="password"
-        containerClass={"mb-3"}
-        key="password"
-        errors={errors}
-      />
-      <FormInput type="hidden" name="id" register={register} />
       {loading ? (
         <ButtonLoader />
       ) : (
         <Button variant="primary" type="submit">
-          Reset
+          Reset Password
         </Button>
       )}
     </form>

@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Traits\HasQuickBooksToken;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,7 +18,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, CanResetPassword;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, CanResetPassword, HasQuickBooksToken;
 
     protected $appends = [
         'role',
@@ -24,6 +26,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'profile',
         'flat_name',
         'apartment_name',
+        'quickbooks'
     ];
     /**
      * The attributes that are mass assignable.
@@ -90,8 +93,36 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->flat()->first();
     }
 
-    public function getProfileAttribute()
+    public function getProfileAttribute(): UserProfile
     {
         return $this->profile()->first();
+    }
+
+    public function getQuickbooksAttribute(): array
+    {
+        return [
+            // "BillAddr" => [
+            //     "Line1" =>  $this->getProfileAttribute()->,
+            //     "City" =>  "Mountain View",
+            //     "Country" =>  "USA",
+            //     "CountrySubDivisionCode" =>  "CA",
+            //     "PostalCode" =>  "94042"
+            // ],
+            "Notes" =>  $this->getProfileAttribute()->special_instruction,
+            // "Title" =>  "Mr",
+            // "GivenName" =>  "Evil",
+            // "MiddleName" =>  "1B",
+            // "FamilyName" =>  "King",
+            // "Suffix" =>  "Jr",
+            "FullyQualifiedName" =>  $this->name,
+            // "CompanyName" =>  "King Evial",
+            "DisplayName" =>  $this->name,
+            "PrimaryPhone" =>  [
+                "FreeFormNumber" =>  $this->getProfileAttribute()->phone_number
+            ],
+            "PrimaryEmailAddr" =>  [
+                "Address" => $this->email
+            ]
+        ];
     }
 }

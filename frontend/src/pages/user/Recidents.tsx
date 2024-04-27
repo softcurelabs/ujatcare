@@ -135,8 +135,8 @@ const Recidents = () => {
   return (
     <React.Fragment>
       <PageTitle
-        breadCrumbItems={[{ label: "Residents", path: "/user", active: true }]}
-        title={"Residents"}
+        breadCrumbItems={[{ label: "Tenants", path: "/user", active: true }]}
+        title={"Tenants"}
       />
 
       <Row>

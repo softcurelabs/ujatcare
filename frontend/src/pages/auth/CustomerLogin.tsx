@@ -102,7 +102,7 @@ const CustomerLogin = () => {
             </div>
 
             <div>
-              <h6 className="text-center text-muted">Resident Login</h6>
+              <h6 className="text-center text-muted">Tenant Login</h6>
             </div>
             <VerticalForm<UserData>
               onSubmit={onSubmit}
@@ -150,7 +150,7 @@ const CustomerLogin = () => {
             </div>
 
             <div>
-              <h6 className="text-center text-muted">Resident Login</h6>
+              <h6 className="text-center text-muted">Tenant Login</h6>
             </div>
             <VerticalForm<UserData>
               onSubmit={onSubmit}

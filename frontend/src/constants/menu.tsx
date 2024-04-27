@@ -161,18 +161,6 @@ const CUSTOMER_ITEMS: MenuItemTypes[] = [
     isTitle: false,
     url: "/notice-highlight",
   },
-  {
-    key: "maintanance-inspection-history",
-    label: "Apartment Inspection Calendar",
-    isTitle: false,
-    url: "/apps/calendar",
-  },
-  {
-    key: "maintanance-inspection-history",
-    label: "Calendar",
-    isTitle: false,
-    url: "/apps/calendar",
-  },
 ];
 
 const ADMIN_ITEMS: MenuItemTypes[] = [
@@ -196,7 +184,7 @@ const ADMIN_ITEMS: MenuItemTypes[] = [
   },
   {
     key: "users",
-    label: "Residents",
+    label: "Tenants",
     isTitle: false,
     url: "/resident",
   },
@@ -237,6 +225,12 @@ const ADMIN_ITEMS: MenuItemTypes[] = [
     isTitle: false,
     url: "/inspection",
   },
+  {
+    key: "quickbook",
+    label: "Quickbook",
+    isTitle: false,
+    url: "/quickbook"
+  }
 ];
 
 const HORIZONTAL_MENU_ITEMS: MenuItemTypes[] = [

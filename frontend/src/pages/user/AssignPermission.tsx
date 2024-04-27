@@ -113,7 +113,7 @@ const BasicInputElements = () => {
                     errors={errors}
                   >
                     <option value="">Select Role</option>
-                    <option value="recident">Resident</option>
+                    <option value="recident">Tenant</option>
                     {/* <option value="staff">Staff</option> */}
                   </FormInput>
 

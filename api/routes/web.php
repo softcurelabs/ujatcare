@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PDFSignController;
 use App\Http\Controllers\VerifyEmailController;
+use App\Services\QuickBook;
 use Illuminate\Support\Facades\Route;
 
 /*

@@ -3,10 +3,13 @@
 use App\Constants\Role;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BugController;
 use App\Http\Controllers\FlatController;
 use App\Http\Controllers\InspectionController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\MaintanceController;
 use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\QuickbookController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\VerifyEmailController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -67,6 +70,14 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff']], function ()
     Route::get('event-inspection', [InspectionController::class, 'events']);
     Route::delete('inspection/{id}', [InspectionController::class, 'delete']);
     Route::delete('inspection-document/{id}', [InspectionController::class, 'deleteDocument']);
+    Route::get('quickbook', [QuickbookController::class, 'connect']);
+    Route::post('quickbook', [QuickbookController::class, 'authorise']);
+
+    // Route::get('invoice', [InvoiceController::class, 'list']);
+    // Route::post('invoice', [InvoiceController::class, 'create']);
+    // Route::post('bulk-invoice', [InvoiceController::class, 'bulkInvoice']);
+    // Route::get('invoice/{id}', [InvoiceController::class, 'show']);
+    // Route::put('invoice/{id}', [InvoiceController::class, 'edit']);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff|recident']], function () {
@@ -77,6 +88,7 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff|recident']], fu
     Route::put('user/{user_id}', [UserProfileController::class, 'update']);
 
     Route::get('maintanance/{id}', [MaintanceController::class, 'show']);
+    Route::post('bug', [BugController::class, 'index']);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'role:recident']], function () {

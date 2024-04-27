@@ -62,3 +62,9 @@ export function importUser(data: any) {
 
   return api.createWithFile(baseUrl, data);
 }
+
+export function createBug(data: any) {
+  const baseUrl = `/bug`;
+
+  return api.createWithFile(baseUrl, data);
+}

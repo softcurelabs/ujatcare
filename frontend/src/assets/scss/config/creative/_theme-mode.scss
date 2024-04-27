@@ -39,6 +39,7 @@
     --#{$prefix}footer-height:             60px;
 
     --#{$prefix}boxed-layout-width:    1300px;
+    --#{$prefix}form-control-disabled-bg:              #9097a7; 
 }
 
 
@@ -53,7 +54,7 @@
     --#{$prefix}box-shadow-sm:                                 0 0.75rem 6rem #{rgba(56, 65, 74,.03)};
     --#{$prefix}box-shadow-lg:                                 0 0 45px 0 #{rgba(0, 0, 0, 0.12)};
     --#{$prefix}box-shadow-inset:                              inset 0 1px 2px #{rgba($black, .075)};
-
+    --#{$prefix}form-control-disabled-bg:              #9097a7; 
     // Card Border
     --#{$prefix}theme-border-width:      0px;
 }
@@ -121,6 +122,7 @@ html[data-menu-color="light"] {
     --#{$prefix}menu-item-active-color:                #{$primary};
     --#{$prefix}menu-icon-twotone-fill:                #{rgba($primary, 0.2)};
     --#{$prefix}menu-item-active-bg:                   #{rgba($primary, 0.2)};
+    --#{$prefix}form-control-disabled-bg:              #9097a7;
 }
 
 // Dark Left Sidebar
@@ -215,6 +217,7 @@ html[data-bs-theme="dark"][data-topbar-color="light"] {
     --#{$prefix}topbar-item-color:          rgba(255,255,255,.6);
     --#{$prefix}topbar-item-hover-color:    #bccee4;
     --#{$prefix}topbar-search-bg:           #464f5b;
+    --#{$prefix}form-control-disabled-bg:              #9097a7; 
 }
 
 // Brand Topbar

@@ -157,7 +157,7 @@ const BasicInputElements = () => {
               <UploadImage id={params.id} />
 
               <div className="mt-4">
-                <ResetPassword id={params.id} />
+                {user && <ResetPassword email={user.email} />}
               </div>
               <div className="mt-2">
                 <Documents id={params.id} />
@@ -290,7 +290,7 @@ const BasicInputElements = () => {
                 </Row>
                 <Row className="gutters">
                   <Col xl={12}>
-                    <h5 className="text-primary">Resident information</h5>
+                    <h5 className="text-primary">Tenant information</h5>
                   </Col>
                   <Col xl={6}>
                     <FormInput
@@ -478,7 +478,7 @@ const EditUser = () => {
     <React.Fragment>
       <PageTitle
         breadCrumbItems={[
-          { label: "Residents", path: "/user" },
+          { label: "Tenants", path: "/user" },
           { label: "My Account", path: "/user", active: true },
         ]}
         title={"My Account"}

@@ -1,10 +1,7 @@
-import { useState } from "react";
-import { Row, Col, Card, Container, FormLabel, Button } from "react-bootstrap";
+import { Row, Col, Card, Container } from "react-bootstrap";
 
 import LogoLight from "../../assets/images/logo-light.png";
 import { Link } from "react-router-dom";
-
-import Loader from "../../components/Loader";
 
 const AboutUs = () => {
   return (
@@ -19,7 +16,7 @@ const AboutUs = () => {
                   <Col lg={2}></Col>
                   <Col lg={3}></Col>
                   <Col lg={2}>
-                    <img src={LogoLight} height={"100"} />
+                    <img src={LogoLight} height={"100"} alt="Logo" />
                   </Col>
                   <Col lg={3}></Col>
                   <Col lg={2}>
@@ -93,7 +90,7 @@ const AboutUs = () => {
                       <Link to={"/auth/login"}>Staff Login</Link>
                     </p>
                     <p>
-                      <Link to={"/auth/customer-login"}>Recident Login</Link>
+                      <Link to={"/auth/customer-login"}>Tenant Login</Link>
                     </p>
                   </Col>
                 </Row>

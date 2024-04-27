@@ -11,6 +11,7 @@ import UserReducer from "./user/UserSlice";
 import MaintananceReducer from "./maintanance/MaintananceSlice";
 import ApplicationReducer from "./application/ApplicationSlice";
 import InspectionReducer from "./inspection/InspectionSlice";
+import QuickBookReducer from "./quickbook/QuickbookSlice";
 
 const store = configureStore({
   reducer: {
@@ -22,7 +23,8 @@ const store = configureStore({
     User: UserReducer,
     Maintanance: MaintananceReducer,
     Application: ApplicationReducer,
-    Inspection: InspectionReducer
+    Inspection: InspectionReducer,
+    QuickBook: QuickBookReducer
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

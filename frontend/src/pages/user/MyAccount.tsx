@@ -6,8 +6,8 @@ import { Row, Col, Card, Button, CardBody, Form } from "react-bootstrap";
 import PageTitle from "../../components/PageTitle";
 import { FormInput } from "../../components/";
 import HyperDatepicker from "../../components/Datepicker";
-import { useNavigate, useParams } from "react-router-dom";
-import { UserEditType, UserProfileType, UserType } from "../../types/UserType";
+import { useNavigate } from "react-router-dom";
+import { UserEditType } from "../../types/UserType";
 import { userEditAsync, userShowAsync } from "../../store/user/UserSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
@@ -168,7 +168,7 @@ const BasicInputElements = () => {
                 <UploadImage id={localUser?.user.id.toString()} />
 
                 <div className="mt-4">
-                  <ResetPassword id={localUser?.user.id.toString()} />
+                  <ResetPassword email={localUser?.user.email.toString()} />
                 </div>
                 <div className="mt-2">
                   <Documents id={localUser?.user.id.toString()} />
@@ -302,7 +302,7 @@ const BasicInputElements = () => {
                 </Row>
                 <Row className="gutters">
                   <Col xl={12}>
-                    <h5 className="text-primary">Resident information</h5>
+                    <h5 className="text-primary">Tenant information</h5>
                   </Col>
                   <Col xl={6}>
                     <FormInput
@@ -314,6 +314,7 @@ const BasicInputElements = () => {
                       containerClass={"mb-3 "}
                       register={register}
                       key="unit"
+                      disabled={true}
                       errors={errors}
                     />
                   </Col>
@@ -322,6 +323,7 @@ const BasicInputElements = () => {
                       type="select"
                       label="Apartment#"
                       name="flat_id"
+                      disabled={true}
                       className="form-control-sm fs-5 "
                       containerClass={"mb-3 "}
                       register={register}
@@ -345,6 +347,7 @@ const BasicInputElements = () => {
                       type="text"
                       name="parking_space"
                       placeholder="Parking"
+                      disabled={true}
                       className="form-control-sm fs-5 "
                       containerClass={"mb-3"}
                       register={register}
@@ -357,6 +360,7 @@ const BasicInputElements = () => {
                       label="Locker#"
                       type="text"
                       name="locker"
+                      disabled={true}
                       placeholder="Locker"
                       className="form-control-sm fs-5"
                       containerClass={"mb-3"}
@@ -370,6 +374,7 @@ const BasicInputElements = () => {
                       label="Income Verification"
                       type="text"
                       name="income_verification"
+                      disabled={true}
                       placeholder="Contact"
                       className="form-control-sm fs-5 "
                       containerClass={"mb-3 "}
@@ -383,6 +388,7 @@ const BasicInputElements = () => {
                       label="Rent Calculation"
                       type="text"
                       name="rent_calculation"
+                      disabled={true}
                       placeholder="Rent"
                       className="form-control-sm fs-5 "
                       containerClass={"mb-3 "}
@@ -396,6 +402,7 @@ const BasicInputElements = () => {
                       label="Language"
                       type="text"
                       name="language"
+                      disabled={true}
                       placeholder="Language"
                       className="form-control-sm fs-5 "
                       containerClass={"mb-3 "}
@@ -408,6 +415,7 @@ const BasicInputElements = () => {
                     <FormInput
                       type="hidden"
                       register={register}
+                      disabled={true}
                       className="form-control-sm fs-5 "
                       containerClass={"mb-3 input-group"}
                       labelClassName="me-2"
@@ -419,6 +427,7 @@ const BasicInputElements = () => {
                       <label className="form-label">Move In Date</label> <br />
                       <HyperDatepicker
                         hideAddon={true}
+                        disabled={true}
                         showTimeSelect={false}
                         // maxDate={new Date()}
                         value={selectedDate}
@@ -440,6 +449,7 @@ const BasicInputElements = () => {
                       type="textarea"
                       name="special_instruction"
                       rows="5"
+                      disabled={true}
                       className="form-control-sm fs-5 "
                       containerClass={"mb-3"}
                       register={register}

@@ -53,7 +53,7 @@
     --#{$prefix}box-shadow-sm:                                 0 0.75rem 6rem #{rgba(56, 65, 74,.03)};
     --#{$prefix}box-shadow-lg:                                 0 0 45px 0 #{rgba(0, 0, 0, 0.12)};
     --#{$prefix}box-shadow-inset:                              inset 0 1px 2px #{rgba($black, .075)};
-
+    --#{$prefix}form-control-disabled-bg:              #dee2e6;
     // Card Border
     --#{$prefix}theme-border-width:      0px;
 }

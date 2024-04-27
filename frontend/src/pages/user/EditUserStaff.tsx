@@ -7,7 +7,7 @@ import PageTitle from "../../components/PageTitle";
 import { FormInput } from "../../components/";
 import HyperDatepicker from "../../components/Datepicker";
 import { useNavigate, useParams } from "react-router-dom";
-import { UserEditType } from "../../types/UserType";
+import { UserEditType, UserType } from "../../types/UserType";
 import { userEditAsync, userShowAsync } from "../../store/user/UserSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
@@ -22,6 +22,7 @@ import { ButtonLoader } from "../../components/ButtonLoader";
 
 const BasicInputElements = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const [user, setUser] = useState<UserType>();
   const { t } = useTranslation();
   const [toast, setToast] = useState("");
   const [error, setNewError] = useState("");
@@ -103,6 +104,7 @@ const BasicInputElements = () => {
         dispatch(userShowAsync(params.id))
           .unwrap()
           .then((response) => {
+            setUser(response.user);
             if (config.BASE_URL && response.image_path)
               setProfilePic(`${config.BASE_URL}/${response.image_path}`);
             setValue("id", response.user.id);
@@ -238,7 +240,7 @@ const BasicInputElements = () => {
               <UploadImage id={params.id} />
 
               <div className="pt-5">
-                <ResetPassword id={params.id} />
+                {user && <ResetPassword email={user.email} />}
               </div>
             </Col>
           </Row>
@@ -253,7 +255,7 @@ const EditUser = () => {
     <React.Fragment>
       <PageTitle
         breadCrumbItems={[
-          { label: "Residents", path: "/user" },
+          { label: "Tenants", path: "/user" },
           { label: "My Account", path: "/user", active: true },
         ]}
         title={"My Account"}

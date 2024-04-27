@@ -102,3 +102,9 @@ export interface UploadataType {
   id: Number;
   file: string;
 }
+
+export interface BugDataType {
+  title: string;
+  description: string;
+  documents: Array<string>;
+}

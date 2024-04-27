@@ -78,7 +78,7 @@ const ImportUsers = ({ show, onHide, onSubmit }: AddMemberProps) => {
         dialogClassName="modal-xl"
       >
         <Modal.Header className="bg-light" onHide={onHide} closeButton>
-          <Modal.Title className="m-0">Import Recidents</Modal.Title>
+          <Modal.Title className="m-0">Import Tenants</Modal.Title>
         </Modal.Header>
         <Modal.Body className="p-4">
           <FormLabel>
