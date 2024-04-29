@@ -156,7 +156,7 @@ const Recidents = () => {
               setShow(true);
             }}
           >
-            <i className="mdi mdi-plus-circle me-1"></i> Import Recidents
+            <i className="mdi mdi-plus-circle me-1"></i> Import Tenants
           </Button>
           {users && (
             <>

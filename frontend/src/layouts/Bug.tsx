@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Button, FormLabel } from "react-bootstrap";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -36,17 +36,25 @@ const Bug = ({ show, onHide, onSubmit }: AddMemberProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setNewError] = useState("");
 
+  useEffect(() => {
+    setNewError("");
+    setToast("");
+  }, [show]);
+
   const {
     register,
     handleSubmit,
     setValue,
     setError,
+    reset,
     control,
     formState: { errors },
   } = useForm<any>({
     defaultValues: {},
     resolver: schemaResolver,
   });
+
+
 
   const onSubmitModal = handleSubmit((data) => {
     setIsLoading(true);
@@ -58,6 +66,8 @@ const Bug = ({ show, onHide, onSubmit }: AddMemberProps) => {
         if (response && response.status === true) {
           setToast(response.message);
           setNewError(response.errors);
+          setValue("documents", []);
+          reset();
         }
         setIsLoading(false);
       })

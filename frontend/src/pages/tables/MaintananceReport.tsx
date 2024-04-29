@@ -69,7 +69,7 @@ const BasicTable = () => {
   return (
     <Card>
       <Card.Body>
-        <h4 className="header-title"> Maintanance Report</h4>
+        <h4 className="header-title"> Maintenance Report</h4>
 
         <div className="table-responsive">
           <Table className="mb-0">
@@ -110,7 +110,7 @@ const MaintananceReport = () => {
           { label: "Tables", path: "/ui/tables/basic" },
           { label: "Basic Tables", path: "/ui/tables/basic", active: true },
         ]}
-        title={"Maintanance Report"}
+        title={"Maintenance Report"}
       />
 
       <Row>

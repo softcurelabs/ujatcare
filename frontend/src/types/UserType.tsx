@@ -32,6 +32,8 @@ export interface UserProfileType extends TimeStampType {
   relationship: string;
   movein_date: Date;
   language: string;
+  fob: string;
+  staff_notes: string;
   special_instruction: null | string;
   image_path: null | string;
   user: UserType;
@@ -58,6 +60,7 @@ export interface UserEditType extends TimeStampType {
   image_path: null | string;
   profile_pic: null | string;
   user: UserType;
+  fob: string;
 }
 
 export interface UsersType extends PaginationType {

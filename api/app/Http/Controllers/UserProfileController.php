@@ -30,15 +30,19 @@ class UserProfileController extends Controller
      */
     public function index(Request $request)
     {
-        return UserProfile::with('user')->whereHas('user.roles', static function ($query) {
-            return $query->whereIn('name', ['admin', 'staff']);
+        $roles = [Role::Staff->value];
+        if (Auth::user()->hasRole([Role::Admin->value])) {
+            $roles[] = Role::Admin->value;
+        }
+        return UserProfile::with('user')->whereHas('user.roles', static function ($query) use ($roles) {
+            return $query->whereIn('name', $roles);
         })->orderBy('id')->paginate($request->get('limit', 10));
     }
 
     public function recidents(Request $request)
     {
         return UserProfile::with('user')->whereHas('user.roles', static function ($query) {
-            return $query->whereIn('name', ['recident']);
+            return $query->whereIn('name', [Role::Recident->value]);
         })->orderBy('id')->paginate($request->get('limit', 10));
     }
 
@@ -102,10 +106,6 @@ class UserProfileController extends Controller
         $userProfile = UserProfile::with('user')->where('user_id', $user_id)->first();
         $user = Auth::user();
 
-        if ($userProfile->user->hasRole(Role::Staff)) {
-            throw ValidationException::withMessages(['Staff can\'t edit any user.']);
-        }
-
         $validations = [
             'phone_number' => 'required|max:10|min:10',
             'relationship' => 'required',
@@ -115,7 +115,7 @@ class UserProfileController extends Controller
             'name' => 'required|min:3',
         ];
 
-        if ($userProfile->user->hasRole([Role::Admin, Role::Staff])) {
+        if ($user->hasRole([Role::Admin, Role::Staff])) {
             $validations = [
                 'unit' => 'required|integer|min:1|max:1000',
                 'parking_space' => 'required|integer|min:1|max:10000',
@@ -126,6 +126,7 @@ class UserProfileController extends Controller
                 'income_verification' => 'required|integer|min:1|max:1000000',
                 'rent_calculation'  => 'required|integer|min:1|max:1000000',
                 'language' => 'required',
+                'fob' => 'required',
                 'special_instruction' => 'min:3',
             ];
         }
@@ -140,6 +141,7 @@ class UserProfileController extends Controller
             $validations['income_verification'] = 'exclude';
             $validations['rent_calculation'] = 'exclude';
             $validations['language'] = 'exclude';
+            $validations['fob'] = 'exclude';
             $validations['special_instruction'] = 'exclude';
         }
 
@@ -236,15 +238,18 @@ class UserProfileController extends Controller
         if ($request->get('role_id') == Role::Recident->value) {
             $validations['flat_id'] = 'required|unique:flat_owner,flat_id';
         }
-        $user = Auth::user();
-        if ($user->id == $user_id) {
+        $currentUser = Auth::user();
+        if ($currentUser->id == $user_id) {
             throw ValidationException::withMessages(['role_id' => "You can't change your own role"]);
         }
 
+        $user = User::find($user_id);
+
+        if ($currentUser->hasRole([Role::Staff->value]) && $user->hasRole([Role::Staff->value, Role::Admin->value])) {
+            throw ValidationException::withMessages(['role_id' => "Staff can't change other admin or staff"]);
+        }
 
         $request->validate($validations);
-
-        $user = User::find($user_id);
 
         $user->syncRoles($request->get('role_id'));
         if ($user->save()) {

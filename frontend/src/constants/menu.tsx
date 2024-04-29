@@ -22,7 +22,7 @@ const MENU_ITEMS: MenuItemTypes[] = [
     children: [
       {
         key: "maintanance-report",
-        label: "Maintanance Report",
+        label: "Maintenance Report",
         isTitle: false,
         url: "/ui/tables/report",
       },
@@ -48,7 +48,7 @@ const MENU_ITEMS: MenuItemTypes[] = [
 
       {
         key: "maintanance-calander",
-        label: "Calander",
+        label: "Calendar",
         isTitle: false,
         url: "/apps/calendar",
       },
@@ -190,7 +190,7 @@ const ADMIN_ITEMS: MenuItemTypes[] = [
   },
   {
     key: "maintanance-report",
-    label: "Maintanance Report",
+    label: "Maintenance Report",
     isTitle: false,
     url: "/ui/tables/report",
   },
@@ -215,7 +215,7 @@ const ADMIN_ITEMS: MenuItemTypes[] = [
   },
   {
     key: "maintanance-calander",
-    label: "Calander",
+    label: "Calendar",
     isTitle: false,
     url: "/apps/calendar",
   },
@@ -226,10 +226,10 @@ const ADMIN_ITEMS: MenuItemTypes[] = [
     url: "/inspection",
   },
   {
-    key: "quickbook",
-    label: "Quickbook",
+    key: "integrations",
+    label: "Integrations",
     isTitle: false,
-    url: "/quickbook"
+    url: "/integration"
   }
 ];
 

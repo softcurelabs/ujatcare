@@ -413,6 +413,20 @@ const BasicInputElements = () => {
                   </Col>
                   <Col xl={6}>
                     <FormInput
+                      label="FOB"
+                      type="text"
+                      name="fob"
+                      disabled={true}
+                      placeholder="FOB"
+                      className="form-control-sm fs-5 "
+                      containerClass={"mb-3 "}
+                      register={register}
+                      key="fob"
+                      errors={errors}
+                    />
+                  </Col>
+                  <Col xl={6}>
+                    <FormInput
                       type="hidden"
                       register={register}
                       disabled={true}

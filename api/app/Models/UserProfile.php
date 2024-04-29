@@ -27,7 +27,8 @@ class UserProfile extends Model
         'image_path',
         'birth_date',
         'staff_notes',
-        'quickbook_id'
+        'quickbook_id',
+        'fob'
     ];
 
     public function user(): BelongsTo

@@ -194,6 +194,14 @@ const CustomerLogin = () => {
                 )}
               </div>
             </VerticalForm>
+            
+          </Col>
+          <Col lg={12}>
+          <div className="text-center mt-2 d-grid">
+              <p className="mb-1">Contact Office: <a href="mailto:office@northparkmanor.org">office@northparkmanor.org</a></p>
+              <p>After Hours Maintenance: <a href="tel:250 812-0283">250 812-0283</a> 
+              </p>
+            </div>
           </Col>
         </Row>
         {/* <div className="text-center">

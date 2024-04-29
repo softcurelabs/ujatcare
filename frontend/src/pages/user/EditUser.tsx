@@ -125,6 +125,8 @@ const BasicInputElements = () => {
             setValue("special_instruction", response.special_instruction);
             setValue("relationship", response.relationship);
             setValue("birth_date", response.birth_date);
+            setValue("staff_notes", response.staff_notes);
+            setValue("fob", response.fob);
             setValue("movein_date", response.movein_date);
             //console.log(response.movein_date);
             setSelectedDate(new Date(response.movein_date));
@@ -389,6 +391,19 @@ const BasicInputElements = () => {
                       containerClass={"mb-3 "}
                       register={register}
                       key="language"
+                      errors={errors}
+                    />
+                  </Col>
+                  <Col xl={6}>
+                    <FormInput
+                      label="FOB"
+                      type="text"
+                      name="fob"
+                      placeholder="FOB"
+                      className="form-control-sm fs-5 "
+                      containerClass={"mb-3 "}
+                      register={register}
+                      key="fob"
                       errors={errors}
                     />
                   </Col>

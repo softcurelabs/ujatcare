@@ -437,7 +437,7 @@ const uiRoutes = {
           element: <MyAccountStaff />,
         },
         {
-          path: '/quickbook',
+          path: '/integration',
           name: "Basic",
           element: <Quickbook />
         },

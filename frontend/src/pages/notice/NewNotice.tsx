@@ -128,9 +128,9 @@ const NewNotice = () => {
         breadCrumbItems={[
           { label: "Dashboard", path: "/dashboard-2" },
           { label: "Bulletin Board", path: "/notice" },
-          { label: "Bulletin Board", path: "/notice/new", active: true },
+          { label: "Post a Bulletin", path: "/notice/new", active: true },
         ]}
-        title={"Bulletin Board"}
+        title={"Post a Bulletin"}
       />
 
       <Row>

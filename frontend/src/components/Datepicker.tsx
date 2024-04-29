@@ -60,6 +60,7 @@ const HyperDatepicker = (props: HyperDatepickerProps) => {
           minDate={props.minDate}
           disabled={props.disabled}
           wrapperClassName="is-invalid"
+          className="form-control"
           maxDate={props.maxDate}
           showMonthDropdown={true}
           showYearDropdown={true}

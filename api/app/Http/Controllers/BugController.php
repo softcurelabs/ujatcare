@@ -18,7 +18,7 @@ class BugController extends Controller
         ];
 
         $request->validate($validations);
-        Mail::to(explode(",", env('SENDER_EMAIL')))->send((new BugCreated($request->get('title'), $request->get('description'), $request->file('documents'), Auth::user()->email)));
+        Mail::to(explode(",", env('SENDER_EMAIL')))->send((new BugCreated($request->get('title'), $request->get('description'), $request->file('documents', []), Auth::user()->email)));
 
         return response()->json(['status' => true, 'message' => "Bug has been reported"]);
 
