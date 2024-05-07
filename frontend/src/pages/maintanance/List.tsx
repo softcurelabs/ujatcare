@@ -15,6 +15,13 @@ interface MaintananceListType {
 }
 const BasicTable = ({ maintanance }: MaintananceListType) => {
   const dispatch = useDispatch<AppDispatch>();
+  let { user, userCustomer } = useSelector((state: RootState) => ({
+    user: state.Auth.user,
+    userCustomer: state.CustomerAuth.user,
+  }));
+  if (userCustomer) {
+    user = userCustomer;
+  }
   const [show, setShow] = useState<boolean>(false);
   const [toast, setToast] = useState("");
   const [error, setError] = useState("");
@@ -60,27 +67,27 @@ const BasicTable = ({ maintanance }: MaintananceListType) => {
                       <td role="cell">{record.created_at}</td>
                       <td role="cell">{record.action_date}</td>
                       <td role="cell">
-                        <React.Fragment>
-                          <>
-                            <Dropdown className="btn-group" align="end">
-                              <Dropdown.Toggle
-                                variant="light"
-                                className="table-action-btn btn-sm"
+                        <>
+                          <Dropdown className="btn-group" align="end">
+                            <Dropdown.Toggle
+                              variant="light"
+                              className="table-action-btn btn-sm"
+                            >
+                              <i className="mdi mdi-dots-horizontal"></i>
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                              {" "}
+                              <Dropdown.Item
+                                href={`maintanance/${record.id}`}
                               >
-                                <i className="mdi mdi-dots-horizontal"></i>
-                              </Dropdown.Toggle>
-                              <Dropdown.Menu>
-                                {" "}
-                                <Dropdown.Item
-                                  href={`maintanance/${record.id}`}
-                                >
-                                  <i className="mdi mdi-check-all me-2 text-muted font-18 vertical-middle"></i>
-                                  Edit Maintanance
-                                </Dropdown.Item>
-                              </Dropdown.Menu>
-                            </Dropdown>
-                          </>
-                        </React.Fragment>
+                                <i className="mdi mdi-check-all me-2 text-muted font-18 vertical-middle"></i>
+                                {user &&
+        (user.user_role.includes("admin") ||
+          user.user_role.includes("staff")) ? <span>Edit Maintanance</span> : <span>View Maintanance</span>}
+                              </Dropdown.Item>
+                            </Dropdown.Menu>
+                          </Dropdown>
+                        </>
                       </td>
                     </tr>
                   );
@@ -126,15 +133,14 @@ const List = () => {
   useEffect(() => {
     dispatch(maintananceAsync(currentPage));
   }, [currentPage]);
-  console.log(maintanance);
 
   return (
     <React.Fragment>
       <PageTitle
         breadCrumbItems={[
-          { label: "Maintanance", path: "/maintanance", active: true },
+          { label: "All Maintenance Requests", path: "/maintanance", active: true },
         ]}
-        title={"Maintanance"}
+        title={"All Maintenance Requests"}
       />
 
       <Row>

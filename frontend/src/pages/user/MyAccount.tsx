@@ -243,6 +243,7 @@ const BasicInputElements = () => {
                         showTimeSelect={false}
                         maxDate={new Date()}
                         value={birthDate}
+                        disabled={disabled}
                         onChange={(date) => {
                           setBirthDate(date);
                           setValue("birth_date", date.toLocaleString("sv-SE"));

@@ -109,14 +109,6 @@ const ActionColumn = () => {
         {" "}
         <i className="mdi mdi-eye"></i>
       </Link>
-      <Link to="#" className="action-icon">
-        {" "}
-        <i className="mdi mdi-square-edit-outline"></i>
-      </Link>
-      <Link to="#" className="action-icon">
-        {" "}
-        <i className="mdi mdi-delete"></i>
-      </Link>
     </>
   );
 };

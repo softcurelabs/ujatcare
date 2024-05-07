@@ -4,13 +4,13 @@ namespace App\Listeners;
 
 use App\Events\UserUpdated;
 use App\Services\QuickBook;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
+use App\Traits\Logger;
 use Illuminate\Support\Facades\Log;
 use QuickBooksOnline\API\Facades\Customer;
 
 class SendUserToQuickbook
 {
+    use Logger;
     /**
      * Create the event listener.
      */
@@ -44,6 +44,7 @@ class SendUserToQuickbook
                     return;
                 }
                 $user->quickbook_id = (int) $resultingCustomerObj->Id;
+                Log::info('Quickbook Synced Customer: '.$resultingCustomerObj->Id);
                 $user->update();
                 return;
             }
@@ -56,21 +57,17 @@ class SendUserToQuickbook
             ]);
 
             $updated = $dataService->Update($updateCustomer);
-            $user->quickbook_id = $updated->Id;
+            $user->quickbook_id =  (int) $updated->Id;
             $user->update();
             $error = $dataService->getLastError();
             if ($error) {
                 $this->logError($error);
             }
+            Log::info('Quickbook Synced Customer: '.$updated->Id);
         } catch (\Throwable $e) {
             Log::error($e);
         }
 
         return;
-    }
-
-    public function logError($error)
-    {
-        Log::error("QuickBook error => {$error->getHttpStatusCode()} {$error->getOAuthHelperError()} {$error->getResponseBody()}");
     }
 }

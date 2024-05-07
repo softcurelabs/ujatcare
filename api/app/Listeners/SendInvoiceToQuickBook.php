@@ -4,14 +4,13 @@ namespace App\Listeners;
 
 use App\Events\InvoiceCreated;
 use App\Services\QuickBook;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use QuickBooksOnline\API\Facades\QuickBookClass;
+use App\Traits\Logger;
+use Illuminate\Support\Facades\Log;
 use QuickBooksOnline\API\Facades\Invoice;
-use QuickBooksOnline\API\Facades\Payment;
 
 class SendInvoiceToQuickBook
 {
+    use Logger;
     /**
      * Create the event listener.
      */
@@ -40,26 +39,27 @@ class SendInvoiceToQuickBook
 
         $theResourceObj = Invoice::create([
             "Line" => $lineItems,
+            "DueDate" => $event->invoice->due_date,
             "CustomerRef" => [
-                "value" => $event->invoice->user->id
+                "value" => $event->invoice->user->profile()->first()->quickbook_id
             ],
             "BillEmail" => [
                 "Address" => $event->invoice->user->email
             ],
             "BillEmailCc" => [
-                "Address" => "mistry.jasmin@gmail.com"
+                "Address" => env('ADMIN_EMAIL')
             ]
         ]);
         $dataService = $this->quickBook->getDataService();
         $resultingObj = $dataService->Add($theResourceObj);
         $error = $dataService->getLastError();
         if ($error) {
-            echo "The Status code is: " . $error->getHttpStatusCode() . "\n";
-            echo "The Helper message is: " . $error->getOAuthHelperError() . "\n";
-            echo "The Response message is: " . $error->getResponseBody() . "\n";
+            $this->logError($error);
         } else {
+            $dataService->SendEmail($resultingObj);
             $event->invoice->quickbook_id = $resultingObj->Id;
             $event->invoice->save();
+            Log::info('Quickbook Synced Invoice: '.$resultingObj->Id. " ".$event->invoice->user->email. " ".$event->invoice->user->profile()->first()->quickbook_id);
         }
     }
 }

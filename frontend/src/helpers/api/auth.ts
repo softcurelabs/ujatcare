@@ -12,8 +12,6 @@ function login(params: { email: string; password: string }) {
 function customerLogin(params: {
   email: string;
   password: string;
-  apartment_id: number;
-  flat_id: number;
 }) {
   const baseUrl = "/auth/rent-login";
   return api.create(`${baseUrl}`, params);

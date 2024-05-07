@@ -1,15 +1,16 @@
 import React from "react";
-import { Route, Navigate, RouteProps } from "react-router-dom";
+import { Route, RouteProps } from "react-router-dom";
 
 // components
 import PrivateRoute from "./PrivateRoute";
-import FAQ from "../pages/other/FAQ";
 import AboutUs from "../pages/other/AboutUs";
 const Notices = React.lazy(() => import("../pages/tables/Notices"));
 const CustomerLogin = React.lazy(() => import("../pages/auth/CustomerLogin"));
 const MaintananceReport = React.lazy(() => import("../pages/tables/MaintananceReport"));
 const Ticket = React.lazy(() => import("../pages/forms/Ticket"));
-const Orders = React.lazy(() => import("../pages/apps/Ecommerce/Orders"));
+const Invoice = React.lazy(() => import("../pages/rent/Invoice"));
+const InvoiceDetail = React.lazy(() => import("../pages/rent/InvoiceDetail"));
+const InvoiceEdit = React.lazy(() => import("../pages/rent/InvoiceEdit"));
 const Create = React.lazy(() => import("../pages/maintanance/Create"));
 const CreateApplication = React.lazy(() => import("../pages/application/Create"));
 
@@ -56,6 +57,7 @@ const NoticeList = React.lazy(() => import("../pages/notice/Notices"));
 const NewNotice = React.lazy(() => import("../pages/notice/NewNotice"));
 const EditNotice = React.lazy(() => import("../pages/notice/EditNotice"));
 const NoticeHighlight = React.lazy(() => import("../pages/notice/CustomerNotices"));
+const ContactOffice = React.lazy(() => import("../pages/user/ContactOffice"));
 
 const UserList = React.lazy(() => import("../pages/user/Users"));
 const RecidentList = React.lazy(() => import("../pages/user/Recidents"));
@@ -160,15 +162,29 @@ const calendarAppRoutes: RoutesProps = {
   element: <CalendarApp />,
   header: "Apps",
 };
-const ecommerce: RoutesProps = {
-  path: "apps/ecommerce/orders",
-  name: "Calendar",
-  icon: "calendar",
-  element: <Orders />,
+const invoice: RoutesProps = {
+  path: "/invoice",
+  name: "Invoices",
+  icon: "Invoice",
+  element: <Invoice />,
+  header: "Apps",
+};
+const invoiceDetails: RoutesProps = {
+  path: "/invoice/:id",
+  name: "Invoice Details",
+  icon: "Invoice Details",
+  element: <InvoiceDetail />,
+  header: "Apps",
+};
+const invoiceEdit: RoutesProps = {
+  path: "/invoice-edit/:id",
+  name: "Invoice Edit",
+  icon: "Invoice Edit",
+  element: <InvoiceEdit />,
   header: "Apps",
 };
 
-const appRoutes = [calendarAppRoutes, ecommerce];
+const appRoutes = [calendarAppRoutes, invoice, invoiceDetails, invoiceEdit];
 
 // ui
 const uiRoutes = {
@@ -358,6 +374,11 @@ const uiRoutes = {
           path: "/notice-highlight",
           name: "Basic",
           element: <NoticeHighlight />,
+        },
+        {
+          path: "/contact-office",
+          name: "Basic",
+          element: <ContactOffice />,
         },
         {
           path: "/notice",

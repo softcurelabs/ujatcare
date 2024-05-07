@@ -13,6 +13,8 @@ import {
   uploadDocuments,
   removeDocument,
   createBug,
+  occupants,
+  sync,
 } from "../../helpers/api/user";
 import {
   BugDataType,
@@ -22,20 +24,23 @@ import {
   UserEditType,
   UserPermissionType,
   UserProfileDataType,
+  UserProfileType,
   UsersType,
 } from "../../types/UserType";
 
 const initialState: StateType = {
   users: null,
   loading: false,
+  occupants: [],
 };
 
 interface StateType {
-  users?: UsersType | null;
+  users?: UsersType | null ;
   status?: any;
   loading: Boolean;
   message?: any;
   errors?: any;
+  occupants? : Array<UserProfileType>;
 }
 
 const UserSlice = createSlice({
@@ -62,6 +67,8 @@ const UserSlice = createSlice({
       })
       .addCase(userAsync.rejected, (state, action) => {
         state.loading = false;
+      }).addCase(occupantsAsync.fulfilled, (state, action) => {
+        state.occupants = action.payload;
       });
   },
 });
@@ -74,10 +81,30 @@ export const userAsync = createAsyncThunk<UsersType | null, Number>(
   }
 );
 
-export const recidentAsync = createAsyncThunk<UsersType | null, Number>(
+export const recidentAsync = createAsyncThunk<UsersType | null, any>(
   "recidentAsync",
-  async (page = 1) => {
-    const response = await recident(page);
+  async ({page, filter}, {rejectWithValue}) => {
+    const response = await recident(page, filter);
+    return response.data;
+  }
+);
+
+export const recidentSyncAsync = createAsyncThunk<StateType, any>(
+  "recidentSyncAsync/show",
+  async (id: any, { rejectWithValue }) => {
+    try {
+      const response = await sync(id);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const occupantsAsync = createAsyncThunk<Array<UserProfileType>>(
+  "occupantsAsync",
+  async () => {
+    const response = await occupants();
     return response.data;
   }
 );

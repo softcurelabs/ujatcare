@@ -133,9 +133,9 @@ const ListAdmin = () => {
     <React.Fragment>
       <PageTitle
         breadCrumbItems={[
-          { label: "Maintanance", path: "/maintanance", active: true },
+          { label: "All Maintenance Requests", path: "/maintanance", active: true },
         ]}
-        title={"Maintanance"}
+        title={"All Maintenance Requests"}
       />
 
       <Row>

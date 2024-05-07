@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Card, Table, Button, Dropdown } from "react-bootstrap";
+import { Row, Col, Card, Table, Button, Dropdown, FormSelect } from "react-bootstrap";
 
 // components
 import PageTitle from "../../components/PageTitle";
@@ -8,15 +8,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import Pagination from "../../components/Pagination";
 import { Confirmation } from "../../components/Confirmation";
-import { recidentAsync, userDeleteAsync } from "../../store/user/UserSlice";
+import { recidentAsync, recidentSyncAsync, userDeleteAsync } from "../../store/user/UserSlice";
 import { UsersType } from "../../types/UserType";
 import ImportUsers from "./ImportUsers";
+import { FormInput } from "../../components";
+import { flatAsync } from "../../store/flat/FlatSlice";
+import classNames from "classnames";
+import { Link } from "react-router-dom";
 
 interface UsersDataType {
   users: UsersType | null;
+  filter: string;
 }
 
-const BasicTable = ({ users }: UsersDataType) => {
+const BasicTable = ({ users, filter }: UsersDataType) => {
   const [show, setShow] = useState<boolean>(false);
   const [id, setId] = useState<Number>(0);
 
@@ -24,9 +29,24 @@ const BasicTable = ({ users }: UsersDataType) => {
   const [toast, setToast] = useState("");
   const [error, setError] = useState("");
   useEffect(() => {
-    dispatch(recidentAsync(1));
-  }, [show]);
+    dispatch(recidentAsync({page: 1, filter: filter}));
+  }, [show, filter]);
 
+  const onClick = (id: Number) => {
+    setToast("");
+    setError("");
+    dispatch(recidentSyncAsync(id)).unwrap().then((response) => {
+      if (response && response.status === true) {
+        setToast(response.message);
+        dispatch(recidentAsync({page: 1, filter: filter}));
+      } else {
+        setError(response.message);
+      }
+    })
+    .catch((reason) => {
+      setError(reason.message);
+    });;
+  }
   return (
     <Card>
       <Card.Body>
@@ -45,6 +65,7 @@ const BasicTable = ({ users }: UsersDataType) => {
                 <th>Name</th>
                 <th>Email</th>
                 <th>Phone</th>
+                <th>Quickbook Sync</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -58,6 +79,16 @@ const BasicTable = ({ users }: UsersDataType) => {
                       <td>{record.user.name}</td>
                       <td>{record.user.email}</td>
                       <td>{record.phone_number}</td>
+                      <td><h5>
+        <span
+          className={classNames("badge", {
+            "bg-success": record.quickbook_id !== null,
+            "bg-warning": record.quickbook_id === null,
+          })}
+        >
+          {record.quickbook_id ? "Syced" : "Not Synced"}
+        </span>
+      </h5></td>
                       <td>
                         <>
                           <Dropdown className="btn-group" align="end">
@@ -84,6 +115,10 @@ const BasicTable = ({ users }: UsersDataType) => {
                               </Dropdown.Item>
                             </Dropdown.Menu>
                           </Dropdown>
+                          <Link to="#" onClick={() => onClick(record.user.id)} aria-disabled={true} className="action-icon" title="Sync with Quickbook">
+              {" "}
+              <i className="mdi mdi-sync"></i>
+            </Link>
                         </>
                       </td>
                     </tr>
@@ -123,9 +158,14 @@ const Recidents = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [currentPage, setCurrentPage] = useState<Number>(1);
   const [show, setShow] = useState<boolean>(false);
-  const { users } = useSelector((state: RootState) => ({
+  const [filter, setFilter] = useState("");
+  const { users, flats } = useSelector((state: RootState) => ({
     users: state.User.users,
+    flats: state.Flat.flats,
   }));
+  useEffect(() => {
+    dispatch(flatAsync());
+  }, []);
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -141,26 +181,41 @@ const Recidents = () => {
 
       <Row>
         <Col lg={12}>
-          <Button
-            className="waves-effect waves-light mb-3 me-3"
-            onClick={() => {
-              let path = `/user-resident/new`;
-              navigate(path);
-            }}
-          >
-            <i className="mdi mdi-plus-circle me-1"></i> Add New
-          </Button>
-          <Button
-            className="waves-effect waves-light mb-3"
-            onClick={() => {
-              setShow(true);
-            }}
-          >
-            <i className="mdi mdi-plus-circle me-1"></i> Import Tenants
-          </Button>
+          <Row>
+            <Col lg={8}>
+              <Button
+                className="waves-effect waves-light mb-3 me-3"
+                onClick={() => {
+                  let path = `/user-resident/new`;
+                  navigate(path);
+                }}
+              >
+                <i className="mdi mdi-plus-circle me-1"></i> Add New
+              </Button>
+              <Button
+                className="waves-effect waves-light mb-3"
+                onClick={() => {
+                  setShow(true);
+                }}
+              >
+                <i className="mdi mdi-plus-circle me-1"></i> Import Tenants
+              </Button>
+            </Col>
+            <Col lg={4}>
+              <FormInput type="select" name="apartment-selection" onChange={(e) => setFilter(e.target.value)} label="Filter" containerClass="d-flex" className="mb-2 ms-2 form-check-inline">
+                <option value={""}>Select Apartment</option>
+                {flats.length &&
+                  flats.map((flat) => (
+                    <option key={`apartment${flat.id}`} value={`${flat.id}`}>
+                      {flat.name.toString()}
+                    </option>
+                  ))}
+              </FormInput>
+            </Col>
+          </Row>
           {users && (
             <>
-              <BasicTable users={users} />
+              <BasicTable users={users} filter={filter} />
               <Pagination
                 tableProps={{
                   pageCount: users.last_page,

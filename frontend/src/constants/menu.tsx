@@ -132,16 +132,10 @@ const CUSTOMER_ITEMS: MenuItemTypes[] = [
     url: "/my-account",
   },
   {
-    key: "rent-payment",
-    label: "Payment Setup",
-    isTitle: false,
-    url: "/rent-payment",
-  },
-  {
     key: "rent-history",
     label: "Rent History",
     isTitle: false,
-    url: "/apps/ecommerce/orders",
+    url: "/invoice",
   },
   {
     key: "maintanance-request",
@@ -160,6 +154,12 @@ const CUSTOMER_ITEMS: MenuItemTypes[] = [
     label: "Bulletin Board",
     isTitle: false,
     url: "/notice-highlight",
+  },
+  {
+    key: "contact-office",
+    label: "Contact Office",
+    isTitle: false,
+    url: "/contact-office",
   },
 ];
 
@@ -205,7 +205,7 @@ const ADMIN_ITEMS: MenuItemTypes[] = [
     key: "rent-history",
     label: "Payments",
     isTitle: false,
-    url: "/apps/ecommerce/orders",
+    url: "/invoice",
   },
   {
     key: "inspect",

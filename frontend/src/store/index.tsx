@@ -12,6 +12,8 @@ import MaintananceReducer from "./maintanance/MaintananceSlice";
 import ApplicationReducer from "./application/ApplicationSlice";
 import InspectionReducer from "./inspection/InspectionSlice";
 import QuickBookReducer from "./quickbook/QuickbookSlice";
+import ContactReducer from "./contact/ContactSlice";
+import InvoiceReducer from "./invoice/InvoiceSlice";
 
 const store = configureStore({
   reducer: {
@@ -24,7 +26,9 @@ const store = configureStore({
     Maintanance: MaintananceReducer,
     Application: ApplicationReducer,
     Inspection: InspectionReducer,
-    QuickBook: QuickBookReducer
+    QuickBook: QuickBookReducer,
+    Contact: ContactReducer,
+    Invoice: InvoiceReducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

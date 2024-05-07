@@ -73,11 +73,14 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff']], function ()
     Route::get('quickbook', [QuickbookController::class, 'connect']);
     Route::post('quickbook', [QuickbookController::class, 'authorise']);
 
-    // Route::get('invoice', [InvoiceController::class, 'list']);
-    // Route::post('invoice', [InvoiceController::class, 'create']);
-    // Route::post('bulk-invoice', [InvoiceController::class, 'bulkInvoice']);
-    // Route::get('invoice/{id}', [InvoiceController::class, 'show']);
-    // Route::put('invoice/{id}', [InvoiceController::class, 'edit']);
+    Route::get('/occupants', [UserProfileController::class, 'allOccupants']);
+    Route::post('invoice', [InvoiceController::class, 'create']);
+    Route::post('bulk-invoice', [InvoiceController::class, 'bulkInvoice']);
+    Route::get('invoice/sync/{id}', [InvoiceController::class, 'sync']);
+    Route::get('resident/sync/{id}', [UserProfileController::class, 'sync']);
+
+    Route::put('invoice/{id}', [InvoiceController::class, 'edit']);
+    Route::delete('invoice/{id}', [InvoiceController::class, 'delete']);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff|recident']], function () {
@@ -89,12 +92,16 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff|recident']], fu
 
     Route::get('maintanance/{id}', [MaintanceController::class, 'show']);
     Route::post('bug', [BugController::class, 'index']);
+
+    Route::get('invoice', [InvoiceController::class, 'list']);
+    Route::get('invoice/{id}', [InvoiceController::class, 'show']);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'role:recident']], function () {
     Route::get('maintanance', [MaintanceController::class, 'list']);
     Route::post('maintanance', [MaintanceController::class, 'store']);
     Route::put('maintanance/{id}', [MaintanceController::class, 'update']);
+    Route::post('contact-office', [BugController::class, 'contactOffice']);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff']], function () {

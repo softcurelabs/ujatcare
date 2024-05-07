@@ -13,8 +13,6 @@ const initialState = {
 interface UserData {
   email: string;
   password: string;
-  apartment_id: number;
-  flat_id: number;
 }
 
 const CustomerAuthSlice = createSlice({
@@ -55,9 +53,7 @@ export const loggedInAsync = createAsyncThunk<any, UserData>(
   async (userData) => {
     const response = await customerLogin({
       email: userData.email,
-      password: userData.password,
-      apartment_id: userData.apartment_id,
-      flat_id: userData.flat_id,
+      password: userData.password
     });
     const user = response.data;
 

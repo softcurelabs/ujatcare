@@ -8,9 +8,19 @@ export function user(page: Number = 1) {
   return api.get(`${baseUrl}`, { page });
 }
 
-export function recident(page: Number = 1) {
+export function recident(page: Number = 1, filter: string) {
   const baseUrl = "/resident";
-  return api.get(`${baseUrl}`, { page });
+  return api.get(`${baseUrl}`, { page, filter });
+}
+
+export function sync(id: any) {
+  const baseUrl = `/resident/sync/${id}`;
+  return api.get(`${baseUrl}`, {});
+}
+
+export function occupants() {
+  const baseUrl = "/occupants";
+  return api.get(`${baseUrl}`, { });
 }
 
 export function edit(params: any) {

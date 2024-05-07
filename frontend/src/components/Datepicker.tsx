@@ -35,7 +35,7 @@ const HyperDatepicker = (props: HyperDatepickerProps) => {
           timeFormat={"hh:mm a"}
           timeCaption={props.timeCaption}
           dateFormat={"hh:mm"}
-          className="is-invalid"
+          className="form-control"
           minDate={props.minDate}
           scrollableYearDropdown={true}
           scrollableMonthYearDropdown={true}

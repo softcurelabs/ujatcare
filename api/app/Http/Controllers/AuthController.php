@@ -106,8 +106,6 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',
-            'flat_id' => 'required|int',
-            'apartment_id' => 'required|int',
             'remember_me' => 'boolean'
         ]);
 
@@ -120,7 +118,7 @@ class AuthController extends Controller
 
         $user = $request->user();
 
-        if (!$user->hasRole(Role::Recident) && null === $this->userRepository->isValid($user->id, $request->get('flat_id'), $request->get('apartment_id'))) {
+        if (!$user->hasRole(Role::Recident)) {
             return response()->json([
                 'message' => 'User is not authorized'
             ], 401);

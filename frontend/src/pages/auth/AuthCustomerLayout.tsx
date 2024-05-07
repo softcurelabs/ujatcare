@@ -39,11 +39,11 @@ const AuthCustomerLayout = ({
       <div className="account-pages mt-5 mb-5">
         <Container>
           <Row className="justify-content-center">
-            <Col md={8} lg={8} xl={isCombineForm ? 9 : 4}>
+            <Col md={6} lg={6} xl={6}>
               <Card className="bg-pattern">
                 <Card.Body className="p-4">
                   <div className="text-center w-95 m-auto row">
-                    <div className="col-lg-2">
+                    <div className="col-lg-3">
                       <Button
                         onClick={() => {
                           navigate("/application");
@@ -53,7 +53,7 @@ const AuthCustomerLayout = ({
                         Start Application
                       </Button>
                     </div>
-                    <div className="auth-brand col-lg-8">
+                    <div className="auth-brand col-lg-6">
                       <Link to="/" className="logo logo-dark text-center">
                         <span className="logo-lg">
                           <img src={LogoLight} alt="" height="100" />
@@ -68,7 +68,7 @@ const AuthCustomerLayout = ({
                         </span>
                       </Link> */}
                     </div>
-                    <div className="col-lg-2">
+                    <div className="col-lg-3">
                       <Button onClick={routeChange} className="btn-sm">
                         Staff Login
                       </Button>

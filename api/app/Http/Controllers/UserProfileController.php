@@ -15,6 +15,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
@@ -41,11 +42,23 @@ class UserProfileController extends Controller
 
     public function recidents(Request $request)
     {
-        return UserProfile::with('user')->whereHas('user.roles', static function ($query) {
+        $queryBuilder = UserProfile::with('user')->whereHas('user.roles', static function ($query) {
             return $query->whereIn('name', [Role::Recident->value]);
-        })->orderBy('id')->paginate($request->get('limit', 10));
+        })->orderBy('id');
+        if (!empty($request->get('filter'))) {
+            $queryBuilder->whereHas('user.flat.flat.apartment', static function ($query) use ($request) {
+                return $query->whereIn('id', [$request->get('filter')]);
+            });
+        }
+
+        return $queryBuilder->paginate($request->get('limit', 10));
     }
 
+
+    public function allOccupants(){
+        $queryBuilder = UserProfile::with('user')->has('user.flat');
+        return $queryBuilder->get();
+    }
     /**
      * Display the specified resource.
      */
@@ -109,7 +122,6 @@ class UserProfileController extends Controller
         $validations = [
             'phone_number' => 'required|max:10|min:10',
             'relationship' => 'required',
-            'birth_date' => 'required|date|before:' . now()->subYears(18)->toDateString(),
             'emergency_contact_number'  => 'required|max:10|min:10',
             'emergency_contact_name' => 'required|min:3',
             'name' => 'required|min:3',
@@ -117,8 +129,10 @@ class UserProfileController extends Controller
 
         if ($user->hasRole([Role::Admin, Role::Staff])) {
             $validations = [
+                'name' => 'required|min:3',
                 'unit' => 'required|integer|min:1|max:1000',
                 'parking_space' => 'required|integer|min:1|max:10000',
+                'birth_date' => 'required|date|before:' . now()->subYears(18)->toDateString(),
                 'locker' => 'required|integer|min:1|max:10000',
                 'staff_notes' => 'required',
                 'flat_id' => "required|integer",
@@ -133,6 +147,9 @@ class UserProfileController extends Controller
 
         if ($user->id === $user_id) {
             $validations['flat_id'] = 'exclude';
+            $validations['birth_date'] = 'exclude';
+            $validations['name'] = 'exclude';
+            $validations['email'] = 'exclude';
             $validations['movein_date'] = 'exclude';
             $validations['unit'] = 'exclude';
             $validations['parking_space'] = 'exclude';
@@ -170,6 +187,24 @@ class UserProfileController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'User Updated Successfully',
+        ]);
+    }
+
+    public function sync(int $id)
+    {
+        $userProfile = UserProfile::with('user')->where('user_id', $id)->first();
+        UserUpdated::dispatch($userProfile);
+
+        if (!empty($userProfile->quickbook_id)) {
+            return response()->json([
+                'status' => true,
+                'message' => 'Tenant Sync Succesfully'
+            ]);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'Error occurred'
         ]);
     }
 

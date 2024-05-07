@@ -37,6 +37,7 @@ export interface UserProfileType extends TimeStampType {
   special_instruction: null | string;
   image_path: null | string;
   user: UserType;
+  quickbook_id: number|null;
 }
 
 export interface UserEditType extends TimeStampType {

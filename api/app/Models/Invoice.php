@@ -27,4 +27,9 @@ class Invoice extends Model
     {
         return $this->hasMany(InvoiceItem::class);
     }
+
+    public function flat(): BelongsTo
+    {
+        return $this->belongsTo(Flat::class, 'flat_id', 'id');
+    }
 }

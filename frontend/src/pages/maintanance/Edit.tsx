@@ -128,6 +128,9 @@ const BasicInputElements = () => {
             if (personCanvas) {
               personCanvas.current?.off();
             }
+            if (signCanvas) {
+              signCanvas.current?.off();
+            }
           })
           .catch((error) => setLocalError(error));
       });
@@ -221,6 +224,7 @@ const BasicInputElements = () => {
                     type="text"
                     register={register}
                     name="tanent_name"
+                    disabled={true}
                     errors={errors}
                     className="form-control-sm "
                     containerClass={"mb-3 input-group"}
@@ -235,6 +239,7 @@ const BasicInputElements = () => {
                     type="text"
                     register={register}
                     name="phone"
+                    disabled={true}
                     errors={errors}
                     className="form-control-sm"
                     containerClass={"mb-3 input-group"}
@@ -252,6 +257,7 @@ const BasicInputElements = () => {
                       type="radio"
                       className="form-check-inline"
                       name="ok_to_enter"
+                      disabled={true}
                       label="Yes"
                       value="1"
                       register={register}
@@ -260,6 +266,7 @@ const BasicInputElements = () => {
                       type="radio"
                       className="form-check-inline"
                       name="ok_to_enter"
+                      disabled={true}
                       label="No"
                       value="2"
                       register={register}
@@ -275,6 +282,7 @@ const BasicInputElements = () => {
                     name="work_requested"
                     placeholder="Work Requested"
                     className="mb-3"
+                    disabled={true}
                     register={register}
                     errors={errors}
                     style={{ height: "100px" }}
@@ -498,14 +506,14 @@ const BasicInputElements = () => {
               </Row>
               <Row>
                 <Col lg={3}>
-                  {" "}
+                  {/* {" "}
                   {loading ? (
                     <ButtonLoader />
                   ) : (
                     <Button variant="primary" type="submit">
                       Submit
                     </Button>
-                  )}
+                  )} */}
                 </Col>
               </Row>
             </form>

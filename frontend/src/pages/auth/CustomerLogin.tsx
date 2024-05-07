@@ -19,8 +19,6 @@ import { ButtonLoader } from "../../components/ButtonLoader";
 interface UserData {
   email: string;
   password: string;
-  apartment_id: number;
-  flat_id: number;
 }
 
 /* bottom links */
@@ -57,7 +55,6 @@ const CustomerLogin = () => {
     error: state.CustomerAuth.error,
     flats: state.Flat.flats,
   }));
-  console.log(loading);
   useEffect(() => {
     dispatch(flatAsync());
   }, []);
@@ -67,7 +64,6 @@ const CustomerLogin = () => {
   */
   const schemaResolver = yupResolver(
     yup.object().shape({
-      flat_id: yup.string().required(t("Please select Apartment")),
       email: yup.string().required(t("Please enter Email")),
       password: yup.string().required(t("Please enter Password")),
     })
@@ -96,9 +92,11 @@ const CustomerLogin = () => {
           </Alert>
         )}
         <Row>
-          <Col md={8} lg={8} xl={6}>
+          <Col lg={12}>
             <div>
-              <h4 className="text-center text-muted">{flats.length && flats[0].name}</h4>
+              <h4 className="text-center text-muted">
+                {flats.length && `${flats[0].name} & ${flats[1].name}`}
+              </h4>
             </div>
 
             <div>
@@ -109,7 +107,7 @@ const CustomerLogin = () => {
               resolver={schemaResolver}
               defaultValues={{ email: "", password: "" }}
             >
-              {flats.length && (
+              {/* {flats.length && (
                 <FormInput type="hidden" name="apartment_id" value={flats[0].id}></FormInput>
               )}
               <FormInput type="select" label="Apartment#" name="flat_id" containerClass="mb-3">
@@ -120,7 +118,7 @@ const CustomerLogin = () => {
                       {flat.name}
                     </option>
                   ))}
-              </FormInput>
+              </FormInput> */}
               <FormInput
                 label={t("Email")}
                 type="text"
@@ -137,14 +135,18 @@ const CustomerLogin = () => {
               ></FormInput>
 
               <div className="text-center d-grid">
-                <Button variant="primary" type="submit" disabled={loading}>
-                  {t("Log In")}
-                </Button>
+                {loading ? (
+                  <ButtonLoader />
+                ) : (
+                  <Button variant="primary" type="submit">
+                    {t("Log In")}
+                  </Button>
+                )}
               </div>
             </VerticalForm>
           </Col>
 
-          <Col md={8} lg={8} xl={6}>
+          {/* <Col md={8} lg={8} xl={6}>
             <div>
               <h4 className="text-center text-muted">{flats.length && flats[1].name}</h4>
             </div>
@@ -194,12 +196,15 @@ const CustomerLogin = () => {
                 )}
               </div>
             </VerticalForm>
-            
-          </Col>
+          </Col> */}
           <Col lg={12}>
-          <div className="text-center mt-2 d-grid">
-              <p className="mb-1">Contact Office: <a href="mailto:office@northparkmanor.org">office@northparkmanor.org</a></p>
-              <p>After Hours Maintenance: <a href="tel:250 812-0283">250 812-0283</a> 
+            <div className="text-center mt-2 d-grid">
+              <p className="mb-1">
+                Contact Office:{" "}
+                <a href="mailto:office@northparkmanor.org">office@northparkmanor.org</a>
+              </p>
+              <p>
+                After Hours Maintenance: <a href="tel:250 812-0283">250 812-0283</a>
               </p>
             </div>
           </Col>

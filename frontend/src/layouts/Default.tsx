@@ -6,6 +6,7 @@ import { RootState } from "../store";
 
 // utils
 import { changeHTMLAttribute } from "../utils";
+import { Navigate, useLocation } from "react-router-dom";
 
 const loading = () => <div className=""></div>;
 
@@ -21,9 +22,14 @@ interface DefaultLayoutProps {
 }
 
 const DefaultLayout = (props: DefaultLayoutProps) => {
-  const { layoutColor } = useSelector((state: RootState) => ({
+  const location = useLocation();
+  const { layoutColor, user, customerUser } = useSelector((state: RootState) => ({
     layoutColor: state.Layout.layoutColor,
+    user: state.Auth.user,
+    customerUser: state.CustomerAuth.user,
   }));
+  // const pathname = location.pathname;
+
 
   useEffect(() => {
     changeHTMLAttribute("data-bs-theme", layoutColor);
@@ -44,6 +50,15 @@ const DefaultLayout = (props: DefaultLayoutProps) => {
         );
     };
   }, []);
+  if (location.pathname !== '/auth/logout') {
+    if (user) {
+      return <Navigate to="/dashboard-1"/>;
+    }
+  
+    if (customerUser) {
+      return <Navigate to="/dashboard-2"/>;
+    }
+  }
 
   // get the child view which we would like to render
   const children = props["children"] || null;
