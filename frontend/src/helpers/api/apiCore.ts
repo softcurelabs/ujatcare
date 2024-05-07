@@ -1,14 +1,21 @@
-import axios from "axios";
+import axios, { AxiosHeaders, AxiosRequestConfig, AxiosRequestHeaders } from "axios";
 
 import config from "../../config";
 
-// content type
-axios.defaults.headers.post["Content-Type"] = "application/json";
-axios.defaults.headers.post["Accept"] = "application/json";
-axios.defaults.baseURL = config.API_URL;
+interface AdaptAxiosRequestConfig extends AxiosRequestConfig {
+  headers: AxiosRequestHeaders
+}
+
+const axiosInstance = axios.create({
+  baseURL: config.API_URL,
+  headers: {
+    'Content-Type': "application/json",
+    'Accept': "application/json",
+  }
+});
 
 // intercepting to capture errors
-axios.interceptors.response.use(
+axiosInstance.interceptors.response.use(
   (response) => {
     return response;
   },
@@ -46,8 +53,8 @@ const AUTH_SESSION_KEY = "ujatcare_user";
  * @param {*} token
  */
 const setAuthorization = (token: string | null) => {
-  if (token) axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-  else delete axios.defaults.headers.common["Authorization"];
+  if (token) axiosInstance.defaults.headers.common["Authorization"] = "Bearer " + token;
+  else delete axiosInstance.defaults.headers.common["Authorization"];
 };
 
 const getUserFromCookie = () => {
@@ -66,9 +73,9 @@ class APICore {
             .map((key) => key + "=" + params[key])
             .join("&")
         : "";
-      response = axios.get(`${url}?${queryString}`, params);
+      response = axiosInstance.get(`${url}?${queryString}`, params);
     } else {
-      response = axios.get(`${url}`, params);
+      response = axiosInstance.get(`${url}`, params);
     }
     return response;
   };
@@ -81,9 +88,9 @@ class APICore {
             .map((key) => key + "=" + params[key])
             .join("&")
         : "";
-      response = axios.get(`${url}?${queryString}`, { responseType: "blob" });
+      response = axiosInstance.get(`${url}?${queryString}`, { responseType: "blob" });
     } else {
-      response = axios.get(`${url}`, { responseType: "blob" });
+      response = axiosInstance.get(`${url}`, { responseType: "blob" });
     }
     return response;
   };
@@ -100,7 +107,7 @@ class APICore {
     }
 
     for (const url of urls) {
-      reqs.push(axios.get(`${url}?${queryString}`));
+      reqs.push(axiosInstance.get(`${url}?${queryString}`));
     }
     return axios.all(reqs);
   };
@@ -109,28 +116,28 @@ class APICore {
    * post given data to url
    */
   create = (url: string, data: any) => {
-    return axios.post(url, data);
+    return axiosInstance.post(url, data);
   };
 
   /**
    * Updates patch data
    */
   updatePatch = (url: string, data: any) => {
-    return axios.patch(url, data);
+    return axiosInstance.patch(url, data);
   };
 
   /**
    * Updates data
    */
   update = (url: string, data: any) => {
-    return axios.put(url, data);
+    return axiosInstance.put(url, data);
   };
 
   /**
    * Deletes data
    */
   delete = (url: string) => {
-    return axios.delete(url);
+    return axiosInstance.delete(url);
   };
 
   /**
@@ -149,12 +156,11 @@ class APICore {
     }
 
     const config = {
-      headers: {
-        ...axios.defaults.headers,
-        "content-type": "multipart/form-data",
-      },
+      headers: new AxiosHeaders({
+        "Content-Type": "multipart/form-data",
+      }) 
     };
-    return axios.post(url, formData, config);
+    return axiosInstance.post(url, formData, config);
   };
 
   /**
@@ -174,11 +180,10 @@ class APICore {
 
     const config = {
       headers: {
-        ...axios.defaults.headers,
-        "content-type": "multipart/form-data",
+        "Content-Type": "multipart/form-data",
       },
     };
-    return axios.patch(url, formData, config);
+    return axiosInstance.patch(url, formData, config);
   };
 
   isUserAuthenticated = () => {
