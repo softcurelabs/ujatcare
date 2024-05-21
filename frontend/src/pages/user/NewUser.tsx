@@ -19,7 +19,8 @@ const BasicInputElements = () => {
   const { t } = useTranslation();
   const schemaResolver = yupResolver(
     yup.object().shape({
-      name: yup.string().required(t("Please select name")),
+      first_name: yup.string().required(t("Please select First Name")),
+      last_name: yup.string().required(t("Please select Last Name")),
       email: yup.string().required(t("Please select name")).email(t("Please valid Email")),
       role_id: yup.string().required(t("Please select role")),
     })
@@ -76,16 +77,24 @@ const BasicInputElements = () => {
           <Row>
             <Col lg={6}>
               <form onSubmit={onSubmit}>
-                <FormInput
-                  label="Name"
-                  type="text"
-                  register={register}
-                  name="name"
-                  errors={errors}
-                  rows="5"
-                  containerClass={"mb-3"}
-                  key="name"
-                />
+              <FormInput
+                    label="First Name"
+                    type="text"
+                    name="first_name"
+                    containerClass={"mb-3 "}
+                    register={register}
+                    key="first_name"
+                    errors={errors}
+                  />
+                  <FormInput
+                    label="Last Name"
+                    type="text"
+                    name="last_name"
+                    containerClass={"mb-3"}
+                    register={register}
+                    key="last_name"
+                    errors={errors}
+                  />
                 <FormInput
                   label="Email"
                   type="text"

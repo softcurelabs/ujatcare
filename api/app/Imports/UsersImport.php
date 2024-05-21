@@ -25,7 +25,7 @@ class UsersImport implements OnEachRow, SkipsOnError, WithHeadingRow
 
     public function onRow(Row $row)
     {
-        if (empty($row['name'])) {
+        if (empty($row['firstname'])) {
             return;
         }
 
@@ -45,7 +45,8 @@ class UsersImport implements OnEachRow, SkipsOnError, WithHeadingRow
                 return;
             }
             $user = \App\Models\User::factory()->create([
-                'name' => $row['name'],
+                'first_name' => $row['firstname'],
+                'last_name' => $row['lastname'],
                 'email' => $row['email'],
                 'password' => bcrypt('p@ssword')
             ]);

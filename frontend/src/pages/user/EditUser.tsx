@@ -21,6 +21,7 @@ import { UploadImage } from "./UploadImage";
 import config from "../../config";
 import { ButtonLoader } from "../../components/ButtonLoader";
 import { Documents } from "./Documents";
+import { FlatType } from "../../types/FlatType";
 
 const BasicInputElements = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -58,6 +59,7 @@ const BasicInputElements = () => {
     handleSubmit,
     setValue,
     setError,
+    watch,
     formState: { errors },
   } = useForm<UserEditType>({
     defaultValues: {
@@ -110,9 +112,14 @@ const BasicInputElements = () => {
               setProfilePic(`${config.BASE_URL}/${response.image_path}`);
             setValue("id", response.user.id);
             setValue("unit", response.unit);
-            setValue("name", response.user.name);
+            setValue("first_name", response.user.first_name);
+            setValue("last_name", response.user.last_name);
             setValue("email", response.user.email);
             setValue("phone_number", response.phone_number);
+            if (response.user.apartment_id) {
+              setValue("apartment_id", response.user.apartment_id);
+            }
+
             if (response.user.flat) {
               setValue("flat_id", response.user.flat.flat_id);
             }
@@ -135,7 +142,16 @@ const BasicInputElements = () => {
           .catch((error) => setNewError(error));
       });
   }, []);
-
+  const apartment_id = watch("apartment_id");
+  let options: Array<FlatType> = [];
+  if (apartment_id && flats.length) {
+    for (let i = 0; i < flats.length; i++) {
+      if (apartment_id == flats[i].id) {
+        options = flats[i].flats;
+        break;
+      }
+    }
+  }
   return (
     <>
       {toast && <div className="alert alert-success">{toast}</div>}
@@ -158,9 +174,7 @@ const BasicInputElements = () => {
 
               <UploadImage id={params.id} />
 
-              <div className="mt-4">
-                {user && <ResetPassword email={user.email} />}
-              </div>
+              <div className="mt-4">{user && <ResetPassword email={user.email} />}</div>
               <div className="mt-2">
                 <Documents id={params.id} />
               </div>
@@ -178,13 +192,25 @@ const BasicInputElements = () => {
                   </Col>
                   <Col xl={6}>
                     <FormInput
-                      label="Name"
+                      label="First Name"
                       type="text"
-                      name="name"
+                      name="first_name"
                       className="form-control-sm fs-5 "
                       containerClass={"mb-3"}
                       register={register}
-                      key="name"
+                      key="first_name"
+                      errors={errors}
+                    />
+                  </Col>
+                  <Col xl={6}>
+                    <FormInput
+                      label="Last Name"
+                      type="text"
+                      name="last_name"
+                      className="form-control-sm fs-5 "
+                      containerClass={"mb-3"}
+                      register={register}
+                      key="last_name"
                       errors={errors}
                     />
                   </Col>
@@ -310,23 +336,60 @@ const BasicInputElements = () => {
                   <Col xl={6}>
                     <FormInput
                       type="select"
-                      label="Apartment#"
+                      label="Building#"
+                      name="apartment_id"
+                      className="form-control-sm fs-5 "
+                      containerClass={"mb-3 "}
+                      register={register}
+                      errors={errors}
+                    >
+                      <option value={""}>Select Building</option>
+                      {flats.length &&
+                        flats.map((flat) => (
+                          <option key={`apartment${flat.id}`} value={flat.id}>
+                            {flat.name.toString()}
+                          </option>
+                        ))}
+                    </FormInput>
+                  </Col>
+                  <Col xl={6}>
+                    <FormInput
+                      type="select"
+                      label="Suite#"
                       name="flat_id"
                       className="form-control-sm fs-5 "
                       containerClass={"mb-3 "}
                       register={register}
                       errors={errors}
                     >
-                      {flats.length &&
-                        flats.map((flat) => (
-                          <optgroup key={`apartment${flat.id}`} label={flat.name.toString()}>
-                            {flat.flats.map((aprtment) => (
-                              <option key={"flat" + aprtment.id} value={aprtment.id}>
-                                {aprtment.name}
-                              </option>
-                            ))}
-                          </optgroup>
-                        ))}
+                      <option value={""}>Select Flat</option>
+                      {options.length &&
+                        options.map((aprtment) => {
+                          let selected = false;
+                          if (user && user.user.flat && user.user.flat.flat_id == aprtment.id) {
+                            selected = true;
+                          }
+                          return aprtment.has_occupied ? (
+                            <option
+                              key={"flat" + aprtment.id}
+                              value={aprtment.id}
+                              disabled
+                              selected={selected}
+                            >
+                              {aprtment.name}
+                              {aprtment.has_occupied}
+                            </option>
+                          ) : (
+                            <option
+                              key={"flat" + aprtment.id}
+                              value={aprtment.id}
+                              selected={selected}
+                            >
+                              {aprtment.name}
+                              {aprtment.has_occupied}
+                            </option>
+                          );
+                        })}
                     </FormInput>
                   </Col>
                   <Col xl={6}>

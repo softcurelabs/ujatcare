@@ -39,7 +39,7 @@ const AuthCustomerLayout = ({
       <div className="account-pages mt-5 mb-5">
         <Container>
           <Row className="justify-content-center">
-            <Col md={6} lg={6} xl={6}>
+            <Col md={5} lg={5} xl={5}>
               <Card className="bg-pattern">
                 <Card.Body className="p-4">
                   <div className="text-center w-95 m-auto row">

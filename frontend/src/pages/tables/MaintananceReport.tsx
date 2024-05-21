@@ -69,8 +69,6 @@ const BasicTable = () => {
   return (
     <Card>
       <Card.Body>
-        <h4 className="header-title"> Maintenance Report</h4>
-
         <div className="table-responsive">
           <Table className="mb-0">
             <thead className="table-light">
@@ -107,8 +105,7 @@ const MaintananceReport = () => {
     <React.Fragment>
       <PageTitle
         breadCrumbItems={[
-          { label: "Tables", path: "/ui/tables/basic" },
-          { label: "Basic Tables", path: "/ui/tables/basic", active: true },
+          { label: "Maintenance Report", path: "/maintenance-report", active: true },
         ]}
         title={"Maintenance Report"}
       />

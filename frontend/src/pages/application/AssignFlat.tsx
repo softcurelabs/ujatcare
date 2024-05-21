@@ -77,7 +77,7 @@ export const AssignFlat = ({
             <FormInput type="hidden" name="id" value={targetId.toString()} register={register} />
             <FormInput
               type="select"
-              label="Apartment#"
+              label="Suite#"
               name="flat_id"
               containerClass="mb-3 "
               register={register}

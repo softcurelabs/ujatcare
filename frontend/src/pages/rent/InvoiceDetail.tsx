@@ -107,7 +107,7 @@ const Items = ({ invoice }: { invoice: InvoiceType }) => {
                 <tr key={index}>
                   <th scope="row">{item.name}</th>
                   <td>{item.qty}</td>
-                  <td>{item.total}</td>
+                  <td>$ {item.total}</td>
                 </tr>
               );
             })}
@@ -136,7 +136,7 @@ const Items = ({ invoice }: { invoice: InvoiceType }) => {
                 Total :
               </th>
               <td>
-                <div className="fw-bold"> {invoice.items[0].total}</div>
+                <div className="fw-bold">$ {invoice.items[0].total}</div>
               </td>
             </tr>
           </tbody>

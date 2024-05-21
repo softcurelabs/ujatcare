@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Row, Col, Card, Container, FormLabel, Button } from "react-bootstrap";
 
 // components
@@ -36,8 +36,10 @@ const BasicInputElements = () => {
     register,
     handleSubmit,
     setValue,
+    setFocus,
     control,
     setError,
+    
     formState: { errors },
   } = useForm<ApplicationType>({
     defaultValues: {
@@ -47,6 +49,7 @@ const BasicInputElements = () => {
       translator_required: 2,
       under_notice: 2,
     },
+    shouldFocusError: true,
     resolver: schemaResolver,
   });
   const onSubmit = handleSubmit(async (data) => {
@@ -69,10 +72,23 @@ const BasicInputElements = () => {
             // @ts-ignore
             setError(element, { message: reason.errors[element].toString() });
           } catch (errror) {}
+          // @ts-ignore
+          const firstError = Object.keys(errors).reduce((field, a) => {
+            // @ts-ignore
+            return !!errors[field] ? field : a;
+          }, null);
+        
+          if (firstError) {
+            console.log(firstError)
+            // @ts-ignore
+            setFocus(firstError);
+          }
+        
         }
         setIsLoading(false);
       });
   });
+
 
   return (
     <>

@@ -4,9 +4,11 @@ import { Route, RouteProps } from "react-router-dom";
 // components
 import PrivateRoute from "./PrivateRoute";
 import AboutUs from "../pages/other/AboutUs";
+
 const Notices = React.lazy(() => import("../pages/tables/Notices"));
 const CustomerLogin = React.lazy(() => import("../pages/auth/CustomerLogin"));
 const MaintananceReport = React.lazy(() => import("../pages/tables/MaintananceReport"));
+const Reports = React.lazy(() => import("../pages/maintanance/Reports"));
 const Ticket = React.lazy(() => import("../pages/forms/Ticket"));
 const Invoice = React.lazy(() => import("../pages/rent/Invoice"));
 const InvoiceDetail = React.lazy(() => import("../pages/rent/InvoiceDetail"));
@@ -341,6 +343,11 @@ const uiRoutes = {
           name: "Basic",
           element: <MaintananceListAdmin />,
         },
+        {
+          path: "/reports",
+          name: "Basic",
+          element: <Reports />,
+        }
       ],
     },
     {
@@ -496,7 +503,7 @@ const uiRoutes = {
           route: PrivateRoute,
         },
         {
-          path: "/ui/tables/report",
+          path: "/maintenance-report",
           name: "Basic",
           element: <MaintananceReport />,
           route: PrivateRoute,

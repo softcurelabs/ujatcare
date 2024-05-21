@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Application extends Model
 {
     use HasFactory;
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i',
+        'updated_at'  => 'datetime:Y-m-d H:i',
+    ];
     protected $fillable = [
         'cash_balance',
         'city',
@@ -58,7 +62,6 @@ class Application extends Model
         'rh_end_date_third',
         'rh_start_date_second',
         'rh_start_date_third',
-        'signature_first',
         'stock_deposit',
         'translator_required',
         'under_notice',
@@ -75,11 +78,16 @@ class Application extends Model
         'hc_disability_second',
         'hc_birth_date_second',
         'hc_wheelchair_second',
-        'signature_second'
+        'approved_by'
     ];
 
     public function documents(): HasMany
     {
         return $this->hasMany(ApplicationDocuments::class, 'application_id', 'id');
+    }
+
+    public function approvedBy()
+    {
+        return $this->belongsTo(User::class, 'approved_by', 'id');
     }
 }

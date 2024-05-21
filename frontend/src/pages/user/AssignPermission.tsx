@@ -6,17 +6,19 @@ import { Row, Col, Card, Button } from "react-bootstrap";
 import PageTitle from "../../components/PageTitle";
 import { FormInput } from "../../components/";
 import { useNavigate, useParams } from "react-router-dom";
-import { UserPermissionType } from "../../types/UserType";
+import { UserEditType, UserPermissionType } from "../../types/UserType";
 import { userPermissionAsync, userShowAsync } from "../../store/user/UserSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { flatAsync } from "../../store/flat/FlatSlice";
+import { FlatType } from "../../types/FlatType";
 
 const BasicInputElements = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [toast, setToast] = useState("");
+  const [localUser, setLocalUser] = useState<UserEditType>();
   const [error, setNewError] = useState("");
   const schemaResolver = yupResolver(
     yup.object().shape({
@@ -39,6 +41,7 @@ const BasicInputElements = () => {
     handleSubmit,
     setValue,
     setError,
+    watch,
     formState: { errors },
   } = useForm<UserPermissionType>({
     defaultValues: {},
@@ -69,8 +72,10 @@ const BasicInputElements = () => {
         dispatch(userShowAsync(params.id))
           .unwrap()
           .then((response) => {
+            setLocalUser(response);
             setValue("id", response.user.id);
             setValue("email", response.user.email);
+            setValue("apartment_id", response.user.apartment_id);
             if (response.user.flat) {
               setValue("flat_id", response.user.flat.flat_id);
             }
@@ -79,6 +84,20 @@ const BasicInputElements = () => {
           .catch((error) => setNewError(error));
       });
   }, [params.id]);
+
+  const apartment_id = watch('apartment_id');
+  let options: Array<FlatType> = [];
+  if (apartment_id && flats.length) {
+    for(let i=0 ; i< flats.length;i++) {
+      if (apartment_id == flats[i].id) {
+        options = flats[i].flats;
+        break;
+      }
+    }
+    if (localUser && localUser.user.flat) {
+      setValue("flat_id", localUser.user.flat.flat_id);
+    }
+  }
 
   return (
     <>
@@ -104,46 +123,51 @@ const BasicInputElements = () => {
                     containerClass={"mb-3"}
                     disabled={true}
                   />
-                  <FormInput
-                    type="select"
-                    label="Role"
-                    name="role_id"
-                    containerClass="mb-3"
-                    register={register}
-                    errors={errors}
-                  >
-                    <option value="">Select Role</option>
-                    <option value="recident">Tenant</option>
-                    {/* <option value="staff">Staff</option> */}
-                  </FormInput>
-
-                  <FormInput
-                    type="select"
-                    label="Apartment#"
-                    name="flat_id"
-                    containerClass="mb-3 "
-                    register={register}
-                    errors={errors}
-                  >
-                    {flats.length &&
-                      flats.map((flat) => (
-                        <optgroup key={`apartment${flat.id}`} label={flat.name.toString()}>
-                          {flat.flats.map((aprtment) =>
-                            aprtment.has_occupied ? (
-                              <option key={"flat" + aprtment.id} value={aprtment.id} disabled>
-                                {aprtment.name}
-                                {aprtment.has_occupied}
-                              </option>
-                            ) : (
-                              <option key={"flat" + aprtment.id} value={aprtment.id}>
-                                {aprtment.name}
-                                {aprtment.has_occupied}
-                              </option>
-                            )
-                          )}
-                        </optgroup>
-                      ))}
-                  </FormInput>
+                  <FormInput type="hidden" name="role_id" register={register} errors={errors} value='recident' />
+                <FormInput
+                  type="select"
+                  label="Building#"
+                  name="apartment_id"
+                  containerClass="mb-3"
+                  register={register}
+                  errors={errors}
+                >
+                  <option value={""}>Select Building</option>
+                  {flats.length &&
+                    flats.map((flat) => (
+                      <option key={`apartment${flat.id}`}  value={flat.id}>
+                        {flat.name.toString()}
+                      </option>
+                    ))}
+                </FormInput>
+                <FormInput
+                  type="select"
+                  label="Suite#"
+                  name="flat_id"
+                  containerClass="mb-3"
+                  register={register}
+                  errors={errors}
+                >
+                  <option value={""}>Select Flat</option>
+                  {options.length &&
+                    options.map((aprtment) => {
+                      let selected = false;
+                      if (localUser && localUser.user.flat && localUser.user.flat.flat_id == aprtment.id) {
+                        selected = true;
+                      }
+                      return aprtment.has_occupied ? (
+                        <option key={"flat" + aprtment.id} value={aprtment.id} disabled selected={selected}>
+                          {aprtment.name}
+                          {aprtment.has_occupied}
+                        </option>
+                      ) : (
+                        <option key={"flat" + aprtment.id} value={aprtment.id} selected={selected}>
+                          {aprtment.name}
+                          {aprtment.has_occupied}
+                        </option>
+                      )
+                    })}
+                </FormInput>
                 </fieldset>
                 <Button
                   onClick={() => navigate(-1)}
@@ -170,7 +194,7 @@ const AssignPermission = () => {
     <React.Fragment>
       <PageTitle
         breadCrumbItems={[
-          { label: "Residents", path: "/resident" },
+          { label: "Tenants", path: "/resident" },
           { label: "Assign Permission", path: "/user", active: true },
         ]}
         title={"Assign Permission"}

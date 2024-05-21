@@ -20,8 +20,8 @@ const PageTitle = (props: PageTitleProps) => {
     <Row>
       <Col>
         <div className="page-title-box">
-          <div className="page-title-right">
-            <Breadcrumb className="m-0">
+          <div>
+            <Breadcrumb className="m-0 mb-0">
               <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
 
               {(props["breadCrumbItems"] || []).map((item, index) => {

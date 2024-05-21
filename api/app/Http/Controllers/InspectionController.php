@@ -16,7 +16,7 @@ class InspectionController extends Controller
 {
     public function list(Request $request): LengthAwarePaginator
     {
-        return Inspection::with(['user:id,name,email', 'inspectionBy:id,name,email', 'flat:id,name'])
+        return Inspection::with(['user:id,first_name,email', 'inspectionBy:id,first_name,email', 'flat:id,name'])
             ->orderBy('id')
             ->paginate($request->get('limit', 10));
     }

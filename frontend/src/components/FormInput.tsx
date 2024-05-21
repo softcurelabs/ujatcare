@@ -70,6 +70,7 @@ interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
   errors?: FieldErrors<any>;
   control?: Control<any>;
   className?: string;
+  symbol?: string;
   labelClassName?: string;
   containerClass?: string;
   refCallback?: any;
@@ -91,11 +92,11 @@ const FormInput = ({
   refCallback,
   children,
   rows,
+  symbol,
   ...otherProps
 }: FormInputProps) => {
   // handle input type
-  const comp =
-    type === "textarea" ? "textarea" : type === "select" ? "select" : "input";
+  const comp = type === "textarea" ? "textarea" : type === "select" ? "select" : "input";
 
   return (
     <>
@@ -116,10 +117,7 @@ const FormInput = ({
                 {label ? (
                   <>
                     {" "}
-                    <Form.Label className={labelClassName}>
-                      {label}
-                    </Form.Label>{" "}
-                    {children}{" "}
+                    <Form.Label className={labelClassName}>{label}</Form.Label> {children}{" "}
                   </>
                 ) : null}
                 <PasswordInput
@@ -166,28 +164,51 @@ const FormInput = ({
                 </>
               ) : (
                 <Form.Group className={containerClass}>
-                  {label ? (
-                    <Form.Label className={labelClassName}>{label}</Form.Label>
-                  ) : null}
-
-                  <Form.Control
-                    type={type}
-                    placeholder={placeholder}
-                    name={name}
-                    id={name}
-                    as={comp}
-                    ref={(r: HTMLInputElement) => {
-                      if (refCallback) refCallback(r);
-                    }}
-                    className={className}
-                    isInvalid={errors && errors[name] ? true : false}
-                    {...(register ? register(name) : {})}
-                    rows={rows}
-                    {...otherProps}
-                    autoComplete={name}
-                  >
-                    {children ? children : null}
-                  </Form.Control>
+                  {label ? <Form.Label className={labelClassName}>{label}</Form.Label> : null}
+                  {symbol ? (
+                    <div className="input-group">
+                      <span className="input-group-text" id={name}>
+                        {symbol}
+                      </span>
+                      <Form.Control
+                        type={type}
+                        placeholder={placeholder}
+                        name={name}
+                        id={name}
+                        as={comp}
+                        ref={(r: HTMLInputElement) => {
+                          if (refCallback) refCallback(r);
+                        }}
+                        className={className}
+                        isInvalid={errors && errors[name] ? true : false}
+                        {...(register ? register(name) : {})}
+                        rows={rows}
+                        {...otherProps}
+                        autoComplete={name}
+                      >
+                        {children ? children : null}
+                      </Form.Control>
+                    </div>
+                  ) : (
+                    <Form.Control
+                      type={type}
+                      placeholder={placeholder}
+                      name={name}
+                      id={name}
+                      as={comp}
+                      ref={(r: HTMLInputElement) => {
+                        if (refCallback) refCallback(r);
+                      }}
+                      className={className}
+                      isInvalid={errors && errors[name] ? true : false}
+                      {...(register ? register(name) : {})}
+                      rows={rows}
+                      {...otherProps}
+                      autoComplete={name}
+                    >
+                      {children ? children : null}
+                    </Form.Control>
+                  )}
 
                   {errors && errors[name] ? (
                     <Form.Control.Feedback type="invalid">

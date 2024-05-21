@@ -6,11 +6,14 @@ export interface FlatType {
 }
 export interface UserType extends TimeStampType {
   name: string;
+  first_name: string;
+  last_name: string;
   email: string;
   role: string;
   flat?: FlatType;
   flat_name?: string;
   apartment_name?: string;
+  apartment_id?: number;
   documents: Array<UserDocumentType>;
 }
 
@@ -43,10 +46,13 @@ export interface UserProfileType extends TimeStampType {
 export interface UserEditType extends TimeStampType {
   unit: Number;
   name: string;
+  first_name: string;
+  last_name: string;
   email: string;
   phone_number: string;
   parking_space: Number;
   locker: Number;
+  apartment_id: number;
   flat_id: Number;
   emergency_contact_number: string;
   emergency_contact_name: string;
@@ -72,6 +78,9 @@ export interface UserData {
   id?: number;
   email: string;
   name: string;
+  first_name: string;
+  apartment_id?: number;
+  last_name: string;
   flat_id?: Number;
   role_id?: string;
 }
@@ -98,6 +107,7 @@ export interface PasswordDataType {
 export interface UserPermissionType {
   id: Number;
   email: string;
+  apartment_id?: number;
   flat_id?: Number;
   role_id?: string;
 }

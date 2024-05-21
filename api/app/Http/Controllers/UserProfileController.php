@@ -72,7 +72,8 @@ class UserProfileController extends Controller
     public function store(Request $request)
     {
         $validations = [
-            'name' => 'required|string',
+            'first_name' => 'required|min:3',
+            'last_name' => 'required',
             'email' => 'required|string|unique:users',
             'role_id' => 'required|string',
         ];
@@ -83,7 +84,8 @@ class UserProfileController extends Controller
         $request->validate($validations);
 
         $user = new User([
-            'name'  => $request->name,
+            'first_name'  => $request->first_name,
+            'last_name'   => $request->last_name,
             'email' => $request->email,
             'password' => bcrypt(Random::generate(10)),
         ]);
@@ -93,8 +95,8 @@ class UserProfileController extends Controller
             if ($request->get('role_id') === Role::Recident->value) {
                 FlatOwner::create(['user_id' => $user->getKey(), 'flat_id' => $request->get('flat_id')]);
             }
-            UserProfile::create(['user_id' => $user->getKey()]);
-
+            $userProfile = UserProfile::create(['user_id' => $user->getKey()]);
+            UserUpdated::dispatch($userProfile);
             $status = Password::sendResetLink(
                 $request->only('email')
             );
@@ -124,31 +126,42 @@ class UserProfileController extends Controller
             'relationship' => 'required',
             'emergency_contact_number'  => 'required|max:10|min:10',
             'emergency_contact_name' => 'required|min:3',
-            'name' => 'required|min:3',
+            'first_name' => 'required|min:3',
+            'last_name' => 'required',
         ];
 
         if ($user->hasRole([Role::Admin, Role::Staff])) {
-            $validations = [
-                'name' => 'required|min:3',
-                'unit' => 'required|integer|min:1|max:1000',
-                'parking_space' => 'required|integer|min:1|max:10000',
-                'birth_date' => 'required|date|before:' . now()->subYears(18)->toDateString(),
-                'locker' => 'required|integer|min:1|max:10000',
-                'staff_notes' => 'required',
-                'flat_id' => "required|integer",
-                'movein_date' => 'date',
-                'income_verification' => 'required|integer|min:1|max:1000000',
-                'rent_calculation'  => 'required|integer|min:1|max:1000000',
-                'language' => 'required',
-                'fob' => 'required',
-                'special_instruction' => 'min:3',
-            ];
+            if ($userProfile->user->hasRole([Role::Recident])) {
+                $validations = [
+                    'first_name' => 'required|min:3',
+                    'last_name' => 'required',
+                    'unit' => 'required|integer|min:1|max:1000',
+                    'parking_space' => 'required|integer|min:1|max:10000',
+                    'birth_date' => 'required|date|before:' . now()->subYears(18)->toDateString(),
+                    'locker' => 'required|integer|min:1|max:10000',
+                    'staff_notes' => 'required',
+                    'flat_id' => "required|integer",
+                    'movein_date' => 'date',
+                    'income_verification' => 'required|integer|min:1|max:1000000',
+                    'rent_calculation'  => 'required|integer|min:1|max:1000000',
+                    'language' => 'required',
+                    'fob' => 'required',
+                    'special_instruction' => 'min:3',
+                ];
+            } else {
+                $validations = [
+                    'phone_number' => 'required|max:10|min:10',
+                    'first_name' => 'required|min:3',
+                    'last_name' => 'required',
+                ];
+            }
         }
 
-        if ($user->id === $user_id) {
+        if ($user->id === $user_id && $userProfile->user->hasRole([Role::Recident])) {
             $validations['flat_id'] = 'exclude';
             $validations['birth_date'] = 'exclude';
-            $validations['name'] = 'exclude';
+            $validations['first_name'] = 'exclude';
+            $validations['last_name'] = 'exclude';
             $validations['email'] = 'exclude';
             $validations['movein_date'] = 'exclude';
             $validations['unit'] = 'exclude';
@@ -178,7 +191,7 @@ class UserProfileController extends Controller
         if (isset($validated['flat_id'])) {
             $userProfile->user->flat->update($validated);
         }
-        if (null != $request->get('name')) {
+        if (null != $request->get('first_name')) {
             $userProfile->user->update($validated);
         }
 

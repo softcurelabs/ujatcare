@@ -112,7 +112,8 @@ const BasicInputElements = () => {
               setProfilePic(`${config.BASE_URL}/${response.image_path}`);
             setValue("id", response.user.id);
             setValue("unit", response.unit);
-            setValue("name", response.user.name);
+            setValue("first_name", response.user.first_name);
+            setValue("last_name", response.user.last_name);
             setValue("email", response.user.email);
             setValue("phone_number", response.phone_number);
             if (response.user.flat) {
@@ -148,13 +149,23 @@ const BasicInputElements = () => {
               <form onSubmit={onSubmit} className={disabled ? "form-readonly" : ""}>
                 <fieldset>
                   <FormInput
-                    label="Name"
+                    label="First Name"
                     type="text"
-                    name="name"
-                    className="form-control-sm fs-5"
+                    name="first_name"
+                    className="form-control-sm ms-2 fs-5"
                     containerClass={"mb-3 input-group"}
                     register={register}
-                    key="name"
+                    key="first_name"
+                    errors={errors}
+                  />
+                  <FormInput
+                    label="Last Name"
+                    type="text"
+                    name="last_name"
+                    className="form-control-sm ms-2 fs-5"
+                    containerClass={"mb-3 input-group"}
+                    register={register}
+                    key="last_name"
                     errors={errors}
                   />
                   <FormInput
@@ -162,7 +173,7 @@ const BasicInputElements = () => {
                     type="text"
                     name="phone_number"
                     placeholder="phone_number"
-                    className="form-control-sm fs-5"
+                    className="form-control-sm ms-2 fs-5"
                     containerClass={"mb-3 input-group"}
                     register={register}
                     key="phone_number"
@@ -174,7 +185,7 @@ const BasicInputElements = () => {
                     type="email"
                     name="email"
                     placeholder="Email"
-                    className="form-control-sm fs-5"
+                    className="form-control-sm ms-2 fs-5"
                     containerClass={"mb-3 input-group"}
                     register={register}
                     key="email"
@@ -185,8 +196,8 @@ const BasicInputElements = () => {
                     type="select"
                     label="Role"
                     name="role_id"
-                    className="form-control-sm fs-5"
-                    containerClass={"mb-3 input-group"}
+                    className="form-control-sm ms-2 fs-5"
+                    containerClass={"mb-3  input-group"}
                     register={register}
                     errors={errors}
                   >

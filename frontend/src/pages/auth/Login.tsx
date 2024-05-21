@@ -88,6 +88,9 @@ const Login = () => {
           </Alert>
         )}
 
+<div>
+              <h5 className="text-center text-muted">Staff Login</h5>
+            </div>
         <VerticalForm<UserData> onSubmit={onSubmit} resolver={schemaResolver}>
           <FormInput
             label={t("Email")}

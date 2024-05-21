@@ -17,7 +17,7 @@ class MaintanceController extends Controller
     {
         $user = Auth::user();
 
-        return MaintananceRequest::select('maintanance_requests.*', 'u1.name as user_name', 'u2.name as repaired_username')
+        return MaintananceRequest::select('maintanance_requests.*', 'u1.first_name as user_name', 'u2.first_name as repaired_username')
             ->join('users as u1', 'maintanance_requests.user_id', 'u1.id')
             ->leftJoin('users as u2', 'maintanance_requests.repaired_by', 'u2.id')
             ->where('user_id', $user->id)->orderBy('id', 'desc')->paginate($request->get('limit', 10));
@@ -25,7 +25,7 @@ class MaintanceController extends Controller
 
     public function listAll(Request $request)
     {
-        return MaintananceRequest::select('maintanance_requests.*', 'u1.name as user_name', 'u2.name as repaired_username')
+        return MaintananceRequest::select('maintanance_requests.*', 'u1.first_name as user_name', 'u2.first_name as repaired_username')
             ->join('users as u1', 'maintanance_requests.user_id', 'u1.id')
             ->leftJoin('users as u2', 'maintanance_requests.repaired_by', 'u2.id')
             ->orderBy('id', 'desc')->paginate($request->get('limit', 10));

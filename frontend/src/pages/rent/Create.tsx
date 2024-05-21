@@ -140,9 +140,10 @@ const Create = ({ users, show, onHide, onSubmit }: AddMemberProps) => {
             errors={errors}
           />
           <FormInput
-            label="Total"
+            label="Amount"
             type="text"
             name="total"
+            symbol="$"
             className="form-control-sm fs-5"
             containerClass={"mb-3"}
             register={register}

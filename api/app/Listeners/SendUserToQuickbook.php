@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Constants\Role;
 use App\Events\UserUpdated;
 use App\Services\QuickBook;
 use App\Traits\Logger;
@@ -25,6 +26,9 @@ class SendUserToQuickbook
     public function handle(UserUpdated $event): void
     {
         $user = $event->user;
+        if (!$user->user->hasRole([Role::Recident])) {
+            return;
+        }
 
         $dataService = $this->quickBook->getDataService();
         try {

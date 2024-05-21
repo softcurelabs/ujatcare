@@ -14,12 +14,14 @@ import { flatAsync } from "../../store/flat/FlatSlice";
 import { UserData } from "../../types/UserType";
 import { userAddAsync } from "../../store/user/UserSlice";
 import { ButtonLoader } from "../../components/ButtonLoader";
+import { FlatType } from "../../types/FlatType";
 
 const BasicInputElements = () => {
   const { t } = useTranslation();
   const schemaResolver = yupResolver(
     yup.object().shape({
-      name: yup.string().required(t("Please select name")),
+      first_name: yup.string().required(t("Please select First Name")),
+      last_name: yup.string().required(t("Please select Last Name")),
       email: yup.string().required(t("Please select name")).email(t("Please valid Email")),
       role_id: yup.string().required(t("Please select role")),
     })
@@ -39,6 +41,7 @@ const BasicInputElements = () => {
     register,
     handleSubmit,
     setError,
+    watch,
     formState: { errors },
   } = useForm<UserData>({ defaultValues: {}, resolver: schemaResolver });
   const onSubmit = handleSubmit(async (data) => {
@@ -62,6 +65,16 @@ const BasicInputElements = () => {
         setIsLoading(false);
       });
   });
+  const apartment_id = watch('apartment_id');
+  let options: Array<FlatType> = [];
+  if (apartment_id && flats.length) {
+    for(let i=0 ; i< flats.length;i++) {
+      if (apartment_id == flats[i].id) {
+        options = flats[i].flats;
+        break;
+      }
+    }
+  }
 
   return (
     <>
@@ -77,14 +90,24 @@ const BasicInputElements = () => {
             <Col lg={6}>
               <form onSubmit={onSubmit}>
                 <FormInput
-                  label="Name"
+                  label="First Name"
                   type="text"
                   register={register}
-                  name="name"
+                  name="first_name"
                   errors={errors}
                   rows="5"
                   containerClass={"mb-3"}
-                  key="name"
+                  key="first_name"
+                />
+                <FormInput
+                  label="Last Name"
+                  type="text"
+                  register={register}
+                  name="last_name"
+                  errors={errors}
+                  rows="5"
+                  containerClass={"mb-3"}
+                  key="last_name"
                 />
                 <FormInput
                   label="Email"
@@ -96,34 +119,45 @@ const BasicInputElements = () => {
                   containerClass={"mb-3"}
                   key="email"
                 />
+                <FormInput type="hidden" name="role_id" register={register} errors={errors} value='recident' />
                 <FormInput
                   type="select"
-                  label="Role"
-                  name="role_id"
+                  label="Building#"
+                  name="apartment_id"
                   containerClass="mb-3"
                   register={register}
                   errors={errors}
                 >
-                  <option value="">Select Role</option>
-                  <option value="recident">Tenant</option>
+                  <option value={""}>Select Building</option>
+                  {flats.length &&
+                    flats.map((flat) => (
+                      <option key={`apartment${flat.id}`}  value={flat.id}>
+                        {flat.name.toString()}
+                      </option>
+                    ))}
                 </FormInput>
                 <FormInput
                   type="select"
-                  label="Apartment#"
+                  label="Suite#"
                   name="flat_id"
                   containerClass="mb-3"
                   register={register}
                   errors={errors}
                 >
-                  {flats.length &&
-                    flats.map((flat) => (
-                      <optgroup key={`apartment${flat.id}`} label={flat.name.toString()}>
-                        {flat.flats.map((aprtment) => (
-                          <option key={"flat" + aprtment.id} value={aprtment.id}>
-                            {aprtment.name}
-                          </option>
-                        ))}
-                      </optgroup>
+                  <option value={""}>Select Flat</option>
+                  {options.length &&
+                    options.map((aprtment) => (
+                      aprtment.has_occupied ? (
+                        <option key={"flat" + aprtment.id} value={aprtment.id} disabled>
+                          {aprtment.name}
+                          {aprtment.has_occupied}
+                        </option>
+                      ) : (
+                        <option key={"flat" + aprtment.id} value={aprtment.id}>
+                          {aprtment.name}
+                          {aprtment.has_occupied}
+                        </option>
+                      )
                     ))}
                 </FormInput>
                 {loading ? (
@@ -151,7 +185,7 @@ const NewUser = () => {
       <PageTitle
         breadCrumbItems={[
           { label: "Dashboard", path: "/dashboard-2" },
-          { label: "Users", path: "/resident" },
+          { label: "Tenants", path: "/resident" },
           { label: "Tenant", path: "/notice/new", active: true },
         ]}
         title={"Tenant"}

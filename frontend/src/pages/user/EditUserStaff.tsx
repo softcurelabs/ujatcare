@@ -109,7 +109,8 @@ const BasicInputElements = () => {
               setProfilePic(`${config.BASE_URL}/${response.image_path}`);
             setValue("id", response.user.id);
             setValue("unit", response.unit);
-            setValue("name", response.user.name);
+            setValue("first_name", response.user.first_name);
+            setValue("last_name", response.user.last_name);
             setValue("email", response.user.email);
             setValue("phone_number", response.phone_number);
             if (response.user.flat) {
@@ -164,14 +165,25 @@ const BasicInputElements = () => {
                     errors={errors}
                   /> */}
                   <FormInput
-                    label="Name"
+                    label="First Name"
                     type="text"
-                    name="name"
+                    name="first_name"
                     className="form-control-sm "
                     containerClass={"mb-3 input-group"}
                     labelClassName="me-2"
                     register={register}
-                    key="name"
+                    key="first_name"
+                    errors={errors}
+                  />
+                  <FormInput
+                    label="Last Name"
+                    type="text"
+                    name="last_name"
+                    className="form-control-sm "
+                    containerClass={"mb-3 input-group"}
+                    labelClassName="me-2"
+                    register={register}
+                    key="last_name"
                     errors={errors}
                   />
                   <FormInput

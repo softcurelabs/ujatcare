@@ -113,7 +113,7 @@ export const Comms = ({
             </div>
           </div>
         </Col>
-        <Col lg={12}>
+        {/* <Col lg={12}>
           <FormGroup className="mb-1">
             <FormLabel className="me-1 ">Signature</FormLabel>
             <Controller
@@ -170,13 +170,8 @@ export const Comms = ({
               className="is-invalid"
               type="hidden"
             />
-            {/* {errors && errors["tanent_signature"] ? (
-              <Form.Control.Feedback type="invalid">
-                {errors["tanent_signature"]!.message}
-              </Form.Control.Feedback>
-            ) : null} */}
-          </FormGroup>
-        </Col>
+          </FormGroup> 
+        </Col>*/}
       </Row>
     </FormGroup>
   );

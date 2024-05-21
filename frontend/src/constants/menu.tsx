@@ -24,7 +24,7 @@ const MENU_ITEMS: MenuItemTypes[] = [
         key: "maintanance-report",
         label: "Maintenance Report",
         isTitle: false,
-        url: "/ui/tables/report",
+        url: "/maintenance-report",
       },
       {
         key: "request",
@@ -192,7 +192,7 @@ const ADMIN_ITEMS: MenuItemTypes[] = [
     key: "maintanance-report",
     label: "Maintenance Report",
     isTitle: false,
-    url: "/ui/tables/report",
+    url: "/maintenance-report",
   },
   {
     key: "users",
@@ -223,7 +223,7 @@ const ADMIN_ITEMS: MenuItemTypes[] = [
     key: "inspect",
     label: "Reports",
     isTitle: false,
-    url: "/inspection",
+    url: "/reports",
   },
   {
     key: "integrations",

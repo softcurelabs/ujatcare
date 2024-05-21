@@ -84,6 +84,7 @@ export const userAsync = createAsyncThunk<UsersType | null, Number>(
 export const recidentAsync = createAsyncThunk<UsersType | null, any>(
   "recidentAsync",
   async ({page, filter}, {rejectWithValue}) => {
+    console.log(page)
     const response = await recident(page, filter);
     return response.data;
   }

@@ -174,6 +174,7 @@ const Items = ({
                       type="text"
                       register={register}
                       name="total"
+                      symbol="$"
                       errors={errors}
                       className="form-control-sm"
                       containerClass={"mb-3 input-group"}

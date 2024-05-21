@@ -15,6 +15,7 @@ export const HouseHoldComposition = ({
   setValue: UseFormSetValue<ApplicationType>;
 }) => {
   const [actionDate, setActionDate] = useState(new Date());
+  const [actionSecondDate, setSecondDate] = useState(new Date());
   return (
     <FormGroup>
       <FormLabel className="fw-bolder fs-4">B. Household Composition:</FormLabel>
@@ -208,17 +209,17 @@ export const HouseHoldComposition = ({
               type="hidden"
               register={register}
               name="hc_birth_date_second"
-              value={actionDate.toISOString().split("T")[0]}
+              value={actionSecondDate.toISOString().split("T")[0]}
               key="hc_birth_date_second"
             />
             <HyperDatepicker
               hideAddon={false}
-              value={actionDate}
+              value={actionSecondDate}
               showTimeSelect={false}
               inputClass="form-control-sm"
               dateFormat="MM-dd-yyyy"
               onChange={(date) => {
-                setActionDate(date);
+                setSecondDate(date);
                 setValue("hc_birth_date_second", date.toLocaleString("sv-SE"));
               }}
             />
@@ -312,6 +313,7 @@ export const HouseHoldComposition = ({
               className="form-check-inline"
               name="hc_wheelchair_second"
               label="N"
+              checked={true}
               value={2}
               register={register}
               key={"hc_wheelchair_second_2"}

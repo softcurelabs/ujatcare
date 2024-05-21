@@ -61,7 +61,7 @@ const BasicTable = ({ users, filter }: UsersDataType) => {
             <thead className="table-light">
               <tr>
                 <th>Unit</th>
-                <th>Apartment</th>
+                <th>Building</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Phone</th>
@@ -169,7 +169,7 @@ const Recidents = () => {
   let navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(recidentAsync(currentPage));
+    dispatch(recidentAsync({page: currentPage, filter}));
   }, [currentPage, show]);
 
   return (
@@ -203,7 +203,7 @@ const Recidents = () => {
             </Col>
             <Col lg={4}>
               <FormInput type="select" name="apartment-selection" onChange={(e) => setFilter(e.target.value)} label="Filter" containerClass="d-flex" className="mb-2 ms-2 form-check-inline">
-                <option value={""}>Select Apartment</option>
+                <option value={""}>Select Building</option>
                 {flats.length &&
                   flats.map((flat) => (
                     <option key={`apartment${flat.id}`} value={`${flat.id}`}>

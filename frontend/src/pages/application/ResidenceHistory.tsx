@@ -45,7 +45,7 @@ export const ResidenceHistory = ({
       </Row>
       <Row>
         <FormLabel className="fw-bolder fs-6">Last Address:</FormLabel>
-        <Col lg={2}>
+        <Col lg={3}>
           <FormInput
             label="Address"
             type="text"
@@ -53,15 +53,15 @@ export const ResidenceHistory = ({
             name="rh_address_first"
             errors={errors}
             className="form-control-sm "
-            containerClass={"mb-3 input-group"}
+            containerClass={"mb-3"}
             labelClassName="me-2"
             size={2}
             key="rh_address_first"
           />
         </Col>
-        <Col lg={3}>
+        <Col lg={2}>
           <FormGroup className="input-group mb-3 ">
-            <Form.Label htmlFor="small" className="me-2">
+            <Form.Label htmlFor="small" className="me-2 w-100">
               Start Date
             </Form.Label>
             <FormInput
@@ -75,7 +75,7 @@ export const ResidenceHistory = ({
               hideAddon={false}
               value={fstartDate}
               showTimeSelect={false}
-              inputClass="form-control-sm"
+              inputClass="form-control-sm w-100"
               dateFormat="MM-dd-yyyy"
               onChange={(date) => {
                 fsetStartDate(date);
@@ -84,14 +84,14 @@ export const ResidenceHistory = ({
             />
             {errors && errors["rh_start_date_first"] ? (
               <Form.Control.Feedback type="invalid">
-                {errors["hc_birth_date_first"]!.message}
+                {errors["rh_start_date_first"]!.message}
               </Form.Control.Feedback>
             ) : null}
           </FormGroup>
         </Col>
-        <Col lg={3}>
+        <Col lg={2}>
           <FormGroup className="input-group mb-3 ">
-            <Form.Label htmlFor="small" className="me-2">
+            <Form.Label htmlFor="small" className="me-2 w-100">
               End Date
             </Form.Label>
             <FormInput
@@ -105,7 +105,7 @@ export const ResidenceHistory = ({
               hideAddon={false}
               value={fendDate}
               showTimeSelect={false}
-              inputClass="form-control-sm"
+              inputClass="form-control-sm w-100"
               dateFormat="MM-dd-yyyy"
               onChange={(date) => {
                 fsetEndDate(date);
@@ -114,20 +114,20 @@ export const ResidenceHistory = ({
             />
             {errors && errors["rh_end_date_first"] ? (
               <Form.Control.Feedback type="invalid">
-                {errors["hc_birth_date_first"]!.message}
+                {errors["rh_end_date_first"]!.message}
               </Form.Control.Feedback>
             ) : null}
           </FormGroup>
         </Col>
-        <Col lg={2}>
+        <Col lg={3}>
           <FormInput
-            label="Lanloard Name"
+            label="Landlord Name"
             type="text"
             register={register}
             name="landlord_name_first"
             errors={errors}
             className="form-control-sm "
-            containerClass={"mb-3 input-group"}
+            containerClass={"mb-3"}
             labelClassName="me-2"
             size={2}
             key="landlord_name_first"
@@ -135,13 +135,13 @@ export const ResidenceHistory = ({
         </Col>
         <Col lg={2}>
           <FormInput
-            label="Lanloard Phone"
+            label="Landlord Phone"
             type="text"
             register={register}
             name="landlord_phone_first"
             errors={errors}
             className="form-control-sm "
-            containerClass={"mb-3 input-group"}
+            containerClass={"mb-3"}
             labelClassName="me-2"
             size={2}
             key="landlord_phone_first"
@@ -150,7 +150,7 @@ export const ResidenceHistory = ({
       </Row>
       <Row>
         <FormLabel className="fw-bolder fs-6">Second Last Address:</FormLabel>
-        <Col lg={2}>
+        <Col lg={3}>
           <FormInput
             label="Address"
             type="text"
@@ -158,15 +158,15 @@ export const ResidenceHistory = ({
             name="rh_address_second"
             errors={errors}
             className="form-control-sm "
-            containerClass={"mb-3 input-group"}
+            containerClass={"mb-3"}
             labelClassName="me-2"
             size={2}
             key="rh_address_second"
           />
         </Col>
-        <Col lg={3}>
+        <Col lg={2}>
           <FormGroup className="input-group mb-3 ">
-            <Form.Label htmlFor="small" className="me-2">
+            <Form.Label htmlFor="small" className="me-2 w-100">
               Start Date
             </Form.Label>
             <FormInput
@@ -194,9 +194,9 @@ export const ResidenceHistory = ({
             ) : null}
           </FormGroup>
         </Col>
-        <Col lg={3}>
+        <Col lg={2}>
           <FormGroup className="input-group mb-3 ">
-            <Form.Label htmlFor="small" className="me-2">
+            <Form.Label htmlFor="small" className="me-2 w-100">
               End Date
             </Form.Label>
             <FormInput
@@ -224,15 +224,15 @@ export const ResidenceHistory = ({
             ) : null}
           </FormGroup>
         </Col>
-        <Col lg={2}>
+        <Col lg={3}>
           <FormInput
-            label="Lanloard Name"
+            label="Landlord Name"
             type="text"
             register={register}
             name="landlord_name_second"
             errors={errors}
             className="form-control-sm "
-            containerClass={"mb-3 input-group"}
+            containerClass={"mb-3"}
             labelClassName="me-2"
             size={2}
             key="landlord_name_second"
@@ -240,13 +240,13 @@ export const ResidenceHistory = ({
         </Col>
         <Col lg={2}>
           <FormInput
-            label="Lanloard Phone"
+            label="Landlord Phone"
             type="text"
             register={register}
             name="landlord_phone_second"
             errors={errors}
             className="form-control-sm "
-            containerClass={"mb-3 input-group"}
+            containerClass={"mb-3"}
             labelClassName="me-2"
             size={2}
             key="landlord_phone_second"
@@ -255,7 +255,7 @@ export const ResidenceHistory = ({
       </Row>
       <Row>
         <FormLabel className="fw-bolder fs-6">Third Last Address:</FormLabel>
-        <Col lg={2}>
+        <Col lg={3}>
           <FormInput
             label="Address"
             type="text"
@@ -263,15 +263,15 @@ export const ResidenceHistory = ({
             name="rh_address_third"
             errors={errors}
             className="form-control-sm "
-            containerClass={"mb-3 input-group"}
+            containerClass={"mb-3"}
             labelClassName="me-2"
             size={2}
             key="rh_address_third"
           />
         </Col>
-        <Col lg={3}>
+        <Col lg={2}>
           <FormGroup className="input-group mb-3 ">
-            <Form.Label htmlFor="small" className="me-2">
+            <Form.Label htmlFor="small" className="me-2 w-100">
               Start Date
             </Form.Label>
             <FormInput
@@ -299,9 +299,9 @@ export const ResidenceHistory = ({
             ) : null}
           </FormGroup>
         </Col>
-        <Col lg={3}>
+        <Col lg={2}>
           <FormGroup className="input-group mb-3 ">
-            <Form.Label htmlFor="small" className="me-2">
+            <Form.Label htmlFor="small" className="me-2 w-100">
               End Date
             </Form.Label>
             <FormInput
@@ -329,15 +329,15 @@ export const ResidenceHistory = ({
             ) : null}
           </FormGroup>
         </Col>
-        <Col lg={2}>
+        <Col lg={3}>
           <FormInput
-            label="Lanloard Name"
+            label="Landlord Name"
             type="text"
             register={register}
             name="landlord_name_third"
             errors={errors}
             className="form-control-sm "
-            containerClass={"mb-3 input-group"}
+            containerClass={"mb-3"}
             labelClassName="me-2"
             size={2}
             key="landlord_name_third"
@@ -345,13 +345,13 @@ export const ResidenceHistory = ({
         </Col>
         <Col lg={2}>
           <FormInput
-            label="Lanloard Phone"
+            label="Landlord Phone"
             type="text"
             register={register}
             name="landlord_phone_third"
             errors={errors}
             className="form-control-sm "
-            containerClass={"mb-3 input-group"}
+            containerClass={"mb-3"}
             labelClassName="me-2"
             size={2}
             key="landlord_phone_third"

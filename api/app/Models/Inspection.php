@@ -11,6 +11,12 @@ class Inspection extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'inspection_date' => 'datetime:Y-m-d H:i',
+        'created_at' => 'datetime:Y-m-d H:i',
+        'updated_at'  => 'datetime:Y-m-d H:i',
+    ];
+
     protected $fillable = [
         'title',
         'description',

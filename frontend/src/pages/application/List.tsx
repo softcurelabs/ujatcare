@@ -41,6 +41,7 @@ const BasicTable = ({ application }: { application: ApplicationsType }) => {
                 <th>Email</th>
                 <th>First Name</th>
                 <th>Created At</th>
+                <th>Approved By</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -53,6 +54,7 @@ const BasicTable = ({ application }: { application: ApplicationsType }) => {
                       <td>{record.email}</td>
                       <td>{record.first_name_first}</td>
                       <td>{record.created_at}</td>
+                      <td>{record.approved_by ? record.approved_by.first_name : ""}</td>
                       <td>
                         <React.Fragment>
                           <>

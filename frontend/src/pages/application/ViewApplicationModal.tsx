@@ -40,7 +40,7 @@ export const ViewApplicationModal = ({
           <Accomodation data={data} />
           <ReasonForMove data={data} />
           <UploadDocuments data={data} />
-          <Comms data={data} />
+          {/* <Comms data={data} />  */}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={() => handleClose()}>
