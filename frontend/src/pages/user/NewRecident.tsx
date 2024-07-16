@@ -122,13 +122,13 @@ const BasicInputElements = () => {
                 <FormInput type="hidden" name="role_id" register={register} errors={errors} value='recident' />
                 <FormInput
                   type="select"
-                  label="Building#"
+                  label="Property"
                   name="apartment_id"
                   containerClass="mb-3"
                   register={register}
                   errors={errors}
                 >
-                  <option value={""}>Select Building</option>
+                  <option value={""}>Select Property</option>
                   {flats.length &&
                     flats.map((flat) => (
                       <option key={`apartment${flat.id}`}  value={flat.id}>
@@ -138,7 +138,7 @@ const BasicInputElements = () => {
                 </FormInput>
                 <FormInput
                   type="select"
-                  label="Suite#"
+                  label="Suite"
                   name="flat_id"
                   containerClass="mb-3"
                   register={register}

@@ -132,10 +132,10 @@ const BasicInputElements = () => {
                   />
 
                   <FormInput
-                    label="Apartment"
+                    label="Property"
                     type="text"
                     name="apartment"
-                    placeholder="apartment"
+                    placeholder="Property"
                     containerClass={"mb-3"}
                     register={register}
                     key="apartment"
@@ -156,7 +156,7 @@ const BasicInputElements = () => {
                   />
 
                   <FormInput
-                    label="Income Verification"
+                    label="Monthly Income"
                     type="text"
                     name="verification"
                     placeholder="Contact"

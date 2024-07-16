@@ -203,7 +203,7 @@ const Recidents = () => {
             </Col>
             <Col lg={4}>
               <FormInput type="select" name="apartment-selection" onChange={(e) => setFilter(e.target.value)} label="Filter" containerClass="d-flex" className="mb-2 ms-2 form-check-inline">
-                <option value={""}>Select Building</option>
+                <option value={""}>Select Property</option>
                 {flats.length &&
                   flats.map((flat) => (
                     <option key={`apartment${flat.id}`} value={`${flat.id}`}>

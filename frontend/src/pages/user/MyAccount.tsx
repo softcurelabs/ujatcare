@@ -338,10 +338,10 @@ const BasicInputElements = () => {
                   </Col>
                   <Col xl={6}>
                     <FormInput
-                      label="Unit"
+                      label="Suite"
                       type="text"
                       name="unit"
-                      placeholder="Unit"
+                      placeholder="Suite"
                       className="form-control-sm fs-5 "
                       containerClass={"mb-3 "}
                       register={register}
@@ -360,7 +360,7 @@ const BasicInputElements = () => {
                   disabled={true}
                   errors={errors}
                 >
-                  <option value={""}>Select Building</option>
+                  <option value={""}>Select Property</option>
                   {flats.length &&
                     flats.map((flat) => (
                       <option key={`apartment${flat.id}`}  value={flat.id}>
@@ -372,7 +372,7 @@ const BasicInputElements = () => {
                 <Col xl={6}>
                 <FormInput
                   type="select"
-                  label="Suite#"
+                  label="Suite"
                   name="flat_id"
                   containerClass="mb-3"
                   disabled={true}
@@ -453,7 +453,7 @@ const BasicInputElements = () => {
                   </Col>
                   <Col xl={6}>
                     <FormInput
-                      label="Income Verification"
+                      label="Monthly Income"
                       type="text"
                       name="income_verification"
                       disabled={true}
@@ -495,11 +495,11 @@ const BasicInputElements = () => {
                   </Col>
                   <Col xl={6}>
                     <FormInput
-                      label="FOB"
+                      label="FOB ID"
                       type="text"
                       name="fob"
                       disabled={true}
-                      placeholder="FOB"
+                      placeholder="FOB ID"
                       className="form-control-sm fs-5 "
                       containerClass={"mb-3 "}
                       register={register}

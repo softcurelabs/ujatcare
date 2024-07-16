@@ -205,7 +205,7 @@ const BasicInputElements = () => {
 
                   <FormInput
                     type="select"
-                    label="Suite#"
+                    label="Suite"
                     name="flat_id"
                     containerClass="mb-3 "
                     register={register}
