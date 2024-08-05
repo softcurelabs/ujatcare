@@ -30,10 +30,10 @@ export const ResidenceHistory = ({ data }: { data: ApplicationType }) => {
           <ViewRaw label="End Date" value={data.rh_end_date_first} />
         </Col>
         <Col lg={4}>
-          <ViewRaw label="Lanloard Name" value={data.landlord_name_first} />
+          <ViewRaw label="Landlord Name" value={data.landlord_name_first} />
         </Col>
         <Col lg={3}>
-          <ViewRaw label="Lanloard Phone" value={data.landlord_phone_first} />
+          <ViewRaw label="Landlord Phone" value={data.landlord_phone_first} />
         </Col>
       </Row>
       <Row>
@@ -48,10 +48,10 @@ export const ResidenceHistory = ({ data }: { data: ApplicationType }) => {
           <ViewRaw label="End Date" value={data.rh_end_date_second} />
         </Col>
         <Col lg={4}>
-          <ViewRaw label="Lanloard Name" value={data.landlord_name_second} />
+          <ViewRaw label="Landlord Name" value={data.landlord_name_second} />
         </Col>
         <Col lg={3}>
-          <ViewRaw label="Lanloard Phone" value={data.landlord_phone_second} />
+          <ViewRaw label="Landlord Phone" value={data.landlord_phone_second} />
         </Col>
       </Row>
       <Row>
@@ -66,10 +66,10 @@ export const ResidenceHistory = ({ data }: { data: ApplicationType }) => {
           <ViewRaw label="End Date" value={data.rh_end_date_third} />
         </Col>
         <Col lg={4}>
-          <ViewRaw label="Lanloard Name" value={data.landlord_name_third} />
+          <ViewRaw label="Landlord Name" value={data.landlord_name_third} />
         </Col>
         <Col lg={3}>
-          <ViewRaw label="Lanloard Phone" value={data.landlord_phone_third} />
+          <ViewRaw label="Landlord Phone" value={data.landlord_phone_third} />
         </Col>
       </Row>
     </FormGroup>

@@ -70,7 +70,7 @@ const BasicInputElements = () => {
       emergency_contact_number: "9601277532",
       emergency_contact_name: "jasmin",
       income_verification: 230,
-      rent_calculation: 123,
+      total_rent: 123,
       language: "eng",
       special_instruction: null,
     },
@@ -122,7 +122,7 @@ const BasicInputElements = () => {
             setValue("emergency_contact_number", response.emergency_contact_number);
             setValue("emergency_contact_name", response.emergency_contact_name);
             setValue("income_verification", response.income_verification);
-            setValue("rent_calculation", response.rent_calculation);
+            setValue("total_rent", response.total_rent);
             setValue("special_instruction", response.special_instruction);
             setValue("relationship", response.relationship);
             setValue("movein_date", response.movein_date);
@@ -267,7 +267,7 @@ const BasicInputElements = () => {
 
                   <FormInput
                     type="select"
-                    label="Apartment#"
+                    label="Suite"
                     name="flat_id"
                     containerClass="mb-3"
                     register={register}
@@ -300,12 +300,12 @@ const BasicInputElements = () => {
                   <FormInput
                     label="Rent Calculation"
                     type="text"
-                    name="rent_calculation"
+                    name="total_rent"
                     placeholder="Rent"
                     className="form-control-sm fs-5"
                     containerClass={"mb-3 input-group"}
                     register={register}
-                    key="rent_calculation"
+                    key="total_rent"
                     errors={errors}
                   />
 

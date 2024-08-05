@@ -6,11 +6,14 @@ export interface FlatType {
 }
 export interface UserType extends TimeStampType {
   name: string;
+  first_name: string;
+  last_name: string;
   email: string;
   role: string;
   flat?: FlatType;
   flat_name?: string;
   apartment_name?: string;
+  apartment_id?: number;
   documents: Array<UserDocumentType>;
 }
 
@@ -28,7 +31,7 @@ export interface UserProfileType extends TimeStampType {
   emergency_contact_number: string;
   emergency_contact_name: string;
   income_verification: Number;
-  rent_calculation: Number;
+  total_rent: Number;
   relationship: string;
   movein_date: Date;
   language: string;
@@ -38,11 +41,26 @@ export interface UserProfileType extends TimeStampType {
   image_path: null | string;
   user: UserType;
   quickbook_id: number|null;
+  emergency_contact_email: string;
+        base_rent: Number;
+        utilities: Number;
+        maintenance_fees: Number;
+        property_taxes: Number;
+        rental_insurance: Number;
+        parking_fees: Number;
+        service_fees: Number;
+        administrative_fees: Number;
+        storage_fees: Number;
+        cable_fees: Number;
+        wifi: Number;
 }
 
 export interface UserEditType extends TimeStampType {
   unit: Number;
   name: string;
+  first_name: string;
+  last_name: string;
+  apartment_id: Number;
   email: string;
   phone_number: string;
   parking_space: Number;
@@ -51,7 +69,7 @@ export interface UserEditType extends TimeStampType {
   emergency_contact_number: string;
   emergency_contact_name: string;
   income_verification: Number;
-  rent_calculation: Number;
+  total_rent: Number;
   language: string;
   relationship: string;
   movein_date: Date;
@@ -62,6 +80,18 @@ export interface UserEditType extends TimeStampType {
   profile_pic: null | string;
   user: UserType;
   fob: string;
+  emergency_contact_email: string;
+        base_rent: Number;
+        utilities: Number;
+        maintenance_fees: Number;
+        property_taxes: Number;
+        rental_insurance: Number;
+        parking_fees: Number;
+        service_fees: Number;
+        administrative_fees: Number;
+        storage_fees: Number;
+        cable_fees: Number;
+        wifi: Number;
 }
 
 export interface UsersType extends PaginationType {
@@ -83,11 +113,23 @@ export interface UserProfileDataType {
   emergency_contact_number: string;
   emergency_contact_name: string;
   income_verification: Number;
-  rent_calculation: Number;
+  total_rent: Number;
   language: string;
   special_instruction: null | string;
   image_path: null | string;
   user: UserType;
+  emergency_contact_email: string;
+        base_rent: Number;
+        utilities: Number;
+        maintenance_fees: Number;
+        property_taxes: Number;
+        rental_insurance: Number;
+        parking_fees: Number;
+        service_fees: Number;
+        administrative_fees: Number;
+        storage_fees: Number;
+        cable_fees: Number;
+        wifi: Number;
 }
 
 export interface PasswordDataType {

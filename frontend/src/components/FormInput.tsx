@@ -75,6 +75,7 @@ interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
   refCallback?: any;
   children?: any;
   rows?: string;
+  prefix?: string;
 }
 
 const FormInput = ({
@@ -91,6 +92,7 @@ const FormInput = ({
   refCallback,
   children,
   rows,
+  prefix,
   ...otherProps
 }: FormInputProps) => {
   // handle input type
@@ -169,7 +171,9 @@ const FormInput = ({
                   {label ? (
                     <Form.Label className={labelClassName}>{label}</Form.Label>
                   ) : null}
-
+                  {prefix ? (
+                      <span className="input-group-text" id={name}>{prefix}</span>
+                  ): <></>}
                   <Form.Control
                     type={type}
                     placeholder={placeholder}

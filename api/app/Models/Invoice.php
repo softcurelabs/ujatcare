@@ -17,6 +17,11 @@ class Invoice extends Model
         'status',
         'due_date'
     ];
+    protected $casts = [
+        'due_date' => 'datetime:Y-m-d H:i',
+        'created_at' => 'datetime:Y-m-d H:i',
+        'updated_at'  => 'datetime:Y-m-d H:i',
+    ];
 
     public function user(): BelongsTo
     {

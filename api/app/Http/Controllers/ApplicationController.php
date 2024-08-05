@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Constants\Role;
+use App\Events\UserUpdated;
 use App\Models\Application;
 use App\Models\ApplicationDocuments;
 use App\Models\FlatOwner;
@@ -71,7 +72,6 @@ class ApplicationController extends Controller
             'rh_end_date_third' => 'nullable|date',
             'rh_start_date_second' => 'nullable|date',
             'rh_start_date_third' => 'nullable|date',
-            'signature_first' => 'required',
             'stock_deposit' => 'required|integer',
             'translator_required' => 'required|in:1,2',
             'under_notice' => 'required|in:1,2',
@@ -96,7 +96,7 @@ class ApplicationController extends Controller
 
     public function list(Request $request)
     {
-        return Application::with('documents')->orderBy('id', 'desc')->paginate($request->get('limit', 10));
+        return Application::with(['documents', 'approvedBy'])->orderBy('id', 'desc')->paginate($request->get('limit', 10));
     }
 
     public function convertToUser(Request $request, int $id): JsonResponse
@@ -117,7 +117,8 @@ class ApplicationController extends Controller
         }
 
         $user = new User([
-            'name'  => $application->first_name_first,
+            'first_name'  => $application->first_name_first,
+            'last_name'  => $application->last_name_first,
             'email' => $application->email,
             'password' => bcrypt(Random::generate(10)),
         ]);
@@ -125,9 +126,16 @@ class ApplicationController extends Controller
         $user->assignRole(Role::Recident->value);
         if ($user->save()) {
             FlatOwner::create(['user_id' => $user->getKey(), 'flat_id' => $request->get('flat_id')]);
-            UserProfile::create(['user_id' => $user->getKey()]);
+            $userProfile = UserProfile::create(['user_id' => $user->getKey()]);
+
+            $userProfile->birth_date = $application->hc_birth_date_first;
+            $userProfile->save();
+
+            $application->approved_by = Auth::user()->id;
+
             $application->status = 1;
             $application->save();
+            UserUpdated::dispatch($userProfile);
 
             Password::sendResetLink(
                 ['email' => $application->email]

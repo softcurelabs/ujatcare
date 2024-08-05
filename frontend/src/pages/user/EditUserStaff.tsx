@@ -66,7 +66,7 @@ const BasicInputElements = () => {
       emergency_contact_number: "9601277532",
       emergency_contact_name: "jasmin",
       income_verification: 230,
-      rent_calculation: 123,
+      total_rent: 123,
       language: "eng",
       special_instruction: null,
     },
@@ -109,7 +109,8 @@ const BasicInputElements = () => {
               setProfilePic(`${config.BASE_URL}/${response.image_path}`);
             setValue("id", response.user.id);
             setValue("unit", response.unit);
-            setValue("name", response.user.name);
+            setValue("first_name", response.user.first_name);
+            setValue("last_name", response.user.last_name);
             setValue("email", response.user.email);
             setValue("phone_number", response.phone_number);
             if (response.user.flat) {
@@ -119,7 +120,7 @@ const BasicInputElements = () => {
             setValue("emergency_contact_number", response.emergency_contact_number);
             setValue("emergency_contact_name", response.emergency_contact_name);
             setValue("income_verification", response.income_verification);
-            setValue("rent_calculation", response.rent_calculation);
+            setValue("total_rent", response.total_rent);
             setValue("special_instruction", response.special_instruction);
             setValue("relationship", response.relationship);
             setValue("movein_date", response.movein_date);
@@ -164,16 +165,25 @@ const BasicInputElements = () => {
                     errors={errors}
                   /> */}
                   <FormInput
-                    label="Name"
-                    type="text"
-                    name="name"
-                    className="form-control-sm "
-                    containerClass={"mb-3 input-group"}
-                    labelClassName="me-2"
-                    register={register}
-                    key="name"
-                    errors={errors}
-                  />
+                  label="First Name"
+                  type="text"
+                  register={register}
+                  name="first_name"
+                  errors={errors}
+                  rows="5"
+                  containerClass={"mb-3"}
+                  key="first_name"
+                />
+                <FormInput
+                  label="Last Name"
+                  type="text"
+                  register={register}
+                  name="last_name"
+                  errors={errors}
+                  rows="5"
+                  containerClass={"mb-3"}
+                  key="last_name"
+                />
                   <FormInput
                     label="Phone#"
                     type="text"
@@ -255,7 +265,7 @@ const EditUser = () => {
     <React.Fragment>
       <PageTitle
         breadCrumbItems={[
-          { label: "Tenants", path: "/user" },
+          { label: "Staff", path: "/user" },
           { label: "My Account", path: "/user", active: true },
         ]}
         title={"My Account"}

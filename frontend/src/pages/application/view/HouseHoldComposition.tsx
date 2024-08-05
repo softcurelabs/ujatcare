@@ -38,7 +38,7 @@ export const HouseHoldComposition = ({ data }: { data: ApplicationType }) => {
           />
         </Col>
       </Row>
-      <Row>
+      {/* <Row>
         <FormLabel className="fw-bolder fs-6">Second Applicant:</FormLabel>
         <Col lg={3}>
           <ViewRaw
@@ -71,7 +71,7 @@ export const HouseHoldComposition = ({ data }: { data: ApplicationType }) => {
             value={boolType[data.hc_wheelchair_second]}
           />
         </Col>
-      </Row>
+      </Row> */}
     </FormGroup>
   );
 };

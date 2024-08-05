@@ -109,7 +109,7 @@ const BasicInputElements = () => {
                 </FormInput>
                 <FormInput
                   type="select"
-                  label="Apartment#"
+                  label="Suite"
                   name="flat_id"
                   containerClass="mb-3"
                   register={register}
@@ -151,7 +151,7 @@ const NewUser = () => {
       <PageTitle
         breadCrumbItems={[
           { label: "Dashboard", path: "/dashboard-2" },
-          { label: "Users", path: "/resident" },
+          { label: "Users", path: "/tenant" },
           { label: "Tenant", path: "/notice/new", active: true },
         ]}
         title={"Tenant"}

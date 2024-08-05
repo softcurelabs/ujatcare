@@ -26,7 +26,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'profile',
         'flat_name',
         'apartment_name',
-        'quickbooks'
+        'apartment_id',
+        'quickbooks',
+        'name'
     ];
     /**
      * The attributes that are mass assignable.
@@ -34,7 +36,8 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
     ];
@@ -82,10 +85,19 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return null !== $this->flat()->first()    ? $this->flat()->first()->flat()->first()->apartment()->first()->name : "";
     }
+    public function getApartmentIdAttribute()
+    {
+        return null !== $this->flat()->first()    ? $this->flat()->first()->flat()->first()->apartment()->first()->id : "";
+    }
 
     public function getRoleAttribute()
     {
         return $this->getRoleNames()->first();
+    }
+
+    public function getNameAttribute()
+    {
+        return $this->first_name . " " . $this->last_name;
     }
 
     public function getFlatAttribute()
@@ -110,9 +122,10 @@ class User extends Authenticatable implements MustVerifyEmail
             // ],
             "Notes" =>  $this->getProfileAttribute()->special_instruction,
             // "Title" =>  "Mr",
-            // "GivenName" =>  "Evil",
+            "GivenName" =>  $this->first_name,
             // "MiddleName" =>  "1B",
             // "FamilyName" =>  "King",
+            "FamilyName" =>  $this->last_name,
             // "Suffix" =>  "Jr",
             "FullyQualifiedName" =>  $this->name,
             // "CompanyName" =>  "King Evial",

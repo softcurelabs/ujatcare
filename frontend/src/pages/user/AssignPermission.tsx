@@ -119,7 +119,7 @@ const BasicInputElements = () => {
 
                   <FormInput
                     type="select"
-                    label="Apartment#"
+                    label="Suite"
                     name="flat_id"
                     containerClass="mb-3 "
                     register={register}
@@ -170,7 +170,7 @@ const AssignPermission = () => {
     <React.Fragment>
       <PageTitle
         breadCrumbItems={[
-          { label: "Residents", path: "/resident" },
+          { label: "Tenant", path: "/tenant" },
           { label: "Assign Permission", path: "/user", active: true },
         ]}
         title={"Assign Permission"}

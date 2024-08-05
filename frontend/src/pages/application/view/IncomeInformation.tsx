@@ -22,7 +22,7 @@ export const IncomeInformation = ({ data }: { data: ApplicationType }) => {
           />
         </Col>
       </Row>
-      <Row>
+      {/* <Row>
         <FormLabel className="fw-bolder fs-6">Second Applicant:</FormLabel>
         <Col lg={3}>
           <ViewRaw label="First Name" value={data.ii_last_name_second} />
@@ -36,7 +36,7 @@ export const IncomeInformation = ({ data }: { data: ApplicationType }) => {
             value={data.ii_income_second}
           />
         </Col>
-      </Row>
+      </Row> */}
     </FormGroup>
   );
 };

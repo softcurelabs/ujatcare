@@ -21,6 +21,7 @@ export interface MaintananceType extends TimeStampType {
   user_name: string;
   repaired_username: string;
   status_name: string;
+  flat_name: string;
 }
 
 export interface MaintananceData {

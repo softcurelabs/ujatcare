@@ -18,10 +18,11 @@ import { Link } from "react-router-dom";
 
 interface UsersDataType {
   users: UsersType | null;
+  page: Number;
   filter: string;
 }
 
-const BasicTable = ({ users, filter }: UsersDataType) => {
+const BasicTable = ({ users, page, filter }: UsersDataType) => {
   const [show, setShow] = useState<boolean>(false);
   const [id, setId] = useState<Number>(0);
 
@@ -29,7 +30,7 @@ const BasicTable = ({ users, filter }: UsersDataType) => {
   const [toast, setToast] = useState("");
   const [error, setError] = useState("");
   useEffect(() => {
-    dispatch(recidentAsync({page: 1, filter: filter}));
+    dispatch(recidentAsync({page: page, filter: filter}));
   }, [show, filter]);
 
   const onClick = (id: Number) => {
@@ -38,7 +39,7 @@ const BasicTable = ({ users, filter }: UsersDataType) => {
     dispatch(recidentSyncAsync(id)).unwrap().then((response) => {
       if (response && response.status === true) {
         setToast(response.message);
-        dispatch(recidentAsync({page: 1, filter: filter}));
+        dispatch(recidentAsync({page: page, filter: filter}));
       } else {
         setError(response.message);
       }
@@ -60,7 +61,7 @@ const BasicTable = ({ users, filter }: UsersDataType) => {
           <Table className="mb-0 table-striped dt-responsive nowrap w-100">
             <thead className="table-light">
               <tr>
-                <th>Unit</th>
+                <th>Suite</th>
                 <th>Apartment</th>
                 <th>Name</th>
                 <th>Email</th>
@@ -169,7 +170,7 @@ const Recidents = () => {
   let navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(recidentAsync(currentPage));
+    dispatch(recidentAsync({page: currentPage, filter: filter}));
   }, [currentPage, show]);
 
   return (
@@ -215,7 +216,7 @@ const Recidents = () => {
           </Row>
           {users && (
             <>
-              <BasicTable users={users} filter={filter} />
+              <BasicTable users={users} page={currentPage} filter={filter} />
               <Pagination
                 tableProps={{
                   pageCount: users.last_page,

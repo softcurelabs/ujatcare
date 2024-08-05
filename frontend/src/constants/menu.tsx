@@ -186,7 +186,7 @@ const ADMIN_ITEMS: MenuItemTypes[] = [
     key: "users",
     label: "Tenants",
     isTitle: false,
-    url: "/resident",
+    url: "/tenant",
   },
   {
     key: "maintanance-report",
@@ -203,7 +203,7 @@ const ADMIN_ITEMS: MenuItemTypes[] = [
 
   {
     key: "rent-history",
-    label: "Payments",
+    label: "Rents",
     isTitle: false,
     url: "/invoice",
   },
@@ -219,12 +219,12 @@ const ADMIN_ITEMS: MenuItemTypes[] = [
     isTitle: false,
     url: "/apps/calendar",
   },
-  {
-    key: "inspect",
-    label: "Reports",
-    isTitle: false,
-    url: "/inspection",
-  },
+//   {
+//     key: "inspect",
+//     label: "Reports",
+//     isTitle: false,
+//     url: "/inspection",
+//   },
   {
     key: "integrations",
     label: "Integrations",

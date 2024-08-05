@@ -23,6 +23,11 @@ class MaintananceRequest extends Model
 
     use HasFactory;
     protected $appends = ['status_name'];
+    protected $casts = [
+        'action_date' => 'datetime:Y-m-d H:i',
+        'created_at' => 'datetime:Y-m-d H:i',
+        'updated_at'  => 'datetime:Y-m-d H:i',
+    ];
 
     protected $fillable = [
         'user_id',

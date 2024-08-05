@@ -406,7 +406,7 @@ const uiRoutes = {
           element: <UserList />,
         },
         {
-          path: "/resident",
+          path: "/tenant",
           name: "Basic",
           element: <RecidentList />,
         },

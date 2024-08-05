@@ -40,6 +40,7 @@ const BasicTable = ({ maintanance }: MaintananceListType) => {
               <tr>
                 <th>ID</th>
                 <th>Requested By</th>
+                <th>Suite</th>
                 <th>Work to be done</th>
                 <th>Assignee</th>
                 <th>Status</th>
@@ -55,6 +56,7 @@ const BasicTable = ({ maintanance }: MaintananceListType) => {
                     <tr key={index} role="row">
                       <td role="cell">{record.id}</td>
                       <td role="cell">{record.tanent_name}</td>
+                      <td role="cell">{record.flat_name}</td>
                       <td role="cell">{record.work_requested}</td>
                       <td role="cell">{record.repaired_username}</td>
                       <td role="cell">

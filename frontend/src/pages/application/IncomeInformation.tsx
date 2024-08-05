@@ -29,7 +29,7 @@ export const IncomeInformation = ({
             register={register}
             name="ii_last_name_first"
             errors={errors}
-            className="form-control-sm "
+            className="form-control "
             containerClass={"mb-3"}
             labelClassName="d-block"
             size={2}
@@ -44,7 +44,7 @@ export const IncomeInformation = ({
             register={register}
             name="ii_income_source_first"
             errors={errors}
-            className="form-control-sm "
+            className="form-control "
             containerClass={"mb-3"}
             labelClassName="d-block"
             size={2}
@@ -58,7 +58,7 @@ export const IncomeInformation = ({
             register={register}
             name="ii_income_first"
             errors={errors}
-            className="form-control-sm "
+            className="form-control "
             containerClass={"mb-3"}
             labelClassName="d-block"
             size={2}
@@ -66,7 +66,7 @@ export const IncomeInformation = ({
           />
         </Col>
       </Row>
-      <Row>
+      {/* <Row>
         <FormLabel className="fw-bolder fs-6">Second Applicant:</FormLabel>
         <Col lg={3}>
           <FormInput
@@ -75,7 +75,7 @@ export const IncomeInformation = ({
             register={register}
             name="ii_last_name_second"
             errors={errors}
-            className="form-control-sm "
+            className="form-control "
             containerClass={"mb-3"}
             labelClassName="d-block"
             size={2}
@@ -90,7 +90,7 @@ export const IncomeInformation = ({
             register={register}
             name="ii_income_source_second"
             errors={errors}
-            className="form-control-sm "
+            className="form-control "
             containerClass={"mb-3"}
             labelClassName="d-block"
             size={2}
@@ -104,14 +104,14 @@ export const IncomeInformation = ({
             register={register}
             name="ii_income_second"
             errors={errors}
-            className="form-control-sm "
+            className="form-control "
             containerClass={"mb-3"}
             labelClassName="d-block"
             size={2}
             key="ii_income_second"
           />
         </Col>
-      </Row>
+      </Row> */}
     </FormGroup>
   );
 };

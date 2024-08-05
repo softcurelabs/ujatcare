@@ -1,6 +1,7 @@
 import { KeyValueType } from "./KeyValueType";
 import { PaginationType } from "./PaginationType";
 import { TimeStampType } from "./TimeStampType";
+import { UserType } from "./UserType";
 
 export interface ApplicationType extends TimeStampType {
   //   email: string;
@@ -72,6 +73,7 @@ export interface ApplicationType extends TimeStampType {
   value_others: number;
   status?: number;
   documents: Array<any>;
+  approved_by?: UserType;
 }
 
 export interface DocumentType extends TimeStampType {

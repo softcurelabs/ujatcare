@@ -110,7 +110,7 @@ const CustomerLogin = () => {
               {/* {flats.length && (
                 <FormInput type="hidden" name="apartment_id" value={flats[0].id}></FormInput>
               )}
-              <FormInput type="select" label="Apartment#" name="flat_id" containerClass="mb-3">
+              <FormInput type="select" label="Suite" name="flat_id" containerClass="mb-3">
                 <option value="">Select Apartment Number</option>
                 {flats.length &&
                   flats[0].flats.map((flat) => (
@@ -162,7 +162,7 @@ const CustomerLogin = () => {
               {flats.length && (
                 <FormInput type="hidden" name="apartment_id" value={flats[1].id}></FormInput>
               )}
-              <FormInput type="select" label="Apartment#" name="flat_id" containerClass="mb-3">
+              <FormInput type="select" label="Suite" name="flat_id" containerClass="mb-3">
                 <option value="">Select Apartment Number</option>
                 {flats.length &&
                   flats[1].flats.map((flat) => (

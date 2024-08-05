@@ -24,11 +24,11 @@ export const Applicant = ({ data }: { data: ApplicationType }) => {
           />
         </Col>
         <Col lg={3}>
-          <ViewRaw label="Home Phone (250)" value={data.home_phone_first} />
+          <ViewRaw label="Home Phone " value={data.home_phone_first} />
         </Col>
       </Row>
       <Row>
-        <FormLabel className="fw-bolder fs-6">Second Applicant:</FormLabel>
+        {/* <FormLabel className="fw-bolder fs-6">Second Applicant:</FormLabel>
         <Col lg={3}>
           <ViewRaw
             label="Name"
@@ -40,9 +40,9 @@ export const Applicant = ({ data }: { data: ApplicationType }) => {
               (data.first_name_second ?? "")
             }
           />
-        </Col>
+        </Col> */}
         <Col lg={3}>
-          <ViewRaw label="Home Phone (250)" value={data.home_phone_second} />
+          <ViewRaw label="Home Phone" value={data.home_phone_second} />
         </Col>
       </Row>
     </FormGroup>

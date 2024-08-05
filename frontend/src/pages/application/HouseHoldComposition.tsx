@@ -27,7 +27,7 @@ export const HouseHoldComposition = ({
             register={register}
             name="hc_last_name_first"
             errors={errors}
-            className="form-control-sm "
+            className="form-control "
             containerClass={"mb-3"}
             labelClassName="d-block"
             size={2}
@@ -41,7 +41,7 @@ export const HouseHoldComposition = ({
             register={register}
             name="hc_first_name_first"
             errors={errors}
-            className="form-control-sm "
+            className="form-control "
             containerClass={"mb-3"}
             labelClassName="d-block"
             size={2}
@@ -64,7 +64,7 @@ export const HouseHoldComposition = ({
               hideAddon={false}
               value={actionDate}
               showTimeSelect={false}
-              inputClass="form-control-sm"
+              inputClass="form-control"
               dateFormat="MM-dd-yyyy"
               onChange={(date) => {
                 setActionDate(date);
@@ -85,7 +85,7 @@ export const HouseHoldComposition = ({
             register={register}
             name="hc_age_first"
             errors={errors}
-            className="form-control-sm"
+            className="form-control"
             containerClass={"mb-3"}
             labelClassName="d-block"
             size={2}
@@ -123,7 +123,7 @@ export const HouseHoldComposition = ({
             register={register}
             name="hc_relationship_first"
             errors={errors}
-            className="form-control-sm "
+            className="form-control "
             containerClass={"mb-3"}
             labelClassName="d-block"
             size={2}
@@ -137,7 +137,7 @@ export const HouseHoldComposition = ({
             register={register}
             name="hc_disability_first"
             errors={errors}
-            className="form-control-sm "
+            className="form-control "
             containerClass={"mb-3"}
             labelClassName="d-block"
             size={2}
@@ -169,7 +169,7 @@ export const HouseHoldComposition = ({
           </Form.Group>
         </Col>
       </Row>
-      <Row>
+      {/* <Row>
         <FormLabel className="fw-bolder fs-6">Second Applicant:</FormLabel>
         <Col lg={2}>
           <FormInput
@@ -178,7 +178,7 @@ export const HouseHoldComposition = ({
             register={register}
             name="hc_last_name_second"
             errors={errors}
-            className="form-control-sm "
+            className="form-control "
             containerClass={"mb-3"}
             labelClassName="d-block"
             size={2}
@@ -192,7 +192,7 @@ export const HouseHoldComposition = ({
             register={register}
             name="hc_first_name_second"
             errors={errors}
-            className="form-control-sm "
+            className="form-control "
             containerClass={"mb-3"}
             labelClassName="d-block"
             size={2}
@@ -215,7 +215,7 @@ export const HouseHoldComposition = ({
               hideAddon={false}
               value={actionDate}
               showTimeSelect={false}
-              inputClass="form-control-sm"
+              inputClass="form-control"
               dateFormat="MM-dd-yyyy"
               onChange={(date) => {
                 setActionDate(date);
@@ -236,7 +236,7 @@ export const HouseHoldComposition = ({
             register={register}
             name="hc_age_second"
             errors={errors}
-            className="form-control-sm"
+            className="form-control"
             containerClass={"mb-3"}
             labelClassName="d-block"
             size={2}
@@ -274,7 +274,7 @@ export const HouseHoldComposition = ({
             register={register}
             name="hc_relationship_second"
             errors={errors}
-            className="form-control-sm "
+            className="form-control "
             containerClass={"mb-3"}
             labelClassName="d-block"
             size={2}
@@ -288,7 +288,7 @@ export const HouseHoldComposition = ({
             register={register}
             name="hc_disability_second"
             errors={errors}
-            className="form-control-sm "
+            className="form-control "
             containerClass={"mb-3"}
             labelClassName="d-block"
             size={2}
@@ -318,7 +318,7 @@ export const HouseHoldComposition = ({
             />
           </Form.Group>
         </Col>
-      </Row>
+      </Row> */}
     </FormGroup>
   );
 };

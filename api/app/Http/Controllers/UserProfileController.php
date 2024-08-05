@@ -55,7 +55,8 @@ class UserProfileController extends Controller
     }
 
 
-    public function allOccupants(){
+    public function allOccupants()
+    {
         $queryBuilder = UserProfile::with('user')->has('user.flat');
         return $queryBuilder->get();
     }
@@ -72,7 +73,8 @@ class UserProfileController extends Controller
     public function store(Request $request)
     {
         $validations = [
-            'name' => 'required|string',
+            'first_name' => 'required|min:3',
+            'last_name' => 'required',
             'email' => 'required|string|unique:users',
             'role_id' => 'required|string',
         ];
@@ -83,7 +85,8 @@ class UserProfileController extends Controller
         $request->validate($validations);
 
         $user = new User([
-            'name'  => $request->name,
+            'first_name'  => $request->first_name,
+            'last_name'   => $request->last_name,
             'email' => $request->email,
             'password' => bcrypt(Random::generate(10)),
         ]);
@@ -93,8 +96,8 @@ class UserProfileController extends Controller
             if ($request->get('role_id') === Role::Recident->value) {
                 FlatOwner::create(['user_id' => $user->getKey(), 'flat_id' => $request->get('flat_id')]);
             }
-            UserProfile::create(['user_id' => $user->getKey()]);
-
+            $userProfile = UserProfile::create(['user_id' => $user->getKey()]);
+            UserUpdated::dispatch($userProfile);
             $status = Password::sendResetLink(
                 $request->only('email')
             );
@@ -124,31 +127,56 @@ class UserProfileController extends Controller
             'relationship' => 'required',
             'emergency_contact_number'  => 'required|max:10|min:10',
             'emergency_contact_name' => 'required|min:3',
-            'name' => 'required|min:3',
+            'first_name' => 'required|min:3',
+            'last_name' => 'required',
+            'email' => 'required|string|email|unique:users',
         ];
 
         if ($user->hasRole([Role::Admin, Role::Staff])) {
-            $validations = [
-                'name' => 'required|min:3',
-                'unit' => 'required|integer|min:1|max:1000',
-                'parking_space' => 'required|integer|min:1|max:10000',
-                'birth_date' => 'required|date|before:' . now()->subYears(18)->toDateString(),
-                'locker' => 'required|integer|min:1|max:10000',
-                'staff_notes' => 'required',
-                'flat_id' => "required|integer",
-                'movein_date' => 'date',
-                'income_verification' => 'required|integer|min:1|max:1000000',
-                'rent_calculation'  => 'required|integer|min:1|max:1000000',
-                'language' => 'required',
-                'fob' => 'required',
-                'special_instruction' => 'min:3',
-            ];
+            if ($userProfile->user->hasRole([Role::Recident])) {
+                $validations = [
+                    'first_name' => 'required|min:3',
+                    'last_name' => 'required',
+                    'email' => 'required|string|email|unique:users',
+                    // 'unit' => 'required|integer|min:1|max:1000',
+                    'parking_space' => 'required|decimal:2',
+                    'birth_date' => 'required|date|before:' . now()->subYears(18)->toDateString(),
+                    'locker' => 'required',
+                    'staff_notes' => 'required',
+                    'flat_id' => "required|integer",
+                    'movein_date' => 'date',
+                    'income_verification' => 'required|decimal:2',
+                    'total_rent'  => 'required|decimal:2',
+                    'language' => 'required',
+                    'fob' => 'required',
+                    'special_instruction' => 'min:3',
+                    'emergency_contact_email' => 'required|email',
+                    'base_rent' => 'required|decimal:2',
+                    'utilities' => 'required|decimal:2',
+                    'maintenance_fees' => 'required|decimal:2',
+                    'property_taxes' => 'required|decimal:2',
+                    'rental_insurance' => 'required|decimal:2',
+                    'parking_fees' => 'required|decimal:2',
+                    'service_fees' => 'required|decimal:2',
+                    'administrative_fees' => 'required|decimal:2',
+                    'storage_fees' => 'required|decimal:2',
+                    'cable_fees' => 'required|decimal:2',
+                    'wifi' => 'required|decimal:2',
+                ];
+            } else {
+                $validations = [
+                    'phone_number' => 'required|max:10|min:10',
+                    'first_name' => 'required|min:3',
+                    'last_name' => 'required',
+                ];
+            }
         }
 
-        if ($user->id === $user_id) {
+        if ($user->id === $user_id && $userProfile->user->hasRole([Role::Recident])) {
             $validations['flat_id'] = 'exclude';
             $validations['birth_date'] = 'exclude';
-            $validations['name'] = 'exclude';
+            $validations['first_name'] = 'exclude';
+            $validations['last_name'] = 'exclude';
             $validations['email'] = 'exclude';
             $validations['movein_date'] = 'exclude';
             $validations['unit'] = 'exclude';
@@ -156,10 +184,22 @@ class UserProfileController extends Controller
             $validations['locker'] = 'exclude';
             $validations['staff_notes'] = 'exclude';
             $validations['income_verification'] = 'exclude';
-            $validations['rent_calculation'] = 'exclude';
+            $validations['total_rent'] = 'exclude';
             $validations['language'] = 'exclude';
             $validations['fob'] = 'exclude';
             $validations['special_instruction'] = 'exclude';
+            $validations['emergency_contact_email'] = 'exclude';
+            $validations['base_rent'] = 'exclude';
+            $validations['utilities'] = 'exclude';
+            $validations['maintenance_fees'] = 'exclude';
+            $validations['property_taxes'] = 'exclude';
+            $validations['rental_insurance'] = 'exclude';
+            $validations['parking_fees'] = 'exclude';
+            $validations['service_fees'] = 'exclude';
+            $validations['administrative_fees'] = 'exclude';
+            $validations['storage_fees'] = 'exclude';
+            $validations['cable_fees'] = 'exclude';
+            $validations['wifi'] = 'exclude';
         }
 
         $validated = $request->validate($validations);
@@ -178,7 +218,7 @@ class UserProfileController extends Controller
         if (isset($validated['flat_id'])) {
             $userProfile->user->flat->update($validated);
         }
-        if (null != $request->get('name')) {
+        if (null != $request->get('first_name')) {
             $userProfile->user->update($validated);
         }
 
@@ -321,6 +361,7 @@ class UserProfileController extends Controller
         $request->validate([
             'users' => 'required|max:1024|mimetypes:application/csv,application/excel,application/vnd.ms-excel, application/vnd.msexcel,text/csv, text/anytext, text/plain, text/x-c,text/comma-separated-values,inode/x-empty,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         ]);
+        set_time_limit(3000);
 
         $import = new UsersImport();
         $import->import(request()->file('users'));

@@ -35,8 +35,8 @@ export const ResidenceHistory = ({
             register={register}
             name="long_term"
             errors={errors}
-            className="form-control-sm"
-            containerClass={"mb-3 input-group"}
+            className="form-control"
+            containerClass={"mb-3 "}
             labelClassName="me-2"
             size={2}
             key="long_term"
@@ -52,15 +52,15 @@ export const ResidenceHistory = ({
             register={register}
             name="rh_address_first"
             errors={errors}
-            className="form-control-sm "
-            containerClass={"mb-3 input-group"}
+            className="form-control "
+            containerClass={"mb-3 "}
             labelClassName="me-2"
             size={2}
             key="rh_address_first"
           />
         </Col>
         <Col lg={3}>
-          <FormGroup className="input-group mb-3 ">
+          <FormGroup className=" mb-3 ">
             <Form.Label htmlFor="small" className="me-2">
               Start Date
             </Form.Label>
@@ -75,7 +75,7 @@ export const ResidenceHistory = ({
               hideAddon={false}
               value={fstartDate}
               showTimeSelect={false}
-              inputClass="form-control-sm"
+              inputClass="form-control"
               dateFormat="MM-dd-yyyy"
               onChange={(date) => {
                 fsetStartDate(date);
@@ -90,7 +90,7 @@ export const ResidenceHistory = ({
           </FormGroup>
         </Col>
         <Col lg={3}>
-          <FormGroup className="input-group mb-3 ">
+          <FormGroup className=" mb-3 ">
             <Form.Label htmlFor="small" className="me-2">
               End Date
             </Form.Label>
@@ -105,7 +105,7 @@ export const ResidenceHistory = ({
               hideAddon={false}
               value={fendDate}
               showTimeSelect={false}
-              inputClass="form-control-sm"
+              inputClass="form-control"
               dateFormat="MM-dd-yyyy"
               onChange={(date) => {
                 fsetEndDate(date);
@@ -121,13 +121,13 @@ export const ResidenceHistory = ({
         </Col>
         <Col lg={2}>
           <FormInput
-            label="Lanloard Name"
+            label="Landlord Name"
             type="text"
             register={register}
             name="landlord_name_first"
             errors={errors}
-            className="form-control-sm "
-            containerClass={"mb-3 input-group"}
+            className="form-control "
+            containerClass={"mb-3 "}
             labelClassName="me-2"
             size={2}
             key="landlord_name_first"
@@ -135,13 +135,13 @@ export const ResidenceHistory = ({
         </Col>
         <Col lg={2}>
           <FormInput
-            label="Lanloard Phone"
+            label="Landlord Phone"
             type="text"
             register={register}
             name="landlord_phone_first"
             errors={errors}
-            className="form-control-sm "
-            containerClass={"mb-3 input-group"}
+            className="form-control "
+            containerClass={"mb-3 "}
             labelClassName="me-2"
             size={2}
             key="landlord_phone_first"
@@ -157,15 +157,15 @@ export const ResidenceHistory = ({
             register={register}
             name="rh_address_second"
             errors={errors}
-            className="form-control-sm "
-            containerClass={"mb-3 input-group"}
+            className="form-control "
+            containerClass={"mb-3 "}
             labelClassName="me-2"
             size={2}
             key="rh_address_second"
           />
         </Col>
         <Col lg={3}>
-          <FormGroup className="input-group mb-3 ">
+          <FormGroup className=" mb-3 ">
             <Form.Label htmlFor="small" className="me-2">
               Start Date
             </Form.Label>
@@ -180,7 +180,7 @@ export const ResidenceHistory = ({
               hideAddon={false}
               value={sstartDate}
               showTimeSelect={false}
-              inputClass="form-control-sm"
+              inputClass="form-control"
               dateFormat="MM-dd-yyyy"
               onChange={(date) => {
                 ssetStartDate(date);
@@ -195,7 +195,7 @@ export const ResidenceHistory = ({
           </FormGroup>
         </Col>
         <Col lg={3}>
-          <FormGroup className="input-group mb-3 ">
+          <FormGroup className=" mb-3 ">
             <Form.Label htmlFor="small" className="me-2">
               End Date
             </Form.Label>
@@ -210,7 +210,7 @@ export const ResidenceHistory = ({
               hideAddon={false}
               value={sendDate}
               showTimeSelect={false}
-              inputClass="form-control-sm"
+              inputClass="form-control"
               dateFormat="MM-dd-yyyy"
               onChange={(date) => {
                 ssetEndDate(date);
@@ -226,13 +226,13 @@ export const ResidenceHistory = ({
         </Col>
         <Col lg={2}>
           <FormInput
-            label="Lanloard Name"
+            label="Landlord Name"
             type="text"
             register={register}
             name="landlord_name_second"
             errors={errors}
-            className="form-control-sm "
-            containerClass={"mb-3 input-group"}
+            className="form-control "
+            containerClass={"mb-3"}
             labelClassName="me-2"
             size={2}
             key="landlord_name_second"
@@ -240,13 +240,13 @@ export const ResidenceHistory = ({
         </Col>
         <Col lg={2}>
           <FormInput
-            label="Lanloard Phone"
+            label="Landlord Phone"
             type="text"
             register={register}
             name="landlord_phone_second"
             errors={errors}
-            className="form-control-sm "
-            containerClass={"mb-3 input-group"}
+            className="form-control "
+            containerClass={"mb-3"}
             labelClassName="me-2"
             size={2}
             key="landlord_phone_second"
@@ -262,15 +262,15 @@ export const ResidenceHistory = ({
             register={register}
             name="rh_address_third"
             errors={errors}
-            className="form-control-sm "
-            containerClass={"mb-3 input-group"}
+            className="form-control "
+            containerClass={"mb-3 "}
             labelClassName="me-2"
             size={2}
             key="rh_address_third"
           />
         </Col>
         <Col lg={3}>
-          <FormGroup className="input-group mb-3 ">
+          <FormGroup className=" mb-3 ">
             <Form.Label htmlFor="small" className="me-2">
               Start Date
             </Form.Label>
@@ -285,7 +285,7 @@ export const ResidenceHistory = ({
               hideAddon={false}
               value={tstartDate}
               showTimeSelect={false}
-              inputClass="form-control-sm"
+              inputClass="form-control"
               dateFormat="MM-dd-yyyy"
               onChange={(date) => {
                 tsetStartDate(date);
@@ -300,7 +300,7 @@ export const ResidenceHistory = ({
           </FormGroup>
         </Col>
         <Col lg={3}>
-          <FormGroup className="input-group mb-3 ">
+          <FormGroup className=" mb-3 ">
             <Form.Label htmlFor="small" className="me-2">
               End Date
             </Form.Label>
@@ -315,7 +315,7 @@ export const ResidenceHistory = ({
               hideAddon={false}
               value={tendDate}
               showTimeSelect={false}
-              inputClass="form-control-sm"
+              inputClass="form-control"
               dateFormat="MM-dd-yyyy"
               onChange={(date) => {
                 tsetEndDate(date);
@@ -331,13 +331,13 @@ export const ResidenceHistory = ({
         </Col>
         <Col lg={2}>
           <FormInput
-            label="Lanloard Name"
+            label="Landlord Name"
             type="text"
             register={register}
             name="landlord_name_third"
             errors={errors}
-            className="form-control-sm "
-            containerClass={"mb-3 input-group"}
+            className="form-control "
+            containerClass={"mb-3 "}
             labelClassName="me-2"
             size={2}
             key="landlord_name_third"
@@ -345,13 +345,13 @@ export const ResidenceHistory = ({
         </Col>
         <Col lg={2}>
           <FormInput
-            label="Lanloard Phone"
+            label="Landlord Phone"
             type="text"
             register={register}
             name="landlord_phone_third"
             errors={errors}
-            className="form-control-sm "
-            containerClass={"mb-3 input-group"}
+            className="form-control "
+            containerClass={"mb-3 "}
             labelClassName="me-2"
             size={2}
             key="landlord_phone_third"
