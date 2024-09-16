@@ -1,6 +1,7 @@
 <?php
 
 use App\Constants\Role;
+use App\Http\Controllers\ApartmentController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BugController;
@@ -41,6 +42,16 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 Route::get('flats', [FlatController::class, 'index']);
+Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
+    Route::post('flat', [FlatController::class, 'store']);
+    Route::delete('flat/{id}', [FlatController::class, 'destroy']);
+    Route::put('flat/{id}', [FlatController::class, 'update']);
+    Route::get('flat/{id}', [FlatController::class, 'show']);
+
+    Route::post('apartment', [ApartmentController::class, 'store']);
+    Route::delete('apartment/{id}', [ApartmentController::class, 'destroy']);
+    Route::put('apartment/{id}', [ApartmentController::class, 'update']);
+});
 Route::post('application', [ApplicationController::class, 'index']);
 Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff']], function () {
     Route::get('notice/{id}', [NoticeController::class, 'show']);
@@ -49,12 +60,16 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff']], function ()
     Route::put('notice/{id}', [NoticeController::class, 'update']);
     Route::get('notice', [NoticeController::class, 'index']);
     Route::get('application', [ApplicationController::class, 'list']);
+    Route::post('application-archive/{id}', [ApplicationController::class, 'archive']);
+    Route::post('application-unarchive/{id}', [ApplicationController::class, 'unarchive']);
+    Route::delete('application/{id}', [ApplicationController::class, 'remove']);
     Route::post('application-to-user/{id}', [ApplicationController::class, 'convertToUser']);
 
     Route::post('user', [UserProfileController::class, 'store']);
     Route::post('user/documents', [UserProfileController::class, 'uploadDocuments']);
     Route::delete('user/document/{id}', [UserProfileController::class, 'deleteDocuments']);
     Route::delete('user/{id}', [UserProfileController::class, 'delete']);
+    Route::put('user/{id}', [UserProfileController::class, 'archive']);
 
     Route::get('user', [UserProfileController::class, 'index']);
     Route::get('resident', [UserProfileController::class, 'recidents']);

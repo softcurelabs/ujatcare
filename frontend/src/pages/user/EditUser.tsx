@@ -112,6 +112,7 @@ const BasicInputElements = () => {
               setProfilePic(`${config.BASE_URL}/${response.image_path}`);
             setValue("id", response.user.id);
             setValue("unit", response.unit);
+            
             setValue("first_name", response.user.first_name);
             setValue("last_name", response.user.last_name);
             setValue("email", response.user.email);
@@ -147,6 +148,7 @@ const BasicInputElements = () => {
             setValue('storage_fees', response.storage_fees);
             setValue('cable_fees', response.cable_fees);
             setValue('wifi', response.wifi);
+            setValue('floor_plan', response.floor_plan)
             //console.log(response.movein_date);
             setSelectedDate(new Date(response.movein_date));
             setBirthDate(new Date(response.birth_date));
@@ -177,7 +179,7 @@ const BasicInputElements = () => {
 
               <UploadImage id={params.id} />
 
-              <div className="mt-4">{user && <ResetPassword email={user.email} />}</div>
+              <div className="mt-4">{user && <ResetPassword email={user?.user.email} />}</div>
               <div className="mt-2">
                 <Documents id={params.id} />
               </div>
@@ -344,12 +346,12 @@ const BasicInputElements = () => {
                         <FormInput
                           label="Floorplan"
                           type="text"
-                          name="unit"
+                          name="floor_plan"
                           placeholder="Floorplan"
                           className="form-control-sm fs-5 "
                           containerClass={"mb-3 "}
                           register={register}
-                          key="unit"
+                          key="floor_plan"
                           errors={errors}
                         />
                       </Col>

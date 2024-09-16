@@ -15,6 +15,7 @@ import {
   createBug,
   occupants,
   sync,
+  archive,
 } from "../../helpers/api/user";
 import {
   BugDataType,
@@ -132,6 +133,18 @@ export const userDeleteAsync = createAsyncThunk<StateType | null, any>(
     }
   }
 );
+
+export const userArchiveAsync = createAsyncThunk<StateType | null, any>(
+    "userArchiveAsync/archive",
+    async ({id, reason}, { rejectWithValue }) => {
+      try {
+        const response = await archive(id, reason);
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(error);
+      }
+    }
+  );
 
 export const userEditAsync = createAsyncThunk<StateType | null, any>(
   "userAsync/edit",

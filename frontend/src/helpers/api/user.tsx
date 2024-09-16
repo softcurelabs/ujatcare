@@ -51,6 +51,11 @@ export function remove(id: Number) {
   return api.delete(`${baseUrl}`);
 }
 
+export function archive(id: Number, reason: number) {
+    const baseUrl = `/user/${id}`;
+    return api.update(`${baseUrl}`, {reason: reason});
+  }
+
 export function upload(id: Number, data: any) {
   const baseUrl = `/upload/${id}`;
 

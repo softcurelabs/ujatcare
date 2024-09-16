@@ -10,7 +10,9 @@ import { Accomodation } from "./view/Accomodation";
 import { ReasonForMove } from "./view/ReasonForMove";
 import { Comms } from "./view/Comms";
 import { UploadDocuments } from "./view/UploadDocuments";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Confirmation } from "../../components/Confirmation";
+import { AssignFlat } from "./AssignFlat";
 
 export const ViewApplicationModal = ({
   okLabel = "OK",
@@ -19,11 +21,16 @@ export const ViewApplicationModal = ({
   submitForm,
   show,
   handleClose,
+  handleArchive,
+  handleUnArchive,
+  handleRemove,
   data,
 }: ConfimationType) => {
   const handlePrint = () => {
     window.print();
   };
+  const [showDel, setshowDel] = useState<boolean>(false);
+  const [showAssign, setshowAssign] = useState<boolean>(false);
 
   return (
     data && (
@@ -40,15 +47,66 @@ export const ViewApplicationModal = ({
           <Accomodation data={data} />
           <ReasonForMove data={data} />
           <UploadDocuments data={data} />
-          <Comms data={data} />
+          {/* <Comms data={data} /> */}
         </Modal.Body>
         <Modal.Footer>
+          {data.status !== 1 ? (
+            data.status === 0 ? (
+              <Button variant="primary" onClick={() => handleArchive()}>
+                Archive
+              </Button>
+            ) : (
+              <Button variant="primary" onClick={() => handleUnArchive()}>
+                Un Archive
+              </Button>
+            )
+          ) : (
+            <></>
+          )}
+          {data.status === 0 ? (
+            <Button variant="primary" onClick={() => setshowAssign(true)}>
+              Accept
+            </Button>
+          ) : (
+            <></>
+          )}
+
           <Button variant="primary" onClick={() => handleClose()}>
             {okLabel}
           </Button>
           <Button variant="primary" onClick={() => handlePrint()}>
             Print
           </Button>
+          {data.status !== 1 ? (
+            <Button
+              variant="primary"
+              onClick={() => {
+                setshowDel(true);
+              }}
+            >
+              Delete
+            </Button>
+          ) : (
+            <></>
+          )}
+          <AssignFlat
+            show={showAssign}
+            targetId={data.id}
+            submitForm={(id) => { setshowAssign(false);handleClose();}}
+            handleClose={() => {setshowAssign(false);}}
+          />
+          <Confirmation
+            show={showDel}
+            targetId={data.id}
+            submitForm={() => {
+              handleRemove();
+              handleClose();
+              setshowDel(false);
+            }}
+            handleClose={() => {
+              setshowDel(false);
+            }}
+          />
         </Modal.Footer>
       </Modal>
     )
@@ -64,4 +122,7 @@ interface ConfimationType {
   submitForm(arg: Number): void;
   handleClose(): void;
   data: ApplicationType | null;
+  handleArchive(): void;
+  handleUnArchive(): void;
+  handleRemove(): void;
 }

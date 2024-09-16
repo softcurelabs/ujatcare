@@ -46,6 +46,7 @@ export const AssignFlat = ({
         if (response && response.status === true) {
           setToast(response.message);
           //   reset();
+          submitForm(10)
         }
         setIsLoading(false);
       })
@@ -61,7 +62,7 @@ export const AssignFlat = ({
   });
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={show} onHide={handleClose} backdropClassName="backdrophigh" className="backdrop">
       <Modal.Header closeButton>
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>

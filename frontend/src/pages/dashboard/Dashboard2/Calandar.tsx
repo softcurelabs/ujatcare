@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Row, Col, Card, Button } from "react-bootstrap";
+import { useEffect, useState } from "react";
 import "@fullcalendar/react";
 import { DateClickArg, Draggable } from "@fullcalendar/interaction";
 import { EventClickArg, EventInput } from "@fullcalendar/core";
-import classNames from "classnames";
 
 // components
-import PageTitle from "../../../components/PageTitle";
 import Calandar from "../../apps/Calendar/Calendar";
 import { useAppDispatch } from "../../../store";
 import { inspectionEventAsync } from "../../../store/inspection/InspectionSlice";

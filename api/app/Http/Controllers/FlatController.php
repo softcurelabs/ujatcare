@@ -6,6 +6,7 @@ use App\Models\Apartment;
 use App\Models\Flat;
 use App\Models\FlatOwner;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class FlatController extends Controller
 {
@@ -22,7 +23,20 @@ class FlatController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:flat,name',
+            'apartment_id' => 'required|exists:apartment,id'
+        ]);
+
+        $flat = new Flat();
+        $flat->apartment_id = $request->get('apartment_id');
+        $flat->name = $request->get('name');
+        $flat->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Suite added successfully'
+        ]);
     }
 
     /**
@@ -30,7 +44,9 @@ class FlatController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $flat = Flat::find($id);
+
+        return response()->json($flat);
     }
 
     /**
@@ -38,7 +54,20 @@ class FlatController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:flat,name',
+            'apartment_id' => 'required|exists:apartment,id'
+        ]);
+
+        $flat = Flat::find($id);
+        $flat->apartment_id = $request->get('apartment_id');
+        $flat->name = $request->get('name');
+        $flat->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Suite added successfully'
+        ]);
     }
 
     /**
@@ -46,6 +75,12 @@ class FlatController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $flat = Flat::find($id);
+        $flat->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Suite deleted successfully'
+        ]);
     }
 }

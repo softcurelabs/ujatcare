@@ -5,17 +5,18 @@ export const Confirmation = ({
   okLabel = "OK",
   cancelLabel = "Cancel",
   title = "Confirmation",
+  message = "Do you really want to submit?",
   submitForm,
   show,
   targetId,
   handleClose,
 }: ConfimationType) => {
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={show} onHide={handleClose} backdropClassName="backdrophigh" className="backdrop">
       <Modal.Header closeButton>
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>Do you really want to submit?</Modal.Body>
+      <Modal.Body>{message}</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           {cancelLabel}
@@ -32,6 +33,7 @@ interface ConfimationType {
   okLabel?: string;
   cancelLabel?: string;
   title?: string;
+  message?: string;
   confirmation?: string;
   show: boolean;
   targetId: Number;

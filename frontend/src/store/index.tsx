@@ -14,6 +14,7 @@ import InspectionReducer from "./inspection/InspectionSlice";
 import QuickBookReducer from "./quickbook/QuickbookSlice";
 import ContactReducer from "./contact/ContactSlice";
 import InvoiceReducer from "./invoice/InvoiceSlice";
+import ApartmentReducer from "./apartment/ApartmentSlice";
 
 const store = configureStore({
   reducer: {
@@ -29,6 +30,7 @@ const store = configureStore({
     QuickBook: QuickBookReducer,
     Contact: ContactReducer,
     Invoice: InvoiceReducer,
+    Apartment: ApartmentReducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

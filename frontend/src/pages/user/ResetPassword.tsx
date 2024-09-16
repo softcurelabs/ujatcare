@@ -1,5 +1,4 @@
 import { Button } from "react-bootstrap";
-import { FormInput } from "../../components";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { useTranslation } from "react-i18next";
@@ -7,7 +6,6 @@ import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { PasswordDataType } from "../../types/UserType";
-import { userResetAsync } from "../../store/user/UserSlice";
 import * as yup from "yup";
 import { ButtonLoader } from "../../components/ButtonLoader";
 import { forgotPasswordAsync } from "../../store/auth/AuthSlice";
@@ -55,6 +53,7 @@ const onSubmit = handleSubmit(() => {
     });
 });
 
+console.log(email)
   return (
     <form onSubmit={onSubmit}>
       {toast && <div className="alert alert-success">{toast}</div>}

@@ -129,7 +129,7 @@ class UserProfileController extends Controller
             'emergency_contact_name' => 'required|min:3',
             'first_name' => 'required|min:3',
             'last_name' => 'required',
-            'email' => 'required|string|email|unique:users',
+            'email' => 'required|string|email|unique:users,email,'.$user_id,
         ];
 
         if ($user->hasRole([Role::Admin, Role::Staff])) {
@@ -137,31 +137,31 @@ class UserProfileController extends Controller
                 $validations = [
                     'first_name' => 'required|min:3',
                     'last_name' => 'required',
-                    'email' => 'required|string|email|unique:users',
+                    'email' => 'required|string|email|unique:users,email,'.$user_id,
                     // 'unit' => 'required|integer|min:1|max:1000',
-                    'parking_space' => 'required|decimal:2',
+                    'parking_space' => 'nullable|sometimes|decimal:0,2',
                     'birth_date' => 'required|date|before:' . now()->subYears(18)->toDateString(),
-                    'locker' => 'required',
-                    'staff_notes' => 'required',
-                    'flat_id' => "required|integer",
-                    'movein_date' => 'date',
-                    'income_verification' => 'required|decimal:2',
-                    'total_rent'  => 'required|decimal:2',
-                    'language' => 'required',
-                    'fob' => 'required',
-                    'special_instruction' => 'min:3',
-                    'emergency_contact_email' => 'required|email',
-                    'base_rent' => 'required|decimal:2',
-                    'utilities' => 'required|decimal:2',
-                    'maintenance_fees' => 'required|decimal:2',
-                    'property_taxes' => 'required|decimal:2',
-                    'rental_insurance' => 'required|decimal:2',
-                    'parking_fees' => 'required|decimal:2',
-                    'service_fees' => 'required|decimal:2',
-                    'administrative_fees' => 'required|decimal:2',
-                    'storage_fees' => 'required|decimal:2',
-                    'cable_fees' => 'required|decimal:2',
-                    'wifi' => 'required|decimal:2',
+                    // 'locker' => 'required',
+                    // 'staff_notes' => 'required',
+                    'flat_id' => "integer",
+                    'movein_date' => 'nullable|sometimes|date',
+                    'income_verification' => 'nullable|sometimes|decimal:2',
+                    'total_rent'  => 'nullable|sometimes|decimal:2',
+                    // 'language' => 'required',
+                    // 'fob' => 'required',
+                    // 'special_instruction' => '',
+                    'emergency_contact_email' => 'nullable|sometimes|email',
+                    'base_rent' => 'nullable|sometimes|decimal:2',
+                    'utilities' => 'nullable|sometimes|decimal:2',
+                    'maintenance_fees' => 'nullable|sometimes|decimal:2',
+                    'property_taxes' => 'nullable|sometimes|decimal:2',
+                    'rental_insurance' => 'nullable|sometimes|decimal:2',
+                    'parking_fees' => 'nullable|sometimes|decimal:2',
+                    'service_fees' => 'nullable|sometimes|decimal:2',
+                    'administrative_fees' => 'nullable|sometimes|decimal:2',
+                    'storage_fees' => 'nullable|sometimes|decimal:2',
+                    'cable_fees' => 'nullable|sometimes|decimal:2',
+                    'wifi' => 'nullable|sometimes|decimal:2',
                 ];
             } else {
                 $validations = [
@@ -177,6 +177,7 @@ class UserProfileController extends Controller
             $validations['birth_date'] = 'exclude';
             $validations['first_name'] = 'exclude';
             $validations['last_name'] = 'exclude';
+            $validations['floor_plan'] = 'exclude';
             $validations['email'] = 'exclude';
             $validations['movein_date'] = 'exclude';
             $validations['unit'] = 'exclude';
@@ -207,7 +208,7 @@ class UserProfileController extends Controller
 
         if (null === $userProfile) {
             $userProfile = new UserProfile();
-            $userProfile->create($validated);
+            $userProfile->create($request->all());
             UserUpdated::dispatch($userProfile);
             return response()->json([
                 'status' => true,
@@ -222,7 +223,7 @@ class UserProfileController extends Controller
             $userProfile->user->update($validated);
         }
 
-        $userProfile->update($validated);
+        $userProfile->update($request->all());
         UserUpdated::dispatch($userProfile);
         return response()->json([
             'status' => true,
@@ -420,6 +421,26 @@ class UserProfileController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Document Deleted Successfully',
+        ]);
+    }
+
+    public function archive(int $id, Request $request) {
+        $user=User::find($id);
+        $request->validate([
+            'reason' => 'required'
+        ]);
+
+        $flatOwner = $user->flat;
+        if ($flatOwner) {
+            $flatOwner->delete();
+        }
+        $user->is_archive = 1;
+        $user->reason = $request->input('reason');
+        $user->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'User Archived Successfully',
         ]);
     }
 }

@@ -57,6 +57,7 @@
     "start": "sh -ac '. ./.env.local; GENERATE_SOURCEMAP=false react-scripts start'",
     "build": "sh -ac '. ./.env.prod; INLINE_RUNTIME_CHUNK=false GENERATE_SOURCEMAP=false react-scripts build';",
     "stage": "sh -ac '. ./.env.stage; INLINE_RUNTIME_CHUNK=false GENERATE_SOURCEMAP=false react-scripts build';",
+    "door238": "sh -ac '. ./.env.door238; INLINE_RUNTIME_CHUNK=false GENERATE_SOURCEMAP=false react-scripts build';",
     "build-demo": "GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

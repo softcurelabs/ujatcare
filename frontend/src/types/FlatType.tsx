@@ -10,6 +10,20 @@ export interface FlatType {
   apartment: ApartmentType
 }
 
+export interface FlatEditType extends TimeStampType {
+    name: string;
+    apartment_id: number;
+}
+
 export interface ApartmentType extends TimeStampType {
   name: string;
 }
+
+export interface ApartmentListType {
+    id: number;
+    name: String;
+    created_at: Date;
+    updated_at: Date;
+    flats: Array<FlatType>;
+  }
+  

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { list, add, assignFlat } from "../../helpers/api/application";
+import { list, add, assignFlat, archive, unarchive, remove } from "../../helpers/api/application";
 import {
   ApplicationType,
   ApplicationsType,
@@ -66,6 +66,42 @@ export const applicationAssignAsync = createAsyncThunk<StateType | null, any>(
       return rejectWithValue(error);
     }
   },
+);
+
+export const applicationArchiveAsync = createAsyncThunk<StateType | null, any>(
+    "application/archive",
+    async (params: number, {rejectWithValue }) => {
+      try {
+        const response = await archive(params);
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(error);
+      }
+    },
+  );
+
+  export const applicationUnArchiveAsync = createAsyncThunk<StateType | null, any>(
+    "application/unarchive",
+    async (params: number, {rejectWithValue }) => {
+      try {
+        const response = await unarchive(params);
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(error);
+      }
+    },
+  );
+
+export const applicationRemoveAsync = createAsyncThunk<StateType | null, any>(
+"application/remove",
+async (params: number, {rejectWithValue }) => {
+    try {
+    const response = await remove(params);
+    return response.data;
+    } catch (error) {
+    return rejectWithValue(error);
+    }
+},
 );
 
 export const { clearData } = ApplicationSlice.actions;

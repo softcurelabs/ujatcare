@@ -137,11 +137,44 @@ class ApplicationController extends Controller
             $application->save();
             UserUpdated::dispatch($userProfile);
 
-            Password::sendResetLink(
-                ['email' => $application->email]
-            );
+            $user->sendWelcomeEmail();
 
             return response()->json(['status' => true, 'message' => 'User created successfully']);
+        }
+    }
+
+    public function archive(Request $request, int $id) {
+        try {
+            $application = Application::findOrFail($id);
+            $application->status = 2;
+            $application->save();
+
+            return response()->json(['status' => true, 'message' => 'User Archived successfully']);
+        } catch (Exception $e) {
+            throw ValidationException::withMessages(['flat_id' => 'Application doesn\'t exists']);
+        }
+    }
+
+    public function unarchive(Request $request, int $id) {
+        try {
+            $application = Application::findOrFail($id);
+            $application->status = 0;
+            $application->save();
+
+            return response()->json(['status' => true, 'message' => 'User UnArchived successfully']);
+        } catch (Exception $e) {
+            throw ValidationException::withMessages(['flat_id' => 'Application doesn\'t exists']);
+        }
+    }
+
+    public function remove(Request $request, int $id) {
+        try {
+            $application = Application::findOrFail($id);
+            $application->delete();
+
+            return response()->json(['status' => true, 'message' => 'User deleted successfully']);
+        } catch (Exception $e) {
+            throw ValidationException::withMessages(['flat_id' => 'Application doesn\'t exists']);
         }
     }
 }

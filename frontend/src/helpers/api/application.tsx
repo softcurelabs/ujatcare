@@ -22,3 +22,18 @@ export function assignFlat(id: Number, params: any) {
   const baseUrl = `/application-to-user/${id}`;
   return api.create(`${baseUrl}`, params);
 }
+
+export function archive(id: number) {
+    const baseUrl = `/application-archive/${id}`;
+    return api.create(`${baseUrl}`, {});
+}
+
+export function unarchive(id: number) {
+const baseUrl = `/application-unarchive/${id}`;
+return api.create(`${baseUrl}`, {});
+}
+
+export function remove(id: number) {
+const baseUrl = `/application/${id}`;
+return api.delete(`${baseUrl}`);
+}

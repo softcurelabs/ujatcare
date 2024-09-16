@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import Pagination from "../../components/Pagination";
-import { applicationAsync } from "../../store/application/ApplicationSlice";
+import { applicationArchiveAsync, applicationUnArchiveAsync, applicationAsync, applicationRemoveAsync } from "../../store/application/ApplicationSlice";
 import { ApplicationType, ApplicationsType } from "../../types/ApplicationType";
 import { AssignFlat } from "./AssignFlat";
 import { ViewApplicationModal } from "./ViewApplicationModal";
@@ -22,7 +22,7 @@ const BasicTable = ({ application }: { application: ApplicationsType }) => {
   const [error, setError] = useState("");
   useEffect(() => {
     dispatch(applicationAsync(1));
-  }, []);
+  }, [dispatch, showApp]);
 
   return (
     <Card>
@@ -42,6 +42,7 @@ const BasicTable = ({ application }: { application: ApplicationsType }) => {
                 <th>First Name</th>
                 <th>Approved By</th>
                 <th>Created At</th>
+                <th>Status</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -55,6 +56,7 @@ const BasicTable = ({ application }: { application: ApplicationsType }) => {
                       <td>{record.first_name_first}</td>
                       <td>{record.approved_by ? record.approved_by.first_name : ''}</td>
                       <td>{record.created_at}</td>
+                      <td>{record.status===2 ? 'Archived': (record.status===1 ? 'Closed' : 'Open')}</td>
                       <td>
                         <React.Fragment>
                           <>
@@ -68,7 +70,7 @@ const BasicTable = ({ application }: { application: ApplicationsType }) => {
                             >
                               View
                             </Button>
-                            {record.status === 0 && (
+                            {/* {record.status === 0 && (
                               <Button
                                 className="btn-secondary ms-2"
                                 onClick={() => {
@@ -79,7 +81,7 @@ const BasicTable = ({ application }: { application: ApplicationsType }) => {
                               >
                                 Assign Flat
                               </Button>
-                            )}
+                            )} */}
                           </>
                         </React.Fragment>
                       </td>
@@ -93,16 +95,34 @@ const BasicTable = ({ application }: { application: ApplicationsType }) => {
           </Table>
         </div>
 
-        <AssignFlat
-          show={show}
-          targetId={id}
-          submitForm={(id) => {}}
-          handleClose={() => setShow(false)}
-        />
         <ViewApplicationModal
           show={showApp}
           data={data}
           submitForm={() => {}}
+          handleArchive={() => {
+            if (data?.id) {
+                dispatch(applicationArchiveAsync(data.id)).unwrap().then((response) => {
+                    setToast(response?.message);
+                    setShowApp(false);
+                });
+            }
+          }}
+          handleUnArchive={() => {
+            if (data?.id) {
+                dispatch(applicationUnArchiveAsync(data.id)).unwrap().then((response) => {
+                    setToast(response?.message);
+                    setShowApp(false);
+                });
+            }
+          }}
+          handleRemove={() => {
+            if (data?.id) {
+                dispatch(applicationRemoveAsync(data.id)).unwrap().then((response) => {
+                    setToast(response?.message);
+                    setShowApp(false);
+                });
+            }
+          }}
           handleClose={() => setShowApp(false)}
         />
       </Card.Body>

@@ -56,7 +56,8 @@ class UserProfile extends Model
         'emergency_address',
         'family_doctor',
         'medical_alerts',
-        'property'
+        'property',
+        'floor_plan'
     ];
 
     public function user(): BelongsTo

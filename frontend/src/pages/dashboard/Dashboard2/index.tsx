@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Card } from "react-bootstrap";
 
 // components
@@ -9,19 +9,31 @@ import Statistics from "./Statistics";
 import AppMenu from "../../../layouts/Menu";
 import { getAdminItems } from "../../../helpers/menu";
 import Calandar from "./Calandar";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
 
 const Dashboard2 = () => {
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
-  /*
-   * handle date change
-   */
-  const onDateChange = (date: Date) => {
-    if (date) {
-      setSelectedDate(date);
-    }
-  };
-
+  let {  user, userCustomer } = useSelector((state: RootState) => ({
+    notices: state.Notice.notices,
+    user: state.Auth.user,
+    userCustomer: state.CustomerAuth.user,
+  }));
+  if (userCustomer) {
+    user = userCustomer;
+  }
+  const [adminItems, setAdminItems] = useState(getAdminItems());
+  useEffect(() => {
+    if (user.user_role.includes('admin')) {
+        setAdminItems([...adminItems, {
+            key: "apartments",
+            label: "Apartments",
+            isTitle: false,
+            url: "/apartment",
+          }]);
+      }
+  }, []);
+  
   return (
     <>
       <Row>
@@ -39,7 +51,7 @@ const Dashboard2 = () => {
         <Col xl={6}>
           <Card className="widget-rounded-circle">
             <Card.Body>
-              <AppMenu menuItems={getAdminItems()} />
+              <AppMenu menuItems={adminItems} />
             </Card.Body>
           </Card>
         </Col>

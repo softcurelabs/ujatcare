@@ -4,6 +4,12 @@ import { Route, RouteProps } from "react-router-dom";
 // components
 import PrivateRoute from "./PrivateRoute";
 import AboutUs from "../pages/other/AboutUs";
+import List from "../pages/apartment/list";
+import New from "../pages/apartment/new";
+import Edit from "../pages/apartment/edit";
+import View from "../pages/apartment/view";
+import NewFlat from "../pages/flat/new";
+import EditFlat from "../pages/flat/edit";
 const Notices = React.lazy(() => import("../pages/tables/Notices"));
 const CustomerLogin = React.lazy(() => import("../pages/auth/CustomerLogin"));
 const MaintananceReport = React.lazy(() => import("../pages/tables/MaintananceReport"));
@@ -397,6 +403,47 @@ const uiRoutes = {
         },
       ],
     },
+    {
+        path: "/",
+        children: [
+          {
+            path: "/apartment",
+            name: "Basic",
+            roles: ['admin'],
+            element: <List />,
+          },
+          {
+            path: "/apartment/new",
+            name: "Basic",
+            roles: ['admin'],
+            element: <New />,
+          },
+          {
+            path: "/apartment/:id",
+            name: "Basic",
+            roles: ['admin'],
+            element: <Edit />,
+          },
+          {
+            path: "/suites/:id",
+            name: "Basic",
+            roles: ['admin'],
+            element: <View />,
+          },
+          {
+            path: "/suite/new/:id",
+            name: "Basic",
+            roles: ['admin'],
+            element: <NewFlat />,
+          },
+          {
+            path: "/suites/suite/:id",
+            name: "Basic",
+            roles: ['admin'],
+            element: <EditFlat />,
+          },
+        ],
+      },
     {
       path: "/",
       children: [

@@ -53,6 +53,7 @@ export interface UserProfileType extends TimeStampType {
         storage_fees: Number;
         cable_fees: Number;
         wifi: Number;
+        floor_plan: string
 }
 
 export interface UserEditType extends TimeStampType {
@@ -92,6 +93,7 @@ export interface UserEditType extends TimeStampType {
         storage_fees: Number;
         cable_fees: Number;
         wifi: Number;
+        floor_plan: string;
 }
 
 export interface UsersType extends PaginationType {
@@ -130,6 +132,7 @@ export interface UserProfileDataType {
         storage_fees: Number;
         cable_fees: Number;
         wifi: Number;
+        floor_plan: string;
 }
 
 export interface PasswordDataType {

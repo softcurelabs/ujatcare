@@ -1,31 +1,31 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { flats } from "../../helpers";
-import { FlatType } from "../../types/FlatType";
+import { FlatEditType, ApartmentListType, FlatType } from "../../types/FlatType";
+import { edit, add, remove, show } from "../../helpers/api/flat";
 const initialState: StateType = {
   flats: [],
+  status:false,
   error: "",
+  message: "",
   loading: false,
 };
 
 interface StateType {
-  flats: Array<ApartmentType>;
+  flats: Array<ApartmentListType>;
+  status: boolean;
   error: String;
+  message: string;
   loading: Boolean;
-}
-
-
-interface ApartmentType {
-  id: number;
-  name: String;
-  created_at: Date;
-  updated_at: Date;
-  flats: Array<FlatType>;
 }
 
 const FlatSlice = createSlice({
   name: "flat",
   initialState,
-  reducers: {},
+  reducers: {
+    clearData: (state) => {
+        state.loading = false;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(flatAsync.pending, () => {
@@ -42,7 +42,7 @@ const FlatSlice = createSlice({
   },
 });
 
-export const flatAsync = createAsyncThunk<Array<ApartmentType>>(
+export const flatAsync = createAsyncThunk<Array<ApartmentListType>>(
   "flatAsync",
   async () => {
     const response = await flats();
@@ -50,4 +50,51 @@ export const flatAsync = createAsyncThunk<Array<ApartmentType>>(
   },
 );
 
+export const flatShowAsync = createAsyncThunk<FlatType, any> (
+    "flatShowAsync",
+    async (id:number) => {
+      const response = await show(id);
+      return response.data;
+    },
+  );
+  
+
+export const flatAddAsync = createAsyncThunk<StateType | null, any>(
+    "flatAsync/add",
+    async (params: FlatEditType, { rejectWithValue }) => {
+      try {
+        const response = await add(params);
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(error);
+      }
+    }
+  );
+
+  export const flatUpdateAsync = createAsyncThunk<StateType | null, any>(
+    "flatUpdateAsync/Update",
+    async (params: FlatEditType, { rejectWithValue }) => {
+      try {
+        const response = await edit(params);
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(error);
+      }
+    }
+  );
+  
+  export const flatDeleteAsync = createAsyncThunk<StateType | null, any>(
+    "flatDeleteAsync/delete",
+    async (id: number, { rejectWithValue }) => {
+      try {
+        const response = await remove(id);
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(error);
+      }
+    }
+  );
+
+export const { clearData } = FlatSlice.actions;
+  
 export default FlatSlice.reducer;

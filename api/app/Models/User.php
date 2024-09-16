@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Mail\InviteEmail;
 use App\Traits\HasQuickBooksToken;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -13,6 +14,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -138,4 +141,20 @@ class User extends Authenticatable implements MustVerifyEmail
             ]
         ];
     }
+
+    public function sendWelcomeEmail(){
+
+        $token = app('auth.password.broker')->createToken($this);;
+
+        DB::table(config('auth.passwords.users.table'))->updateOrInsert([
+            'email' => $this->email
+        ],[
+            'email' => $this->email,
+            'token' => $token
+        ]);
+
+        $resetUrl= url(config('app.url').route('password.reset', $token, false));
+
+        Mail::to($this)->send(new InviteEmail($this, $resetUrl));
+      }
 }

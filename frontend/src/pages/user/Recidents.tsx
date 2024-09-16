@@ -8,7 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import Pagination from "../../components/Pagination";
 import { Confirmation } from "../../components/Confirmation";
-import { recidentAsync, recidentSyncAsync, userDeleteAsync } from "../../store/user/UserSlice";
+import {ArchiveConfirmation} from "../../components/ArchiveConfirmation";
+import { recidentAsync, recidentSyncAsync, userArchiveAsync, userDeleteAsync } from "../../store/user/UserSlice";
 import { UsersType } from "../../types/UserType";
 import ImportUsers from "./ImportUsers";
 import { FormInput } from "../../components";
@@ -24,6 +25,7 @@ interface UsersDataType {
 
 const BasicTable = ({ users, page, filter }: UsersDataType) => {
   const [show, setShow] = useState<boolean>(false);
+  const [archiveConfirm, setArchiveConfirm] = useState<boolean>(false);
   const [id, setId] = useState<Number>(0);
 
   const dispatch = useDispatch<AppDispatch>();
@@ -97,6 +99,13 @@ const BasicTable = ({ users, page, filter }: UsersDataType) => {
                               <i className="mdi mdi-dots-horizontal"></i>
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
+                            <Dropdown.Item onClick={() => {
+                                  setId(record.user.id);
+                                  setArchiveConfirm(true);
+                            }}>
+                                <i className="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>
+                                Archive Tenant
+                            </Dropdown.Item>
                               <Dropdown.Item href={`assign-permission/${record.user.id}`}>
                                 <i className="mdi mdi-pencil me-2 text-muted font-18 vertical-middle"></i>
                                 Manage Permission
@@ -148,6 +157,26 @@ const BasicTable = ({ users, page, filter }: UsersDataType) => {
                 });
             }}
             handleClose={() => setShow(false)}
+          />
+          <ArchiveConfirmation
+            show={archiveConfirm}
+            targetId={id}
+            submitForm={(id, reason) => {
+                console.log(reason);
+              dispatch(userArchiveAsync({id, reason}))
+                .unwrap()
+                .then((response) => {
+                  if (response && response.status === true) {
+                    setToast(response.message);
+                    setArchiveConfirm(false);
+                  }
+                })
+                .catch((reason) => {
+                  setError(reason.message);
+                  setArchiveConfirm(false);
+                });
+            }}
+            handleClose={() => setArchiveConfirm(false)}
           />
         </div>
       </Card.Body>

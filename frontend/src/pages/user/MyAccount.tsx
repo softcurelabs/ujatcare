@@ -152,6 +152,7 @@ const BasicInputElements = () => {
             setValue('storage_fees', response.storage_fees);
             setValue('cable_fees', response.cable_fees);
             setValue('wifi', response.wifi);
+            setValue('floor_plan', response.floor_plan);
             //console.log(response.movein_date);
             setSelectedDate(new Date(response.movein_date));
             // console.log(response.birth_date);
@@ -360,12 +361,12 @@ const BasicInputElements = () => {
                         <FormInput
                           label="Floorplan"
                           type="text"
-                          name="unit"
+                          name="floor_plan"
                           placeholder="Floorplan"
                           className="form-control-sm fs-5 "
                           containerClass={"mb-3 "}
                           register={register}
-                          key="unit"
+                          key="floor_plan"
                           errors={errors}
                           disabled={true}
                         />
