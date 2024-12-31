@@ -70,25 +70,11 @@ const BasicTable = ({ maintanance }: MaintananceListType) => {
                       <td role="cell">{record.action_date}</td>
                       <td role="cell">
                         <>
-                          <Dropdown className="btn-group" align="end">
-                            <Dropdown.Toggle
-                              variant="light"
-                              className="table-action-btn btn-sm"
-                            >
-                              <i className="mdi mdi-dots-horizontal"></i>
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                              {" "}
-                              <Dropdown.Item
-                                href={`maintanance/${record.id}`}
-                              >
-                                <i className="mdi mdi-check-all me-2 text-muted font-18 vertical-middle"></i>
-                                {user &&
-        (user.user_role.includes("admin") ||
-          user.user_role.includes("staff")) ? <span>Edit Maintanance</span> : <span>View Maintanance</span>}
-                              </Dropdown.Item>
-                            </Dropdown.Menu>
-                          </Dropdown>
+                        <React.Fragment>
+                          <>
+                            <a href={`maintanance/${record.id}`} title="View"><i className="mdi mdi-eye me-2 text-muted font-18 vertical-middle"></i></a>
+                          </>
+                        </React.Fragment>
                         </>
                       </td>
                     </tr>

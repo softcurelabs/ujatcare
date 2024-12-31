@@ -12,6 +12,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
@@ -21,7 +22,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, CanResetPassword, HasQuickBooksToken;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, CanResetPassword, HasQuickBooksToken, SoftDeletes;
 
     protected $appends = [
         'role',
@@ -42,6 +43,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'first_name',
         'last_name',
         'email',
+        'phone_number',
         'password',
     ];
 
@@ -150,10 +152,10 @@ class User extends Authenticatable implements MustVerifyEmail
             'email' => $this->email
         ],[
             'email' => $this->email,
-            'token' => $token
+            'token' => bcrypt($token)
         ]);
 
-        $resetUrl= url(config('app.url').route('password.reset', $token, false));
+        $resetUrl= config('auth.frontend') . $token;
 
         Mail::to($this)->send(new InviteEmail($this, $resetUrl));
       }

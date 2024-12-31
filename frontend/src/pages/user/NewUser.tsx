@@ -16,110 +16,121 @@ import { userAddAsync } from "../../store/user/UserSlice";
 import { ButtonLoader } from "../../components/ButtonLoader";
 
 const BasicInputElements = () => {
-  const { t } = useTranslation();
-  const schemaResolver = yupResolver(
-    yup.object().shape({
-      first_name: yup.string().required(t("Please select first name")),
-      last_name: yup.string().required(t("Please select last name")),
-      email: yup.string().required(t("Please select name")).email(t("Please valid Email")),
-      role_id: yup.string().required(t("Please select role")),
-    })
-  );
-  const [toast, setToast] = useState("");
-  const [error, setNewError] = useState("");
-  const [loading, setIsLoading] = useState(false);
-  const dispatch = useDispatch<AppDispatch>();
-  const { flats } = useSelector((state: RootState) => ({
-    flats: state.Flat.flats,
-  }));
-  useEffect(() => {
-    dispatch(flatAsync());
-  }, []);
+    const { t } = useTranslation();
+    const schemaResolver = yupResolver(
+        yup.object().shape({
+            first_name: yup.string().required(t("Please select first name")),
+            last_name: yup.string().required(t("Please select last name")),
+            email: yup.string().email(t("Please valid Email")).required(t('Please enter email')),
+            role_id: yup.string().required(t("Please select role")),
+        })
+    );
+    const [toast, setToast] = useState("");
+    const [error, setNewError] = useState("");
+    const [loading, setIsLoading] = useState(false);
+    const dispatch = useDispatch<AppDispatch>();
+    const { flats } = useSelector((state: RootState) => ({
+        flats: state.Flat.flats,
+    }));
+    useEffect(() => {
+        dispatch(flatAsync());
+    }, []);
 
-  const {
-    register,
-    handleSubmit,
-    setError,
-    formState: { errors },
-  } = useForm<UserData>({ defaultValues: {}, resolver: schemaResolver });
-  const onSubmit = handleSubmit(async (data) => {
-    setIsLoading(true);
-    dispatch(userAddAsync(data))
-      .unwrap()
-      .then((response) => {
-        if (response && response.status === true) {
-          setToast(response.message);
-          //   reset();
-        }
-        setIsLoading(false);
-      })
-      .catch((reason) => {
-        for (var element in reason.errors) {
-          try {
-            // @ts-ignore
-            setError(element, { message: reason.errors[element].toString() });
-          } catch (errror) {}
-        }
-        setIsLoading(false);
-      });
-  });
+    const {
+        register,
+        handleSubmit,
+        setError,
+        formState: { errors },
+    } = useForm<UserData>({ defaultValues: {}, resolver: schemaResolver });
+    const onSubmit = handleSubmit(async (data) => {
+        setIsLoading(true);
+        dispatch(userAddAsync(data))
+            .unwrap()
+            .then((response) => {
+                if (response && response.status === true) {
+                    setToast(response.message);
+                    //   reset();
+                }
+                setIsLoading(false);
+            })
+            .catch((reason) => {
+                for (var element in reason.errors) {
+                    try {
+                        // @ts-ignore
+                        setError(element, { message: reason.errors[element].toString() });
+                    } catch (errror) { }
+                }
+                setIsLoading(false);
+            });
+    });
 
-  return (
-    <>
-      {toast && <div className="alert alert-success">{toast}</div>}
-      {error && (
-        <div className="alert alert-danger mt-3" role="alert">
-          {error}
-        </div>
-      )}
-      <Card>
-        <Card.Body>
-          <Row>
-            <Col lg={6}>
-              <form onSubmit={onSubmit}>
-                <FormInput
-                  label="First Name"
-                  type="text"
-                  register={register}
-                  name="first_name"
-                  errors={errors}
-                  rows="5"
-                  containerClass={"mb-3"}
-                  key="first_name"
-                />
-                <FormInput
-                  label="Last Name"
-                  type="text"
-                  register={register}
-                  name="last_name"
-                  errors={errors}
-                  rows="5"
-                  containerClass={"mb-3"}
-                  key="last_name"
-                />
-                <FormInput
-                  label="Email"
-                  type="text"
-                  register={register}
-                  name="email"
-                  errors={errors}
-                  rows="5"
-                  containerClass={"mb-3"}
-                  key="email"
-                />
-                <FormInput
-                  type="select"
-                  label="Role"
-                  name="role_id"
-                  containerClass="mb-3"
-                  register={register}
-                  errors={errors}
-                >
-                  <option value="">Select Role</option>
-                  <option value="staff">Staff</option>
-                  <option value="admin">Admin</option>
-                </FormInput>
-                {/* <FormInput
+    return (
+        <>
+            {toast && <div className="alert alert-success">{toast}</div>}
+            {error && (
+                <div className="alert alert-danger mt-3" role="alert">
+                    {error}
+                </div>
+            )}
+            <Card>
+                <Card.Body>
+                    <Row>
+                        <Col lg={6}>
+                            <form onSubmit={onSubmit}>
+                                <FormInput
+                                    label="First Name"
+                                    type="text"
+                                    register={register}
+                                    name="first_name"
+                                    errors={errors}
+                                    rows="5"
+                                    containerClass={"mb-3"}
+                                    key="first_name"
+                                />
+                                <FormInput
+                                    label="Last Name"
+                                    type="text"
+                                    register={register}
+                                    name="last_name"
+                                    errors={errors}
+                                    rows="5"
+                                    containerClass={"mb-3"}
+                                    key="last_name"
+                                />
+                                <FormInput
+                                    label="Phone number"
+                                    type="text"
+                                    register={register}
+                                    name="phone_number"
+                                    errors={errors}
+                                    containerClass={"mb-3"}
+                                    key="phone_number"
+                                />
+
+                                <FormInput
+                                    label="Email"
+                                    type="text"
+                                    register={register}
+                                    name="email"
+                                    errors={errors}
+                                    rows="5"
+                                    containerClass={"mb-3"}
+                                    key="email"
+                                />
+                                <FormInput
+                                    type="select"
+                                    label="Role"
+                                    name="role_id"
+                                    containerClass="mb-3"
+                                    register={register}
+                                    errors={errors}
+                                >
+                                    <option value="">Select Role</option>
+                                    <option value="staff">Staff</option>
+                                    <option value="maintenance-staff">Maintenance Staff</option>
+                                    <option value="admin">Admin</option>
+                                </FormInput>
+                                {/* <FormInput
                   type="select"
                   label="Suite"
                   name="flat_id"
@@ -144,43 +155,43 @@ const BasicInputElements = () => {
                       </optgroup>
                     ))}
                 </FormInput> */}
-                {loading ? (
-                  <ButtonLoader />
-                ) : (
-                  <Button variant="primary" type="submit">
-                    Create User
-                  </Button>
-                )}
-              </form>
-            </Col>
+                                {loading ? (
+                                    <ButtonLoader />
+                                ) : (
+                                    <Button variant="primary" type="submit">
+                                        Create User
+                                    </Button>
+                                )}
+                            </form>
+                        </Col>
 
-            <Col lg={6}></Col>
-            <Col lg={3}></Col>
-          </Row>
-        </Card.Body>
-      </Card>
-    </>
-  );
+                        <Col lg={6}></Col>
+                        <Col lg={3}></Col>
+                    </Row>
+                </Card.Body>
+            </Card>
+        </>
+    );
 };
 
 const NewUser = () => {
-  return (
-    <React.Fragment>
-      <PageTitle
-        breadCrumbItems={[
-          { label: "Dashboard", path: "/dashboard-2" },
-          { label: "Users", path: "/user" },
-          { label: "New Staff", path: "/notice/new", active: true },
-        ]}
-        title={"New Staff"}
-      />
+    return (
+        <React.Fragment>
+            <PageTitle
+                breadCrumbItems={[
+                    { label: "Dashboard", path: "/dashboard-2" },
+                    { label: "Users", path: "/user" },
+                    { label: "New Staff", path: "/notice/new", active: true },
+                ]}
+                title={"New Staff"}
+            />
 
-      <Row>
-        <Col>
-          <BasicInputElements />
-        </Col>
-      </Row>
-    </React.Fragment>
-  );
+            <Row>
+                <Col>
+                    <BasicInputElements />
+                </Col>
+            </Row>
+        </React.Fragment>
+    );
 };
 export default NewUser;

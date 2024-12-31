@@ -21,9 +21,11 @@ interface UsersDataType {
   users: UsersType | null;
   page: Number;
   filter: string;
+  name: string;
+  findFlat: string;
 }
 
-const BasicTable = ({ users, page, filter }: UsersDataType) => {
+const BasicTable = ({ users, page, filter, name, findFlat }: UsersDataType) => {
   const [show, setShow] = useState<boolean>(false);
   const [archiveConfirm, setArchiveConfirm] = useState<boolean>(false);
   const [id, setId] = useState<Number>(0);
@@ -32,8 +34,8 @@ const BasicTable = ({ users, page, filter }: UsersDataType) => {
   const [toast, setToast] = useState("");
   const [error, setError] = useState("");
   useEffect(() => {
-    dispatch(recidentAsync({page: page, filter: filter}));
-  }, [show, filter]);
+    dispatch(recidentAsync({page: page, filter: filter, name, findFlat}));
+  }, [show, archiveConfirm]);
 
   const onClick = (id: Number) => {
     setToast("");
@@ -162,7 +164,6 @@ const BasicTable = ({ users, page, filter }: UsersDataType) => {
             show={archiveConfirm}
             targetId={id}
             submitForm={(id, reason) => {
-                console.log(reason);
               dispatch(userArchiveAsync({id, reason}))
                 .unwrap()
                 .then((response) => {
@@ -189,6 +190,8 @@ const Recidents = () => {
   const [currentPage, setCurrentPage] = useState<Number>(1);
   const [show, setShow] = useState<boolean>(false);
   const [filter, setFilter] = useState("");
+  const [name, setName] = useState("");
+  const [findFlat, setFindFlat] = useState("");
   const { users, flats } = useSelector((state: RootState) => ({
     users: state.User.users,
     flats: state.Flat.flats,
@@ -199,8 +202,8 @@ const Recidents = () => {
   let navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(recidentAsync({page: currentPage, filter: filter}));
-  }, [currentPage, show]);
+    dispatch(recidentAsync({page: currentPage, filter: filter, name, findFlat}));
+  }, [currentPage, show, name, findFlat]);
 
   return (
     <React.Fragment>
@@ -212,7 +215,7 @@ const Recidents = () => {
       <Row>
         <Col lg={12}>
           <Row>
-            <Col lg={8}>
+            <Col lg={6}>
               <Button
                 className="waves-effect waves-light mb-3 me-3"
                 onClick={() => {
@@ -231,8 +234,14 @@ const Recidents = () => {
                 <i className="mdi mdi-plus-circle me-1"></i> Import Tenants
               </Button>
             </Col>
-            <Col lg={4}>
-              <FormInput type="select" name="apartment-selection" onChange={(e) => setFilter(e.target.value)} label="Filter" containerClass="d-flex" className="mb-2 ms-2 form-check-inline">
+            <Col lg={2}>
+              <FormInput type="text" name="apartment-flat" label="Filters" onKeyUp={(e) => setFindFlat(e.currentTarget.value)}  placeholder="Search Flat" containerClass="d-flex" className="mb-2 ms-2 form-check-inline"/>
+            </Col>
+            <Col lg={2}>
+              <FormInput type="text" name="apartment-name" onKeyUp={(e) => {setName(e.currentTarget.value)}}  placeholder="Search Tanent" containerClass="d-flex" className="mb-2 ms-2 form-check-inline"/>
+            </Col>
+            <Col lg={2}>
+              <FormInput type="select" name="apartment-selection" onChange={(e) => setFilter(e.target.value)} containerClass="d-flex" className="mb-2 ms-2 form-check-inline">
                 <option value={""}>Select Apartment</option>
                 {flats.length &&
                   flats.map((flat) => (
@@ -245,7 +254,7 @@ const Recidents = () => {
           </Row>
           {users && (
             <>
-              <BasicTable users={users} page={currentPage} filter={filter} />
+              <BasicTable users={users} page={currentPage} filter={filter} name={name} findFlat={findFlat} />
               <Pagination
                 tableProps={{
                   pageCount: users.last_page,

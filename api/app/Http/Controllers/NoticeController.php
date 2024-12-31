@@ -20,7 +20,7 @@ class NoticeController extends Controller
      */
     public function highlight(Request $request)
     {
-        return Notice::where('schedule_date', '<', now())->orderBy('id', 'desc')->paginate($request->get('limit', 5));
+        return Notice::where('schedule_date', '<=',  \DB::raw('NOW()'))->orderBy('id', 'desc')->paginate($request->get('limit', 5));
     }
 
     /**

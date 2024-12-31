@@ -42,7 +42,6 @@ export const Documents = ({ id }: { id?: string }) => {
     dispatch(userShowAsync(id))
       .unwrap()
       .then((response) => {
-        console.log(response.user);
         setDocuments(response.user.documents);
       });
   }, []);

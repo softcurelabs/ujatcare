@@ -11,9 +11,11 @@ import { applicationArchiveAsync, applicationUnArchiveAsync, applicationAsync, a
 import { ApplicationType, ApplicationsType } from "../../types/ApplicationType";
 import { AssignFlat } from "./AssignFlat";
 import { ViewApplicationModal } from "./ViewApplicationModal";
+import FormInput from "../../components/FormInput";
 
 const BasicTable = ({ application }: { application: ApplicationsType }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const [filter, setFilter] = useState("");
   const [show, setShow] = useState<boolean>(false);
   const [showApp, setShowApp] = useState<boolean>(false);
   const [data, setData] = useState<ApplicationType | null>(null);
@@ -21,8 +23,8 @@ const BasicTable = ({ application }: { application: ApplicationsType }) => {
   const [toast, setToast] = useState("");
   const [error, setError] = useState("");
   useEffect(() => {
-    dispatch(applicationAsync(1));
-  }, [dispatch, showApp]);
+    dispatch(applicationAsync({filter, page: 1}));
+  }, [filter, showApp]);
 
   return (
     <Card>
@@ -33,6 +35,17 @@ const BasicTable = ({ application }: { application: ApplicationsType }) => {
             {error}
           </div>
         )}
+        <Row>
+            <Col lg={9} className=""></Col>
+            <Col lg={3} >
+              <FormInput type="select" name="application" onChange={(e) => setFilter(e.target.value)} label="Filter" containerClass="d-flex" className="mb-2 ms-2 form-check-inline">
+                <option value={""}>Select Status</option>
+                <option value={0}>Open</option>
+                <option value={1}>Closed</option>
+                <option value={2}>Archived</option>
+              </FormInput>
+            </Col>
+        </Row>
         <div className="table-responsive">
           <Table className="mb-0 table-striped dt-responsive nowrap w-100">
             <thead className="table-light">

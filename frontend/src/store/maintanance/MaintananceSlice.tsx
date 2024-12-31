@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
+    Conversation,
   DashboardType,
   MaintananceData,
   MaintanancesType,
@@ -12,6 +13,8 @@ import {
   edit,
   maintananceDashboard,
   maintananceShow,
+  conversation,
+  createConversation,
 } from "../../helpers/api/maintanance";
 
 const initialState: StateType = {
@@ -62,9 +65,9 @@ export const maintananceAsync = createAsyncThunk<
 
 export const maintananceAdminAsync = createAsyncThunk<
   MaintanancesType | null,
-  Number
->("maintananceAdminAsync", async (page = 1) => {
-  const response = await maintananceAdmin(page);
+  any
+>("maintananceAdminAsync", async ({page, status}) => {
+  const response = await maintananceAdmin(page, status);
   return response.data;
 });
 
@@ -120,6 +123,29 @@ export const maintananceAdminEditAsync = createAsyncThunk<
   async (param: MaintananceData, { rejectWithValue }) => {
     try {
       const response = await maintananceAdminEdit(param);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+);
+
+export const conversationAsync = createAsyncThunk<
+Array<Conversation> | null,
+string
+>("conversationAsync", async (id) => {
+  const response = await conversation(id);
+  return response.data;
+});
+
+export const conversationCreateAsync = createAsyncThunk<
+  StateType | null,
+  any
+>(
+  "conversationCreateAsync",
+  async (param: MaintananceData, { rejectWithValue }) => {
+    try {
+      const response = await createConversation(param);
       return response.data;
     } catch (error) {
       return rejectWithValue(error);

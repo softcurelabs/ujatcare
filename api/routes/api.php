@@ -69,7 +69,8 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff']], function ()
     Route::post('user/documents', [UserProfileController::class, 'uploadDocuments']);
     Route::delete('user/document/{id}', [UserProfileController::class, 'deleteDocuments']);
     Route::delete('user/{id}', [UserProfileController::class, 'delete']);
-    Route::put('user/{id}', [UserProfileController::class, 'archive']);
+    // Route::put('user/{id}', [UserProfileController::class, 'update']);
+    Route::patch('user/{id}', [UserProfileController::class, 'archive']);
 
     Route::get('user', [UserProfileController::class, 'index']);
     Route::get('resident', [UserProfileController::class, 'recidents']);
@@ -82,13 +83,12 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff']], function ()
     Route::post('inspection', [InspectionController::class, 'create']);
     Route::post('inspection/{id}', [InspectionController::class, 'update']);
     Route::get('inspection/{id}', [InspectionController::class, 'show']);
-    Route::get('event-inspection', [InspectionController::class, 'events']);
     Route::delete('inspection/{id}', [InspectionController::class, 'delete']);
     Route::delete('inspection-document/{id}', [InspectionController::class, 'deleteDocument']);
     Route::get('quickbook', [QuickbookController::class, 'connect']);
     Route::post('quickbook', [QuickbookController::class, 'authorise']);
 
-    Route::get('/occupants', [UserProfileController::class, 'allOccupants']);
+    
     Route::post('invoice', [InvoiceController::class, 'create']);
     Route::post('bulk-invoice', [InvoiceController::class, 'bulkInvoice']);
     Route::get('invoice/sync/{id}', [InvoiceController::class, 'sync']);
@@ -98,18 +98,23 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff']], function ()
     Route::delete('invoice/{id}', [InvoiceController::class, 'delete']);
 });
 
-Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff|recident']], function () {
+Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff|recident|maintenance-staff']], function () {
     Route::get('notice-highlight', [NoticeController::class, 'highlight']);
-    Route::get('user/{id}', [UserProfileController::class, 'show']);
     Route::post('upload/{user_id}', [UserProfileController::class, 'upload']);
     Route::put('set-password/{user_id}', [UserProfileController::class, 'setPassword']);
     Route::put('user/{user_id}', [UserProfileController::class, 'update']);
 
-    Route::get('maintanance/{id}', [MaintanceController::class, 'show']);
     Route::post('bug', [BugController::class, 'index']);
 
     Route::get('invoice', [InvoiceController::class, 'list']);
     Route::get('invoice/{id}', [InvoiceController::class, 'show']);
+});
+
+Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff|recident|maintenance-staff']], function () {
+    Route::get('maintanance/{id}', [MaintanceController::class, 'show']);
+    Route::get('user/{id}', [UserProfileController::class, 'show']);
+    Route::post('maintanance-conversation/{id}', [MaintanceController::class, 'createConversation']);
+    Route::get('maintanance-conversation/{id}', [MaintanceController::class, 'conversations']);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'role:recident']], function () {
@@ -119,12 +124,18 @@ Route::group(['middleware' => ['auth:sanctum', 'role:recident']], function () {
     Route::post('contact-office', [BugController::class, 'contactOffice']);
 });
 
-Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff']], function () {
+Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff|maintenance-staff']], function () {
     Route::get('maintanance-admin', [MaintanceController::class, 'listAll']);
+    Route::get('event-inspection', [InspectionController::class, 'events']);
+    Route::get('/occupants', [UserProfileController::class, 'allOccupants']);
+
     Route::put('maintanance-admin/{id}', [MaintanceController::class, 'updateAdmin']);
     Route::get('maintanance-dashboard', [MaintanceController::class, 'dashboard']);
 });
 
+Route::group(['middleware' => ['auth:sanctum', 'role:maintenance-staff']], function () {
+    Route::post('maintanance', [MaintanceController::class, 'store']);
+});
 Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
     ->middleware(['signed', 'throttle:6,1'])
     ->name('verification.verify');

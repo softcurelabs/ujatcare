@@ -30,8 +30,7 @@ axiosInstance.interceptors.response.use(
     } else {
       switch (error.response.status) {
         case 401:
-          message = "Invalid credentials";
-          break;
+            return Promise.reject(error.response.data)
         case 403:
           message = "Access Forbidden";
           break;

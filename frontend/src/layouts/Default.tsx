@@ -56,6 +56,9 @@ const DefaultLayout = (props: DefaultLayoutProps) => {
     }
   
     if (customerUser) {
+        if (customerUser.user_role.includes("recident")) {
+            return <Navigate to="/dashboard-1"/>;
+        }
       return <Navigate to="/dashboard-2"/>;
     }
   }

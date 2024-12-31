@@ -12,7 +12,7 @@ const NoticeHighlight = ({ noticeHighlights }: NoticeHighlightType) => {
         <Card.Body>
           <h4 className="header-title text-dark mb-3">Bulletin Board</h4>
           <div className="table-responsive">
-            <table className="table table-borderless table-hover table-nowrap table-centered m-0">
+            <table className="table table-borderless table-hover table-wrap table-centered m-0">
               <thead className="text-dark">
                 <tr>
                   <th>Title</th>

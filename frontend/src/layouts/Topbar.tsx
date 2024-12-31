@@ -102,7 +102,7 @@ const Topbar = ({ hideLogo, navCssClasses }: TopbarProps) => {
   if (user && user.user_role.includes("recident")) {
     heading = (
       <>
-        <h4 className="text-white"> Apt#: {user.flat}</h4>
+        <h4 className="text-white"> Suite#: {user.flat}</h4>
         {/* <h4 className="text-white">Name: {name}</h4> */}
       </>
     );

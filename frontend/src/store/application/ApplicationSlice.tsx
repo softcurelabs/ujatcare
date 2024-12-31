@@ -48,10 +48,10 @@ export const applicationAddAsync = createAsyncThunk<StateType | null, any>(
   },
 );
 
-export const applicationAsync = createAsyncThunk<ApplicationsType, Number>(
+export const applicationAsync = createAsyncThunk<ApplicationsType, any>(
   "applicationAsync/list",
-  async (page = 1) => {
-    const response = await list(page);
+  async ({page, filter}) => {
+    const response = await list(filter, page);
     return response.data;
   },
 );

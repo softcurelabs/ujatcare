@@ -37,7 +37,7 @@ const BasicTable = ({ flats }: NoticeHighlightType) => {
             <thead className="table-light">
               <tr>
                 <th>Id</th>
-                <th>Name</th>
+                <th>Number</th>
                 <th>Actions</th>
               </tr>
             </thead>

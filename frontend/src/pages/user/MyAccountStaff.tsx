@@ -21,182 +21,194 @@ import config from "../../config";
 import { ButtonLoader } from "../../components/ButtonLoader";
 
 const BasicInputElements = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { t } = useTranslation();
-  const [toast, setToast] = useState("");
-  const [error, setNewError] = useState("");
-  const [loading, setIsLoading] = useState(false);
-  const schemaResolver = yupResolver(
-    yup.object().shape({
-      //   title: yup.string().required(t("Please select title")).min(10, "Atleast 10 char required"),
-    })
-  );
-  let { user, customerUser } = useSelector((state: RootState) => ({
-    user: state.Auth.user,
-    customerUser: state.CustomerAuth.user,
-  }));
+    const dispatch = useDispatch<AppDispatch>();
+    const { t } = useTranslation();
+    const [toast, setToast] = useState("");
+    const [error, setNewError] = useState("");
+    const [loading, setIsLoading] = useState(false);
+    const schemaResolver = yupResolver(
+        yup.object().shape({
+            //   title: yup.string().required(t("Please select title")).min(10, "Atleast 10 char required"),
+        })
+    );
+    let { user, customerUser } = useSelector((state: RootState) => ({
+        user: state.Auth.user,
+        customerUser: state.CustomerAuth.user,
+    }));
 
-  if (!user) {
-    user = customerUser;
-  }
-  //   console.log(user);
-
-  /*
-   * form methods
-   */
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-  const [disabled, setDisabled] = useState<boolean>(true);
-  const navigate = useNavigate();
-  const [profilePic, setProfilePic] = useState<null | string>(null);
-  /*
-   * handle date change
-   */
-  const onDateChange = (date: Date) => {
-    if (date) {
-      setSelectedDate(date);
+    if (!user) {
+        user = customerUser;
     }
-  };
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    setError,
-    formState: { errors },
-  } = useForm<UserEditType>({
-    defaultValues: {
-      unit: 10,
-      phone_number: "9601277532",
-      parking_space: 120,
-      emergency_contact_number: "9601277532",
-      emergency_contact_name: "jasmin",
-      income_verification: 230,
-      total_rent: 123,
-      language: "eng",
-      special_instruction: null,
-    },
-    resolver: schemaResolver,
-  });
-  const onSubmit = handleSubmit((data) => {
-    setIsLoading(true);
-    dispatch(userEditAsync(data))
-      .unwrap()
-      .then((response) => {
-        if (response && response.status === true) {
-          setToast(response.message);
-          window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-          });
-          //   reset();
+    //   console.log(user);
+
+    /*
+     * form methods
+     */
+    const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+    const [disabled, setDisabled] = useState<boolean>(true);
+    const navigate = useNavigate();
+    const [profilePic, setProfilePic] = useState<null | string>(null);
+    /*
+     * handle date change
+     */
+    const onDateChange = (date: Date) => {
+        if (date) {
+            setSelectedDate(date);
         }
-        setIsLoading(false);
-      })
-      .catch((reason) => {
-        for (var element in reason.errors) {
-          try {
-            // @ts-ignore
-            setError(element, { message: reason.errors[element].toString() });
-          } catch (errror) {}
-        }
-        setIsLoading(false);
-      });
-  });
-  useEffect(() => {
-    dispatch(flatAsync())
-      .unwrap()
-      .then(() => {
-        dispatch(userShowAsync(user.user_id))
-          .unwrap()
-          .then((response) => {
-            if (config.BASE_URL && response.image_path)
-              setProfilePic(`${config.BASE_URL}/${response.image_path}`);
-            setValue("id", response.user.id);
-            setValue("unit", response.unit);
-            setValue("name", response.user.name);
-            setValue("email", response.user.email);
-            setValue("phone_number", response.phone_number);
-            if (response.user.flat) {
-              setValue("flat_id", response.user.flat.flat_id);
-            }
-            setValue("parking_space", response.parking_space);
-            setValue("emergency_contact_number", response.emergency_contact_number);
-            setValue("emergency_contact_name", response.emergency_contact_name);
-            setValue("income_verification", response.income_verification);
-            setValue("total_rent", response.total_rent);
-            setValue("special_instruction", response.special_instruction);
-            setValue("relationship", response.relationship);
-            setValue("movein_date", response.movein_date);
-            // setSelectedDate(new Date(response.movein_date));
-          })
-          .catch((error) => setNewError(error.message));
-      });
-  }, []);
+    };
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        setError,
+        formState: { errors },
+    } = useForm<UserEditType>({
+        defaultValues: {
+            unit: 10,
+            phone_number: "",
+            parking_space: 120,
+            emergency_contact_number: "",
+            emergency_contact_name: "",
+            income_verification: 230,
+            total_rent: 123,
+            language: "eng",
+            special_instruction: null,
+        },
+        resolver: schemaResolver,
+    });
+    const onSubmit = handleSubmit((data) => {
+        setIsLoading(true);
+        dispatch(userEditAsync(data))
+            .unwrap()
+            .then((response) => {
+                if (response && response.status === true) {
+                    setToast(response.message);
+                    window.scrollTo({
+                        top: 0,
+                        behavior: "smooth",
+                    });
+                    //   reset();
+                }
+                setIsLoading(false);
+            })
+            .catch((reason) => {
+                for (var element in reason.errors) {
+                    try {
+                        // @ts-ignore
+                        setError(element, { message: reason.errors[element].toString() });
+                    } catch (errror) { }
+                }
+                setIsLoading(false);
+            });
+    });
+    useEffect(() => {
+        dispatch(flatAsync())
+            .unwrap()
+            .then(() => {
+                dispatch(userShowAsync(user.user_id))
+                    .unwrap()
+                    .then((response) => {
+                        if (config.BASE_URL && response.image_path)
+                            setProfilePic(`${config.BASE_URL}/${response.image_path}`);
+                        setValue("id", response.user.id);
+                        setValue("unit", response.unit);
+                        setValue("first_name", response.user.first_name);
+                        setValue("last_name", response.user.last_name);
+                        setValue("email", response.user.email);
+                        setValue("phone_number", response.phone_number);
+                        if (response.user.flat) {
+                            setValue("flat_id", response.user.flat.flat_id);
+                        }
+                        setValue("parking_space", response.parking_space);
+                        setValue("emergency_contact_number", response.emergency_contact_number);
+                        setValue("emergency_contact_name", response.emergency_contact_name);
+                        setValue("income_verification", response.income_verification);
+                        setValue("total_rent", response.total_rent);
+                        setValue("special_instruction", response.special_instruction);
+                        setValue("relationship", response.relationship);
+                        setValue("movein_date", response.movein_date);
+                        // setSelectedDate(new Date(response.movein_date));
+                    })
+                    .catch((error) => setNewError(error.message));
+            });
+    }, []);
 
-  return (
-    <>
-      <Card>
-        <Card.Body>
-          {toast && <div className="alert alert-success">{toast}</div>}
-          {error && (
-            <div className="alert alert-danger mt-3" role="alert">
-              {error}
-            </div>
-          )}
+    return (
+        <>
+            <Card>
+                <Card.Body>
+                    {toast && <div className="alert alert-success">{toast}</div>}
+                    {error && (
+                        <div className="alert alert-danger mt-3" role="alert">
+                            {error}
+                        </div>
+                    )}
 
-          <Row>
-            <Col lg={6}>
-              <form onSubmit={onSubmit} className={disabled ? "form-readonly" : ""}>
-                <fieldset>
-                  <FormInput
-                    label="Name"
-                    type="text"
-                    name="name"
-                    className="form-control-sm fs-5"
-                    containerClass={"mb-3 input-group"}
-                    register={register}
-                    key="name"
-                    errors={errors}
-                  />
-                  <FormInput
-                    label="Phone#"
-                    type="text"
-                    name="phone_number"
-                    placeholder="phone_number"
-                    className="form-control-sm fs-5"
-                    containerClass={"mb-3 input-group"}
-                    register={register}
-                    key="phone_number"
-                    errors={errors}
-                  />
+                    <Row>
+                        <Col lg={6}>
+                            <form onSubmit={onSubmit} className={disabled ? "form-readonly" : ""}>
+                                <fieldset>
+                                    <FormInput
+                                        label="First Name"
+                                        type="text"
+                                        name="first_name"
+                                        className="form-control-sm fs-5"
+                                        containerClass={"mb-3 input-group"}
+                                        register={register}
+                                        key="first_name"
+                                        errors={errors}
+                                    />
+                                    <FormInput
+                                        label="Last Name"
+                                        type="text"
+                                        name="last_name"
+                                        className="form-control-sm fs-5"
+                                        containerClass={"mb-3 input-group"}
+                                        register={register}
+                                        key="last_name"
+                                        errors={errors}
+                                    />
+                                    <FormInput
+                                        label="Phone#"
+                                        type="text"
+                                        name="phone_number"
+                                        placeholder="phone_number"
+                                        className="form-control-sm fs-5"
+                                        containerClass={"mb-3 input-group"}
+                                        register={register}
+                                        key="phone_number"
+                                        errors={errors}
+                                    />
 
-                  <FormInput
-                    label="Email"
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    className="form-control-sm fs-5"
-                    containerClass={"mb-3 input-group"}
-                    register={register}
-                    key="email"
-                    errors={errors}
-                    disabled={true}
-                  />
-                  <FormInput
-                    type="select"
-                    label="Role"
-                    name="role_id"
-                    className="form-control-sm fs-5"
-                    containerClass={"mb-3 input-group"}
-                    register={register}
-                    errors={errors}
-                  >
-                    <option value="">Select Role</option>
-                    <option value="admin" selected>
-                      Super Admin
-                    </option>
-                    <option value="staff">Staff</option>
-                  </FormInput>
-                  {/* <FormInput
+                                    <FormInput
+                                        label="Email"
+                                        type="email"
+                                        name="email"
+                                        placeholder="Email"
+                                        className="form-control-sm fs-5"
+                                        containerClass={"mb-3 input-group"}
+                                        register={register}
+                                        key="email"
+                                        errors={errors}
+                                        disabled={true}
+                                    />
+                                    <FormInput
+                                        type="select"
+                                        label="Role"
+                                        name="role_id"
+                                        className="form-control-sm fs-5"
+                                        containerClass={"mb-3 input-group"}
+                                        register={register}
+                                        errors={errors}
+                                    >
+                                        <option value="">Select Role</option>
+                                        <option value="admin" selected>
+                                            Super Admin
+                                        </option>
+                                        <option value="staff">Staff</option>
+                                        <option value="maintenance-staff">Maintanance Staff</option>
+                                    </FormInput>
+                                    {/* <FormInput
                     label="Unit"
                     type="text"
                     name="unit"
@@ -372,7 +384,7 @@ const BasicInputElements = () => {
                       register={register}
                     />
                   </div> */}
-                  {/* {user.user_role.includes("admin") && (
+                                    {/* {user.user_role.includes("admin") && (
                     <FormInput
                       label="Staff Note"
                       type="textarea"
@@ -385,79 +397,79 @@ const BasicInputElements = () => {
                       errors={errors}
                     />
                   )} */}
-                </fieldset>
+                                </fieldset>
 
-                <Button
-                  onClick={() => navigate(-1)}
-                  variant="primary"
-                  className="me-2"
-                  type="submit"
-                >
-                  Back
-                </Button>
-                {!disabled ? (
-                  loading ? (
-                    <ButtonLoader />
-                  ) : (
-                    <Button variant="primary" type="submit">
-                      Submit
-                    </Button>
-                  )
-                ) : (
-                  <div />
-                )}
-              </form>
-            </Col>
+                                <Button
+                                    onClick={() => navigate(-1)}
+                                    variant="primary"
+                                    className="me-2"
+                                    type="submit"
+                                >
+                                    Back
+                                </Button>
+                                {!disabled ? (
+                                    loading ? (
+                                        <ButtonLoader />
+                                    ) : (
+                                        <Button variant="primary" type="submit">
+                                            Submit
+                                        </Button>
+                                    )
+                                ) : (
+                                    <div />
+                                )}
+                            </form>
+                        </Col>
 
-            <Col lg={6}>
-              <div className="text-center">
-                {profilePic && <img src={profilePic} className="rounded-4" alt="{}" width={125} />}
-              </div>
-              <div className="text-end pb-2">
-                {disabled ? (
-                  <Button variant="primary" type="submit" onClick={() => setDisabled(false)}>
-                    Edit
-                  </Button>
-                ) : (
-                  <div></div>
-                )}
-              </div>
+                        <Col lg={6}>
+                            <div className="text-center">
+                                {profilePic && <img src={profilePic} className="rounded-4" alt="{}" width={125} />}
+                            </div>
+                            <div className="text-end pb-2">
+                                {disabled ? (
+                                    <Button variant="primary" type="submit" onClick={() => setDisabled(false)}>
+                                        Edit
+                                    </Button>
+                                ) : (
+                                    <div></div>
+                                )}
+                            </div>
 
-              <div>
-                <UploadImage id={user.user_id} />
-              </div>
+                            <div>
+                                <UploadImage id={user.user_id} />
+                            </div>
 
-              <div className="pt-2">
-                <ResetPassword email={user.email} />
-              </div>
-              {/* <div className="pt-2">
+                            <div className="pt-2">
+                                <ResetPassword email={user.email} />
+                            </div>
+                            {/* <div className="pt-2">
                 <Documents id={user.user_id} />
               </div> */}
-            </Col>
-          </Row>
-        </Card.Body>
-      </Card>
-    </>
-  );
+                        </Col>
+                    </Row>
+                </Card.Body>
+            </Card>
+        </>
+    );
 };
 
 const MyAccountStaff = () => {
-  return (
-    <React.Fragment>
-      <PageTitle
-        breadCrumbItems={[
-          { label: "Users", path: "/user" },
-          { label: "My Account", path: "/user", active: true },
-        ]}
-        title={"My Account"}
-      />
+    return (
+        <React.Fragment>
+            <PageTitle
+                breadCrumbItems={[
+                    { label: "Users", path: "/user" },
+                    { label: "My Account", path: "/user", active: true },
+                ]}
+                title={"My Account"}
+            />
 
-      <Row>
-        <Col>
-          <BasicInputElements />
-        </Col>
-      </Row>
-    </React.Fragment>
-  );
+            <Row>
+                <Col>
+                    <BasicInputElements />
+                </Col>
+            </Row>
+        </React.Fragment>
+    );
 };
 export default MyAccountStaff;

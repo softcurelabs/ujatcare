@@ -55,9 +55,7 @@ const CustomerLogin = () => {
     error: state.CustomerAuth.error,
     flats: state.Flat.flats,
   }));
-  useEffect(() => {
-    dispatch(flatAsync());
-  }, []);
+
 
   /*
   form validation schema
@@ -68,13 +66,16 @@ const CustomerLogin = () => {
       password: yup.string().required(t("Please enter Password")),
     })
   );
+  useEffect(() => {
+    dispatch(flatAsync());
+  }, [])
 
   /*
   handle form submission
   */
-  const onSubmit = (formData: UserData) => {
-    dispatch(loggedInAsync(formData));
-  };
+  function onSubmit(formData: UserData) {
+        dispatch(loggedInAsync(formData));
+    }
 
   const location = useLocation();
   //
@@ -120,10 +121,10 @@ const CustomerLogin = () => {
                   ))}
               </FormInput> */}
               <FormInput
-                label={t("Email")}
+                label={t("Email/Phone")}
                 type="text"
                 name="email"
-                placeholder="Enter your Email"
+                placeholder="Enter your Email/Phone"
                 containerClass={"mb-3"}
               />
               <FormInput

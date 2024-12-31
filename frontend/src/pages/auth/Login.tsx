@@ -53,14 +53,12 @@ const Login = () => {
     userLoggedIn: state.Auth.userLoggedIn,
   }));
 
-  console.log(loading, "Asd");
-
   /*
   form validation schema
   */
   const schemaResolver = yupResolver(
     yup.object().shape({
-      email: yup.string().required(t("Please enter Email")).email("Please enter valid email"),
+      email: yup.string().required(t("Please enter Email/Phone")),
       password: yup.string().required(t("Please enter Password")),
     })
   );
@@ -81,7 +79,7 @@ const Login = () => {
     <>
       {(userLoggedIn || user) && <Navigate to={redirectUrl}></Navigate>}
 
-      <AuthLayout helpText={t("")} bottomLinks={<BottomLink />}>
+      <AuthLayout helpText={t("Staff Login")} bottomLinks={<BottomLink />}>
         {error && (
           <Alert variant="danger" className="my-2">
             {error}
@@ -90,10 +88,10 @@ const Login = () => {
 
         <VerticalForm<UserData> onSubmit={onSubmit} resolver={schemaResolver}>
           <FormInput
-            label={t("Email")}
+            label={t("Email/Phone")}
             type="text"
             name="email"
-            placeholder="Enter your Email"
+            placeholder="Enter your Email/Phone Number"
             containerClass={"mb-3"}
           />
           <FormInput

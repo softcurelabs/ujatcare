@@ -3,9 +3,9 @@ import { APICore } from "./apiCore";
 const api = new APICore();
 
 // account
-export function list(page: Number = 1) {
+export function list(filter: string, page: Number = 1) {
   const baseUrl = "/application";
-  return api.get(`${baseUrl}`, { page });
+  return api.get(`${baseUrl}`, { page, filter });
 }
 
 export function edit(params: any) {

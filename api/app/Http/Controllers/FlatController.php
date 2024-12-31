@@ -6,6 +6,7 @@ use App\Models\Apartment;
 use App\Models\Flat;
 use App\Models\FlatOwner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class FlatController extends Controller
@@ -15,7 +16,10 @@ class FlatController extends Controller
      */
     public function index()
     {
-        return response()->json(Apartment::all()->load(['flats']));
+        $apartments = Apartment::with(['flats' => function($query) {
+            $query->orderByRaw('lpad(name, 10, 0) asc');
+        }])->get();
+        return response()->json($apartments);
     }
 
     /**

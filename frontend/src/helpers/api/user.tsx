@@ -8,9 +8,9 @@ export function user(page: Number = 1) {
   return api.get(`${baseUrl}`, { page });
 }
 
-export function recident(page: Number = 1, filter: string) {
+export function recident(page: Number = 1, filter: string, findFlat: string, name: string) {
   const baseUrl = "/resident";
-  return api.get(`${baseUrl}`, { page, filter });
+  return api.get(`${baseUrl}`, { page, filter, findFlat, name });
 }
 
 export function sync(id: any) {
@@ -53,7 +53,7 @@ export function remove(id: Number) {
 
 export function archive(id: Number, reason: number) {
     const baseUrl = `/user/${id}`;
-    return api.update(`${baseUrl}`, {reason: reason});
+    return api.updatePatch(`${baseUrl}`, {reason: reason});
   }
 
 export function upload(id: Number, data: any) {

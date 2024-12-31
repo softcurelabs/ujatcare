@@ -96,7 +96,13 @@ class ApplicationController extends Controller
 
     public function list(Request $request)
     {
-        return Application::with(['documents', 'approvedBy'])->orderBy('id', 'desc')->paginate($request->get('limit', 10));
+        $status = $request->get('filter');
+        $qb = Application::with(['documents']);
+        if ($status != "" && in_array($status, [0, 1, 2])) {
+            $qb->where('status', $status);
+        }
+        return $qb->orderBy('id', 'desc')->paginate($request->get('limit', 10));
+        //Application::with(['documents', 'approvedBy'])->where('status', $status)->orderBy('id', 'desc')->paginate($request->get('limit', 10));
     }
 
     public function convertToUser(Request $request, int $id): JsonResponse
@@ -119,6 +125,7 @@ class ApplicationController extends Controller
         $user = new User([
             'first_name'  => $application->first_name_first,
             'last_name'  => $application->last_name_first,
+            'phone_number'  => $application->home_phone_first,
             'email' => $application->email,
             'password' => bcrypt(Random::generate(10)),
         ]);

@@ -6,7 +6,7 @@
 <div>
     You are invited to join {{ $app }}.<br/>
     <br/>
-    Use below link to reset password.
+    Use below invitation link.
     <br/>
     {{ $reset_link }}
 </div>

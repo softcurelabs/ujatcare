@@ -108,9 +108,12 @@ const BasicInputElements = () => {
                 {isLoading ? (
                   <ButtonLoader />
                 ) : (
+                    <>
                   <Button variant="primary" type="submit" className="waves-effect waves-light me-1">
                     Submit
                   </Button>
+                  
+                  </>
                 )}
               </Col>
               <Col lg={12} className="d-flex justify-content-center">
@@ -118,6 +121,10 @@ const BasicInputElements = () => {
                   General Information
                 </Link>
               </Col>
+              <Col lg={12} className="d-flex justify-content-center">
+              <Link to="/" className="logo logo-light text-center"> Go Back to Home
+                  </Link>
+                  </Col>
             </Row>
           </form>
 

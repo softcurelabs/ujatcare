@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Alert, Row, Col } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "react-i18next";
@@ -47,6 +47,7 @@ const ResetPassword = () => {
 
   const [toast, setToast] = useState("");
   const [error, setError] = useState("");
+  const [redirect, setRedirect] = useState("");
   const [loading, setIsLoading] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const params = useParams();
@@ -56,7 +57,7 @@ const ResetPassword = () => {
    */
   const schemaResolver = yupResolver(
     yup.object().shape({
-      email: yup.string().email().required(t("Please enter email")),
+      email: yup.string().email(),
       password: yup
         .string()
         .required("Please enter your password.")
@@ -81,6 +82,12 @@ const ResetPassword = () => {
       .then((response) => {
         if (response && response.status === true) {
           setToast(response.message);
+          if (response.redirect == 'recident') {
+            setRedirect('/auth/customer-login')
+          } else {
+            setRedirect('/auth/login')
+          }
+          
         }
         setIsLoading(false);
       })
@@ -92,6 +99,7 @@ const ResetPassword = () => {
 
   return (
     <>
+    {(redirect && redirect != '') && <Navigate to={redirect}></Navigate>}
       <AuthLayout bottomLinks={<BottomLink />}>
         {toast && <div className="alert alert-success">{toast}</div>}
         {error && (
@@ -111,6 +119,14 @@ const ResetPassword = () => {
               type="text"
               name="email"
               placeholder={t("Enter your email")}
+              containerClass={"mb-3"}
+            />
+            <p className="text-center">{t('Or')}</p>
+            <FormInput
+              label={t("Phone Number")}
+              type="text"
+              name="phone_number"
+              placeholder={t("Enter your Phone")}
               containerClass={"mb-3"}
             />
             <FormInput

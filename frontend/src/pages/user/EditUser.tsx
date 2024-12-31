@@ -118,12 +118,6 @@ const BasicInputElements = () => {
             setValue("email", response.user.email);
             setValue("phone_number", response.phone_number);
             
-            if (response.user.apartment_id) {
-                setValue("apartment_id", response.user.apartment_id);
-            }
-            if (response.user.flat) {
-                setValue("flat_id", response.user.flat.flat_id);
-            }
             setValue("parking_space", response.parking_space);
             setValue("locker", response.locker);
             setValue("emergency_contact_number", response.emergency_contact_number);
@@ -152,6 +146,12 @@ const BasicInputElements = () => {
             //console.log(response.movein_date);
             setSelectedDate(new Date(response.movein_date));
             setBirthDate(new Date(response.birth_date));
+            if (response.user.apartment_id) {
+                setValue("apartment_id", response.user.apartment_id);
+            }
+            if (response.user.flat) {
+                setValue("flat_id", response.user.flat.flat_id);
+            }
           })
           .catch((error) => setNewError(error));
       });
@@ -179,7 +179,7 @@ const BasicInputElements = () => {
 
               <UploadImage id={params.id} />
 
-              <div className="mt-4">{user && <ResetPassword email={user?.user.email} />}</div>
+              <div className="mt-4">{user && user.user && <ResetPassword email={user?.user.email} />}</div>
               <div className="mt-2">
                 <Documents id={params.id} />
               </div>
@@ -387,9 +387,13 @@ const BasicInputElements = () => {
                             flats.map((flat) => 
                                 ((apartment_id == flat.id) ?
                                 <>{flat.flats.map((aprtment) => (
-                                  <option key={"flat" + aprtment.id} value={aprtment.id} disabled={aprtment.has_occupied}>
+                                    ((user.user.flat && user.user.flat.flat_id == aprtment.id)) ?
+                                  <option key={"flat" + aprtment.id} value={aprtment.id} selected>
                                     {aprtment.name}
                                   </option>
+                                  : <option key={"flat" + aprtment.id} value={aprtment.id} disabled={aprtment.has_occupied}>
+                                  {aprtment.name}
+                                </option>
                                 ))}</>: <></>)
                             )}
                         </FormInput>
@@ -738,7 +742,7 @@ const EditUser = () => {
 
       <Row>
         <Col>
-          <BasicInputElements />
+          <BasicInputElements key={'user-profile'} />
         </Col>
       </Row>
     </React.Fragment>

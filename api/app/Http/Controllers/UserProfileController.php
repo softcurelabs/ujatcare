@@ -18,11 +18,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Maatwebsite\Excel\Facades\Excel;
 use Nette\Utils\Random;
 use PhpParser\Node\Stmt\Foreach_;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Throwable;
 
 class UserProfileController extends Controller
 {
@@ -50,6 +52,19 @@ class UserProfileController extends Controller
                 return $query->whereIn('id', [$request->get('filter')]);
             });
         }
+        if ('undefined' != $request->get('findFlat') && !empty($request->get('findFlat'))) {
+            $queryBuilder->whereHas('user.flat.flat', static function ($query) use ($request) {
+                return $query->where('name',  'like', '%' . $request->get('findFlat') . '%');
+            });
+        }
+
+        if ('undefined' != $request->get('name') && !empty($request->get('name'))) {
+            $queryBuilder->whereHas('user', static function ($query) use ($request) {
+                return $query->where('first_name',  'like', '%' . $request->get('name') . '%');
+            });
+        }
+
+        // findFlat, name
 
         return $queryBuilder->paginate($request->get('limit', 10));
     }
@@ -73,34 +88,43 @@ class UserProfileController extends Controller
     public function store(Request $request)
     {
         $validations = [
+            'phone_number' =>  ['required', Rule::unique('users', 'phone_number')
+                ->whereNull('deleted_at'), 'max:10', 'min:10'],
             'first_name' => 'required|min:3',
             'last_name' => 'required',
-            'email' => 'required|string|unique:users',
+            'email' => 'sometimes|nullable|email',
             'role_id' => 'required|string',
         ];
         if ($request->get('role_id') == Role::Recident->value) {
-            $validations['flat_id'] = 'required|unique:flat_owner,flat_id';
+            $validations['flat_id'] = ['required', Rule::unique('flat_owner', 'flat_id')
+                ->whereNull('deleted_at')];
         }
 
         $request->validate($validations);
-
-        $user = new User([
+        $data = [
             'first_name'  => $request->first_name,
             'last_name'   => $request->last_name,
-            'email' => $request->email,
+            'phone_number' => $request->phone_number,
             'password' => bcrypt(Random::generate(10)),
-        ]);
+        ];
+
+        if (!empty($request->email)) {
+            $data['email'] = $request->email;
+        }
+
+        $user = new User($data);
 
         $user->assignRole($request->get('role_id'));
         if ($user->save()) {
             if ($request->get('role_id') === Role::Recident->value) {
                 FlatOwner::create(['user_id' => $user->getKey(), 'flat_id' => $request->get('flat_id')]);
             }
-            $userProfile = UserProfile::create(['user_id' => $user->getKey()]);
-            UserUpdated::dispatch($userProfile);
-            $status = Password::sendResetLink(
-                $request->only('email')
-            );
+            $userProfile = UserProfile::create(['user_id' => $user->getKey(), 'phone_number' => $request->phone_number]);
+            try {
+                UserUpdated::dispatch($userProfile);
+                $user->sendWelcomeEmail();
+            } catch (Exception $e) {
+            }
 
             return response()->json([
                 'status' => true,
@@ -123,21 +147,22 @@ class UserProfileController extends Controller
         $user = Auth::user();
 
         $validations = [
-            'phone_number' => 'required|max:10|min:10',
+            'phone_number' => 'required|max:10|min:10|unique:users,phone_number,' . $user_id,
             'relationship' => 'required',
             'emergency_contact_number'  => 'required|max:10|min:10',
             'emergency_contact_name' => 'required|min:3',
             'first_name' => 'required|min:3',
             'last_name' => 'required',
-            'email' => 'required|string|email|unique:users,email,'.$user_id,
+            'email' => 'sometimes|nullable|email',
         ];
 
-        if ($user->hasRole([Role::Admin, Role::Staff])) {
+        if ($user->hasRole([Role::Admin, Role::Staff, Role::MaintenanceStaff])) {
             if ($userProfile->user->hasRole([Role::Recident])) {
                 $validations = [
                     'first_name' => 'required|min:3',
                     'last_name' => 'required',
-                    'email' => 'required|string|email|unique:users,email,'.$user_id,
+                    'email' => 'sometimes|nullable|email',
+                    'phone_number' => 'required|max:10|min:10|unique:users,phone_number,' . $user_id,
                     // 'unit' => 'required|integer|min:1|max:1000',
                     'parking_space' => 'nullable|sometimes|decimal:0,2',
                     'birth_date' => 'required|date|before:' . now()->subYears(18)->toDateString(),
@@ -165,14 +190,14 @@ class UserProfileController extends Controller
                 ];
             } else {
                 $validations = [
-                    'phone_number' => 'required|max:10|min:10',
+                    'phone_number' => 'required|max:10|min:10|unique:users,phone_number,' . $user_id,
                     'first_name' => 'required|min:3',
                     'last_name' => 'required',
                 ];
             }
         }
 
-        if ($user->id === $user_id && $userProfile->user->hasRole([Role::Recident])) {
+        if ($user->id === $user_id && ($userProfile->user->hasRole([Role::Recident]))) {
             $validations['flat_id'] = 'exclude';
             $validations['birth_date'] = 'exclude';
             $validations['first_name'] = 'exclude';
@@ -224,7 +249,10 @@ class UserProfileController extends Controller
         }
 
         $userProfile->update($request->all());
-        UserUpdated::dispatch($userProfile);
+        try {
+            UserUpdated::dispatch($userProfile);
+        } catch (Throwable $e) {
+        }
         return response()->json([
             'status' => true,
             'message' => 'User Updated Successfully',
@@ -298,9 +326,11 @@ class UserProfileController extends Controller
             'password' => bcrypt($request->get('password')),
         ]);
 
+
         return response()->json([
             'status' => true,
             'message' => 'Password updated Successfully',
+            // 'redirect' => $redirect
         ]);
     }
 
@@ -424,8 +454,9 @@ class UserProfileController extends Controller
         ]);
     }
 
-    public function archive(int $id, Request $request) {
-        $user=User::find($id);
+    public function archive(int $id, Request $request)
+    {
+        $user = User::find($id);
         $request->validate([
             'reason' => 'required'
         ]);

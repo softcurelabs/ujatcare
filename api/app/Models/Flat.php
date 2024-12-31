@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Flat extends Model
 {
     protected $table = 'flat';
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     protected $appends = ['has_occupied'];
 
     public function apartment(): BelongsTo
@@ -27,5 +29,6 @@ class Flat extends Model
     public function getHasOccupiedAttribute()
     {
         return $this->flatOwner()->exists();
+        
     }
 }

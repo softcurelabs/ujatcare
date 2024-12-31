@@ -53,7 +53,6 @@ const onSubmit = handleSubmit(() => {
     });
 });
 
-console.log(email)
   return (
     <form onSubmit={onSubmit}>
       {toast && <div className="alert alert-success">{toast}</div>}

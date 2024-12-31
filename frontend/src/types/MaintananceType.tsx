@@ -1,5 +1,6 @@
 import { PaginationType } from "./PaginationType";
 import { TimeStampType } from "./TimeStampType";
+import { UserType } from "./UserType";
 
 export interface MaintananceType extends TimeStampType {
   user_id: number;
@@ -44,6 +45,18 @@ export interface MaintananceData {
   repaired_by: number | null;
   repaired_username: string;
   status_name: string;
+}
+
+export interface Conversation extends TimeStampType {
+    message: String;
+    sender_id: number;
+    sender?: UserType;
+}
+
+export interface ConversationData {
+    message: string;
+    sender_id: number;
+    maintanance_id: string;
 }
 
 export interface MaintanancesType extends PaginationType {

@@ -2,6 +2,7 @@ import { PaginationType } from "./PaginationType";
 import { TimeStampType } from "./TimeStampType";
 
 export interface FlatType {
+    id: number;
   flat_id: number;
 }
 export interface UserType extends TimeStampType {
@@ -10,7 +11,9 @@ export interface UserType extends TimeStampType {
   last_name: string;
   email: string;
   role: string;
+  phone_number: string;
   flat?: FlatType;
+  flat_id?: Number;
   flat_name?: string;
   apartment_name?: string;
   apartment_id?: number;
@@ -103,7 +106,9 @@ export interface UsersType extends PaginationType {
 export interface UserData {
   id?: number;
   email: string;
+  phone_number: string;
   name: string;
+  apartment_id?: number;
   flat_id?: Number;
   role_id?: string;
 }

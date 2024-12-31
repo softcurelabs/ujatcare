@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 
@@ -44,7 +46,7 @@ class AuthController extends Controller
             'password' => bcrypt($request->password),
         ]);
 
-        $user->assignRole(Role::Renter);
+        $user->sendWelcomeEmail();
         event(new Registered($user));
         if ($user->save()) {
             $tokenResult = $user->createToken('Personal Access Token');
@@ -70,12 +72,16 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|string|email',
+            'email' => 'required|string',
             'password' => 'required|string',
             'remember_me' => 'boolean'
         ]);
 
-        $credentials = request(['email', 'password']);
+        if (filter_var($request->get('email'), FILTER_VALIDATE_EMAIL)) {
+            $credentials = request(['email', 'password']);
+        } else {
+            $credentials = ['phone_number' => $request->get('email'), 'password' => $request->password];
+        }
         if (!Auth::attempt($credentials)) {
             return response()->json([
                 'message' => 'Username or password Incorrect'
@@ -83,9 +89,9 @@ class AuthController extends Controller
         }
 
         $user = $request->user();
-        if (!($user->hasRole(Role::Admin) || $user->hasRole(Role::Staff))) {
+        if (!($user->hasRole(Role::Admin) || $user->hasRole(Role::Staff) || $user->hasRole(Role::MaintenanceStaff))) {
             return response()->json([
-                'message' => 'User is not authorized'
+                'message' => 'User is Tanent and you have used staff login go to tanent login'
             ], 401);
         }
         $tokenResult = $user->createToken('Personal Access Token');
@@ -109,7 +115,12 @@ class AuthController extends Controller
             'remember_me' => 'boolean'
         ]);
 
-        $credentials = request(['email', 'password']);
+        if (filter_var($request->get('email'), FILTER_VALIDATE_EMAIL)) {
+            $credentials = request(['email', 'password']);
+        } else {
+            $credentials = ['phone_number' => $request->get('email'), 'password' => $request->password];
+        }
+
         if (!Auth::attempt($credentials)) {
             return response()->json([
                 'message' => 'Username or password Incorrect'
@@ -120,7 +131,7 @@ class AuthController extends Controller
 
         if (!$user->hasRole(Role::Recident)) {
             return response()->json([
-                'message' => 'User is not authorized'
+                'message' => 'User is Staff and you have used tanent login go to staff login'
             ], 401);
         }
         $tokenResult = $user->createToken('Personal Access Token');
@@ -189,18 +200,30 @@ class AuthController extends Controller
     {
         $request->validate([
             'token' => 'required',
-            'email' => 'required|email',
+            'email' => 'email',
             'password' => 'required|min:8|confirmed',
         ]);
-
+        $redirect = 'admin';
+        $data = [];
+        if ($request->phone_number != "") {
+            $data = $request->only('phone_number', 'password', 'password_confirmation', 'token');
+        } else {
+            $data = $request->only('email', 'password', 'token');
+        }
+        
         $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function (User $user, string $password) {
+            $data,
+            function (User $user, string $password) use (&$redirect) {
                 $user->forceFill([
-                    'password' => bcrypt($password)
+                    'password' => Hash::make($password)
                 ])->setRememberToken(Str::random(60));
 
                 $user->save();
+
+                if ($user->hasRole(Role::Recident)) {
+                    $redirect = 'recident';
+                }
+        
 
                 event(new PasswordReset($user));
             }
@@ -209,7 +232,8 @@ class AuthController extends Controller
         if ($status === Password::PASSWORD_RESET) {
             return response()->json([
                 'status' => true,
-                'message' => __($status)
+                'message' => __($status),
+                'redirect' => $redirect
             ]);
         }
 

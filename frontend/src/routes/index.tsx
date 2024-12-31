@@ -10,6 +10,7 @@ import Edit from "../pages/apartment/edit";
 import View from "../pages/apartment/view";
 import NewFlat from "../pages/flat/new";
 import EditFlat from "../pages/flat/edit";
+const CreateAdmin = React.lazy(() => import("../pages/maintanance/CreateAdmin"));
 const Notices = React.lazy(() => import("../pages/tables/Notices"));
 const CustomerLogin = React.lazy(() => import("../pages/auth/CustomerLogin"));
 const MaintananceReport = React.lazy(() => import("../pages/tables/MaintananceReport"));
@@ -106,15 +107,15 @@ const BasicTables = React.lazy(() => import("../pages/tables/Basic"));
 const AdvancedTables = React.lazy(() => import("../pages/tables/Advanced"));
 
 export interface RoutesProps {
-  path: RouteProps["path"];
-  name?: string;
-  element?: RouteProps["element"];
-  route?: any;
-  exact?: boolean;
-  icon?: string;
-  header?: string;
-  roles?: string[];
-  children?: RoutesProps[];
+    path: RouteProps["path"];
+    name?: string;
+    element?: RouteProps["element"];
+    route?: any;
+    exact?: boolean;
+    icon?: string;
+    header?: string;
+    roles?: string[];
+    children?: RoutesProps[];
 }
 
 // root routes
@@ -127,567 +128,572 @@ export interface RoutesProps {
 
 // dashboards
 const dashboardRoutes: RoutesProps = {
-  path: "/dashboard",
-  name: "Dashboards",
-  route: PrivateRoute,
-  icon: "airplay",
-  header: "Navigation",
-  children: [
-    {
-      path: "/dashboard-1",
-      name: "Dashboard 1",
-      element: <Dashboard1 />,
-      route: PrivateRoute,
-    },
-    {
-      path: "/dashboard-2",
-      name: "Dashboard 2",
-      roles: ["admin", "staff"],
-      element: <Dashboard2 />,
-      route: PrivateRoute,
-    },
-    {
-      path: "/dashboard-3",
-      name: "Dashboard 3",
-      element: <Dashboard3 />,
-      route: PrivateRoute,
-    },
-    {
-      path: "/dashboard-4",
-      name: "Dashboard 4",
-      element: <Dashboard4 />,
-      route: PrivateRoute,
-    },
-  ],
+    path: "/dashboard",
+    name: "Dashboards",
+    route: PrivateRoute,
+    icon: "airplay",
+    header: "Navigation",
+    children: [
+        {
+            path: "/dashboard-1",
+            name: "Dashboard 1",
+            element: <Dashboard1 />,
+            route: PrivateRoute,
+        },
+        {
+            path: "/dashboard-2",
+            name: "Dashboard 2",
+            roles: ["admin", "staff", "maintenance-staff"],
+            element: <Dashboard2 />,
+            route: PrivateRoute,
+        },
+        {
+            path: "/dashboard-3",
+            name: "Dashboard 3",
+            element: <Dashboard3 />,
+            route: PrivateRoute,
+        },
+        {
+            path: "/dashboard-4",
+            name: "Dashboard 4",
+            element: <Dashboard4 />,
+            route: PrivateRoute,
+        },
+    ],
 };
 
 const calendarAppRoutes: RoutesProps = {
-  path: "/apps/calendar",
-  name: "Calendar",
-  icon: "calendar",
-  element: <CalendarApp />,
-  header: "Apps",
+    path: "/apps/calendar",
+    name: "Calendar",
+    icon: "calendar",
+    element: <CalendarApp />,
+    header: "Apps",
 };
 const invoice: RoutesProps = {
-  path: "/invoice",
-  name: "Invoices",
-  icon: "Invoice",
-  element: <Invoice />,
-  header: "Apps",
+    path: "/invoice",
+    name: "Invoices",
+    icon: "Invoice",
+    element: <Invoice />,
+    header: "Apps",
 };
 const invoiceDetails: RoutesProps = {
-  path: "/invoice/:id",
-  name: "Invoice Details",
-  icon: "Invoice Details",
-  element: <InvoiceDetail />,
-  header: "Apps",
+    path: "/invoice/:id",
+    name: "Invoice Details",
+    icon: "Invoice Details",
+    element: <InvoiceDetail />,
+    header: "Apps",
 };
 const invoiceEdit: RoutesProps = {
-  path: "/invoice-edit/:id",
-  name: "Invoice Edit",
-  icon: "Invoice Edit",
-  element: <InvoiceEdit />,
-  header: "Apps",
+    path: "/invoice-edit/:id",
+    name: "Invoice Edit",
+    icon: "Invoice Edit",
+    element: <InvoiceEdit />,
+    header: "Apps",
 };
 
 const appRoutes = [calendarAppRoutes, invoice, invoiceDetails, invoiceEdit];
 
 // ui
 const uiRoutes = {
-  path: "/ui",
-  name: "Components",
-  icon: "pocket",
-  header: "UI Elements",
-  children: [
-    {
-      path: "/ui/base",
-      name: "Base UI",
-      children: [],
-    },
-    {
-      path: "/ui/widgets",
-      name: "Widgets",
-      // element: <Widgets />,
-      route: PrivateRoute,
-    },
-    {
-      path: "/ui/icons",
-      name: "Icons",
-      children: [
+    path: "/ui",
+    name: "Components",
+    icon: "pocket",
+    header: "UI Elements",
+    children: [
         {
-          path: "/ui/icons/two-tone",
-          name: "Two Tone Icons",
-          element: <TwoToneIcons />,
-          route: PrivateRoute,
+            path: "/ui/base",
+            name: "Base UI",
+            children: [],
         },
         {
-          path: "/ui/icons/feather",
-          name: "Feather Icons",
-          element: <FeatherIcons />,
-          route: PrivateRoute,
+            path: "/ui/widgets",
+            name: "Widgets",
+            // element: <Widgets />,
+            route: PrivateRoute,
         },
         {
-          path: "/ui/icons/dripicons",
-          name: "Dripicons",
-          element: <Dripicons />,
-          route: PrivateRoute,
+            path: "/ui/icons",
+            name: "Icons",
+            children: [
+                {
+                    path: "/ui/icons/two-tone",
+                    name: "Two Tone Icons",
+                    element: <TwoToneIcons />,
+                    route: PrivateRoute,
+                },
+                {
+                    path: "/ui/icons/feather",
+                    name: "Feather Icons",
+                    element: <FeatherIcons />,
+                    route: PrivateRoute,
+                },
+                {
+                    path: "/ui/icons/dripicons",
+                    name: "Dripicons",
+                    element: <Dripicons />,
+                    route: PrivateRoute,
+                },
+                {
+                    path: "/ui/icons/mdi",
+                    name: "Material Design",
+                    element: <MDIIcons />,
+                    route: PrivateRoute,
+                },
+                {
+                    path: "/ui/icons/font-awesome",
+                    name: "Font Awesome 5",
+                    element: <FontAwesomeIcons />,
+                    route: PrivateRoute,
+                },
+                {
+                    path: "/ui/icons/themify",
+                    name: "Themify",
+                    element: <ThemifyIcons />,
+                    route: PrivateRoute,
+                },
+                {
+                    path: "/ui/icons/simple-line",
+                    name: "Simple Line Icons",
+                    element: <SimpleLineIcons />,
+                    route: PrivateRoute,
+                },
+                {
+                    path: "/ui/icons/weather",
+                    name: "Weather Icons",
+                    element: <WeatherIcons />,
+                    route: PrivateRoute,
+                },
+            ],
         },
         {
-          path: "/ui/icons/mdi",
-          name: "Material Design",
-          element: <MDIIcons />,
-          route: PrivateRoute,
+            path: "/ui/forms",
+            name: "Forms",
+            children: [
+                {
+                    path: "/ui/forms/basic",
+                    name: "Basic Elements",
+                    element: <BasicForms />,
+                    route: PrivateRoute,
+                },
+                {
+                    path: "/ui/forms/notices",
+                    name: "Basic Elements",
+                    element: <Notices />,
+                    route: PrivateRoute,
+                },
+                {
+                    path: "/ui/forms/report",
+                    name: "Basic Elements",
+                    element: <MaintananceReport />,
+                    route: PrivateRoute,
+                },
+                {
+                    path: "/ui/forms/advanced",
+                    name: "Form Advanced",
+                    element: <FormAdvanced />,
+                    route: PrivateRoute,
+                },
+                {
+                    path: "/ui/forms/validation",
+                    name: "Form Validation",
+                    element: <FormValidation />,
+                    route: PrivateRoute,
+                },
+                {
+                    path: "/ui/forms/wizard",
+                    name: "Form Wizard",
+                    element: <FormWizard />,
+                    route: PrivateRoute,
+                },
+                {
+                    path: "/ui/forms/upload",
+                    name: "File Upload",
+                    element: <FileUpload />,
+                    route: PrivateRoute,
+                },
+                {
+                    path: "/ui/forms/editors",
+                    name: "Editors",
+                    element: <Editors />,
+                    route: PrivateRoute,
+                },
+            ],
         },
         {
-          path: "/ui/icons/font-awesome",
-          name: "Font Awesome 5",
-          element: <FontAwesomeIcons />,
-          route: PrivateRoute,
+            path: "/",
+            name: "Tables",
+            children: [
+                {
+                    path: "/maintanance/create",
+                    name: "Basic",
+                    element: <Create />,
+                },
+                {
+                    path: "/maintanance/create-admin",
+                    name: "Basic",
+                    element: <CreateAdmin />,
+                },
+                {
+                    path: "/maintanance",
+                    name: "Basic",
+                    element: <MaintananceList />,
+                },
+                {
+                    path: "/maintanance/:id",
+                    name: "Basic",
+                    element: <MaintananceEdit />,
+                },
+                {
+                    path: "/maintanance-admin/:id",
+                    name: "Basic",
+                    element: <MaintananceEditAdmin />,
+                },
+                {
+                    path: "/maintanance-admin",
+                    name: "Basic",
+                    element: <MaintananceListAdmin />,
+                },
+            ],
         },
         {
-          path: "/ui/icons/themify",
-          name: "Themify",
-          element: <ThemifyIcons />,
-          route: PrivateRoute,
+            path: "/",
+            name: "Tables",
+            children: [
+                {
+                    path: "/inspection",
+                    name: "Basic",
+                    element: <Inspection />,
+                    route: PrivateRoute,
+                },
+                {
+                    path: "/inspection/new",
+                    name: "Basic",
+                    element: <CreateInspection />,
+                    route: PrivateRoute,
+                },
+                {
+                    path: "/inspection/:id",
+                    name: "Basic",
+                    element: <EditInspection />,
+                    route: PrivateRoute,
+                },
+            ],
         },
         {
-          path: "/ui/icons/simple-line",
-          name: "Simple Line Icons",
-          element: <SimpleLineIcons />,
-          route: PrivateRoute,
+            path: "/",
+            children: [
+                {
+                    path: "/notice-highlight",
+                    name: "Basic",
+                    element: <NoticeHighlight />,
+                },
+                {
+                    path: "/contact-office",
+                    name: "Basic",
+                    element: <ContactOffice />,
+                },
+                {
+                    path: "/notice",
+                    name: "Basic",
+                    element: <NoticeList />,
+                },
+                {
+                    path: "/notice/new",
+                    name: "Basic",
+                    element: <NewNotice />,
+                },
+                {
+                    path: "/notice/:id",
+                    name: "Basic",
+                    element: <EditNotice />,
+                },
+            ],
         },
         {
-          path: "/ui/icons/weather",
-          name: "Weather Icons",
-          element: <WeatherIcons />,
-          route: PrivateRoute,
-        },
-      ],
-    },
-    {
-      path: "/ui/forms",
-      name: "Forms",
-      children: [
-        {
-          path: "/ui/forms/basic",
-          name: "Basic Elements",
-          element: <BasicForms />,
-          route: PrivateRoute,
-        },
-        {
-          path: "/ui/forms/notices",
-          name: "Basic Elements",
-          element: <Notices />,
-          route: PrivateRoute,
-        },
-        {
-          path: "/ui/forms/report",
-          name: "Basic Elements",
-          element: <MaintananceReport />,
-          route: PrivateRoute,
-        },
-        {
-          path: "/ui/forms/advanced",
-          name: "Form Advanced",
-          element: <FormAdvanced />,
-          route: PrivateRoute,
-        },
-        {
-          path: "/ui/forms/validation",
-          name: "Form Validation",
-          element: <FormValidation />,
-          route: PrivateRoute,
-        },
-        {
-          path: "/ui/forms/wizard",
-          name: "Form Wizard",
-          element: <FormWizard />,
-          route: PrivateRoute,
+            path: "/",
+            children: [
+                {
+                    path: "/apartment",
+                    name: "Basic",
+                    roles: ['admin'],
+                    element: <List />,
+                },
+                {
+                    path: "/apartment/new",
+                    name: "Basic",
+                    roles: ['admin'],
+                    element: <New />,
+                },
+                {
+                    path: "/apartment/:id",
+                    name: "Basic",
+                    roles: ['admin'],
+                    element: <Edit />,
+                },
+                {
+                    path: "/suites/:id",
+                    name: "Basic",
+                    roles: ['admin'],
+                    element: <View />,
+                },
+                {
+                    path: "/suite/new/:id",
+                    name: "Basic",
+                    roles: ['admin'],
+                    element: <NewFlat />,
+                },
+                {
+                    path: "/suites/suite/:id",
+                    name: "Basic",
+                    roles: ['admin'],
+                    element: <EditFlat />,
+                },
+            ],
         },
         {
-          path: "/ui/forms/upload",
-          name: "File Upload",
-          element: <FileUpload />,
-          route: PrivateRoute,
-        },
-        {
-          path: "/ui/forms/editors",
-          name: "Editors",
-          element: <Editors />,
-          route: PrivateRoute,
-        },
-      ],
-    },
-    {
-      path: "/",
-      name: "Tables",
-      children: [
-        {
-          path: "/maintanance/create",
-          name: "Basic",
-          element: <Create />,
-        },
-        {
-          path: "/maintanance",
-          name: "Basic",
-          element: <MaintananceList />,
-        },
-        {
-          path: "/maintanance/:id",
-          name: "Basic",
-          element: <MaintananceEdit />,
-        },
-        {
-          path: "/maintanance-admin/:id",
-          name: "Basic",
-          element: <MaintananceEditAdmin />,
-        },
-        {
-          path: "/maintanance-admin",
-          name: "Basic",
-          element: <MaintananceListAdmin />,
-        },
-      ],
-    },
-    {
-      path: "/",
-      name: "Tables",
-      children: [
-        {
-          path: "/inspection",
-          name: "Basic",
-          element: <Inspection />,
-          route: PrivateRoute,
-        },
-        {
-          path: "/inspection/new",
-          name: "Basic",
-          element: <CreateInspection />,
-          route: PrivateRoute,
-        },
-        {
-          path: "/inspection/:id",
-          name: "Basic",
-          element: <EditInspection />,
-          route: PrivateRoute,
-        },
-      ],
-    },
-    {
-      path: "/",
-      children: [
-        {
-          path: "/notice-highlight",
-          name: "Basic",
-          element: <NoticeHighlight />,
-        },
-        {
-          path: "/contact-office",
-          name: "Basic",
-          element: <ContactOffice />,
-        },
-        {
-          path: "/notice",
-          name: "Basic",
-          element: <NoticeList />,
-        },
-        {
-          path: "/notice/new",
-          name: "Basic",
-          element: <NewNotice />,
-        },
-        {
-          path: "/notice/:id",
-          name: "Basic",
-          element: <EditNotice />,
-        },
-      ],
-    },
-    {
-        path: "/",
-        children: [
-          {
-            path: "/apartment",
-            name: "Basic",
-            roles: ['admin'],
-            element: <List />,
-          },
-          {
-            path: "/apartment/new",
-            name: "Basic",
-            roles: ['admin'],
-            element: <New />,
-          },
-          {
-            path: "/apartment/:id",
-            name: "Basic",
-            roles: ['admin'],
-            element: <Edit />,
-          },
-          {
-            path: "/suites/:id",
-            name: "Basic",
-            roles: ['admin'],
-            element: <View />,
-          },
-          {
-            path: "/suite/new/:id",
-            name: "Basic",
-            roles: ['admin'],
-            element: <NewFlat />,
-          },
-          {
-            path: "/suites/suite/:id",
-            name: "Basic",
-            roles: ['admin'],
-            element: <EditFlat />,
-          },
-        ],
-      },
-    {
-      path: "/",
-      children: [
-        {
-          path: "/user",
-          name: "Basic",
-          element: <UserList />,
-        },
-        {
-          path: "/tenant",
-          name: "Basic",
-          element: <RecidentList />,
-        },
+            path: "/",
+            children: [
+                {
+                    path: "/user",
+                    name: "Basic",
+                    element: <UserList />,
+                },
+                {
+                    path: "/tenant",
+                    name: "Basic",
+                    element: <RecidentList />,
+                },
 
-        {
-          path: "/user/new",
-          name: "Basic",
-          element: <NewUser />,
+                {
+                    path: "/user/new",
+                    name: "Basic",
+                    element: <NewUser />,
+                },
+                {
+                    path: "/user-resident/new",
+                    name: "Basic",
+                    element: <NewRecident />,
+                },
+                {
+                    path: "/user/:id",
+                    name: "Basic",
+                    element: <EditUser />,
+                },
+                {
+                    path: "/applications",
+                    name: "Application",
+                    element: <ListApplication />,
+                    route: PrivateRoute,
+                },
+                {
+                    path: "/user-staff/:id",
+                    name: "Basic",
+                    element: <EditUserStaff />,
+                },
+                {
+                    path: "/assign-permission/:id",
+                    name: "Basic",
+                    element: <AssignPermission />,
+                },
+                {
+                    path: "/assign-permission-staff/:id",
+                    name: "Basic",
+                    element: <AssignPermissionAdmin />,
+                },
+                {
+                    path: "/my-account",
+                    name: "Basic",
+                    element: <ProfileSelector />,
+                },
+                {
+                    path: "/staff-account",
+                    name: "Basic",
+                    element: <MyAccountStaff />,
+                },
+                {
+                    path: '/integration',
+                    name: "Basic",
+                    element: <Quickbook />
+                },
+                {
+                    path: '/quickbook/connect',
+                    name: "Basic",
+                    element: <QuickbookConnect />
+                }
+            ],
         },
         {
-          path: "/user-resident/new",
-          name: "Basic",
-          element: <NewRecident />,
+            path: "/",
+            children: [
+                {
+                    path: "/rent-payment",
+                    name: "Basic",
+                    element: <RentPayment />,
+                },
+            ],
         },
         {
-          path: "/user/:id",
-          name: "Basic",
-          element: <EditUser />,
+            path: "/ui/tables",
+            name: "Tables",
+            children: [
+                {
+                    path: "/ui/tables/basic",
+                    name: "Basic",
+                    element: <BasicTables />,
+                    route: PrivateRoute,
+                },
+                {
+                    path: "/ui/tables/ticket",
+                    name: "Basic",
+                    element: <Ticket />,
+                    route: PrivateRoute,
+                },
+                {
+                    path: "/ui/tables/report",
+                    name: "Basic",
+                    element: <MaintananceReport />,
+                    route: PrivateRoute,
+                },
+                {
+                    path: "/ui/tables/advanced",
+                    name: "Advanced",
+                    element: <AdvancedTables />,
+                    route: PrivateRoute,
+                },
+            ],
         },
-        {
-          path: "/applications",
-          name: "Application",
-          element: <ListApplication />,
-          route: PrivateRoute,
-        },
-        {
-          path: "/user-staff/:id",
-          name: "Basic",
-          element: <EditUserStaff />,
-        },
-        {
-          path: "/assign-permission/:id",
-          name: "Basic",
-          element: <AssignPermission />,
-        },
-        {
-          path: "/assign-permission-staff/:id",
-          name: "Basic",
-          element: <AssignPermissionAdmin />,
-        },
-        {
-          path: "/my-account",
-          name: "Basic",
-          element: <ProfileSelector />,
-        },
-        {
-          path: "/staff-account",
-          name: "Basic",
-          element: <MyAccountStaff />,
-        },
-        {
-          path: '/integration',
-          name: "Basic",
-          element: <Quickbook />
-        },
-        {
-          path: '/quickbook/connect',
-          name: "Basic",
-          element: <QuickbookConnect />
-        }
-      ],
-    },
-    {
-      path: "/",
-      children: [
-        {
-          path: "/rent-payment",
-          name: "Basic",
-          element: <RentPayment />,
-        },
-      ],
-    },
-    {
-      path: "/ui/tables",
-      name: "Tables",
-      children: [
-        {
-          path: "/ui/tables/basic",
-          name: "Basic",
-          element: <BasicTables />,
-          route: PrivateRoute,
-        },
-        {
-          path: "/ui/tables/ticket",
-          name: "Basic",
-          element: <Ticket />,
-          route: PrivateRoute,
-        },
-        {
-          path: "/ui/tables/report",
-          name: "Basic",
-          element: <MaintananceReport />,
-          route: PrivateRoute,
-        },
-        {
-          path: "/ui/tables/advanced",
-          name: "Advanced",
-          element: <AdvancedTables />,
-          route: PrivateRoute,
-        },
-      ],
-    },
-  ],
+    ],
 };
 
 // auth
 const authRoutes: RoutesProps[] = [
-  {
-    path: "/",
-    name: "Root",
-    element: <AboutUs />,
-  },
-  {
-    path: "/auth/login",
-    name: "Login",
-    element: <Login />,
-    route: Route,
-  },
-  {
-    path: "/application",
-    name: "Application",
-    element: <CreateApplication />,
-    route: Route,
-  },
+    {
+        path: "/",
+        name: "Root",
+        element: <AboutUs />,
+    },
+    {
+        path: "/auth/login",
+        name: "Login",
+        element: <Login />,
+        route: Route,
+    },
+    {
+        path: "/application",
+        name: "Application",
+        element: <CreateApplication />,
+        route: Route,
+    },
 
-  {
-    path: "/auth/customer-login",
-    name: "Login",
-    element: <CustomerLogin />,
-    route: Route,
-  },
-  {
-    path: "/auth/register",
-    name: "Register",
-    element: <Register />,
-    route: Route,
-  },
-  {
-    path: "/auth/confirm",
-    name: "Confirm",
-    element: <Confirm />,
-    route: Route,
-  },
-  {
-    path: "/auth/forget-password",
-    name: "Forget Password",
-    element: <ForgetPassword />,
-    route: Route,
-  },
-  {
-    path: "/reset-password/:token",
-    name: "Reset Password",
-    element: <ResetPassword />,
-    route: Route,
-  },
-  {
-    path: "/auth/signin-signup",
-    name: "SignIn-SignUp",
-    element: <SignInSignUp />,
-    route: Route,
-  },
-  {
-    path: "/auth/lock-screen",
-    name: "Lock Screen",
-    element: <LockScreen />,
-    route: Route,
-  },
-  {
-    path: "/auth/logout",
-    name: "Logout",
-    element: <Logout />,
-    route: Route,
-  },
+    {
+        path: "/auth/customer-login",
+        name: "Login",
+        element: <CustomerLogin />,
+        route: Route,
+    },
+    {
+        path: "/auth/register",
+        name: "Register",
+        element: <Register />,
+        route: Route,
+    },
+    {
+        path: "/auth/confirm",
+        name: "Confirm",
+        element: <Confirm />,
+        route: Route,
+    },
+    {
+        path: "/auth/forget-password",
+        name: "Forget Password",
+        element: <ForgetPassword />,
+        route: Route,
+    },
+    {
+        path: "/reset-password/:token",
+        name: "Reset Password",
+        element: <ResetPassword />,
+        route: Route,
+    },
+    {
+        path: "/auth/signin-signup",
+        name: "SignIn-SignUp",
+        element: <SignInSignUp />,
+        route: Route,
+    },
+    {
+        path: "/auth/lock-screen",
+        name: "Lock Screen",
+        element: <LockScreen />,
+        route: Route,
+    },
+    {
+        path: "/auth/logout",
+        name: "Logout",
+        element: <Logout />,
+        route: Route,
+    },
 ];
 
 // public routes
 const otherPublicRoutes = [
-  {
-    path: "/landing",
-    name: "landing",
-    element: <Landing />,
-    route: Route,
-  },
-  {
-    path: "/maintenance",
-    name: "Maintenance",
-    element: <Maintenance />,
-    route: Route,
-  },
-  {
-    path: "/error-404",
-    name: "Error - 404",
-    element: <Error404 />,
-    route: Route,
-  },
-  {
-    path: "/error-404-two",
-    name: "Error - 404 Two",
-    element: <Error404Two />,
-    route: Route,
-  },
-  {
-    path: "/error-500",
-    name: "Error - 500",
-    element: <Error500 />,
-    route: Route,
-  },
-  {
-    path: "/error-500-two",
-    name: "Error - 500 Two",
-    element: <Error500Two />,
-    route: Route,
-  },
-  {
-    path: "/upcoming",
-    name: "Coming Soon",
-    element: <Upcoming />,
-    route: Route,
-  },
+    {
+        path: "/landing",
+        name: "landing",
+        element: <Landing />,
+        route: Route,
+    },
+    {
+        path: "/maintenance",
+        name: "Maintenance",
+        element: <Maintenance />,
+        route: Route,
+    },
+    {
+        path: "/error-404",
+        name: "Error - 404",
+        element: <Error404 />,
+        route: Route,
+    },
+    {
+        path: "/error-404-two",
+        name: "Error - 404 Two",
+        element: <Error404Two />,
+        route: Route,
+    },
+    {
+        path: "/error-500",
+        name: "Error - 500",
+        element: <Error500 />,
+        route: Route,
+    },
+    {
+        path: "/error-500-two",
+        name: "Error - 500 Two",
+        element: <Error500Two />,
+        route: Route,
+    },
+    {
+        path: "/upcoming",
+        name: "Coming Soon",
+        element: <Upcoming />,
+        route: Route,
+    },
 ];
 
 // flatten the list of all nested routes
 const flattenRoutes = (routes: RoutesProps[]) => {
-  let flatRoutes: RoutesProps[] = [];
+    let flatRoutes: RoutesProps[] = [];
 
-  routes = routes || [];
-  routes.forEach((item: RoutesProps) => {
-    flatRoutes.push(item);
+    routes = routes || [];
+    routes.forEach((item: RoutesProps) => {
+        flatRoutes.push(item);
 
-    if (typeof item.children !== "undefined") {
-      flatRoutes = [...flatRoutes, ...flattenRoutes(item.children)];
-    }
-  });
-  return flatRoutes;
+        if (typeof item.children !== "undefined") {
+            flatRoutes = [...flatRoutes, ...flattenRoutes(item.children)];
+        }
+    });
+    return flatRoutes;
 };
 
 // All routes
@@ -697,8 +703,8 @@ const publicRoutes = [...authRoutes, ...otherPublicRoutes];
 const authProtectedFlattenRoutes = flattenRoutes([...authProtectedRoutes]);
 const publicProtectedFlattenRoutes = flattenRoutes([...publicRoutes]);
 export {
-  publicRoutes,
-  authProtectedRoutes,
-  authProtectedFlattenRoutes,
-  publicProtectedFlattenRoutes,
+    publicRoutes,
+    authProtectedRoutes,
+    authProtectedFlattenRoutes,
+    publicProtectedFlattenRoutes,
 };
