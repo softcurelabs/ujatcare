@@ -252,7 +252,7 @@ const BasicInputElements = () => {
                             </Col>
                         </Row>
                         <Row>
-                            <Col lg={12}>
+                            <Col lg={4}>
                                 <Form.Label htmlFor="small" className="me-2">
                                     Request
                                 </Form.Label>
@@ -264,6 +264,26 @@ const BasicInputElements = () => {
                                     register={register}
                                     errors={errors}
                                 />
+                            </Col>
+                            <Col lg={4}>
+                                <Form.Group className="mb-2 input-group">
+                                    {admins && localUser && <FormInput
+                                        label="Repaired By"
+                                        type="select"
+                                        name="repaired_by"
+                                        register={register}
+                                        errors={errors}
+                                        className="form-control-sm fs-5"
+                                        containerClass={"mb-3"}
+                                    >
+                                        <option value="">Select Repaired By</option>
+                                        {admins.data.map((user) => (
+                                            <option value={user.user.id.toString()}>
+                                                {user.user.name}
+                                            </option>
+                                        ))}
+                                    </FormInput>}
+                                </Form.Group>
                             </Col>
                         </Row>
                     </Card.Body>
@@ -441,26 +461,7 @@ const BasicInputElements = () => {
                                     />
                                 </Form.Group>
                             </Col>
-                            <Col lg={4}>
-                                <Form.Group className="mb-2 input-group">
-                                    {admins && localUser && <FormInput
-                                        label="Repaired By"
-                                        type="select"
-                                        name="repaired_by"
-                                        register={register}
-                                        errors={errors}
-                                        className="form-control-sm fs-5"
-                                        containerClass={"mb-3"}
-                                    >
-                                        <option value="">Select Repaired By</option>
-                                        {admins.data.map((user) => (
-                                            <option value={user.user.id.toString()}>
-                                                {user.user.name}
-                                            </option>
-                                        ))}
-                                    </FormInput>}
-                                </Form.Group>
-                            </Col>
+                            
                             <Col lg={4}>
                                 <Form.Group className="mb-2 input-group">
                                     <Form.Label className="me-2">Status:</Form.Label>

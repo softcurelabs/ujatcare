@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use Throwable;
 
 class MaintanceController extends Controller
 {
@@ -93,12 +94,26 @@ class MaintanceController extends Controller
             'message' => 'Maintanance Request Updated Successfully',
         ]);
     }
-
-
     public function updateAdmin(Request $request, int $id)
     {
         $validation = [
             'repaired_by' => "required|exists:App\Models\User,id",
+        ];
+
+        try {
+            $validatedData = $this->validate($request, $validation);
+            $maintananceRequest = MaintananceRequest::find($id);
+            $maintananceRequest->update($validatedData);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Maintanance Request Updated Successfully',
+            ]);
+        } catch (Throwable $th) {
+
+        }
+
+        $validation = [
             'status' => 'required|in:1,2,3,4',
             'action_taken' => 'required|in:1,2,3,4',
             'chargable' => 'required|in:1,2',
@@ -106,13 +121,8 @@ class MaintanceController extends Controller
             'action_date' => 'required',
             'time_in' => 'required',
             'time_out' => 'required',
-            // 'service_signature' => 'required'
         ];
-
         $validatedData = $this->validate($request, $validation);
-
-        $maintananceRequest = MaintananceRequest::find($id);
-        $maintananceRequest->update($validatedData);
         $status = '';
         switch ($request->get('status')) {
             case 1:

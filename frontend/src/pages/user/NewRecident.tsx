@@ -19,7 +19,7 @@ const BasicInputElements = () => {
     const { t } = useTranslation();
     const schemaResolver = yupResolver(
         yup.object().shape({
-            first_name: yup.string().required(t("Please select first_name")),
+            first_name: yup.string().required(t("Please select first name")),
             last_name: yup.string().required(t("Please select last name")),
             role_id: yup.string().required(t("Please select role")),
         })
@@ -111,7 +111,7 @@ const BasicInputElements = () => {
                                 />
                                 <FormInput
                                     label="Phone number"
-                                    type="text"
+                                    type="number"
                                     register={register}
                                     name="phone_number"
                                     errors={errors}
