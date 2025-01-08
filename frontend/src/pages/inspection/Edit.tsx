@@ -46,7 +46,7 @@ const BasicInputElements = () => {
 
   useEffect(() => {
     dispatch(flatAsync()).then(() => {
-      dispatch(userAsync(1)).then(() => {
+      dispatch(userAsync({page: 1})).then(() => {
         dispatch(inspectionShowAsync(params.id))
           .unwrap()
           .then((response) => {

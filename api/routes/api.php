@@ -72,7 +72,6 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff']], function ()
     // Route::put('user/{id}', [UserProfileController::class, 'update']);
     Route::patch('user/{id}', [UserProfileController::class, 'archive']);
 
-    Route::get('user', [UserProfileController::class, 'index']);
     Route::get('resident', [UserProfileController::class, 'recidents']);
 
     Route::post('user/import', [UserProfileController::class, 'import']);
@@ -99,6 +98,7 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff']], function ()
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff|recident|maintenance-staff']], function () {
+    Route::get('user', [UserProfileController::class, 'index']);
     Route::get('notice-highlight', [NoticeController::class, 'highlight']);
     Route::post('upload/{user_id}', [UserProfileController::class, 'upload']);
     Route::put('set-password/{user_id}', [UserProfileController::class, 'setPassword']);
@@ -115,11 +115,13 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff|recident|mainte
     Route::get('user/{id}', [UserProfileController::class, 'show']);
     Route::post('maintanance-conversation/{id}', [MaintanceController::class, 'createConversation']);
     Route::get('maintanance-conversation/{id}', [MaintanceController::class, 'conversations']);
+    Route::post('maintanance', [MaintanceController::class, 'store']);
+
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'role:recident']], function () {
     Route::get('maintanance', [MaintanceController::class, 'list']);
-    Route::post('maintanance', [MaintanceController::class, 'store']);
+    // Route::post('maintanance', [MaintanceController::class, 'store']);
     Route::put('maintanance/{id}', [MaintanceController::class, 'update']);
     Route::post('contact-office', [BugController::class, 'contactOffice']);
 });
@@ -131,10 +133,10 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff|maintenance-sta
 
     Route::put('maintanance-admin/{id}', [MaintanceController::class, 'updateAdmin']);
     Route::get('maintanance-dashboard', [MaintanceController::class, 'dashboard']);
+
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'role:maintenance-staff']], function () {
-    Route::post('maintanance', [MaintanceController::class, 'store']);
 });
 Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
     ->middleware(['signed', 'throttle:6,1'])

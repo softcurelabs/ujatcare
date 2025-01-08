@@ -37,7 +37,7 @@ const BasicInputElements = () => {
 
   useEffect(() => {
     dispatch(flatAsync());
-    dispatch(userAsync(1));
+    dispatch(userAsync({page: 1}));
   }, []);
 
   const {

@@ -84,15 +84,15 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getFlatNameAttribute()
     {
-        return null !== $this->flat()->first() ?  $this->flat()->first()->flat()->first()->name : "";
+        return (null !== $this->flat()->first() && $this->flat()->first()->flat() && $this->flat()->first()->flat()->first() && $this->flat()->first()->flat()->first()->name ) ?  $this->flat()->first()->flat()->first()->name : "";
     }
     public function getApartmentNameAttribute()
     {
-        return null !== $this->flat()->first()    ? $this->flat()->first()->flat()->first()->apartment()->first()->name : "";
+        return (null !== $this->flat()->first() && $this->flat()->first()->flat()->first() && $this->flat()->first()->flat()->first()->apartment()->first() )   ? $this->flat()->first()->flat()->first()->apartment()->first()->name : "";
     }
     public function getApartmentIdAttribute()
     {
-        return null !== $this->flat()->first()    ? $this->flat()->first()->flat()->first()->apartment()->first()->id : "";
+        return (null !== $this->flat()->first() && $this->flat()->first()->flat()->first() && $this->flat()->first()->flat()->first()->apartment()->first() ) ? $this->flat()->first()->flat()->first()->apartment()->first()->id : "";
     }
 
     public function getRoleAttribute()
@@ -155,7 +155,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'token' => bcrypt($token)
         ]);
 
-        $resetUrl= config('auth.frontend') . $token;
+        $resetUrl= config('auth.frontend') . $token .'?from=welcome';
 
         Mail::to($this)->send(new InviteEmail($this, $resetUrl));
       }

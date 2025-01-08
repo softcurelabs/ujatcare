@@ -24,7 +24,7 @@ const BasicTable = ({ users }: UsersDataType) => {
   const [toast, setToast] = useState("");
   const [error, setError] = useState("");
   useEffect(() => {
-    dispatch(userAsync(1));
+    dispatch(userAsync({page: 1}));
   }, [show]);
 
   return (
@@ -125,7 +125,7 @@ const Users = () => {
   let navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(userAsync(currentPage));
+    dispatch(userAsync({page: currentPage}));
   }, [currentPage, show]);
 
   return (

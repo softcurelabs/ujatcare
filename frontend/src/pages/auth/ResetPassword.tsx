@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Alert, Row, Col } from "react-bootstrap";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useParams, useSearchParams } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "react-i18next";
@@ -51,6 +51,7 @@ const ResetPassword = () => {
   const [loading, setIsLoading] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const params = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   /*
    * form validation schema
@@ -150,7 +151,7 @@ const ResetPassword = () => {
                 <ButtonLoader />
               ) : (
                 <Button variant="primary" type="submit">
-                  {t("Reset Password")}
+                  {searchParams.get('from') == "welcome" ? t("Set Password") : t("Reset Password")}
                 </Button>
               )}
             </div>

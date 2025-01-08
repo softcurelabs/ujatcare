@@ -33,7 +33,7 @@ class UserProfileController extends Controller
      */
     public function index(Request $request)
     {
-        $roles = [Role::Staff->value];
+        $roles = [Role::Staff->value, Role::MaintenanceStaff->value];
         if (Auth::user()->hasRole([Role::Admin->value])) {
             $roles[] = Role::Admin->value;
         }
@@ -72,7 +72,11 @@ class UserProfileController extends Controller
 
     public function allOccupants()
     {
-        $queryBuilder = UserProfile::with('user')->has('user.flat');
+                $queryBuilder = UserProfile::with(['user' => function($query) {
+            return $query->without(['flat', 'getFlatAttributes'])->select('id', 'first_name');
+        }])->select('user_id' )->has('user.flat');
+
+
         return $queryBuilder->get();
     }
     /**

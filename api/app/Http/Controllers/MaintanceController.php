@@ -98,7 +98,7 @@ class MaintanceController extends Controller
     public function updateAdmin(Request $request, int $id)
     {
         $validation = [
-            'repaired_by' => "required|in:" . Auth::id(),
+            'repaired_by' => "required|exists:App\Models\User,id",
             'status' => 'required|in:1,2,3,4',
             'action_taken' => 'required|in:1,2,3,4',
             'chargable' => 'required|in:1,2',
@@ -152,12 +152,16 @@ class MaintanceController extends Controller
                 $actionTaken = 'Outside Contractor Called';
                 break;
         }
+        $repairedBy = User::find($request->get('repaired_by', null));
         $actionDate = date('Y-m-d', strtotime($request->get('action_date')));
         $timeIn = date('H:i', strtotime($maintananceRequest->time_in));
         $timeOut = date('H:i', strtotime($maintananceRequest->time_out));
         $message = "<strong>Status</strong>: {$status}<br/><strong>Comment</strong>: {$request->get('work_done')}<br/><strong>Action Date</strong>: {$actionDate}<br/>";
         $message .= "<strong>Time In</strong>: {$timeIn}<br/><strong>Time Out</strong>: {$timeOut}<br/>";
         $message .= "<strong>Action Taken</strong>: {$actionTaken}<br/>";
+        if ($repairedBy) {
+            $message .= "<strong>Assigned To</strong>: {$repairedBy->first_name}<br/>";
+        }
         $message .= "<strong>Chargable</strong>: {$chargable}";
 
         $validatedData = [

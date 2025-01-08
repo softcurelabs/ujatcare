@@ -7,7 +7,7 @@ import { maintananceAddAsync } from "../../store/maintanance/MaintananceSlice";
 import { AppDispatch, RootState } from "../../store";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { occupantsAsync, userShowAsync } from "../../store/user/UserSlice";
+import { occupantsAsync, userAsync, userShowAsync } from "../../store/user/UserSlice";
 import { UserProfileDataType } from "../../types/UserType";
 import { FormInput } from "../../components";
 import SignaturePad from "react-signature-canvas";
@@ -81,7 +81,11 @@ const BasicInputElements = () => {
     const [timeIn, setTimeIn] = useState(new Date());
     const [timeOut, setTimeOut] = useState(new Date());
     const [loading, setIsLoading] = useState(false);
+    const { admins } = useSelector((state: RootState) => ({
+        admins: state.User.users,
+    }));
     useEffect(() => {
+        dispatch(userAsync({page: 1, limit: 1000}));
         dispatch(occupantsAsync());
     }, []);
 

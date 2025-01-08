@@ -10,7 +10,7 @@ import {
 import { AppDispatch, RootState } from "../../store";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { userShowAsync } from "../../store/user/UserSlice";
+import { userAsync, userShowAsync } from "../../store/user/UserSlice";
 import { UserProfileDataType } from "../../types/UserType";
 import { FormInput } from "../../components";
 import SignaturePad from "react-signature-canvas";
@@ -41,6 +41,12 @@ const BasicInputElements = () => {
     if (!user) {
         user = customerUser;
     }
+    const { admins } = useSelector((state: RootState) => ({
+        admins: state.User.users,
+    }));
+    useEffect(() => {
+        dispatch(userAsync({page: 1, limit: 1000}));
+    }, []);
 
     const methods = useForm<MaintananceData>({
         defaultValues: {},
@@ -80,6 +86,7 @@ const BasicInputElements = () => {
                 // }
                 setValue("service_signature", response?.service_signature!);
                 setValue("phone", response?.phone!);
+                setValue('repaired_by', response?.repaired_by);
                 setValue("ok_to_enter", response?.ok_to_enter.toString());
                 // if (response?.action_taken) {
                 //     setValue("action_taken", response?.action_taken!.toString()); 
@@ -113,7 +120,6 @@ const BasicInputElements = () => {
                 dispatch(userShowAsync(response.user_id))
                     .unwrap()
                     .then((response1) => {
-                        console.log(response1);
                         setLocalUser(response1);
                     });
                 // if (signCanvas.current) {
@@ -433,16 +439,29 @@ const BasicInputElements = () => {
                                         label="Management"
                                         className="form-check-inline"
                                     />
-                                    <FormInput
-                                        type="hidden"
-                                        name="repaired_by"
-                                        errors={errors}
-                                        register={register}
-                                        value={user.user_id}
-                                    />
                                 </Form.Group>
                             </Col>
-                            <Col lg={8}>
+                            <Col lg={4}>
+                                <Form.Group className="mb-2 input-group">
+                                    {admins && localUser && <FormInput
+                                        label="Repaired By"
+                                        type="select"
+                                        name="repaired_by"
+                                        register={register}
+                                        errors={errors}
+                                        className="form-control-sm fs-5"
+                                        containerClass={"mb-3"}
+                                    >
+                                        <option value="">Select Repaired By</option>
+                                        {admins.data.map((user) => (
+                                            <option value={user.user.id.toString()}>
+                                                {user.user.name}
+                                            </option>
+                                        ))}
+                                    </FormInput>}
+                                </Form.Group>
+                            </Col>
+                            <Col lg={4}>
                                 <Form.Group className="mb-2 input-group">
                                     <Form.Label className="me-2">Status:</Form.Label>
                                     <FormInput

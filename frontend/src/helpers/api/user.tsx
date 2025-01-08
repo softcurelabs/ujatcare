@@ -3,9 +3,9 @@ import { APICore } from "./apiCore";
 const api = new APICore();
 
 // account
-export function user(page: Number = 1) {
+export function user(page: Number = 1, limit: number = 10) {
   const baseUrl = "/user";
-  return api.get(`${baseUrl}`, { page });
+  return api.get(`${baseUrl}`, { page, limit });
 }
 
 export function recident(page: Number = 1, filter: string, findFlat: string, name: string) {

@@ -74,10 +74,10 @@ const UserSlice = createSlice({
   },
 });
 
-export const userAsync = createAsyncThunk<UsersType | null, Number>(
+export const userAsync = createAsyncThunk<UsersType | null, any>(
   "userAsync",
-  async (page = 1) => {
-    const response = await user(page);
+  async ({page = 1, limit = 10}) => {
+    const response = await user(page, limit);
     return response.data;
   }
 );
