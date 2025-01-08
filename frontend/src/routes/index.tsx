@@ -98,7 +98,6 @@ const WeatherIcons = React.lazy(() => import("../pages/icons/WeatherIcons/"));
 const BasicForms = React.lazy(() => import("../pages/forms/Basic"));
 const FormAdvanced = React.lazy(() => import("../pages/forms/Advanced"));
 const FormValidation = React.lazy(() => import("../pages/forms/Validation"));
-const FormWizard = React.lazy(() => import("../pages/forms/Wizard"));
 const FileUpload = React.lazy(() => import("../pages/forms/FileUpload"));
 const Editors = React.lazy(() => import("../pages/forms/Editors"));
 
@@ -297,12 +296,6 @@ const uiRoutes = {
                     path: "/ui/forms/validation",
                     name: "Form Validation",
                     element: <FormValidation />,
-                    route: PrivateRoute,
-                },
-                {
-                    path: "/ui/forms/wizard",
-                    name: "Form Wizard",
-                    element: <FormWizard />,
                     route: PrivateRoute,
                 },
                 {
