@@ -7,7 +7,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BugController;
 use App\Http\Controllers\FlatController;
 use App\Http\Controllers\InspectionController;
+use App\Http\Controllers\ListingController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\ListingReviewController;
 use App\Http\Controllers\MaintanceController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\QuickbookController;
@@ -53,7 +55,17 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
     Route::put('apartment/{id}', [ApartmentController::class, 'update']);
 });
 Route::post('application', [ApplicationController::class, 'index']);
+// Listing routes
+Route::get('listings', [ListingController::class, 'allListingController']);
+Route::get('listing/{id}', [ListingController::class, 'show']);
+Route::post('listing/{listing_id}/review', [ListingReviewController::class, 'store']);
+
 Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff']], function () {
+
+    Route::post('listing/add', [ListingController::class,'store']);
+    Route::put('listing/{id}', [ListingController::class,'update']);
+    Route::delete('listing/{id}', [ListingController::class,'delete']);
+    
     Route::get('notice/{id}', [NoticeController::class, 'show']);
     Route::post('notice', [NoticeController::class, 'store']);
     Route::delete('notice/{id}', [NoticeController::class, 'delete']);
