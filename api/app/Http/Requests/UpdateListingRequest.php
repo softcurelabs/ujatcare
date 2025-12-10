@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateListingRequest extends FormRequest
 {
-    public function rules()
+    public function rules() : array
     {
         return [
             'title' => 'sometimes|string|max:255',
