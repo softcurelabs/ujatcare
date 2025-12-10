@@ -14,7 +14,7 @@ class ListingReviewService
         return ListingReview::latest()->get();
     }
 
-    public function create(array $data, int $listing_id) : ListingReview
+    public function create(array $data, int $listing_id) : ?ListingReview
     {
         if (!Listing::find($listing_id)) {
             return null;
