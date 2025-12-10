@@ -4,16 +4,17 @@ namespace App\Services;
 
 use App\Models\Listing;
 use App\Models\ListingReview;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Storage;
 
 class ListingReviewService
 {
-    public function all()
+    public function all() : Collection
     {
         return ListingReview::latest()->get();
     }
 
-    public function create(array $data, int $listing_id)
+    public function create(array $data, int $listing_id) : ListingReview
     {
         if (!Listing::find($listing_id)) {
             return null;
@@ -28,7 +29,7 @@ class ListingReviewService
         return ListingReview::create($data);
     }
 
-    public function update(ListingReview $review, array $data)
+    public function update(ListingReview $review, array $data) : ListingReview
     {
         if (isset($data['img_url']) && $data['img_url'] instanceof \Illuminate\Http\UploadedFile) {
             if ($review->img_url) {
@@ -42,12 +43,12 @@ class ListingReviewService
         return $review;
     }
 
-    public function delete(ListingReview $review)
+    public function delete(ListingReview $review) : void
     {
         if ($review->img_url) {
             Storage::delete($review->img_url);
         }
 
-        return $review->delete();
+        $review->delete();
     }
 }
