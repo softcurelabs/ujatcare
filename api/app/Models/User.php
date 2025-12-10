@@ -110,9 +110,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->flat()->first();
     }
 
-    public function getProfileAttribute(): UserProfile
+    public function getProfileAttribute(): ?UserProfile
     {
-        return $this->profile()->first();
+        return $this->profile()->first() ?? null;
     }
 
     public function getQuickbooksAttribute(): array

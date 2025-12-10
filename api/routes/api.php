@@ -60,11 +60,13 @@ Route::get('listings', [ListingController::class, 'allListingController']);
 Route::get('listing/{id}', [ListingController::class, 'show']);
 Route::post('listing/{listing_id}/review', [ListingReviewController::class, 'store']);
 
-Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff']], function () {
-
+Route::group(['middleware'=> ['auth:sanctum','role:admin']], function () {
     Route::post('listing/add', [ListingController::class,'store']);
     Route::put('listing/{id}', [ListingController::class,'update']);
     Route::delete('listing/{id}', [ListingController::class,'delete']);
+});
+
+Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff']], function () {
     
     Route::get('notice/{id}', [NoticeController::class, 'show']);
     Route::post('notice', [NoticeController::class, 'store']);
