@@ -2,133 +2,83 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Listing;
+use App\Http\Requests\StoreReviewRequest;
+use App\Http\Requests\UpdateReviewRequest;
 use App\Models\ListingReview;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use App\Services\ListingReviewService;
 
 class ListingReviewController extends Controller
 {
-    /**
-     * Get all reviews
-     */
+    protected $service;
+
+    public function __construct(ListingReviewService $service)
+    {
+        $this->service = $service;
+    }
+
     public function index()
     {
         return response()->json([
             'status' => true,
-            'data'   => ListingReview::latest()->get(),
+            'data' => $this->service->all(),
         ]);
     }
 
-    /**
-     * Store a new review
-     */
-   public function store(Request $request, $listing_id)
-{
-    $validated = $request->validate([
-        'overall_rating'     => 'required|numeric|min:1|max:5',
-        'service_rating'     => 'nullable|numeric|min:1|max:5',
-        'hospitality_rating' => 'nullable|numeric|min:1|max:5',
-        'pricing_rating'     => 'nullable|numeric|min:1|max:5',
+    public function store(StoreReviewRequest $request, int $listing_id)
+    {
+        $review = $this->service->create($request->validated(), $listing_id);
 
-        'name'   => 'required|string|max:255',
-        'email'  => 'required|email',
-        'review' => 'nullable|string',
+        if (!$review) {
+            return response()->json(['message' => 'Listing not found'], 404);
+        }
 
-        'img_url' => 'nullable|image|mimes:jpg,png,jpeg,webp|max:2048',
-    ]);
-    if (!Listing::where('id', $listing_id)->exists()) {
-    return response()->json(['message' => 'Listing not found'], 404);
-}
-
-
-    // ✔ Ensure this listing id is assigned
-    $validated['listing_id'] = $listing_id;
-
-    // ✔ Upload image
-    if ($request->hasFile('img_url')) {
-        $validated['img_url'] = $request->file('img_url')->store('listing_reviews');
+        return response()->json([
+            'status' => true,
+            'message' => 'Review Created Successfully',
+            'data' => $review,
+        ], 201);
     }
 
-    // ✔ Create review
-    $review = ListingReview::create($validated);
-
-    return response()->json([
-        'status'  => true,
-        'message' => 'Review Created Successfully',
-        'data'    => $review,
-    ], 201);
-}
-
-
-    /**
-     * Show single review
-     */
-    public function show($id)
+    public function show(int $id)
     {
         $review = ListingReview::findOrFail($id);
 
         return response()->json([
             'status' => true,
-            'data'   => $review,
+            'data' => $review,
         ]);
     }
 
-    /**
-     * Update review
-     */
-    public function update(Request $request, $id)
+    public function showAll(int $listing_id)
+    {
+        $reviews = ListingReview::where('listing_id', $listing_id)->get();
+
+        return response()->json([
+            'status' => true,
+            'data' => $reviews,
+        ]);
+    }
+
+    public function update(UpdateReviewRequest $request, int $id)
     {
         $review = ListingReview::findOrFail($id);
 
-        $validated = $request->validate([
-            'listing_id' => 'sometimes|exists:listings,id',
-
-            'overall_rating'     => 'sometimes|numeric|min:1|max:5',
-            'service_rating'     => 'sometimes|numeric|min:1|max:5',
-            'hospitality_rating' => 'sometimes|numeric|min:1|max:5',
-            'pricing_rating'     => 'sometimes|numeric|min:1|max:5',
-
-            'name'   => 'sometimes|string|max:255',
-            'email'  => 'sometimes|email',
-            'review' => 'sometimes|string',
-
-            'img_url' => 'sometimes|image|mimes:jpg,png,jpeg,webp|max:2048',
-        ]);
-
-        // New image uploaded?
-        if ($request->hasFile('img_url')) {
-            if ($review->img_url) {
-                Storage::delete($review->img_url);
-            }
-
-            $validated['img_url'] = $request->file('img_url')->store('listing_reviews');
-        }
-
-        $review->update($validated);
+        $updated = $this->service->update($review, $request->validated());
 
         return response()->json([
-            'status'  => true,
+            'status' => true,
             'message' => 'Review Updated Successfully',
-            'data'    => $review,
+            'data' => $updated,
         ]);
     }
 
-    /**
-     * Delete review
-     */
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $review = ListingReview::findOrFail($id);
-
-        if ($review->img_url) {
-            Storage::delete($review->img_url);
-        }
-
-        $review->delete();
+        $this->service->delete($review);
 
         return response()->json([
-            'status'  => true,
+            'status' => true,
             'message' => 'Review Deleted Successfully',
         ]);
     }

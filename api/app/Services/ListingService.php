@@ -2,10 +2,9 @@
 
 namespace App\Services;
 
+use App\Http\Requests\StoreListingRequest;
+use App\Http\Requests\UpdateListingRequest;
 use App\Models\Listing;
-use App\Models\ListingFaq;
-use App\Models\ListingTime;
-use App\Models\ListingPrice;
 use App\Models\ListingImage;
 use Illuminate\Support\Facades\DB;
 
@@ -22,25 +21,25 @@ class ListingService
     {
         return Listing::select([
             'id', 'title', 'bg_img', 'contact_number',
-            'address', 'add_favorite', 'small_description', 'logo'
+            'address', 'add_favorite', 'small_description', 'logo',
         ])->get();
     }
 
-    public function getListingDetails($id)
+    public function getListingDetails(int $id)
     {
         return Listing::with([
             'images', 'faqs', 'times', 'prices',
-            'categories', 'reviews', 'facilities'
+            'categories', 'reviews', 'facilities',
         ])->findOrFail($id);
     }
 
-    public function createListing($request)
+    public function createListing(StoreListingRequest $request)
     {
         return DB::transaction(function () use ($request) {
 
             $data = $request->only([
                 'title', 'small_description', 'contact_number',
-                'address', 'description', 'listing_url', 'email'
+                'address', 'description', 'listing_url', 'email',
             ]);
 
             if ($request->hasFile('bg_img')) {
@@ -94,11 +93,11 @@ class ListingService
                 $listing->facilities()->sync($request->facilities);
             }
 
-            return $listing->load(['images','faqs','times','prices','categories','facilities']);
+            return $listing->load(['images', 'faqs', 'times', 'prices', 'categories', 'facilities']);
         });
     }
 
-    public function updateListing($request, $id)
+    public function updateListing(UpdateListingRequest $request, int $id)
     {
         return DB::transaction(function () use ($request, $id) {
 
@@ -168,11 +167,11 @@ class ListingService
                 $listing->facilities()->sync($request->facilities);
             }
 
-            return $listing->load(['images','faqs','times','prices','categories','facilities']);
+            return $listing->load(['images', 'faqs', 'times', 'prices', 'categories', 'facilities']);
         });
     }
 
-    public function deleteListing($id)
+    public function deleteListing(int $id)
     {
         $listing = Listing::findOrFail($id);
 

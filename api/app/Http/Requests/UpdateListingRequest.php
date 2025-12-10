@@ -16,7 +16,7 @@ class UpdateListingRequest extends FormRequest
             'description' => 'sometimes|string',
 
             'bg_img' => 'nullable|image|max:2048',
-            'logo'  => 'nullable|image|max:2048',
+            'logo' => 'nullable|image|max:2048',
             'images' => 'sometimes|array',
             'images.*' => 'image|max:4096',
 

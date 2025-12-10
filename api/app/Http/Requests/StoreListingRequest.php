@@ -16,13 +16,13 @@ class StoreListingRequest extends FormRequest
             'description' => 'nullable|string',
 
             'bg_img' => 'sometimes|image|mimes:jpg,png,jpeg,webp|max:2048',
-            'logo'   => 'sometimes|image|mimes:jpg,png,jpeg,webp|max:2048',
+            'logo' => 'sometimes|image|mimes:jpg,png,jpeg,webp|max:2048',
             'images' => 'sometimes|array',
             'images.*' => 'image|mimes:jpg,png,jpeg,webp|max:2048',
 
             'faqs' => 'sometimes|array',
             'faqs.*.question' => 'required_with:faqs|string',
-            'faqs.*.answer'   => 'required_with:faqs|string',
+            'faqs.*.answer' => 'required_with:faqs|string',
 
             'times' => 'sometimes|array',
             'times.*.days' => 'required|string',

@@ -21,7 +21,7 @@ class Listing extends Model
         'email',
         'add_favorite',
         'bg_img',
-        'logo'
+        'logo',
     ];
 
     public function images(): HasMany

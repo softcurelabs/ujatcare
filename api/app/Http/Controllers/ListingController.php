@@ -22,7 +22,7 @@ class ListingController extends Controller
         );
     }
 
-    public function show($id)
+    public function show(int $id)
     {
         return response()->json(
             $this->listingService->getListingDetails($id)
@@ -40,7 +40,7 @@ class ListingController extends Controller
         ], 201);
     }
 
-    public function update(UpdateListingRequest $request, $id)
+    public function update(UpdateListingRequest $request, int $id)
     {
         $listing = $this->listingService->updateListing($request, $id);
 
@@ -51,7 +51,7 @@ class ListingController extends Controller
         ]);
     }
 
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $this->listingService->deleteListing($id);
 

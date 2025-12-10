@@ -1,22 +1,19 @@
 <?php
 
-use App\Constants\Role;
 use App\Http\Controllers\ApartmentController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BugController;
 use App\Http\Controllers\FlatController;
 use App\Http\Controllers\InspectionController;
-use App\Http\Controllers\ListingController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\ListingController;
 use App\Http\Controllers\ListingReviewController;
 use App\Http\Controllers\MaintanceController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\QuickbookController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\VerifyEmailController;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -59,15 +56,16 @@ Route::post('application', [ApplicationController::class, 'index']);
 Route::get('listings', [ListingController::class, 'allListingController']);
 Route::get('listing/{id}', [ListingController::class, 'show']);
 Route::post('listing/{listing_id}/review', [ListingReviewController::class, 'store']);
+Route::get('listing/{listing_id}/reviews', [ListingReviewController::class, 'showAll']);
 
-Route::group(['middleware'=> ['auth:sanctum','role:admin']], function () {
-    Route::post('listing/add', [ListingController::class,'store']);
-    Route::put('listing/{id}', [ListingController::class,'update']);
-    Route::delete('listing/{id}', [ListingController::class,'delete']);
+Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
+    Route::post('listing/add', [ListingController::class, 'store']);
+    Route::put('listing/{id}', [ListingController::class, 'update']);
+    Route::delete('listing/{id}', [ListingController::class, 'delete']);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff']], function () {
-    
+
     Route::get('notice/{id}', [NoticeController::class, 'show']);
     Route::post('notice', [NoticeController::class, 'store']);
     Route::delete('notice/{id}', [NoticeController::class, 'delete']);
@@ -101,7 +99,6 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff']], function ()
     Route::get('quickbook', [QuickbookController::class, 'connect']);
     Route::post('quickbook', [QuickbookController::class, 'authorise']);
 
-    
     Route::post('invoice', [InvoiceController::class, 'create']);
     Route::post('bulk-invoice', [InvoiceController::class, 'bulkInvoice']);
     Route::get('invoice/sync/{id}', [InvoiceController::class, 'sync']);
@@ -150,8 +147,7 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff|maintenance-sta
 
 });
 
-Route::group(['middleware' => ['auth:sanctum', 'role:maintenance-staff']], function () {
-});
+Route::group(['middleware' => ['auth:sanctum', 'role:maintenance-staff']], function () {});
 Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
     ->middleware(['signed', 'throttle:6,1'])
     ->name('verification.verify');
