@@ -117,6 +117,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->profile()->first();
     }
 
+    public function favourites()
+    {
+        return $this->hasMany(ListingFavourite::class);
+    }
+
     public function getQuickbooksAttribute(): array
     {
         return [

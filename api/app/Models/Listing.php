@@ -22,6 +22,8 @@ class Listing extends Model
         'add_favorite',
         'bg_img',
         'logo',
+        'latitude',
+        'longitude',
     ];
 
     public function images(): HasMany
@@ -57,5 +59,10 @@ class Listing extends Model
     public function facilities(): BelongsToMany
     {
         return $this->belongsToMany(Facility::class, 'listing_facilities');
+    }
+
+    public function favourites()
+    {
+        return $this->hasMany(ListingFavourite::class);
     }
 }

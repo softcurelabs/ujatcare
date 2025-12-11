@@ -37,6 +37,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('logout', [AuthController::class, 'logout']);
         Route::get('profile', [AuthController::class, 'user']);
+        Route::post('/listings/{id}/favourite', [ListingController::class, 'toggleFavourite']);
     });
 });
 

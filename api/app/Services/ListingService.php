@@ -5,8 +5,10 @@ namespace App\Services;
 use App\Http\Requests\StoreListingRequest;
 use App\Http\Requests\UpdateListingRequest;
 use App\Models\Listing;
+use App\Models\ListingFavourite;
 use App\Models\ListingImage;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -193,5 +195,29 @@ class ListingService
         $this->uploader->delete($listing->logo);
 
         $listing->delete();
+    }
+
+    public function toggleFavourite(int $listingId): ListingFavourite
+    {
+        $user = Auth::user();
+
+        $fav = ListingFavourite::where('user_id', $user->id)
+            ->where('listing_id', $listingId)
+            ->first();
+
+        // If already exists → toggle
+        if ($fav) {
+            $fav->favourite = ! $fav->favourite;
+            $fav->save();
+
+            return $fav;
+        }
+
+        // If not exists → create as favourite
+        return ListingFavourite::create([
+            'user_id' => $user->id,
+            'listing_id' => $listingId,
+            'favourite' => true,
+        ]);
     }
 }
