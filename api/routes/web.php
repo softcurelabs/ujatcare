@@ -1,8 +1,6 @@
 <?php
 
 use App\Http\Controllers\PDFSignController;
-use App\Http\Controllers\VerifyEmailController;
-use App\Services\QuickBook;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,5 +18,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('signin', [PDFSignController::class, "index"]);
-Route::get('callback', [PDFSignController::class, "callback"]);
+Route::get('signin', [PDFSignController::class, 'index']);
+Route::get('callback', [PDFSignController::class, 'callback']);

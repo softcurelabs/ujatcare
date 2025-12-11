@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Constants\Role;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 
@@ -22,6 +21,7 @@ class AuthController extends Controller
     {
         $this->userRepository = $userRepository;
     }
+
     /**
      * Create user
      *
@@ -34,31 +34,37 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|string|unique:users',
-            'password' => 'required|string',
-            'c_password' => 'required|same:password'
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'email' => 'required|string|email|unique:users,email',
+            'password' => 'required|string|min:6',
+            'c_password' => 'required|same:password',
         ]);
 
-        $user = new User([
-            'name'  => $request->name,
+        // 1. Save user first
+        $user = User::create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
 
+        // 2. Send welcome email AFTER user is saved
         $user->sendWelcomeEmail();
+
+        // 3. Fire email verification event AFTER user exists
         event(new Registered($user));
+
+        // 4. Create token
         if ($user->save()) {
             $tokenResult = $user->createToken('Personal Access Token');
             $token = $tokenResult->plainTextToken;
-
-            return response()->json([
-                'message' => 'Successfully created user!',
-                'accessToken' => $token,
-            ], 201);
-        } else {
-            return response()->json(['error' => 'Provide proper details']);
         }
+
+        return response()->json([
+            'message' => 'Successfully created user!',
+            'accessToken' => $token,
+        ], 201);
     }
 
     /**
@@ -68,13 +74,12 @@ class AuthController extends Controller
      * @param  [string] password
      * @param  [boolean] remember_me
      */
-
     public function login(Request $request)
     {
         $request->validate([
             'email' => 'required|string',
             'password' => 'required|string',
-            'remember_me' => 'boolean'
+            'remember_me' => 'boolean',
         ]);
 
         if (filter_var($request->get('email'), FILTER_VALIDATE_EMAIL)) {
@@ -82,16 +87,16 @@ class AuthController extends Controller
         } else {
             $credentials = ['phone_number' => $request->get('email'), 'password' => $request->password];
         }
-        if (!Auth::attempt($credentials)) {
+        if (! Auth::attempt($credentials)) {
             return response()->json([
-                'message' => 'Username or password Incorrect'
+                'message' => 'Username or password Incorrect',
             ], 401);
         }
 
         $user = $request->user();
-        if (!($user->hasRole(Role::Admin) || $user->hasRole(Role::Staff) || $user->hasRole(Role::MaintenanceStaff))) {
+        if (! ($user->hasRole(Role::Admin) || $user->hasRole(Role::Staff) || $user->hasRole(Role::MaintenanceStaff))) {
             return response()->json([
-                'message' => 'User is Tanent and you have used staff login go to tanent login'
+                'message' => 'User is Tanent and you have used staff login go to tanent login',
             ], 401);
         }
         $tokenResult = $user->createToken('Personal Access Token');
@@ -101,7 +106,7 @@ class AuthController extends Controller
             'user_id' => $user->id,
             'user_role' => $user->getRoleNames(),
             'profile_pic' => $user->profile->image_path ? asset($user->profile->image_path) : '#',
-            'username' => $user->name,
+            'username' => $user->first_name.' '.$user->last_name,
             'accessToken' => $token,
             'token_type' => 'Bearer',
         ]);
@@ -112,7 +117,7 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',
-            'remember_me' => 'boolean'
+            'remember_me' => 'boolean',
         ]);
 
         if (filter_var($request->get('email'), FILTER_VALIDATE_EMAIL)) {
@@ -121,22 +126,21 @@ class AuthController extends Controller
             $credentials = ['phone_number' => $request->get('email'), 'password' => $request->password];
         }
 
-        if (!Auth::attempt($credentials)) {
+        if (! Auth::attempt($credentials)) {
             return response()->json([
-                'message' => 'Username or password Incorrect'
+                'message' => 'Username or password Incorrect',
             ], 401);
         }
 
         $user = $request->user();
 
-        if (!$user->hasRole(Role::Recident)) {
+        if (! $user->hasRole(Role::Recident)) {
             return response()->json([
-                'message' => 'User is Staff and you have used tanent login go to staff login'
+                'message' => 'User is Staff and you have used tanent login go to staff login',
             ], 401);
         }
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->plainTextToken;
-
 
         return response()->json([
             'user_id' => $user->id,
@@ -159,18 +163,19 @@ class AuthController extends Controller
         $request->user()->tokens()->delete();
 
         return response()->json([
-            'message' => 'Successfully logged out'
+            'message' => 'Successfully logged out',
         ]);
     }
 
     public function user()
     {
         $user = Auth::user();
+
         return response()->json([
             'user_id' => $user->id,
             'user_role' => $user->getRoleNames(),
             'profile_pic' => $user->profile->image_path ? asset($user->profile->image_path) : '#',
-            'username' => $user->name
+            'username' => $user->name,
         ]);
     }
 
@@ -205,17 +210,17 @@ class AuthController extends Controller
         ]);
         $redirect = 'admin';
         $data = [];
-        if ($request->phone_number != "") {
+        if ($request->phone_number != '') {
             $data = $request->only('phone_number', 'password', 'password_confirmation', 'token');
         } else {
             $data = $request->only('email', 'password', 'token');
         }
-        
+
         $status = Password::reset(
             $data,
             function (User $user, string $password) use (&$redirect) {
                 $user->forceFill([
-                    'password' => Hash::make($password)
+                    'password' => Hash::make($password),
                 ])->setRememberToken(Str::random(60));
 
                 $user->save();
@@ -223,7 +228,6 @@ class AuthController extends Controller
                 if ($user->hasRole(Role::Recident)) {
                     $redirect = 'recident';
                 }
-        
 
                 event(new PasswordReset($user));
             }
@@ -233,7 +237,7 @@ class AuthController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => __($status),
-                'redirect' => $redirect
+                'redirect' => $redirect,
             ]);
         }
 

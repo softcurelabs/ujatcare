@@ -20,7 +20,7 @@ class NoticeController extends Controller
      */
     public function highlight(Request $request)
     {
-        return Notice::where('schedule_date', '<=',  \DB::raw('NOW()'))->orderBy('id', 'desc')->paginate($request->get('limit', 5));
+        return Notice::where('schedule_date', '<=', \DB::raw('NOW()'))->orderBy('id', 'desc')->paginate($request->get('limit', 5));
     }
 
     /**
@@ -46,6 +46,7 @@ class NoticeController extends Controller
     public function show(int $id)
     {
         $notice = Notice::find($id);
+
         return response()->json($notice);
     }
 
@@ -55,7 +56,7 @@ class NoticeController extends Controller
     public function update(Request $request, int $id)
     {
         $request->validate([
-            'title' => 'required|min:10'
+            'title' => 'required|min:10',
         ]);
         $notice = Notice::find($id);
         $notice->update($request->all());

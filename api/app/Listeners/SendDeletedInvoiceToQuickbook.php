@@ -5,13 +5,12 @@ namespace App\Listeners;
 use App\Events\InvoiceDeleted;
 use App\Services\QuickBook;
 use App\Traits\Logger;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
 
 class SendDeletedInvoiceToQuickbook
 {
     use Logger;
+
     /**
      * Create the event listener.
      */
@@ -28,7 +27,7 @@ class SendDeletedInvoiceToQuickbook
         $dataService = $this->quickBook->getDataService();
 
         $invoice = $dataService->FindbyId('invoice', $event->invoice->quickbook_id);
-        if (!$invoice) {
+        if (! $invoice) {
             return;
         }
         $resultingObj = $dataService->Delete($invoice);

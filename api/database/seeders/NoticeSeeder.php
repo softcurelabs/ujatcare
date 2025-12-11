@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Notice;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class NoticeSeeder extends Seeder
@@ -14,11 +13,20 @@ class NoticeSeeder extends Seeder
      */
     public function run(): void
     {
+        $user = User::first(); // safer than find(1)
 
-        $user = User::find(1);
+        if (! $user) {
+            throw new \Exception('No users found. Run UserSeeder first.');
+        }
 
-        Notice::create(['title' => "Halloween Celebration Invition on 10 Feb 2024", 'user_id' => $user->id]);
+        Notice::create([
+            'title' => 'Halloween Celebration Invitation on 10 Feb 2024',
+            'user_id' => $user->id,
+        ]);
 
-        Notice::create(['title' => "Holi Celebration Invition on 30 Feb 2024", 'user_id' => $user->id]);
+        Notice::create([
+            'title' => 'Holi Celebration Invitation on 30 Feb 2024',
+            'user_id' => $user->id,
+        ]);
     }
 }

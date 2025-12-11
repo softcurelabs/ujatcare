@@ -6,12 +6,12 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateReviewRequest extends FormRequest
 {
-    public function authorize() : bool
+    public function authorize(): bool
     {
         return true;
     }
 
-    public function rules() : array
+    public function rules(): array
     {
         return [
             'listing_id' => 'sometimes|exists:listings,id',

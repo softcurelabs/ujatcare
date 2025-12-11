@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\Services\QuickBook;
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -30,8 +29,5 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
-    {
-
-    }
+    public function boot(): void {}
 }

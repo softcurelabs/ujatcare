@@ -10,7 +10,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ApplicationDocuments extends Model
 {
     use HasFactory, SoftDeletes;
+
     protected $table = 'documents';
+
     protected $fillable = ['document_name', 'application_id'];
 
     public function application(): BelongsTo

@@ -9,15 +9,16 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class MaintananceConversation extends Model
 {
     use HasFactory;
+
     protected $casts = [
         'created_at' => 'datetime:Y-m-d H:i',
-        'updated_at'  => 'datetime:Y-m-d H:i',
+        'updated_at' => 'datetime:Y-m-d H:i',
     ];
 
     protected $fillable = [
         'maintanance_id',
         'sender_id',
-        'message'
+        'message',
     ];
 
     public function sender(): HasOne

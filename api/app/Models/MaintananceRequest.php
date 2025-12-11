@@ -2,33 +2,32 @@
 
 namespace App\Models;
 
-use App\Constants\Status;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
-use const App\Constants\Status;
 
 class MaintananceRequest extends Model
 {
     public const Status = [
-        1 => "Pending",
-        2 => "In Progress",
-        3 => "On Hold",
-        4 => "Done",
+        1 => 'Pending',
+        2 => 'In Progress',
+        3 => 'On Hold',
+        4 => 'Done',
     ];
+
     protected $attributes = [
         'status' => 1,
     ];
 
     use HasFactory, SoftDeletes;
+
     protected $appends = ['status_name'];
+
     protected $casts = [
         'action_date' => 'datetime:Y-m-d H:i',
         'created_at' => 'datetime:Y-m-d H:i',
-        'updated_at'  => 'datetime:Y-m-d H:i',
+        'updated_at' => 'datetime:Y-m-d H:i',
     ];
 
     protected $fillable = [
@@ -47,7 +46,7 @@ class MaintananceRequest extends Model
         'work_done',
         'chargable',
         'flat_id',
-        'repaired_by'
+        'repaired_by',
     ];
 
     public function getStatusNameAttribute()

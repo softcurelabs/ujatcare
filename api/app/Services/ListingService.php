@@ -26,7 +26,7 @@ class ListingService
         $this->uploader = $uploader;
     }
 
-    public function getAllListings() : Collection
+    public function getAllListings(): Collection
     {
         return Listing::select([
             'id', 'title', 'bg_img', 'contact_number',
@@ -42,7 +42,7 @@ class ListingService
         ])->findOrFail($id);
     }
 
-    public function createListing(StoreListingRequest $request) : Listing
+    public function createListing(StoreListingRequest $request): Listing
     {
         return DB::transaction(function () use ($request) {
 
@@ -106,7 +106,7 @@ class ListingService
         });
     }
 
-    public function updateListing(UpdateListingRequest $request, int $id) : Listing
+    public function updateListing(UpdateListingRequest $request, int $id): Listing
     {
         return DB::transaction(function () use ($request, $id) {
 
@@ -180,7 +180,7 @@ class ListingService
         });
     }
 
-    public function deleteListing(int $id) : void
+    public function deleteListing(int $id): void
     {
         $listing = Listing::findOrFail($id);
 

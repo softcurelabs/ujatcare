@@ -16,21 +16,21 @@ class ListingController extends Controller
         $this->listingService = $listingService;
     }
 
-    public function allListingController() : JsonResponse
+    public function allListingController(): JsonResponse
     {
         return response()->json(
             $this->listingService->getAllListings()
         );
     }
 
-    public function show(int $id) : JsonResponse
+    public function show(int $id): JsonResponse
     {
         return response()->json(
             $this->listingService->getListingDetails($id)
         );
     }
 
-    public function store(StoreListingRequest $request) : JsonResponse
+    public function store(StoreListingRequest $request): JsonResponse
     {
         $listing = $this->listingService->createListing($request);
 
@@ -41,7 +41,7 @@ class ListingController extends Controller
         ], 201);
     }
 
-    public function update(UpdateListingRequest $request, int $id) : JsonResponse
+    public function update(UpdateListingRequest $request, int $id): JsonResponse
     {
         $listing = $this->listingService->updateListing($request, $id);
 
@@ -52,7 +52,7 @@ class ListingController extends Controller
         ]);
     }
 
-    public function destroy(int $id) : JsonResponse
+    public function destroy(int $id): JsonResponse
     {
         $this->listingService->deleteListing($id);
 

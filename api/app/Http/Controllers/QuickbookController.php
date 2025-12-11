@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 
 class QuickbookController extends Controller
 {
-    public function connect(QuickBook $quickBook) : JsonResponse {
+    public function connect(QuickBook $quickBook): JsonResponse
+    {
         if ($quickBook->hasValidRefreshToken()) {
             return response()->json([
                 'status' => $quickBook->hasValidRefreshToken(),
@@ -17,14 +18,16 @@ class QuickbookController extends Controller
 
         return response()->json([
             'status' => $quickBook->hasValidRefreshToken(),
-            'url' => $quickBook->authorizationUri()
+            'url' => $quickBook->authorizationUri(),
         ]);
     }
 
-    public function authorise(QuickBook $quickBook, Request $request) : JsonResponse {
+    public function authorise(QuickBook $quickBook, Request $request): JsonResponse
+    {
         $quickBook->exchangeCodeForToken($request->get('code'), $request->get('realmId'));
+
         return response()->json([
-            'status' => $quickBook->hasValidAccessToken()
+            'status' => $quickBook->hasValidAccessToken(),
         ]);
     }
 }

@@ -21,13 +21,13 @@ class ApartmentController extends Controller
             'name' => 'required|unique:apartment,name',
         ]);
 
-        $apartment = new Apartment();
+        $apartment = new Apartment;
         $apartment->name = $request->get('name');
         $apartment->save();
 
         return response()->json([
             'status' => true,
-            'message' => 'Apartment added successfully'
+            'message' => 'Apartment added successfully',
         ]);
     }
 
@@ -54,7 +54,7 @@ class ApartmentController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Apartment updated successfully'
+            'message' => 'Apartment updated successfully',
         ]);
     }
 
@@ -68,7 +68,7 @@ class ApartmentController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Apartment deleted successfully'
+            'message' => 'Apartment deleted successfully',
         ]);
     }
 }

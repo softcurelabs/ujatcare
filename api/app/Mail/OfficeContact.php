@@ -3,13 +3,11 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Mail\Mailables\Address;
-use Illuminate\Mail\Mailables\Attachment;
 
 class OfficeContact extends Mailable
 {
@@ -23,7 +21,7 @@ class OfficeContact extends Mailable
         //
     }
 
-        /**
+    /**
      * Get the message envelope.
      */
     public function envelope(): Envelope
@@ -31,7 +29,7 @@ class OfficeContact extends Mailable
         return new Envelope(
             subject: $this->title,
             replyTo: [
-                new Address($this->replyItTo, "User"),
+                new Address($this->replyItTo, 'User'),
             ]
         );
     }
@@ -43,13 +41,11 @@ class OfficeContact extends Mailable
     {
         return new Content(
             markdown: 'emails.office_contact',
-            with:
-            [
-                'description'=> $this->description
+            with: [
+                'description' => $this->description,
             ]
         );
     }
-
 
     /**
      * Get the attachments for the message.

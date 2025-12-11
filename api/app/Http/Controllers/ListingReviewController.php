@@ -17,7 +17,7 @@ class ListingReviewController extends Controller
         $this->service = $service;
     }
 
-    public function index() : JsonResponse
+    public function index(): JsonResponse
     {
         return response()->json([
             'status' => true,
@@ -25,11 +25,11 @@ class ListingReviewController extends Controller
         ]);
     }
 
-    public function store(StoreReviewRequest $request, int $listing_id) : JsonResponse
+    public function store(StoreReviewRequest $request, int $listing_id): JsonResponse
     {
         $review = $this->service->create($request->validated(), $listing_id);
 
-        if (!$review) {
+        if (! $review) {
             return response()->json(['message' => 'Listing not found'], 404);
         }
 
@@ -40,7 +40,7 @@ class ListingReviewController extends Controller
         ], 201);
     }
 
-    public function show(int $id) : JsonResponse
+    public function show(int $id): JsonResponse
     {
         $review = ListingReview::findOrFail($id);
 
@@ -50,7 +50,7 @@ class ListingReviewController extends Controller
         ]);
     }
 
-    public function showAll(int $listing_id) : JsonResponse
+    public function showAll(int $listing_id): JsonResponse
     {
         $reviews = ListingReview::where('listing_id', $listing_id)->get();
 
@@ -60,7 +60,7 @@ class ListingReviewController extends Controller
         ]);
     }
 
-    public function update(UpdateReviewRequest $request, int $id) : JsonResponse
+    public function update(UpdateReviewRequest $request, int $id): JsonResponse
     {
         $review = ListingReview::findOrFail($id);
 
@@ -73,7 +73,7 @@ class ListingReviewController extends Controller
         ]);
     }
 
-    public function destroy(int $id) : JsonResponse
+    public function destroy(int $id): JsonResponse
     {
         $review = ListingReview::findOrFail($id);
         $this->service->delete($review);

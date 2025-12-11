@@ -8,8 +8,6 @@ use App\Models\MaintananceRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\Rule;
 use Throwable;
 
 class MaintanceController extends Controller
@@ -31,21 +29,22 @@ class MaintanceController extends Controller
     public function listAll(Request $request)
     {
         $queryBuilder = MaintananceRequest::select('maintanance_requests.*', 'f1.name as flat_name', 'u1.first_name as user_name', 'u2.first_name as repaired_username')
-        ->join('users as u1', 'maintanance_requests.user_id', 'u1.id')
-        ->join('flat as f1', 'maintanance_requests.flat_id', 'f1.id')
-        ->leftJoin('users as u2', 'maintanance_requests.repaired_by', 'u2.id')
-        ->orderBy('id', 'desc');
+            ->join('users as u1', 'maintanance_requests.user_id', 'u1.id')
+            ->join('flat as f1', 'maintanance_requests.flat_id', 'f1.id')
+            ->leftJoin('users as u2', 'maintanance_requests.repaired_by', 'u2.id')
+            ->orderBy('id', 'desc');
         $status = $request->get('status');
-        if ($status != "" && in_array($status, [0, 1, 2])) {
+        if ($status != '' && in_array($status, [0, 1, 2])) {
             $queryBuilder->where('status', $status);
         }
+
         return $queryBuilder->paginate($request->get('limit', 10));
     }
 
     public function store(Request $request)
     {
         $validatedData = $this->validate($request, [
-            'user_id' => "required",
+            'user_id' => 'required',
             'flat_id' => 'exists:App\Models\Flat,id',
             'tanent_name' => 'required|max:50',
             'phone' => 'required|min:10|max:10',
@@ -58,7 +57,7 @@ class MaintanceController extends Controller
         if ($loggedInUser->hasRole(Role::Recident) && $user->id != Auth::id()) {
             return response()->json([
                 'status' => false,
-                'message' => 'You can only create ticket for yourself'
+                'message' => 'You can only create ticket for yourself',
             ]);
         }
 
@@ -84,7 +83,7 @@ class MaintanceController extends Controller
         if ($maintananceRequest->status != 1) {
             return response()->json([
                 'status' => false,
-                'message' => "You can't edit already in progress ticket"
+                'message' => "You can't edit already in progress ticket",
             ]);
         }
         $maintananceRequest->update($validatedData);
@@ -94,6 +93,7 @@ class MaintanceController extends Controller
             'message' => 'Maintanance Request Updated Successfully',
         ]);
     }
+
     public function updateAdmin(Request $request, int $id)
     {
         $validation = [
@@ -176,7 +176,7 @@ class MaintanceController extends Controller
 
         $validatedData = [
             'message' => $message,
-            'sender_id' => Auth::id()
+            'sender_id' => Auth::id(),
         ];
 
         $validatedData['maintanance_id'] = $id;
@@ -188,7 +188,6 @@ class MaintanceController extends Controller
             'message' => 'Maintanance Request Updated Successfully',
         ]);
     }
-
 
     public function dashboard()
     {
@@ -203,6 +202,7 @@ class MaintanceController extends Controller
     public function show(int $id)
     {
         $maintananceRequest = MaintananceRequest::find($id);
+
         return response()->json($maintananceRequest);
     }
 
@@ -211,7 +211,7 @@ class MaintanceController extends Controller
         $validation = [
             // 'status' => 'required|in:2,3',
             'message' => 'required',
-            'sender_id' => "required|in:" . Auth::id()
+            'sender_id' => 'required|in:'.Auth::id(),
         ];
 
         $validatedData = $this->validate($request, $validation);

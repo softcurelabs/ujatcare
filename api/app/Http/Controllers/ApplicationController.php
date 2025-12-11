@@ -13,7 +13,6 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
 use Nette\Utils\Random;
 
@@ -21,7 +20,7 @@ class ApplicationController extends Controller
 {
     public function index(Request $request): JsonResponse
     {
-        //return response()->json(get_class($request->file('documents')));
+        // return response()->json(get_class($request->file('documents')));
         $request->validate([
             'cash_balance' => 'required|integer',
             'city' => 'required|max:128',
@@ -83,7 +82,7 @@ class ApplicationController extends Controller
         $application = Application::create($request->all());
         foreach ($request->file('documents', []) as $document) {
             $document_path = $document->store('documents');
-            $applicationDocument = new ApplicationDocuments();
+            $applicationDocument = new ApplicationDocuments;
             $applicationDocument->fill(['document_name' => $document_path, 'application_id' => $application->id]);
             $applicationDocument->save();
         }
@@ -98,11 +97,12 @@ class ApplicationController extends Controller
     {
         $status = $request->get('filter');
         $qb = Application::with(['documents']);
-        if ($status != "" && in_array($status, [0, 1, 2])) {
+        if ($status != '' && in_array($status, [0, 1, 2])) {
             $qb->where('status', $status);
         }
+
         return $qb->orderBy('id', 'desc')->paginate($request->get('limit', 10));
-        //Application::with(['documents', 'approvedBy'])->where('status', $status)->orderBy('id', 'desc')->paginate($request->get('limit', 10));
+        // Application::with(['documents', 'approvedBy'])->where('status', $status)->orderBy('id', 'desc')->paginate($request->get('limit', 10));
     }
 
     public function convertToUser(Request $request, int $id): JsonResponse
@@ -113,8 +113,7 @@ class ApplicationController extends Controller
             throw ValidationException::withMessages(['flat_id' => 'Application doesn\'t exists']);
         }
 
-
-        if ($application && 0 !== $application->status) {
+        if ($application && $application->status !== 0) {
             throw ValidationException::withMessages(['flat_id' => 'Application is already processed']);
         }
 
@@ -123,9 +122,9 @@ class ApplicationController extends Controller
         }
 
         $user = new User([
-            'first_name'  => $application->first_name_first,
-            'last_name'  => $application->last_name_first,
-            'phone_number'  => $application->home_phone_first,
+            'first_name' => $application->first_name_first,
+            'last_name' => $application->last_name_first,
+            'phone_number' => $application->home_phone_first,
             'email' => $application->email,
             'password' => bcrypt(Random::generate(10)),
         ]);
@@ -150,7 +149,8 @@ class ApplicationController extends Controller
         }
     }
 
-    public function archive(Request $request, int $id) {
+    public function archive(Request $request, int $id)
+    {
         try {
             $application = Application::findOrFail($id);
             $application->status = 2;
@@ -162,7 +162,8 @@ class ApplicationController extends Controller
         }
     }
 
-    public function unarchive(Request $request, int $id) {
+    public function unarchive(Request $request, int $id)
+    {
         try {
             $application = Application::findOrFail($id);
             $application->status = 0;
@@ -174,7 +175,8 @@ class ApplicationController extends Controller
         }
     }
 
-    public function remove(Request $request, int $id) {
+    public function remove(Request $request, int $id)
+    {
         try {
             $application = Application::findOrFail($id);
             $application->delete();

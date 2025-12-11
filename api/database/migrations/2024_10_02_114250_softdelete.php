@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        foreach([
+        foreach ([
             'apartment',
             'applications',
             'documents',
@@ -25,7 +25,7 @@ return new class extends Migration
             'notice',
             'user_documents',
             'user_profiles',
-            'users'
+            'users',
         ] as $table) {
             Schema::table($table, function (Blueprint $table) {
                 $table->softDeletes();

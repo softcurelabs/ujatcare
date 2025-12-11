@@ -6,12 +6,12 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreReviewRequest extends FormRequest
 {
-    public function authorize() : bool
+    public function authorize(): bool
     {
         return true;
     }
 
-    public function rules() : array
+    public function rules(): array
     {
         return [
             'overall_rating' => 'required|numeric|min:1|max:5',

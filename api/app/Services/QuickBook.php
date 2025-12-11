@@ -5,7 +5,8 @@ namespace App\Services;
 use App\Models\Token;
 use QuickBooksOnline\API\DataService\DataService;
 
-class QuickBook {
+class QuickBook
+{
     private DataService $dataService;
 
     public function __construct(private array $config, private Token $token) {}

@@ -15,13 +15,13 @@ class BugController extends Controller
         $validations = [
             'title' => 'required|max:128',
             'description' => 'required',
-            'documents.*' => 'mimes:jpg,jpeg,png|max:4096'
+            'documents.*' => 'mimes:jpg,jpeg,png|max:4096',
         ];
 
         $request->validate($validations);
-        Mail::to(explode(",", env('SENDER_EMAIL')))->send((new BugCreated($request->get('title'), $request->get('description'), $request->file('documents', []), Auth::user()->email)));
+        Mail::to(explode(',', env('SENDER_EMAIL')))->send((new BugCreated($request->get('title'), $request->get('description'), $request->file('documents', []), Auth::user()->email)));
 
-        return response()->json(['status' => true, 'message' => "Bug has been reported"]);
+        return response()->json(['status' => true, 'message' => 'Bug has been reported']);
 
     }
 
@@ -33,8 +33,8 @@ class BugController extends Controller
         ];
 
         $request->validate($validations);
-        Mail::to(explode(",", env('ADMIN_EMAIL')))->send((new OfficeContact($request->get('subject'), $request->get('description'), Auth::user()->email)));
+        Mail::to(explode(',', env('ADMIN_EMAIL')))->send((new OfficeContact($request->get('subject'), $request->get('description'), Auth::user()->email)));
 
-        return response()->json(['status' => true, 'message' => "Request has been sent. Office admin may contact soon."]);
+        return response()->json(['status' => true, 'message' => 'Request has been sent. Office admin may contact soon.']);
     }
 }

@@ -19,12 +19,12 @@ use Illuminate\Support\Facades\Storage;
  */
 class ImageUploadService
 {
-    public function upload($file, $path) : string|false
+    public function upload($file, $path): string|false
     {
         return $file->store($path);
     }
 
-    public function delete($path) : void
+    public function delete($path): void
     {
         if ($path && Storage::exists($path)) {
             Storage::delete($path);

@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Apartment;
 use App\Models\Flat;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ApartmentSeeder extends Seeder
@@ -19,6 +18,7 @@ class ApartmentSeeder extends Seeder
         '401',
         '402',
     ];
+
     /**
      * Run the database seeds.
      */

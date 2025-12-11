@@ -25,7 +25,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         ResetPassword::createUrlUsing(function (User $user, string $token) {
-            return config('auth.frontend') . $token;
+            return config('auth.frontend').$token;
         });
     }
 }

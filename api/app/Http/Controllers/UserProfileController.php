@@ -10,19 +10,12 @@ use App\Models\User;
 use App\Models\UserDocuments;
 use App\Models\UserProfile;
 use Exception;
-use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
-use Maatwebsite\Excel\Facades\Excel;
 use Nette\Utils\Random;
-use PhpParser\Node\Stmt\Foreach_;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Throwable;
 
@@ -37,6 +30,7 @@ class UserProfileController extends Controller
         if (Auth::user()->hasRole([Role::Admin->value])) {
             $roles[] = Role::Admin->value;
         }
+
         return UserProfile::with('user')->whereHas('user.roles', static function ($query) use ($roles) {
             return $query->whereIn('name', $roles);
         })->orderBy('id')->paginate($request->get('limit', 10));
@@ -47,20 +41,20 @@ class UserProfileController extends Controller
         $queryBuilder = UserProfile::with('user')->whereHas('user.roles', static function ($query) {
             return $query->whereIn('name', [Role::Recident->value]);
         })->orderBy('id');
-        if (!empty($request->get('filter'))) {
+        if (! empty($request->get('filter'))) {
             $queryBuilder->whereHas('user.flat.flat.apartment', static function ($query) use ($request) {
                 return $query->whereIn('id', [$request->get('filter')]);
             });
         }
-        if ('undefined' != $request->get('findFlat') && !empty($request->get('findFlat'))) {
+        if ($request->get('findFlat') != 'undefined' && ! empty($request->get('findFlat'))) {
             $queryBuilder->whereHas('user.flat.flat', static function ($query) use ($request) {
-                return $query->where('name',  'like', '%' . $request->get('findFlat') . '%');
+                return $query->where('name', 'like', '%'.$request->get('findFlat').'%');
             });
         }
 
-        if ('undefined' != $request->get('name') && !empty($request->get('name'))) {
+        if ($request->get('name') != 'undefined' && ! empty($request->get('name'))) {
             $queryBuilder->whereHas('user', static function ($query) use ($request) {
-                return $query->where('first_name',  'like', '%' . $request->get('name') . '%');
+                return $query->where('first_name', 'like', '%'.$request->get('name').'%');
             });
         }
 
@@ -69,16 +63,15 @@ class UserProfileController extends Controller
         return $queryBuilder->paginate($request->get('limit', 10));
     }
 
-
     public function allOccupants()
     {
-                $queryBuilder = UserProfile::with(['user' => function($query) {
+        $queryBuilder = UserProfile::with(['user' => function ($query) {
             return $query->without(['flat', 'getFlatAttributes'])->select('id', 'first_name');
-        }])->select('user_id' )->has('user.flat');
-
+        }])->select('user_id')->has('user.flat');
 
         return $queryBuilder->get();
     }
+
     /**
      * Display the specified resource.
      */
@@ -92,7 +85,7 @@ class UserProfileController extends Controller
     public function store(Request $request)
     {
         $validations = [
-            'phone_number' =>  ['required', Rule::unique('users', 'phone_number')
+            'phone_number' => ['required', Rule::unique('users', 'phone_number')
                 ->whereNull('deleted_at'), 'max:10', 'min:10'],
             'first_name' => 'required|min:3',
             'last_name' => 'required',
@@ -106,13 +99,13 @@ class UserProfileController extends Controller
 
         $request->validate($validations);
         $data = [
-            'first_name'  => $request->first_name,
-            'last_name'   => $request->last_name,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
             'phone_number' => $request->phone_number,
             'password' => bcrypt(Random::generate(10)),
         ];
 
-        if (!empty($request->email)) {
+        if (! empty($request->email)) {
             $data['email'] = $request->email;
         }
 
@@ -151,9 +144,9 @@ class UserProfileController extends Controller
         $user = Auth::user();
 
         $validations = [
-            'phone_number' => 'required|max:10|min:10|unique:users,phone_number,' . $user_id,
+            'phone_number' => 'required|max:10|min:10|unique:users,phone_number,'.$user_id,
             'relationship' => 'required',
-            'emergency_contact_number'  => 'required|max:10|min:10',
+            'emergency_contact_number' => 'required|max:10|min:10',
             'emergency_contact_name' => 'required|min:3',
             'first_name' => 'required|min:3',
             'last_name' => 'required',
@@ -166,16 +159,16 @@ class UserProfileController extends Controller
                     'first_name' => 'required|min:3',
                     'last_name' => 'required',
                     'email' => 'sometimes|nullable|email',
-                    'phone_number' => 'required|max:10|min:10|unique:users,phone_number,' . $user_id,
+                    'phone_number' => 'required|max:10|min:10|unique:users,phone_number,'.$user_id,
                     // 'unit' => 'required|integer|min:1|max:1000',
                     'parking_space' => 'nullable|sometimes|decimal:0,2',
-                    'birth_date' => 'required|date|before:' . now()->subYears(18)->toDateString(),
+                    'birth_date' => 'required|date|before:'.now()->subYears(18)->toDateString(),
                     // 'locker' => 'required',
                     // 'staff_notes' => 'required',
-                    'flat_id' => "integer",
+                    'flat_id' => 'integer',
                     'movein_date' => 'nullable|sometimes|date',
                     'income_verification' => 'nullable|sometimes|decimal:2',
-                    'total_rent'  => 'nullable|sometimes|decimal:2',
+                    'total_rent' => 'nullable|sometimes|decimal:2',
                     // 'language' => 'required',
                     // 'fob' => 'required',
                     // 'special_instruction' => '',
@@ -194,7 +187,7 @@ class UserProfileController extends Controller
                 ];
             } else {
                 $validations = [
-                    'phone_number' => 'required|max:10|min:10|unique:users,phone_number,' . $user_id,
+                    'phone_number' => 'required|max:10|min:10|unique:users,phone_number,'.$user_id,
                     'first_name' => 'required|min:3',
                     'last_name' => 'required',
                 ];
@@ -234,11 +227,11 @@ class UserProfileController extends Controller
 
         $validated = $request->validate($validations);
 
-
-        if (null === $userProfile) {
-            $userProfile = new UserProfile();
+        if ($userProfile === null) {
+            $userProfile = new UserProfile;
             $userProfile->create($request->all());
             UserUpdated::dispatch($userProfile);
+
             return response()->json([
                 'status' => true,
                 'message' => 'User Updated Successfully',
@@ -248,7 +241,7 @@ class UserProfileController extends Controller
         if (isset($validated['flat_id'])) {
             $userProfile->user->flat->update($validated);
         }
-        if (null != $request->get('first_name')) {
+        if ($request->get('first_name') != null) {
             $userProfile->user->update($validated);
         }
 
@@ -257,6 +250,7 @@ class UserProfileController extends Controller
             UserUpdated::dispatch($userProfile);
         } catch (Throwable $e) {
         }
+
         return response()->json([
             'status' => true,
             'message' => 'User Updated Successfully',
@@ -268,16 +262,16 @@ class UserProfileController extends Controller
         $userProfile = UserProfile::with('user')->where('user_id', $id)->first();
         UserUpdated::dispatch($userProfile);
 
-        if (!empty($userProfile->quickbook_id)) {
+        if (! empty($userProfile->quickbook_id)) {
             return response()->json([
                 'status' => true,
-                'message' => 'Tenant Sync Succesfully'
+                'message' => 'Tenant Sync Succesfully',
             ]);
         }
 
         return response()->json([
             'status' => false,
-            'message' => 'Error occurred'
+            'message' => 'Error occurred',
         ]);
     }
 
@@ -287,15 +281,15 @@ class UserProfileController extends Controller
             'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:1024',
         ]);
         $userProfile = UserProfile::with('user')->where('user_id', $user_id)->first();
-        if (null === $userProfile) {
-            $userProfile = new UserProfile();
+        if ($userProfile === null) {
+            $userProfile = new UserProfile;
             $userProfile->save();
         }
 
         $image_path = $request->file('image')->store('images');
 
         $userProfile->update([
-            'image_path' => $image_path
+            'image_path' => $image_path,
         ]);
 
         return response()->json([
@@ -330,14 +324,12 @@ class UserProfileController extends Controller
             'password' => bcrypt($request->get('password')),
         ]);
 
-
         return response()->json([
             'status' => true,
             'message' => 'Password updated Successfully',
             // 'redirect' => $redirect
         ]);
     }
-
 
     public function permission(Request $request, $user_id)
     {
@@ -365,8 +357,8 @@ class UserProfileController extends Controller
         if ($user->save()) {
             if ($request->get('role_id') === Role::Recident->value) {
                 $flatOwner = $user->flat;
-                if (!$flatOwner) {
-                    $flatOwner = new FlatOwner();
+                if (! $flatOwner) {
+                    $flatOwner = new FlatOwner;
                 }
                 $flatOwner->user_id = $user_id;
                 $flatOwner->flat_id = $request->get('flat_id');
@@ -398,19 +390,19 @@ class UserProfileController extends Controller
         ]);
         set_time_limit(3000);
 
-        $import = new UsersImport();
+        $import = new UsersImport;
         $import->import(request()->file('users'));
 
         $message = '';
 
         foreach ($import->errors()->all() as $error) {
-            $message .= $error->getMessage() . "<br/>";
+            $message .= $error->getMessage().'<br/>';
         }
 
         return response()->json([
             'status' => true,
-            'message' => "Users added Successfully",
-            'errors' => $message
+            'message' => 'Users added Successfully',
+            'errors' => $message,
         ]);
     }
 
@@ -421,15 +413,15 @@ class UserProfileController extends Controller
             'passport.*' => 'mimes:jpg,jpeg,pdf,png|max:20000|min:1',
             'other_document.*' => 'mimes:jpg,jpeg,pdf,png|max:20000|min:1',
             'documents.*' => 'mimes:jpg,jpeg,pdf,png|max:20000|min:1',
-            'user_id' => 'exists:users,id'
+            'user_id' => 'exists:users,id',
         ]);
 
         $allTypes = ['licence', 'passport', 'other_document', 'documents'];
 
         foreach ($allTypes as $type => $typeValue) {
             foreach ($request->file($typeValue, []) as $document) {
-                //s$document_path = $document->store($typeValue);
-                $licence = new UserDocuments();
+                // s$document_path = $document->store($typeValue);
+                $licence = new UserDocuments;
                 $document_path = $document->store('documents');
                 $licence->fill(['document_name' => $document->getClientOriginalName(), 'document_path' => $document_path, 'user_id' => $request->get('user_id'), 'type' => $type]);
                 $licence->save();
@@ -462,7 +454,7 @@ class UserProfileController extends Controller
     {
         $user = User::find($id);
         $request->validate([
-            'reason' => 'required'
+            'reason' => 'required',
         ]);
 
         $flatOwner = $user->flat;

@@ -10,10 +10,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Application extends Model
 {
     use HasFactory, SoftDeletes;
+
     protected $casts = [
         'created_at' => 'datetime:Y-m-d H:i',
-        'updated_at'  => 'datetime:Y-m-d H:i',
+        'updated_at' => 'datetime:Y-m-d H:i',
     ];
+
     protected $fillable = [
         'cash_balance',
         'city',
@@ -79,7 +81,7 @@ class Application extends Model
         'hc_disability_second',
         'hc_birth_date_second',
         // 'hc_wheelchair_second',
-        'approved_by'
+        'approved_by',
     ];
 
     public function documents(): HasMany

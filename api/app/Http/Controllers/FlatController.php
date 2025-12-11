@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Apartment;
 use App\Models\Flat;
-use App\Models\FlatOwner;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Validation\ValidationException;
 
 class FlatController extends Controller
 {
@@ -16,9 +13,10 @@ class FlatController extends Controller
      */
     public function index()
     {
-        $apartments = Apartment::with(['flats' => function($query) {
+        $apartments = Apartment::with(['flats' => function ($query) {
             $query->orderByRaw('lpad(name, 10, 0) asc');
         }])->get();
+
         return response()->json($apartments);
     }
 
@@ -29,17 +27,17 @@ class FlatController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:flat,name',
-            'apartment_id' => 'required|exists:apartment,id'
+            'apartment_id' => 'required|exists:apartment,id',
         ]);
 
-        $flat = new Flat();
+        $flat = new Flat;
         $flat->apartment_id = $request->get('apartment_id');
         $flat->name = $request->get('name');
         $flat->save();
 
         return response()->json([
             'status' => true,
-            'message' => 'Suite added successfully'
+            'message' => 'Suite added successfully',
         ]);
     }
 
@@ -60,7 +58,7 @@ class FlatController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:flat,name',
-            'apartment_id' => 'required|exists:apartment,id'
+            'apartment_id' => 'required|exists:apartment,id',
         ]);
 
         $flat = Flat::find($id);
@@ -70,7 +68,7 @@ class FlatController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Suite added successfully'
+            'message' => 'Suite added successfully',
         ]);
     }
 
@@ -84,7 +82,7 @@ class FlatController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Suite deleted successfully'
+            'message' => 'Suite deleted successfully',
         ]);
     }
 }

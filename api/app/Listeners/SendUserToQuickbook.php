@@ -12,6 +12,7 @@ use QuickBooksOnline\API\Facades\Customer;
 class SendUserToQuickbook
 {
     use Logger;
+
     /**
      * Create the event listener.
      */
@@ -26,7 +27,7 @@ class SendUserToQuickbook
     public function handle(UserUpdated $event): void
     {
         $user = $event->user;
-        if (!$user->user->hasRole([Role::Recident])) {
+        if (! $user->user->hasRole([Role::Recident])) {
             return;
         }
 
@@ -36,6 +37,7 @@ class SendUserToQuickbook
             $error = $dataService->getLastError();
             if ($error) {
                 $this->logError($error);
+
                 return;
             }
 
@@ -45,23 +47,25 @@ class SendUserToQuickbook
                 $error = $dataService->getLastError();
                 if ($error) {
                     $this->logError($error);
+
                     return;
                 }
                 $user->quickbook_id = (int) $resultingCustomerObj->Id;
                 Log::info('Quickbook Synced Customer: '.$resultingCustomerObj->Id);
                 $user->update();
+
                 return;
             }
 
             $theCustomer = reset($entities);
             $updateCustomer = Customer::update($theCustomer, [
-                //If you are going to do a full Update, set sparse to false
+                // If you are going to do a full Update, set sparse to false
                 'sparse' => 'false',
-                ...$user->user->quickbooks
+                ...$user->user->quickbooks,
             ]);
 
             $updated = $dataService->Update($updateCustomer);
-            $user->quickbook_id =  (int) $updated->Id;
+            $user->quickbook_id = (int) $updated->Id;
             $user->update();
             $error = $dataService->getLastError();
             if ($error) {
@@ -72,6 +76,5 @@ class SendUserToQuickbook
             Log::error($e);
         }
 
-        return;
     }
 }
