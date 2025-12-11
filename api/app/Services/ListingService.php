@@ -9,6 +9,14 @@ use App\Models\ListingImage;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Service class responsible for managing listing operations.
+ *
+ * Handles business logic related to creating, retrieving, and updating listings,
+ * including associated images, FAQs, times, prices, categories, and facilities.
+ * Encapsulates all interactions with the Listing model and related entities,
+ * ensuring transactional integrity and proper resource management.
+ */
 class ListingService
 {
     protected $uploader;
@@ -109,13 +117,13 @@ class ListingService
             // BG image
             if ($request->hasFile('bg_img')) {
                 $this->uploader->delete($listing->bg_img);
-                $data['bg_img'] = $this->uploader->upload($request->bg_img, 'listing_bg');
+                $data['bg_img'] = $this->uploader->upload($request->bg_img, 'listings/bg');
             }
 
             // Logo
             if ($request->hasFile('logo')) {
                 $this->uploader->delete($listing->logo);
-                $data['logo'] = $this->uploader->upload($request->logo, 'listing_logo');
+                $data['logo'] = $this->uploader->upload($request->logo, 'listings/logo');
             }
 
             $listing->update($data);
@@ -130,7 +138,7 @@ class ListingService
                 foreach ($request->file('images') as $img) {
                     ListingImage::create([
                         'listing_id' => $listing->id,
-                        'url' => $this->uploader->upload($img, 'listing_images'),
+                        'url' => $this->uploader->upload($img, 'listings/images'),
                     ]);
                 }
             }

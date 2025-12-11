@@ -6,7 +6,6 @@ namespace App\Models;
 
 use App\Mail\InviteEmail;
 use App\Traits\HasQuickBooksToken;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,7 +21,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, CanResetPassword, HasQuickBooksToken, SoftDeletes;
+    use CanResetPassword, HasApiTokens, HasFactory, HasQuickBooksToken, HasRoles, Notifiable, SoftDeletes;
 
     protected $appends = [
         'role',
@@ -32,8 +31,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'apartment_name',
         'apartment_id',
         'quickbooks',
-        'name'
+        'name',
     ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -84,15 +84,17 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getFlatNameAttribute()
     {
-        return (null !== $this->flat()->first() && $this->flat()->first()->flat() && $this->flat()->first()->flat()->first() && $this->flat()->first()->flat()->first()->name ) ?  $this->flat()->first()->flat()->first()->name : "";
+        return ($this->flat()->first() !== null && $this->flat()->first()->flat() && $this->flat()->first()->flat()->first() && $this->flat()->first()->flat()->first()->name) ? $this->flat()->first()->flat()->first()->name : '';
     }
+
     public function getApartmentNameAttribute()
     {
-        return (null !== $this->flat()->first() && $this->flat()->first()->flat()->first() && $this->flat()->first()->flat()->first()->apartment()->first() )   ? $this->flat()->first()->flat()->first()->apartment()->first()->name : "";
+        return ($this->flat()->first() !== null && $this->flat()->first()->flat()->first() && $this->flat()->first()->flat()->first()->apartment()->first()) ? $this->flat()->first()->flat()->first()->apartment()->first()->name : '';
     }
+
     public function getApartmentIdAttribute()
     {
-        return (null !== $this->flat()->first() && $this->flat()->first()->flat()->first() && $this->flat()->first()->flat()->first()->apartment()->first() ) ? $this->flat()->first()->flat()->first()->apartment()->first()->id : "";
+        return ($this->flat()->first() !== null && $this->flat()->first()->flat()->first() && $this->flat()->first()->flat()->first()->apartment()->first()) ? $this->flat()->first()->flat()->first()->apartment()->first()->id : '';
     }
 
     public function getRoleAttribute()
@@ -102,7 +104,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getNameAttribute()
     {
-        return $this->first_name . " " . $this->last_name;
+        return $this->first_name.' '.$this->last_name;
     }
 
     public function getFlatAttribute()
@@ -112,7 +114,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getProfileAttribute(): ?UserProfile
     {
-        return $this->profile()->first() ?? null;
+        return $this->profile()->first();
     }
 
     public function getQuickbooksAttribute(): array
@@ -125,38 +127,39 @@ class User extends Authenticatable implements MustVerifyEmail
             //     "CountrySubDivisionCode" =>  "CA",
             //     "PostalCode" =>  "94042"
             // ],
-            "Notes" =>  $this->getProfileAttribute()->special_instruction,
+            'Notes' => $this->getProfileAttribute()->special_instruction,
             // "Title" =>  "Mr",
-            "GivenName" =>  $this->first_name,
+            'GivenName' => $this->first_name,
             // "MiddleName" =>  "1B",
             // "FamilyName" =>  "King",
-            "FamilyName" =>  $this->last_name,
+            'FamilyName' => $this->last_name,
             // "Suffix" =>  "Jr",
-            "FullyQualifiedName" =>  $this->name,
+            'FullyQualifiedName' => $this->name,
             // "CompanyName" =>  "King Evial",
-            "DisplayName" =>  $this->name,
-            "PrimaryPhone" =>  [
-                "FreeFormNumber" =>  $this->getProfileAttribute()->phone_number
+            'DisplayName' => $this->name,
+            'PrimaryPhone' => [
+                'FreeFormNumber' => $this->getProfileAttribute()->phone_number,
             ],
-            "PrimaryEmailAddr" =>  [
-                "Address" => $this->email
-            ]
+            'PrimaryEmailAddr' => [
+                'Address' => $this->email,
+            ],
         ];
     }
 
-    public function sendWelcomeEmail(){
+    public function sendWelcomeEmail()
+    {
 
-        $token = app('auth.password.broker')->createToken($this);;
+        $token = app('auth.password.broker')->createToken($this);
 
         DB::table(config('auth.passwords.users.table'))->updateOrInsert([
-            'email' => $this->email
-        ],[
             'email' => $this->email,
-            'token' => bcrypt($token)
+        ], [
+            'email' => $this->email,
+            'token' => bcrypt($token),
         ]);
 
-        $resetUrl= config('auth.frontend') . $token .'?from=welcome';
+        $resetUrl = config('auth.frontend').$token.'?from=welcome';
 
         Mail::to($this)->send(new InviteEmail($this, $resetUrl));
-      }
+    }
 }

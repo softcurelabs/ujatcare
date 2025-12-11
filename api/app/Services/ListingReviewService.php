@@ -7,6 +7,12 @@ use App\Models\ListingReview;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * Service class responsible for managing listing review operations.
+ *
+ * Handles creation, retrieval, updating, and deletion of listing reviews,
+ * including associated image uploads and storage management.
+ */
 class ListingReviewService
 {
     public function all() : Collection

@@ -61,7 +61,7 @@ Route::get('listing/{listing_id}/reviews', [ListingReviewController::class, 'sho
 Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
     Route::post('listing/add', [ListingController::class, 'store']);
     Route::put('listing/{id}', [ListingController::class, 'update']);
-    Route::delete('listing/{id}', [ListingController::class, 'delete']);
+    Route::delete('listing/{id}', [ListingController::class, 'destroy']);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'role:admin|staff']], function () {

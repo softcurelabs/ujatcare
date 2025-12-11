@@ -6,6 +6,10 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreListingRequest extends FormRequest
 {
+    public function authorize(): bool
+    {
+        return true;
+    }
     public function rules() : array
     {
         return [
@@ -21,16 +25,16 @@ class StoreListingRequest extends FormRequest
             'images.*' => 'image|mimes:jpg,png,jpeg,webp|max:2048',
 
             'faqs' => 'sometimes|array',
-            'faqs.*.question' => 'required_with:faqs|string',
-            'faqs.*.answer' => 'required_with:faqs|string',
+            'faqs.*.question' => 'required|string',
+            'faqs.*.answer' => 'required|string',
 
             'times' => 'sometimes|array',
-            'times.*.days' => 'required|string',
-            'times.*.time' => 'required|string',
+            'times.*.days' => 'required|integer|min:1|max:7',
+            'times.*.time' => 'required|date_format:H:i',
 
             'prices' => 'sometimes|array',
             'prices.*.price_range' => 'required|string',
-            'prices.*.price' => 'required|string',
+            'prices.*.price' => 'required|numeric|min:0|max:99999999.99',
 
             'categories' => 'sometimes|array',
             'categories.*' => 'integer|exists:categories,id',
