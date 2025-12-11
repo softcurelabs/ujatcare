@@ -6,6 +6,8 @@ use App\Http\Requests\StoreListingRequest;
 use App\Http\Requests\UpdateListingRequest;
 use App\Services\ListingService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ListingController extends Controller
 {
@@ -59,6 +61,20 @@ class ListingController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Listing Deleted Successfully',
+        ]);
+    }
+
+    public function toggleFavourite(int $listingId): JsonResponse
+    {
+        Log::info('Listing ID: '.$listingId.' User ID: '.Auth::user()->id);
+        $favourite = $this->listingService->toggleFavourite($listingId);
+
+        return response()->json([
+            'status' => true,
+            'message' => $favourite->favourite
+                ? 'Listing added to favourites'
+                : 'Listing removed from favourites',
+            'data' => $favourite,
         ]);
     }
 }
