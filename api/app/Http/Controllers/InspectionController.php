@@ -23,8 +23,8 @@ class InspectionController extends Controller
 
     public function events()
     {
-        return Inspection::select(["id", "title", "inspection_date as date"])
-            ->where('inspection_date', '>=', new DateTime())
+        return Inspection::select(['id', 'title', 'inspection_date as date'])
+            ->where('inspection_date', '>=', new DateTime)
             ->where('status', '!=', 3)
             ->get()->toArray();
     }
@@ -46,7 +46,6 @@ class InspectionController extends Controller
 
         return response()->json(['status' => true, 'message' => 'Inspection Created successfully']);
     }
-
 
     public function show(int $id)
     {
@@ -77,7 +76,7 @@ class InspectionController extends Controller
             // 'note' => 'required',
         ];
 
-        if ('3' == $request->get('status')) {
+        if ($request->get('status') == '3') {
             $validations = array_merge($validations, ['notes' => 'required', 'documents.*' => 'mimes:jpg,jpeg,png|max:4096']);
         }
         $request->validate($validations);

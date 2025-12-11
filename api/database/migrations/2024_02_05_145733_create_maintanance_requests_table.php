@@ -34,7 +34,7 @@ return new class extends Migration
             $table->time('time_out')->nullable();
             $table->text('work_done')->nullable();
             $table->tinyInteger('chargable')->nullable();
-            $table->integer('repaired_by')->nullable()->index("maintanance_repaired_by");
+            $table->integer('repaired_by')->nullable()->index('maintanance_repaired_by');
             $table->timestamps();
         });
     }

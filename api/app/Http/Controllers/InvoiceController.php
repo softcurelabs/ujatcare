@@ -9,7 +9,6 @@ use App\Events\InvoiceUpdated;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,6 +26,7 @@ class InvoiceController extends Controller
         if ('' != ($request->get('filter', ''))) {
             $invoice->where('status', $request->get('filter', ''));
         }
+
         return $invoice->paginate($request->get('limit', 10));
     }
 
@@ -40,23 +40,23 @@ class InvoiceController extends Controller
         ]);
 
         $user = User::find($request->get('tenant'));
-        if (!$user->flat()) {
+        if (! $user->flat()) {
             throw ValidationException::withMessages(['Tenent doesn\'t hold any flat.']);
         }
-        $invoice = new Invoice();
+        $invoice = new Invoice;
 
         $invoice->fill([
             'user_id' => $user->id,
             'flat_id' => $user->flat()->first()->id,
             'status' => 0,
-            'due_date' => $request->get('due_date')
+            'due_date' => $request->get('due_date'),
         ]);
 
-        $item = new InvoiceItem();
+        $item = new InvoiceItem;
         $item->fill([
             'total' => $request->get('total'),
             'name' => $request->get('title'),
-            'qty' => 1
+            'qty' => 1,
         ]);
         $invoice->save();
         $invoice->items()->save($item);
@@ -66,34 +66,33 @@ class InvoiceController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Invoice Created Succesfully'
+            'message' => 'Invoice Created Succesfully',
         ]);
     }
 
-    public function bulkInvoice()
-    {
-    }
+    public function bulkInvoice() {}
 
     public function sync(int $id)
     {
         $invoice = Invoice::find($id);
-        if (!$invoice) {
+        if (! $invoice) {
             throw ValidationException::withMessages(['Invoice doesn\'t exists.']);
         }
         InvoiceUpdated::dispatch($invoice);
-        if (!empty($invoice->quickbook_id)) {
+        if (! empty($invoice->quickbook_id)) {
             return response()->json([
                 'status' => true,
-                'message' => 'Invoice Sync Succesfully'
+                'message' => 'Invoice Sync Succesfully',
             ]);
         }
 
         return response()->json([
             'status' => false,
-            'message' => 'Error occurred'
+            'message' => 'Error occurred',
         ]);
 
     }
+
     public function show(int $id)
     {
         $invoice = Invoice::with('items', 'flat', 'flat.apartment');
@@ -101,13 +100,14 @@ class InvoiceController extends Controller
         if ($user->hasRole([Role::Recident->value])) {
             $invoice->where('user_id', $user->id);
         }
+
         return $invoice->where('id', $id)->get()->first();
     }
 
     public function delete(int $id)
     {
         $invoice = Invoice::find($id);
-        if (!$invoice) {
+        if (! $invoice) {
             throw ValidationException::withMessages(['Invoice doesn\'t exists.']);
         }
 
@@ -117,14 +117,14 @@ class InvoiceController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Invoice Deleted Succesfully'
+            'message' => 'Invoice Deleted Succesfully',
         ]);
     }
 
     public function edit(int $id, Request $request)
     {
         $invoice = Invoice::find($id);
-        if (!$invoice) {
+        if (! $invoice) {
             throw ValidationException::withMessages(['Invoice doesn\'t exists.']);
         }
 
@@ -136,14 +136,14 @@ class InvoiceController extends Controller
         ]);
         $invoice->fill([
             'status' => $request->get('invoice_status'),
-            'due_date' => $request->get('due_date')
+            'due_date' => $request->get('due_date'),
         ]);
 
         $item = $invoice->items()->first();
         $item->fill([
             'total' => $request->get('total'),
             'name' => $request->get('name'),
-            'qty' => 1
+            'qty' => 1,
         ]);
         $invoice->update();
         $item->update();
@@ -153,7 +153,7 @@ class InvoiceController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Invoice Updated Succesfully'
+            'message' => 'Invoice Updated Succesfully',
         ]);
     }
 }

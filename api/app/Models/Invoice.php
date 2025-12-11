@@ -16,12 +16,13 @@ class Invoice extends Model
         'user_id',
         'flat_id',
         'status',
-        'due_date'
+        'due_date',
     ];
+
     protected $casts = [
         'due_date' => 'datetime:Y-m-d H:i',
         'created_at' => 'datetime:Y-m-d H:i',
-        'updated_at'  => 'datetime:Y-m-d H:i',
+        'updated_at' => 'datetime:Y-m-d H:i',
     ];
 
     public function user(): BelongsTo

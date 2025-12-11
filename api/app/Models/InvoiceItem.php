@@ -14,7 +14,7 @@ class InvoiceItem extends Model
     protected $fillable = [
         'total',
         'name',
-        'qty'
+        'qty',
     ];
 
     public function invoice(): BelongsTo

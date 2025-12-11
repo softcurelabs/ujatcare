@@ -149,8 +149,8 @@ return [
         'ClientID' => env('QUICKBOOK_CLIENT_ID'),
         'ClientSecret' => env('QUICKBOOK_CLIENT_SECRETE'),
         'RedirectURI' => env('QUICKBOOK_REDIRECT_URI'),
-        'scope' => "com.intuit.quickbooks.accounting",
-        'baseUrl' => env('APP_ENV') === 'local' ? "Development" : "Production"
+        'scope' => 'com.intuit.quickbooks.accounting',
+        'baseUrl' => env('APP_ENV') === 'local' ? 'Development' : 'Production',
     ],
 
     /*

@@ -15,7 +15,7 @@ class Inspection extends Model
     protected $casts = [
         'inspection_date' => 'datetime:Y-m-d H:i',
         'created_at' => 'datetime:Y-m-d H:i',
-        'updated_at'  => 'datetime:Y-m-d H:i',
+        'updated_at' => 'datetime:Y-m-d H:i',
     ];
 
     protected $fillable = [
@@ -26,7 +26,7 @@ class Inspection extends Model
         'flat_id',
         'inspection_by',
         'inspection_date',
-        'priority'
+        'priority',
     ];
 
     protected $appends = [];
@@ -51,7 +51,7 @@ class Inspection extends Model
         return $this->hasMany(InspectionDocument::class);
     }
 
-    public function save(array $options = array())
+    public function save(array $options = [])
     {
         if (auth()->id()) {
             $this->user_id = auth()->id();

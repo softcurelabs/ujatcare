@@ -10,7 +10,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class InspectionDocument extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $table = "inspection_documents";
+
+    protected $table = 'inspection_documents';
 
     protected $fillable = ['document_name', 'document_path', 'inspection_id'];
 

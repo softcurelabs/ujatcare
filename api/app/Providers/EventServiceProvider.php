@@ -37,7 +37,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         UserUpdated::class => [
             SendUserToQuickbook::class,
-        ]
+        ],
     ];
 
     /**

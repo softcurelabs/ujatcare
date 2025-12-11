@@ -2,24 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class PDFSignController extends Controller
 {
     public function index()
     {
-        return redirect()->away("https://secure.echosign.com/public/oauth/v2?redirect_uri=https://softcuretechlab.com/callback&response_type=code&client_id=CBJCHBCAABAAIl2MbMVVpoVhw2s_ixXLP2RmtfMHH5T5&state=NH7peiZ9io8yrXRyIfwfA6kQfa-31fD2&scope=user_read:account+user_write:account+user_login:account+agreement_read:account+agreement_write:account+agreement_send:account+widget_read:account+widget_write:account+library_read:account+library_write:account+workflow_read:account+workflow_write:account");
+        return redirect()->away('https://secure.echosign.com/public/oauth/v2?redirect_uri=https://softcuretechlab.com/callback&response_type=code&client_id=CBJCHBCAABAAIl2MbMVVpoVhw2s_ixXLP2RmtfMHH5T5&state=NH7peiZ9io8yrXRyIfwfA6kQfa-31fD2&scope=user_read:account+user_write:account+user_login:account+agreement_read:account+agreement_write:account+agreement_send:account+widget_read:account+widget_write:account+library_read:account+library_write:account+workflow_read:account+workflow_write:account');
     }
 
     public function callback(Request $request)
     {
 
-        $request->get("code");
+        $request->get('code');
         exit;
     }
 }
-
 
 // {
 //     "fileInfos": [{
@@ -37,5 +35,4 @@ class PDFSignController extends Controller
 //     "state": "IN_PROCESS"
 // }
 
-
-//CBJCHBCAABAAduMi0B9f6Grj86iN0V5YQc_KT_0ieNsX
+// CBJCHBCAABAAduMi0B9f6Grj86iN0V5YQc_KT_0ieNsX

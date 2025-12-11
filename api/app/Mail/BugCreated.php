@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Attachment;
@@ -18,7 +17,7 @@ class BugCreated extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(private string $title, private string $description, private array $mailAttachments, private string $replyItTo){}
+    public function __construct(private string $title, private string $description, private array $mailAttachments, private string $replyItTo) {}
 
     /**
      * Get the message envelope.
@@ -28,7 +27,7 @@ class BugCreated extends Mailable
         return new Envelope(
             subject: 'Bug Created',
             replyTo: [
-                new Address($this->replyItTo, "User"),
+                new Address($this->replyItTo, 'User'),
             ]
         );
     }
@@ -40,10 +39,9 @@ class BugCreated extends Mailable
     {
         return new Content(
             markdown: 'emails.bug_created',
-            with:
-            [
-                'title'=> $this->title,
-                'description'=> $this->description
+            with: [
+                'title' => $this->title,
+                'description' => $this->description,
             ]
         );
     }
@@ -58,9 +56,10 @@ class BugCreated extends Mailable
         $attach = [];
         foreach ($this->mailAttachments as $attachment) {
             $attach[] = Attachment::fromPath($attachment->getRealPath())
-            ->as($attachment->getClientOriginalName())
-            ->withMime($attachment->getClientMimeType());
+                ->as($attachment->getClientOriginalName())
+                ->withMime($attachment->getClientMimeType());
         }
+
         return $attach;
     }
 }

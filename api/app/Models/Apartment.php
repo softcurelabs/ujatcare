@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Apartment extends Model
 {
     protected $table = 'apartment';
-    use HasFactory, SoftDeletes;
 
+    use HasFactory, SoftDeletes;
 
     public function flats(): HasMany
     {
